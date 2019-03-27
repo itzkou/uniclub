@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
-import com.kou.uniclub.Adapter.vp_homeAdapter
+import com.kou.uniclub.Adapter.HomeAdapter
 import com.kou.uniclub.Fragments.*
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -76,7 +76,7 @@ class Home : AppCompatActivity() {
     }
 
     private fun setupViewPager(viewPager: ViewPager) {
-        val adapter=vp_homeAdapter(supportFragmentManager)
+        val adapter=HomeAdapter(supportFragmentManager)
 
         val homeFeed=HomeFeed.newInstance()
         val calendar=Calendar.newInstance()
