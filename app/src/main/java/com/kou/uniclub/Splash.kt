@@ -4,8 +4,7 @@ package com.kou.uniclub
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
-import android.widget.Toast
-import com.kou.uniclub.Network.Connectivity
+import com.kou.uniclub.Extensions.Connectivity
 import android.content.Intent
 import android.os.Handler
 import android.support.design.widget.Snackbar

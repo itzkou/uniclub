@@ -13,12 +13,20 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
-            tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Authentication.Auth">
+            tools:ignore="GoogleAppIndexingWarning"
+            android:screenOrientation="portrait"
+           >
+        <activity android:name=".Authentication.Auth"
+                  android:launchMode="singleTask"
+                  >
         </activity>
-        <activity android:name=".Authentication.SignUP">
+        <activity android:name=".Authentication.SignUP"
+                  android:launchMode="singleTask"
+                  >
         </activity>
-        <activity android:name=".Authentication.SignIN">
+        <activity android:name=".Authentication.SignIN"
+                  android:launchMode="singleTask"
+                 >
         </activity>
         <activity
                 android:name=".Intro"
