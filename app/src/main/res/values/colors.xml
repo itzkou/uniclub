@@ -5,6 +5,9 @@
     <color name="black">#000000</color>
     <color name="transparent">#C0BBBB</color>
     <color name="white">#FFF</color>
+    <color name="shimmerBG">#33AAAAAA</color>
+    <color name="shimmerShader">#0DAAAAAA</color>
+
 
 
 </resources>

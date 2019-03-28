@@ -1,10 +1,12 @@
 package com.kou.uniclub.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.kou.uniclub.ClubsFilter
 import com.kou.uniclub.Model.University
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.row_university.view.*
@@ -30,6 +32,7 @@ class UnivsAdapter(val universities :List<University>, val context: Context) : R
 
         holder.card.setOnClickListener {
             mID=univ.id
+            context.startActivity(Intent(context,ClubsFilter::class.java))
 
 
         }
@@ -48,7 +51,7 @@ class UnivsAdapter(val universities :List<University>, val context: Context) : R
     class Holder(view: View) : RecyclerView.ViewHolder(view)  {
         val card=view.cardUniv
         val image=view.im_university
-        val title =view.tv_university
+        val title =view.tv_univ_title
 
 
     }
