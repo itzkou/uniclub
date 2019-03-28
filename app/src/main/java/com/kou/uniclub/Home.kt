@@ -80,13 +80,13 @@ class Home : AppCompatActivity() {
 
         val homeFeed=HomeFeed.newInstance()
         val calendar=Calendar.newInstance()
-        val clubs=Clubs.newInstance()
+        val univs=Universities.newInstance()
         val notif=Notification.newInstance()
         val profile=Profile.newInstance()
 
         adapter.addFragment(homeFeed)
         adapter.addFragment(calendar)
-        adapter.addFragment(clubs)
+        adapter.addFragment(univs)
         adapter.addFragment(notif)
         adapter.addFragment(profile)
         vp_home.adapter=adapter
