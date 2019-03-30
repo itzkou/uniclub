@@ -1,11 +1,13 @@
 package com.kou.uniclub.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.kou.uniclub.Authentication.Auth
 import com.kou.uniclub.Model.EventFeed
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.row_event_feed.view.*
@@ -36,6 +38,10 @@ class HomeFeedAdapter (val events :List<EventFeed>, val context: Context): Recyc
         holder.month.text=month
         holder.day.text=day
 
+        holder.fav.setOnClickListener {
+            context.startActivity(Intent(context,Auth::class.java))
+        }
+
 
 
 
@@ -48,6 +54,7 @@ class HomeFeedAdapter (val events :List<EventFeed>, val context: Context): Recyc
         val day = view.day
         val month = view.month
         val place = view.place
+        val fav=view.favorite
 
     }
 }
