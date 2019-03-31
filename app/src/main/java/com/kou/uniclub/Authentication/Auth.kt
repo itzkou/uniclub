@@ -26,7 +26,8 @@ class Auth : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
 
-        checkPermis()
+        if(checkPermis())
+            init()
 
 
     }
@@ -49,8 +50,8 @@ class Auth : AppCompatActivity() {
 
 
                  if(deniedCount==0) {
-                    //Toast.makeText(this, "All permissions are granted", Toast.LENGTH_SHORT).show()
-                    //init()
+                    Toast.makeText(this, "All permissions are granted", Toast.LENGTH_SHORT).show()
+
 
                 }
                 else
@@ -76,10 +77,7 @@ class Auth : AppCompatActivity() {
 
             }
 
-            if (deniedCount==0) {
-                Toast.makeText(this, "All permissions are granted", Toast.LENGTH_SHORT).show()
-                init()
-            }
+
 
 
 
