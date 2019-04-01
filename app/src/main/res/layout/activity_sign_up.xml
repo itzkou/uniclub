@@ -28,12 +28,14 @@
                app:layout_constraintStart_toStartOf="parent"
                android:layout_marginStart="20dp" android:layout_marginTop="32dp"
                app:layout_constraintTop_toTopOf="parent"/>
-    <ImageView android:id="@+id/icon_photo"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:src="@drawable/icon_photo" app:layout_constraintTop_toTopOf="parent"
-               android:layout_marginTop="32dp"
-               app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"/>
+    <com.mikhaellopez.circularimageview.CircularImageView android:id="@+id/icon_photo"
+                                                          android:layout_width="80dp"
+                                                          android:layout_height="80dp"
+                                                          android:src="@drawable/ic_launcher_background"
+                                                          app:layout_constraintTop_toTopOf="parent"
+                                                          android:layout_marginTop="32dp"
+                                                          app:layout_constraintEnd_toEndOf="parent"
+                                                          app:layout_constraintStart_toStartOf="parent"/>
 
 
     <EditText android:id="@+id/ed_username"

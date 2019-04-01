@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.MenuItem
 import com.kou.uniclub.Adapter.HomeAdapter
 import com.kou.uniclub.Fragments.*
+import com.kou.uniclub.SharedUtils.PrefsManager
 import kotlinx.android.synthetic.main.activity_home.*
 
 class Home : AppCompatActivity() {
@@ -20,6 +21,9 @@ class Home : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        //access uniclub functionnalities
+
+
 
         //navigation
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
