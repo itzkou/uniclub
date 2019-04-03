@@ -32,6 +32,8 @@ interface UniclubApi{
             @POST("login")
             fun signIN( @Field("email")email:String,
                         @Field("password")password:String):Call<Token>
+    @GET("user")
+    fun getUser(@Header("Authorization") authToken:String?):Call<UserResponse>
 
 
             @GET("event/{id}")
@@ -45,6 +47,10 @@ interface UniclubApi{
 
             @GET("events")
             fun getEventFeed():Call<FeedResponse>
+
+            @GET("events/today")
+            fun getEvenToday():Call<FeedResponse>
+
 /*
 @GET("events/club/{club_id}")
 fun getEventByclub(@Path("club_id")id:Int):Call<EventResponse>

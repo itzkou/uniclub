@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.MenuItem
 import com.kou.uniclub.Adapter.HomeAdapter
 import com.kou.uniclub.Fragments.*
-import com.kou.uniclub.SharedUtils.PrefsManager
 import kotlinx.android.synthetic.main.activity_home.*
 
 class Home : AppCompatActivity() {

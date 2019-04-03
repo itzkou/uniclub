@@ -34,7 +34,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class SignUP : AppCompatActivity(),Validation {
-
+//TODO("when the image is empty the app crashes")
 //TODO("prevention contre l'erreur lors de signup form validation (+) >> if email already exists!!")
      private var cities = arrayOf("","Ariana", "Tunis", "Bizerte")
     private var city:String?=null
@@ -66,33 +66,8 @@ class SignUP : AppCompatActivity(),Validation {
 
     override fun onStart() {
         super.onStart()
+        signUP()
 
-        //retrofit
-        btn_signup.setOnClickListener {
-            val service=UniclubApi.create()
-            val u=User(ed_email.text.toString(),ed_password.text.toString(),ed_username.text.toString(),1,1,"")
-            service.signUP(u.name,u.email,u.password,1,1,body).enqueue(object:Callback<Token>{
-                override fun onFailure(call: Call<Token>, t: Throwable) {
-                        if(t  is IOException)
-                            Toast.makeText(this@SignUP,"Network faillure ALLunivs",Toast.LENGTH_SHORT).show()
-                    else   Toast.makeText(this@SignUP,"Conversion error",Toast.LENGTH_SHORT).show()
-
-                                  }
-
-                override fun onResponse(call: Call<Token>, response: Response<Token>) {
-                    if (response.isSuccessful){
-                        Toast.makeText(this@SignUP,"Account Created",Toast.LENGTH_SHORT).show()
-                        PrefsManager.seToken(this@SignUP,response.body()!!.token)
-                        Log.d("myToken",PrefsManager.geToken(this@SignUP))
-
-                        startActivity(Intent(this@SignUP,Home::class.java))
-                        finish()
-
-                    }                }
-
-            })
-
-        }
 
 
 
@@ -230,6 +205,36 @@ class SignUP : AppCompatActivity(),Validation {
             }
         }
         builder.show()
+
+    }
+
+    fun signUP(){
+        //retrofit
+        btn_signup.setOnClickListener {
+            val service=UniclubApi.create()
+            val u=User(ed_email.text.toString(),ed_password.text.toString(),ed_username.text.toString(),1,1,"")
+            service.signUP(u.name,u.email,u.password,1,1,body).enqueue(object:Callback<Token>{
+                override fun onFailure(call: Call<Token>, t: Throwable) {
+                    if(t  is IOException)
+                        Toast.makeText(this@SignUP,"Network faillure ALLunivs",Toast.LENGTH_SHORT).show()
+                    else   Toast.makeText(this@SignUP,"Conversion error",Toast.LENGTH_SHORT).show()
+
+                }
+
+                override fun onResponse(call: Call<Token>, response: Response<Token>) {
+                    if (response.isSuccessful){
+                        Toast.makeText(this@SignUP,"Account Created",Toast.LENGTH_SHORT).show()
+                        PrefsManager.seToken(this@SignUP,response.body()!!.token)
+                        Log.d("stoken",PrefsManager.geToken(this@SignUP))
+
+                        startActivity(Intent(this@SignUP,Home::class.java))
+                        finish()
+
+                    }                }
+
+            })
+
+        }
 
     }
 }

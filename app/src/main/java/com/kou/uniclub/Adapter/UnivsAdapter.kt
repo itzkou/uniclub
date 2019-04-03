@@ -11,7 +11,6 @@ import com.kou.uniclub.Model.University
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.row_university.view.*
 
-//TODO("hethy liste des universités once clicked list all clubs of that univ")
 class UnivsAdapter(val universities :List<University>, val context: Context) : RecyclerView.Adapter<UnivsAdapter.Holder>(){
 
     companion object {

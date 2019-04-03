@@ -18,10 +18,11 @@ import java.io.IOException
 
 class ClubsFilter : AppCompatActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_clubs_filter)
-        back_white.setOnClickListener {
+        back_black.setOnClickListener {
             startActivity(Intent(this@ClubsFilter,Home::class.java))
             finish()
         }
