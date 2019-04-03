@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.kou.uniclub.Authentication.Auth
-import com.kou.uniclub.Model.EventFeed
+import com.kou.uniclub.EventDetails
+import com.kou.uniclub.Model.Event
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
 import kotlinx.android.synthetic.main.row_event_feed.view.*
@@ -16,9 +18,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class HomeFeedAdapter (val events :List<EventFeed>, val context: Context): RecyclerView.Adapter<HomeFeedAdapter.Holder>() {
-
-
+class HomeFeedAdapter (val events :List<Event>, val context: Context): RecyclerView.Adapter<HomeFeedAdapter.Holder>() {
+    companion object {
+        var event_id: Int? = null
+    }
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): Holder {
         return Holder(LayoutInflater.from(parent.context).inflate(R.layout.row_event_feed, parent, false))
     }
@@ -28,7 +31,7 @@ class HomeFeedAdapter (val events :List<EventFeed>, val context: Context): Recyc
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val event: EventFeed = events[position]
+        val event: Event = events[position]
             //date stuff
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date = format.parse(event.date)
@@ -46,8 +49,14 @@ class HomeFeedAdapter (val events :List<EventFeed>, val context: Context): Recyc
         }
         //TODO("else case = use private services")
 
+        //Event details
+        holder.pic.setOnClickListener {
 
+            event_id=event.id
+            Log.d("id_ev", event_id.toString())
+            context.startActivity(Intent(context,EventDetails::class.java))
 
+        }
 
 
 
@@ -60,6 +69,7 @@ class HomeFeedAdapter (val events :List<EventFeed>, val context: Context): Recyc
         val month = view.month
         val place = view.place
         val fav=view.favorite
+        val pic=view.im_event
 
     }
 }

@@ -2,7 +2,7 @@ package com.kou.uniclub.Model
 
 import com.google.gson.annotations.SerializedName
 
-data class EventFeed(
+data class Event(
     @SerializedName("club_id")
     val clubId: Int,
     @SerializedName("created_at")

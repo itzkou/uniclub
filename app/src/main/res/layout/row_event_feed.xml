@@ -19,6 +19,7 @@
                                                      android:layout_height="match_parent">
 
             <ImageView android:id="@+id/im_event"
+
                        android:layout_width="320dp"
                        android:layout_height="160dp"
                        android:src="@drawable/im_event" app:layout_constraintEnd_toEndOf="parent"

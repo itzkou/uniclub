@@ -1,9 +1,6 @@
 package com.kou.uniclub.Network
 
-import com.kou.uniclub.Model.ClubResponse
-import com.kou.uniclub.Model.FeedResponse
-import com.kou.uniclub.Model.Token
-import com.kou.uniclub.Model.UniversityResponse
+import com.kou.uniclub.Model.*
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -37,7 +34,8 @@ interface UniclubApi{
                         @Field("password")password:String):Call<Token>
 
 
-
+            @GET("event/{id}")
+            fun getEvent(@Path("id")id:Int):Call<EventResponse>
 
             @GET("universities")
             fun getUniversities():retrofit2.Call<UniversityResponse>

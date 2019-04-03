@@ -2,7 +2,7 @@ package com.kou.uniclub.Model
 
 import com.google.gson.annotations.SerializedName
 
-data class FeedResponse(
+data class EventResponse(
     @SerializedName("data")
     val `data`: List<Event>,
     @SerializedName("success")

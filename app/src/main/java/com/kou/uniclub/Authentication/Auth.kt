@@ -13,7 +13,6 @@ import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.activity_auth.*
 
 class Auth : AppCompatActivity() {
-
     private val appPermissions= arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
         android.Manifest.permission.READ_EXTERNAL_STORAGE,
         android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -29,6 +28,20 @@ class Auth : AppCompatActivity() {
         if(checkPermis())
             init()
 
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(checkPermis())
+            init()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(checkPermis())
+            init()
 
     }
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -51,7 +64,6 @@ class Auth : AppCompatActivity() {
 
                  if(deniedCount==0) {
                     Toast.makeText(this, "All permissions are granted", Toast.LENGTH_SHORT).show()
-
 
                 }
                 else

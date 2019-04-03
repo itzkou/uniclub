@@ -47,8 +47,6 @@ class SignUP : AppCompatActivity(),Validation {
     lateinit var chosenUri: Uri
     lateinit var  body: MultipartBody.Part
     private var mCurrentPhotoPath: String=""
-    //FORM VALIDATION
-    private var isFormValid:Boolean=true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
