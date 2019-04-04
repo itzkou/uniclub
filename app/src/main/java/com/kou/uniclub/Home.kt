@@ -1,12 +1,18 @@
 package com.kou.uniclub
 
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.ActivityCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import com.kou.uniclub.Adapter.HomeAdapter
+import com.kou.uniclub.Adapter.HomeFeedAdapter.Companion.PERMIS_REQUEST
+import com.kou.uniclub.Authentication.Auth
 import com.kou.uniclub.Fragments.*
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -46,6 +52,59 @@ class Home : AppCompatActivity() {
         )
         setupViewPager(vp_home)
           }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode== PERMIS_REQUEST)
+        { val permisResults=HashMap<String,Int>()
+            var deniedCount=0
+
+
+            // gather granted results
+            for(i in 0 until grantResults.size)
+            {
+                if (grantResults[i]== PackageManager.PERMISSION_DENIED)
+                {
+                    permisResults[permissions[i]] = grantResults[i]
+                    deniedCount++
+                }
+
+
+                if(deniedCount==0) {
+                    Toast.makeText(this, "All permissions are granted", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@Home, Auth::class.java))
+                }
+                else
+                {
+                    for (j in permisResults.entries)
+                    {  val key=j.key
+
+
+                        if(ActivityCompat.shouldShowRequestPermissionRationale(this,key))
+                        {
+                            Toast.makeText(this, "Enable all permissions in order to use our services", Toast.LENGTH_SHORT).show()
+
+
+                        }
+                        else {
+                            Toast.makeText(this, "Go to settings and enable permissions", Toast.LENGTH_SHORT).show()
+
+
+                        }
+                    }
+
+                }
+
+            }
+
+
+
+
+
+
+        }
+
+
+    }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
