@@ -26,7 +26,10 @@ class Calendar: Fragment() {
     val v=inflater.inflate(R.layout.fragment_calendar,container,false)
         val rvCalendar=v.findViewById<RecyclerView>(R.id.rvCalendar)
         val calendar=java.util.Calendar.getInstance()
+        calendar.add(java.util.Calendar.DAY_OF_MONTH,-2)
+
         var currenTime=calendar.time
+
 
 
 
@@ -38,6 +41,8 @@ class Calendar: Fragment() {
 
 
         }
+
+
 
 
         rvCalendar.layoutManager=LinearLayoutManager(activity!!,LinearLayoutManager.HORIZONTAL,false)

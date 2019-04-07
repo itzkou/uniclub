@@ -117,7 +117,7 @@ class Home : AppCompatActivity() {
                     startActivity(Intent(this@Home, Auth::class.java))
                     finish()
                 }
-                vp_home.currentItem=4
+               else vp_home.currentItem=4
 
 
 
