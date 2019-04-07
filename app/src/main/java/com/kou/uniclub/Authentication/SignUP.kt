@@ -184,6 +184,8 @@ class SignUP : AppCompatActivity(),Validation {
     }
 
     //Alert dialog for Pictures
+
+
     fun selectImage() {
 
         val items = arrayOf<CharSequence>("Camera", "Gallery", "Cancel")
@@ -216,7 +218,7 @@ class SignUP : AppCompatActivity(),Validation {
             service.signUP(u.name,u.email,u.password,1,1,body).enqueue(object:Callback<Token>{
                 override fun onFailure(call: Call<Token>, t: Throwable) {
                     if(t  is IOException)
-                        Toast.makeText(this@SignUP,"Network faillure ALLunivs",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SignUP,"Network faillure SignUP",Toast.LENGTH_SHORT).show()
                     else   Toast.makeText(this@SignUP,"Conversion error",Toast.LENGTH_SHORT).show()
 
                 }

@@ -1,5 +1,6 @@
 package com.kou.uniclub.Fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -25,12 +26,11 @@ class Profile:Fragment() {
         fun newInstance():Profile=Profile()
     }
 
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v=inflater.inflate(R.layout.fragment_profile,container,false)
-        if(PrefsManager.geToken(activity!!)==null) {
-            startActivity(Intent(activity!!, Auth::class.java))
-        }
-        else
+
             Profile()
 
 

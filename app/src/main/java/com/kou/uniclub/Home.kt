@@ -14,6 +14,7 @@ import com.kou.uniclub.Adapter.HomeAdapter
 import com.kou.uniclub.Adapter.HomeFeedAdapter.Companion.PERMIS_REQUEST
 import com.kou.uniclub.Authentication.Auth
 import com.kou.uniclub.Fragments.*
+import com.kou.uniclub.SharedUtils.PrefsManager
 import kotlinx.android.synthetic.main.activity_home.*
 
 class Home : AppCompatActivity() {
@@ -69,32 +70,14 @@ class Home : AppCompatActivity() {
                 }
 
 
-                if(deniedCount==0) {
-                    Toast.makeText(this, "All permissions are granted", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@Home, Auth::class.java))
-                }
-                else
-                {
-                    for (j in permisResults.entries)
-                    {  val key=j.key
-
-
-                        if(ActivityCompat.shouldShowRequestPermissionRationale(this,key))
-                        {
-                            Toast.makeText(this, "Enable all permissions in order to use our services", Toast.LENGTH_SHORT).show()
-
-
-                        }
-                        else {
-                            Toast.makeText(this, "Go to settings and enable permissions", Toast.LENGTH_SHORT).show()
-
-
-                        }
-                    }
-
-                }
-
             }
+            if(deniedCount==0) {
+                Toast.makeText(this, "All permissions are granted", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this@Home, Auth::class.java))
+            }
+            else
+                Toast.makeText(this, "All permissions are required", Toast.LENGTH_SHORT).show()
+
 
 
 
@@ -129,7 +112,14 @@ class Home : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_profile -> {
+                //TODO permissions check
+                if(PrefsManager.geToken(this@Home)==null) {
+                    startActivity(Intent(this@Home, Auth::class.java))
+                    finish()
+                }
                 vp_home.currentItem=4
+
+
 
                 return@OnNavigationItemSelectedListener true
             }

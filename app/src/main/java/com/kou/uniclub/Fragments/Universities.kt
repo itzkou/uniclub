@@ -33,7 +33,7 @@ class Universities: Fragment() {
         uniclub.getUniversities().enqueue(object: Callback<UniversityResponse>{
             override fun onFailure(call: Call<UniversityResponse>, t: Throwable) {
                 if(t  is IOException)
-                    Toast.makeText(activity!!,"Network faillure ALLunivs",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity!!,"Network faillure Univerisities",Toast.LENGTH_SHORT).show()
             else    Toast.makeText(activity!!,"conversion error",Toast.LENGTH_SHORT).show()}
 
             override fun onResponse(call: Call<UniversityResponse>, response: Response<UniversityResponse>) {
