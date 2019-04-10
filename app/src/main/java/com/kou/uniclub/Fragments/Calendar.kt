@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.fragment_calendar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
 import java.util.*
 
 class Calendar: Fragment() {
@@ -103,11 +104,15 @@ class Calendar: Fragment() {
                     recyclerView.layoutManager=LinearLayoutManager(activity!!, LinearLayout.VERTICAL,false)
                    recyclerView.adapter= MyeventsAdapter(participations,activity!!)
 
-                    for (i in 0 until participations.size)
-                    {
+                   for (i in 0 until participations.size)
+
+                    {   val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                        val date = format.parse(participations[i].date)
+                        val eventDay=DateFormat.format("dd",date) as String
+
                         mCalendar.addDecorator(object : DayViewDecorator {
                             override fun shouldDecorate(day: CalendarDay?): Boolean {
-                                return day!!.calendar.get(java.util.Calendar.DATE) == participations[i].date
+                                return day!!.calendar.get(java.util.Calendar.DAY_OF_MONTH) ==eventDay.toInt()
                             }
 
                             override fun decorate(view: DayViewFacade?) {
@@ -115,6 +120,7 @@ class Calendar: Fragment() {
                             }
 
                         })
+
                     }
                 }
             }
