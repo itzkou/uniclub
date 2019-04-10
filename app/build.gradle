@@ -13,8 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        renderscriptSupportModeEnabled true
-        renderscriptTargetApi 28
+       
 
     }
     buildTypes {
@@ -46,8 +45,11 @@ dependencies {
     //MAPS
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
-    //shadows
-    implementation 'com.github.armcha:ColoredShadowImageView:1.1.0'
+    //CalendarView
+    implementation 'com.github.prolificinteractive:material-calendarview:1.4.3'
+    //design
+    implementation'com.android.support:cardview-v7:28.0.0'
+    implementation'com.android.support:recyclerview-v7:28.0.0'
 
 
 

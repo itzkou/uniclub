@@ -26,19 +26,23 @@ class CalendarAdapter(val dates:ArrayList<Date>,context: Context) : RecyclerView
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val calendar=java.util.Calendar.getInstance()
 
-        val currentDate= SimpleDateFormat("yyyy/MM/dd").format(calendar.time)
-        val myDate=SimpleDateFormat("yyyy/MM/dd").format(dates[position])
+
         //data
         val date=dates[position]
         val day = DateFormat.format("dd", date) as String
         val dayName=DateFormat.format("EEE",date) as String
         holder.dayName.text=dayName
         holder.day.text=day
-        Log.d("damn","current date: $currentDate   mydate:$myDate   position : $position ")
+        Log.d("testo",Calendar.DAY_OF_MONTH.toString())
 
-        if(myDate.equals(currentDate)) {
+        if(day.toInt() == calendar.get(Calendar.DAY_OF_MONTH)) {
+            //holder.card.shadowColor=ContextCompat.getColor(context,R.color.cyan)
             holder.card.setImageResource(R.drawable.calendaro)
-            holder.card.shadowColor=ContextCompat.getColor(context,R.color.cyan)
+
+        }
+        else{
+            holder.card.setImageResource(R.drawable.calendaro_greyed)
+
 
         }
 

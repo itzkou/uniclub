@@ -48,8 +48,7 @@ class Profile:Fragment() {
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 if(t  is IOException)
                     Toast.makeText(activity!!,"Network faillure ", Toast.LENGTH_SHORT).show()
-                else   Toast.makeText(activity!!,"Conversion error", Toast.LENGTH_SHORT).show()
-                Log.d("stoken",PrefsManager.geToken(activity!!).toString())
+
             }
 
         })

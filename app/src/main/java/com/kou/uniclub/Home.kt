@@ -5,21 +5,28 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.kou.uniclub.Adapter.HomeAdapter
-import com.kou.uniclub.Adapter.HomeFeedAdapter.Companion.PERMIS_REQUEST
 import com.kou.uniclub.Authentication.Auth
 import com.kou.uniclub.Fragments.*
 import com.kou.uniclub.SharedUtils.PrefsManager
 import kotlinx.android.synthetic.main.activity_home.*
+import java.util.ArrayList
 
 class Home : AppCompatActivity() {
     //navigation stuff
     private var prevMenuItem: MenuItem? = null
+
+    //permissions
+    private val appPermissions= arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        android.Manifest.permission.READ_EXTERNAL_STORAGE,
+        android.Manifest.permission.ACCESS_FINE_LOCATION)
+    private  val PERMIS_REQUEST=1998
 
 
 
@@ -73,7 +80,7 @@ class Home : AppCompatActivity() {
             }
             if(deniedCount==0) {
                 Toast.makeText(this, "All permissions are granted", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this@Home, Auth::class.java))
+                    startActivity(Intent(this@Home,Auth::class.java))
             }
             else
                 Toast.makeText(this, "All permissions are required", Toast.LENGTH_SHORT).show()
@@ -102,7 +109,8 @@ class Home : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_clubs -> {
-                vp_home.currentItem=2
+
+                 vp_home.currentItem=2
 
                 return@OnNavigationItemSelectedListener true
             }
@@ -112,12 +120,12 @@ class Home : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_profile -> {
-                //TODO permissions check
+                //TODO permissions check on resume messed up
                 if(PrefsManager.geToken(this@Home)==null) {
-                    startActivity(Intent(this@Home, Auth::class.java))
-                    finish()
+                    checkPermis()
+
                 }
-               else vp_home.currentItem=4
+                else  vp_home.currentItem=4
 
 
 
@@ -145,4 +153,23 @@ class Home : AppCompatActivity() {
 
 
     }
+    private  fun checkPermis():Boolean{
+        val listPermis= ArrayList<String>()
+
+        for (i in appPermissions){
+            if (ContextCompat.checkSelfPermission(this@Home,i)!= PackageManager.PERMISSION_GRANTED){
+                listPermis.add(i)
+
+            }
+        }
+
+        if (listPermis.isNotEmpty())
+        {
+            ActivityCompat.requestPermissions(this@Home,listPermis.toArray(arrayOfNulls(listPermis.size)), PERMIS_REQUEST)
+            return false
+        }
+
+        return true
+    }
+
 }

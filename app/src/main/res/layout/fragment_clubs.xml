@@ -7,7 +7,7 @@
 
     <ImageView
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="128dp"
             android:id="@+id/bar" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:scaleType="center" app:srcCompat="@drawable/orange_bar"/>
@@ -20,14 +20,14 @@
             app:layout_constraintEnd_toEndOf="@+id/bar" android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintTop_toTopOf="@+id/bar"
-            app:layout_constraintBottom_toBottomOf="@+id/bar"/>
+            android:layout_marginTop="16dp"/>
     <ImageView android:id="@+id/filter"
                android:src="@drawable/icon_notify"
                android:layout_width="24dp"
                android:layout_height="24dp"
                app:layout_constraintEnd_toEndOf="@+id/bar" android:layout_marginEnd="18dp"
                app:layout_constraintTop_toTopOf="@+id/bar"
-               app:layout_constraintBottom_toBottomOf="@+id/bar"/>
+               android:layout_marginTop="16dp"/>
 
     <ImageView android:id="@+id/settings"
                android:src="@drawable/ic_settings"
@@ -36,22 +36,19 @@
                app:layout_constraintStart_toStartOf="parent"
                android:layout_marginStart="18dp"
                app:layout_constraintTop_toTopOf="@+id/bar"
-               app:layout_constraintBottom_toBottomOf="@+id/bar"/>
-    <ImageView android:layout_width="320dp"
-               android:layout_height="36dp"
-               android:src="@drawable/btn_signup"
-               app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-               app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-               android:layout_marginTop="24dp" app:layout_constraintTop_toBottomOf="@+id/bar"
-               android:id="@+id/imageView3"/>
+               android:layout_marginTop="16dp"/>
+
 
     <android.support.v7.widget.SearchView android:layout_width="320dp"
                                           android:layout_height="35dp"
-                                          app:layout_constraintTop_toBottomOf="@id/bar"
+                                          app:queryHint="Rechercher"
                                           app:layout_constraintEnd_toEndOf="parent"
-                                          android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-                                          android:layout_marginStart="20dp"
-                                          android:layout_marginTop="24dp" android:id="@+id/searchView"/>
+                                          android:layout_marginEnd="8dp"
+                                          android:id="@+id/searchView"
+                                          app:queryBackground="@drawable/searchview"
+                                          app:layout_constraintStart_toStartOf="parent"
+                                          android:layout_marginStart="8dp" android:layout_marginBottom="16dp"
+                                          app:layout_constraintBottom_toBottomOf="@+id/bar"/>
 
 
     <android.support.v7.widget.RecyclerView android:id="@+id/rvUnivs"
@@ -60,7 +57,7 @@
                                             app:layout_constraintEnd_toEndOf="parent"
                                             app:layout_constraintStart_toStartOf="parent"
                                             app:layout_constraintHorizontal_bias="1.0"
-                                            android:layout_marginTop="8dp"
+                                            android:layout_marginTop="16dp"
                                             app:layout_constraintTop_toBottomOf="@+id/searchView"
                                             android:layout_marginBottom="8dp"
                                             app:layout_constraintBottom_toBottomOf="parent"/>
