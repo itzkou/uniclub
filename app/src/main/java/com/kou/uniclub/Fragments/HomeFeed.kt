@@ -6,10 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import android.widget.Spinner
+import android.widget.*
 import com.kou.uniclub.Adapter.HomeFeedAdapter
 import com.kou.uniclub.Model.FeedResponse
 import com.kou.uniclub.Network.UniclubApi
@@ -95,6 +92,7 @@ class HomeFeed: Fragment() {
         val service=UniclubApi.create()
         service.getEvenToday().enqueue(object: Callback<FeedResponse> {
             override fun onFailure(call: Call<FeedResponse>, t: Throwable) {
+                Toast.makeText(activity!!,"There are no events Today",Toast.LENGTH_SHORT).show()
 
             }
 

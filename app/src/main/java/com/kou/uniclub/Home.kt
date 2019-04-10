@@ -81,6 +81,7 @@ class Home : AppCompatActivity() {
             if(deniedCount==0) {
                 Toast.makeText(this, "All permissions are granted", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this@Home,Auth::class.java))
+                        finish()
             }
             else
                 Toast.makeText(this, "All permissions are required", Toast.LENGTH_SHORT).show()
@@ -104,13 +105,18 @@ class Home : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_calendar -> {
+                /*
+                if(PrefsManager.geToken(this@Home)==null) {
+                    checkPermis()
+
+                }
+                else*/
                 vp_home.currentItem=1
 
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_clubs -> {
-
-                 vp_home.currentItem=2
+                vp_home.currentItem=2
 
                 return@OnNavigationItemSelectedListener true
             }
