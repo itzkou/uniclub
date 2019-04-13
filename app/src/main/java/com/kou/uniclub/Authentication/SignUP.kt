@@ -67,7 +67,8 @@ class SignUP : AppCompatActivity(),Validation {
         }
         //photos
         icon_photo.setOnClickListener {
-            selectImage()
+            if (checkPermis())
+                selectImage()
         }
 
         //form Validation
@@ -134,7 +135,9 @@ class SignUP : AppCompatActivity(),Validation {
             }
             if(deniedCount==0) {
                 Toast.makeText(this, "All permissions are granted", Toast.LENGTH_SHORT).show()
-                TODO("Unlock Sign UP button")
+                selectImage()
+
+                //TODO("Unlock Sign UP button")
             }
             else
                 Toast.makeText(this, "All permissions are required", Toast.LENGTH_SHORT).show()
