@@ -1,13 +1,18 @@
 package com.kou.uniclub.Authentication
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -42,73 +47,42 @@ class SignUP : AppCompatActivity(),Validation {
     //REQUESTS FOR RESULTS
     private val SELECT_FILE=1
     private val REQUEST_IMAGE_CAPTURE = 2
+    private  val PERMIS_REQUEST=1997
     //IMAGE UPLOAD
     lateinit var chosenFile: File
     lateinit var chosenUri: Uri
     lateinit var  body: MultipartBody.Part
     private var mCurrentPhotoPath: String=""
+    //Permissions array
+    private val appPermissions= arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        android.Manifest.permission.READ_EXTERNAL_STORAGE)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-
         //redirect
         back.setOnClickListener {
             startActivity(Intent(this@SignUP,Auth::class.java))
         }
-
         //photos
         icon_photo.setOnClickListener {
             selectImage()
         }
+
+        //form Validation
+        formValidation()
+
+
+
     }
 
     override fun onStart() {
         super.onStart()
-        signUP()
-
-
-
-
-        ed_username.afterTextChanged() {
-            ed_username.error =if( it.isValidName() && it.length>=4) null
-               else  "username is a 4 digit long"
-
-
-
+        formFill()
+        btn_signup.setOnClickListener {
+            Toast.makeText(this@SignUP,"Signed UP",Toast.LENGTH_SHORT).show()
         }
-        ed_email.afterTextChanged {
-            ed_email.error=if (it.length >= 6 &&it.isValidEmail())  null
-            else "invalid email "
-        }
-
-        ed_mobile.afterTextChanged {
-            ed_mobile.error=if(it.length==8&&it.isValidPhone()) null
-            else "enter an 8-digit phone number"
-        }
-
-        ed_password.afterTextChanged {
-            ed_password.error=if(it.length>=6&&it.isValidPassword()) null
-            else "enter at least 6 digits that include a lower case an uppercase and a special character"
-
-        }
-        //spinner values
-        sp_region.adapter=ArrayAdapter(this@SignUP,android.R.layout.simple_spinner_dropdown_item,cities)
-        sp_region.onItemSelectedListener=object:AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                city=cities[position]
-            }
-
-        }
-
-
-
-
-
 
 
     }
@@ -140,6 +114,42 @@ class SignUP : AppCompatActivity(),Validation {
 
         }
     }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode== PERMIS_REQUEST)
+        { val permisResults=HashMap<String,Int>()
+            var deniedCount=0
+
+
+            // gather granted results
+            for(i in 0 until grantResults.size)
+            {
+                if (grantResults[i]== PackageManager.PERMISSION_DENIED)
+                {
+                    permisResults[permissions[i]] = grantResults[i]
+                    deniedCount++
+                }
+
+
+            }
+            if(deniedCount==0) {
+                Toast.makeText(this, "All permissions are granted", Toast.LENGTH_SHORT).show()
+                TODO("Unlock Sign UP button")
+            }
+            else
+                Toast.makeText(this, "All permissions are required", Toast.LENGTH_SHORT).show()
+
+
+
+
+
+
+
+        }
+
+
+    }
+
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
@@ -212,7 +222,6 @@ class SignUP : AppCompatActivity(),Validation {
 
     fun signUP(){
         //retrofit
-        btn_signup.setOnClickListener {
             val service=UniclubApi.create()
             val u=User(ed_email.text.toString(),ed_password.text.toString(),ed_username.text.toString(),1,1,"")
             service.signUP(u.name,u.email,u.password,1,1,body).enqueue(object:Callback<Token>{
@@ -237,6 +246,83 @@ class SignUP : AppCompatActivity(),Validation {
             })
 
         }
+    fun formFill(){
+        ed_username.afterTextChanged{
+            ed_username.error=if( it.isValidName() )null
+            else "invalid username"
 
+
+        }
+        ed_email.afterTextChanged {
+            ed_email.error= if (it.isValidEmail()) null
+            else "invalid email"
+        }
+
+        ed_mobile.afterTextChanged {
+            ed_mobile.error=if(it.isValidPhone()) null
+            else "enter an 8-digit phone number"
+        }
+
+        ed_password.afterTextChanged {
+            ed_password.error=if(it.isValidPassword()) null
+            else "enter at least 6 digits that include a lower case an uppercase and a special character"
+
+        }
+        //spinner values
+        sp_region.adapter=ArrayAdapter(this@SignUP,android.R.layout.simple_spinner_dropdown_item,cities)
+        sp_region.onItemSelectedListener=object:AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                city=cities[position]
+            }
+
+        }
     }
+    fun formValidation(){
+        btn_signup.isEnabled=false
+        val formValidation= object :TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val u = ed_username.text.toString().isValidName()
+                val e = ed_email.text.toString().isValidEmail()
+                val p = ed_password.text.toString().isValidPassword()
+                val m = ed_mobile.text.toString().isValidPhone()
+
+                btn_signup.isEnabled = u && e && p && m
+            }
+
+        }
+        ed_username.addTextChangedListener(formValidation)
+        ed_mobile.addTextChangedListener(formValidation)
+        ed_password.addTextChangedListener(formValidation)
+        ed_username.addTextChangedListener(formValidation)
+    }
+
+
+    private  fun checkPermis():Boolean{
+        val listPermis= ArrayList<String>()
+
+        for (i in appPermissions){
+            if (ContextCompat.checkSelfPermission(this@SignUP,i)!= PackageManager.PERMISSION_GRANTED){
+                listPermis.add(i)
+
+            }
+        }
+
+        if (listPermis.isNotEmpty())
+        {
+            ActivityCompat.requestPermissions(this@SignUP,listPermis.toArray(arrayOfNulls(listPermis.size)), PERMIS_REQUEST)
+            return false
+        }
+
+        return true
+    }
+
 }

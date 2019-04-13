@@ -9,17 +9,17 @@ interface Validation {
 
     fun String.isValidEmail(): Boolean
             = this.isNotEmpty() &&
-            Patterns.EMAIL_ADDRESS.matcher(this).matches()
+            Patterns.EMAIL_ADDRESS.matcher(this).matches()&&this.length >= 6
 
 
     fun String.isValidName():Boolean
-            =this.isNotEmpty()&&this.matches(Regex("^[\\p{L} .'-]+$"))
+            =this.isNotEmpty()&&this.matches(Regex("^[\\p{L} .'-]+$"))&&this.length>=4
 
     fun String.isValidPhone():Boolean
-            =this.isNotEmpty()&&Patterns.PHONE.matcher(this).matches()
+            =this.isNotEmpty()&&Patterns.PHONE.matcher(this).matches()&&this.length==8
 
     fun String.isValidPassword():Boolean
-            =this.isNotEmpty()&&this.matches(Regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#'&\$%]).{6,20}$"))
+            =this.isNotEmpty()&&this.matches(Regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#'&\$%]).{6,20}$"))&&this.length>=6
 
 
 
@@ -27,6 +27,7 @@ interface Validation {
 
     fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit){
         this.addTextChangedListener(object: TextWatcher {
+
             override fun afterTextChanged(s: Editable?){
                 afterTextChanged.invoke(s.toString())
 

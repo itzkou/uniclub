@@ -25,14 +25,10 @@ import com.kou.uniclub.Authentication.Auth
 class HomeFeedAdapter (val events :List<Event>, val context: Context): RecyclerView.Adapter<HomeFeedAdapter.Holder>() {
     companion object {
         var event_id: Int? = null
-        const val PERMIS_REQUEST=1997
 
     }
-    private val appPermissions= arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        android.Manifest.permission.READ_EXTERNAL_STORAGE,
-        android.Manifest.permission.ACCESS_FINE_LOCATION)
 
-   var activity=context as Activity
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): Holder {
@@ -58,10 +54,8 @@ class HomeFeedAdapter (val events :List<Event>, val context: Context): RecyclerV
         holder.month.text=month
         holder.day.text=day
 
-        //if (PrefsManager.geToken(context)==null)TODO("else case = use private services")
+        //TODO("token null show alert")
         holder.fav.setOnClickListener {
-               checkPermis()
-
         }
 
 
@@ -95,24 +89,6 @@ class HomeFeedAdapter (val events :List<Event>, val context: Context): RecyclerV
         val fav=view.favorite
         val pic=view.im_event
 
-    }
-    fun checkPermis():Boolean{
-        val listPermis=ArrayList<String>()
-
-        for (i in appPermissions){
-            if (ContextCompat.checkSelfPermission(context,i)!= PackageManager.PERMISSION_GRANTED){
-                listPermis.add(i)
-
-            }
-        }
-
-        if (listPermis.isNotEmpty())
-        {
-            ActivityCompat.requestPermissions(activity,listPermis.toArray(arrayOfNulls(listPermis.size)), PERMIS_REQUEST)
-            return false
-        }
-
-        return true
     }
 
 
