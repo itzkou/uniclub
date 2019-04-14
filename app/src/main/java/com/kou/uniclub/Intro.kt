@@ -6,9 +6,8 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.text.Html
-import android.view.View
 import android.widget.TextView
-import com.kou.uniclub.Adapter.SliderAdapter
+import com.kou.uniclub.Adapter.VpSlider
 import com.kou.uniclub.Authentication.Auth
 import kotlinx.android.synthetic.main.activity_intro.*
 
@@ -19,7 +18,7 @@ class Intro : AppCompatActivity() {
         setContentView(R.layout.activity_intro)
 
 
-        val sliderAdapter= SliderAdapter(this@Intro)
+        val sliderAdapter= VpSlider(this@Intro)
       slider_pager.adapter=sliderAdapter
         addDots(0)
 

@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.kou.uniclub.R
 
-class SliderAdapter (context: Context):PagerAdapter() {
+class VpSlider (context: Context):PagerAdapter() {
     private var layoutInflater: LayoutInflater? = null
     private var mcontext: Context = context
 

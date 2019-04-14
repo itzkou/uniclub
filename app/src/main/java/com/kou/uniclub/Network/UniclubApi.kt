@@ -48,7 +48,7 @@ interface UniclubApi{
             @GET("events")
             fun getEventFeed():Call<FeedResponse>
 
-            @GET("events/searchview")
+            @GET("today")
             fun getEvenToday():Call<FeedResponse>
 
 /*

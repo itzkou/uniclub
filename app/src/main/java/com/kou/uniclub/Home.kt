@@ -9,7 +9,7 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
-import com.kou.uniclub.Adapter.HomeAdapter
+import com.kou.uniclub.Adapter.VpHome
 import com.kou.uniclub.Authentication.SignUP
 import com.kou.uniclub.Fragments.*
 import com.kou.uniclub.SharedUtils.PrefsManager
@@ -72,9 +72,7 @@ class Home : AppCompatActivity() {
             }
             R.id.nav_profile -> {
                 //TODO ALERT if User not loggedIN
-                if(PrefsManager.geToken(this@Home)==null)
-                    startActivity(Intent(this@Home,SignUP::class.java))
-                else vp_home.currentItem=4
+                vp_home.currentItem=4
 
 
 
@@ -85,7 +83,7 @@ class Home : AppCompatActivity() {
     }
 
     private fun setupViewPager(viewPager: ViewPager) {
-        val adapter=HomeAdapter(supportFragmentManager)
+        val adapter=VpHome(supportFragmentManager)
 
         val homeFeed=HomeFeed.newInstance()
         val calendar=Calendar.newInstance()

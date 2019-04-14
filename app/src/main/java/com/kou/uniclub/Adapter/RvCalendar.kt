@@ -1,7 +1,6 @@
 package com.kou.uniclub.Adapter
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
 import android.util.Log
@@ -10,11 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.row_day.view.*
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CalendarAdapter(val dates:ArrayList<Date>,context: Context) : RecyclerView.Adapter<CalendarAdapter.Holder>() {
+class RvCalendar(val dates:ArrayList<Date>, context: Context) : RecyclerView.Adapter<RvCalendar.Holder>() {
     private val context=context
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): Holder {
         return Holder(LayoutInflater.from(parent.context).inflate(R.layout.row_day, parent, false))

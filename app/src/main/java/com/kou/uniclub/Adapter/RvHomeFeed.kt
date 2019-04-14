@@ -1,13 +1,8 @@
 package com.kou.uniclub.Adapter
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
-import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
+
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
 import android.util.Log
@@ -19,10 +14,9 @@ import com.kou.uniclub.Model.Event
 import kotlinx.android.synthetic.main.row_event_feed.view.*
 import java.text.SimpleDateFormat
 import java.util.*
-import com.kou.uniclub.Authentication.Auth
 
 
-class HomeFeedAdapter (val events :List<Event>, val context: Context): RecyclerView.Adapter<HomeFeedAdapter.Holder>() {
+class RvHomeFeed (val events :List<Event>, val context: Context): RecyclerView.Adapter<RvHomeFeed.Holder>() {
     companion object {
         var event_id: Int? = null
 
@@ -87,6 +81,7 @@ class HomeFeedAdapter (val events :List<Event>, val context: Context): RecyclerV
         val month = view.month
         val place = view.place
         val fav=view.favorite
+        //TODO("don forget parsing image with picasso in On bindViewholder")
         val pic=view.im_event
 
     }

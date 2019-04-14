@@ -1,15 +1,13 @@
 package com.kou.uniclub.Fragments
 
-import android.content.Context
-import android.content.Intent
+
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
-import com.kou.uniclub.Authentication.Auth
 import com.kou.uniclub.Model.UserResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
@@ -31,8 +29,11 @@ class Profile:Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v=inflater.inflate(R.layout.fragment_profile,container,false)
-
+            val edEmail=v.findViewById<EditText>(R.id.edEmail)
             Profile()
+
+        edEmail.isEnabled=false
+        edEmail.isFocusable=false
 
 
         return v
@@ -44,7 +45,7 @@ class Profile:Fragment() {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if(response.isSuccessful){
                 val user=response.body()!!.user
-                tv_email.text=user.email
+                edEmail.hint=user.email
                     Picasso.get().load("http://10.0.2.2:8000/"+user.image).into(im_profile)
                 }
             }

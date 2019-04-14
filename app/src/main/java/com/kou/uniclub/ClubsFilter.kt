@@ -3,11 +3,12 @@ package com.kou.uniclub
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.LinearLayout
 import android.widget.Toast
-import com.kou.uniclub.Adapter.ClubsAdapter
-import com.kou.uniclub.Adapter.UnivsAdapter.Companion.mID
+import com.kou.uniclub.Adapter.RvClubs
+import com.kou.uniclub.Adapter.RvUnivs.Companion.mID
 import com.kou.uniclub.Model.ClubResponse
 import com.kou.uniclub.Network.UniclubApi
 import kotlinx.android.synthetic.main.activity_clubs_filter.*
@@ -40,9 +41,11 @@ class ClubsFilter : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<ClubResponse>, response: Response<ClubResponse>) {
-                rvClubs.layoutManager = LinearLayoutManager(this@ClubsFilter, LinearLayout.VERTICAL, false)
-                rvClubs.adapter= ClubsAdapter(response.body()!!.data,this@ClubsFilter)
+                if (response.isSuccessful) {
+                    rvClubs.layoutManager = GridLayoutManager(this@ClubsFilter, 3)
+                    rvClubs.adapter = RvClubs(response.body()!!.data, this@ClubsFilter)
 
+                }
             }
 
         })

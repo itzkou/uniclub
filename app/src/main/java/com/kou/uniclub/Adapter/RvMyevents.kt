@@ -11,8 +11,8 @@ import kotlinx.android.synthetic.main.row_event_feed.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MyeventsAdapter(val events :List<Event>, val context: Context): RecyclerView.Adapter<MyeventsAdapter.Holder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, p1: Int): MyeventsAdapter.Holder {
+class RvMyevents(val events :List<Event>, val context: Context): RecyclerView.Adapter<RvMyevents.Holder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, p1: Int): RvMyevents.Holder {
         return Holder(LayoutInflater.from(parent.context).inflate(com.kou.uniclub.R.layout.row_event_feed, parent, false))
 
     }
@@ -20,7 +20,7 @@ class MyeventsAdapter(val events :List<Event>, val context: Context): RecyclerVi
     override fun getItemCount(): Int {
         return events.size    }
 
-    override fun onBindViewHolder(holder: MyeventsAdapter.Holder, position: Int) {
+    override fun onBindViewHolder(holder: RvMyevents.Holder, position: Int) {
         val event: Event = events[position]
         //date stuff
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

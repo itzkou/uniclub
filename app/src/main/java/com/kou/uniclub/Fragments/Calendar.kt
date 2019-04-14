@@ -1,7 +1,5 @@
 package com.kou.uniclub.Fragments
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -10,17 +8,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CalendarView
 import android.widget.ImageView
 import android.widget.LinearLayout
-import com.kou.uniclub.Adapter.CalendarAdapter
-import com.kou.uniclub.Adapter.MyeventsAdapter
-import com.kou.uniclub.Model.Event
+import com.kou.uniclub.Adapter.RvCalendar
+import com.kou.uniclub.Adapter.RvMyevents
 import com.kou.uniclub.Model.FeedResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
@@ -29,7 +23,6 @@ import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.spans.DotSpan
-import kotlinx.android.synthetic.main.fragment_calendar.*
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -100,21 +93,24 @@ class Calendar: Fragment() {
                 if(response.isSuccessful)
                 {   val participations=response.body()!!.data
                     recyclerView.layoutManager=LinearLayoutManager(activity!!, LinearLayout.VERTICAL,false)
-                   recyclerView.adapter= MyeventsAdapter(participations,activity!!)
+                   recyclerView.adapter= RvMyevents(participations,activity!!)
 
                    for (i in 0 until participations.size)
 
-                    {   val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                        val date = format.parse(participations[i].date)
-                        val eventDay=DateFormat.format("dd",date) as String
+                    {   val format = SimpleDateFormat("yyyy-MM-dd")
+                        val current=CalendarDay.from(format.parse(participations[i].date))
 
                         mCalendar.addDecorator(object : DayViewDecorator {
                             override fun shouldDecorate(day: CalendarDay?): Boolean {
-                                return day!!.calendar.get(java.util.Calendar.DAY_OF_MONTH) ==eventDay.toInt()
+
+                                return day!!.equals(current)
                             }
 
                             override fun decorate(view: DayViewFacade?) {
-                                view!!.addSpan(DotSpan(5F, ContextCompat.getColor(activity!!, R.color.orange)))
+                                view!!.setSelectionDrawable(ContextCompat.getDrawable(activity!!,R.drawable.orange_circle)!!)
+
+
+
                             }
 
                         })
@@ -141,7 +137,7 @@ class Calendar: Fragment() {
 
         }
         recyclerView.layoutManager=LinearLayoutManager(activity!!,LinearLayoutManager.HORIZONTAL,false)
-        recyclerView .adapter=CalendarAdapter(dates,activity!!)
+        recyclerView .adapter=RvCalendar(dates,activity!!)
     }
 
 

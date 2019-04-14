@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.kou.uniclub.Adapter.HomeFeedAdapter
+import com.kou.uniclub.Adapter.RvHomeFeed
 import com.kou.uniclub.Model.FeedResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
@@ -34,8 +34,7 @@ class HomeFeed: Fragment() {
         FeedAlldates()
 
 
-        //spinners
-        //filtre region
+
 
         sp_region.adapter=ArrayAdapter(activity!!,android.R.layout.simple_spinner_dropdown_item,cities)
         sp_region.onItemSelectedListener=object: AdapterView.OnItemSelectedListener{
@@ -81,7 +80,7 @@ class HomeFeed: Fragment() {
                 if(response.isSuccessful)
                 {
                     rvHome.layoutManager=LinearLayoutManager(activity!!,LinearLayout.VERTICAL,false)
-                    rvHome.adapter=HomeFeedAdapter(response.body()!!.data,activity!!)
+                    rvHome.adapter=RvHomeFeed(response.body()!!.data,activity!!)
                 }
             }
 
@@ -100,7 +99,7 @@ class HomeFeed: Fragment() {
                 if(response.isSuccessful)
                 {
                     rvHome.layoutManager=LinearLayoutManager(activity!!,LinearLayout.VERTICAL,false)
-                    rvHome.adapter=HomeFeedAdapter(response.body()!!.data,activity!!)
+                    rvHome.adapter=RvHomeFeed(response.body()!!.data,activity!!)
 
                 }
             }
