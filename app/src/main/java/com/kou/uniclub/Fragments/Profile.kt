@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import com.kou.uniclub.Model.UserResponse
 import com.kou.uniclub.Network.UniclubApi
@@ -30,10 +31,25 @@ class Profile:Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v=inflater.inflate(R.layout.fragment_profile,container,false)
             val edEmail=v.findViewById<EditText>(R.id.edEmail)
+            val edPhone=v.findViewById<EditText>(R.id.edPhone)
+            val edRegion=v.findViewById<EditText>(R.id.edRegion)
+            val edUniv=v.findViewById<EditText>(R.id.edUniv)
+            val edit=v.findViewById<ImageView>(R.id.edit)
             Profile()
 
         edEmail.isEnabled=false
-        edEmail.isFocusable=false
+        edPhone.isEnabled=false
+        edRegion.isEnabled=false
+        edUniv.isEnabled=false
+
+        edEmail.hint="test"
+
+        edit.setOnClickListener {
+            edEmail.isEnabled=true
+            edPhone.isEnabled=true
+            edRegion.isEnabled=true
+            edUniv.isEnabled=true
+        }
 
 
         return v
