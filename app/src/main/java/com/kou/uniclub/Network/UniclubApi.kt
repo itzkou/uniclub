@@ -36,7 +36,7 @@ interface UniclubApi{
     fun getUser(@Header("Authorization") authToken:String?):Call<UserResponse>
 
 
-            @GET("event/{id}")
+            @GET("events/{id}")
             fun getEvent(@Path("id")id:Int):Call<EventResponse>
 
             @GET("universities")

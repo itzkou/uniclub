@@ -82,8 +82,7 @@ class SignUP : AppCompatActivity(),Validation {
         super.onStart()
         formFill()
         btn_signup.setOnClickListener {
-            Toast.makeText(this@SignUP,"Signed UP",Toast.LENGTH_SHORT).show()
-        }
+signUP()        }
 
 
     }

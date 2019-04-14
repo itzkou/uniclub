@@ -14,6 +14,7 @@ import com.kou.uniclub.Model.UserResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,7 +44,10 @@ class Profile:Fragment() {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if(response.isSuccessful){
                 val user=response.body()!!.user
-                tv_email.text=user.email      }      }
+                tv_email.text=user.email
+                    Picasso.get().load("http://10.0.2.2:8000/"+user.image).into(im_profile)
+                }
+            }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 if(t  is IOException)

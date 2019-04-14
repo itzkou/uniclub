@@ -25,6 +25,7 @@ class Home : AppCompatActivity() {
 
         //navigation
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
         //viewpager
 
         vp_home.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{

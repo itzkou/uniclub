@@ -38,10 +38,12 @@ class EventDetails : AppCompatActivity(),OnMapReadyCallback {
                 else   Toast.makeText(this@EventDetails,"Conversion error", Toast.LENGTH_SHORT).show()              }
 
             override fun onResponse(call: Call<EventResponse>, response: Response<EventResponse>) {
-                val event=response.body()!!.data[0]
-                tv_title.text=event.libele
-                tv_program.text=event.date
-                tv_eventDesc.text=event.description
+                if (response.isSuccessful) {
+                    val event = response.body()!!.data[0]
+                    tv_title.title = event.libele
+                    tv_program.text = event.date
+                    tv_eventDesc.text = event.description
+                }
 
             }
         })

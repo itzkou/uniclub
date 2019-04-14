@@ -69,14 +69,12 @@ class Calendar: Fragment() {
             cv.animate().alpha(1F).duration = 1000
 
 
-
-
         }
 
 
-        hide.setOnClickListener { cv.animate().translationY(-cv.height.toFloat()).duration = 1000
+        hide.setOnClickListener {
             cv.visibility = View.INVISIBLE
-            cv.animate().translationY(0F) }
+        }
 
 
 
