@@ -6,15 +6,13 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.format.DateFormat
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import com.kou.uniclub.Adapter.RvCalendar
-import com.kou.uniclub.Adapter.RvMyevents
+import com.kou.uniclub.Adapter.CalendarAdapter
+import com.kou.uniclub.Adapter.MyEventsAdapter
 import com.kou.uniclub.Model.FeedResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
@@ -22,7 +20,6 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-import com.prolificinteractive.materialcalendarview.spans.DotSpan
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -93,7 +90,7 @@ class Calendar: Fragment() {
                 if(response.isSuccessful)
                 {   val participations=response.body()!!.data
                     recyclerView.layoutManager=LinearLayoutManager(activity!!, LinearLayout.VERTICAL,false)
-                   recyclerView.adapter= RvMyevents(participations,activity!!)
+                   recyclerView.adapter= MyEventsAdapter(participations,activity!!)
 
                    for (i in 0 until participations.size)
 
@@ -137,7 +134,7 @@ class Calendar: Fragment() {
 
         }
         recyclerView.layoutManager=LinearLayoutManager(activity!!,LinearLayoutManager.HORIZONTAL,false)
-        recyclerView .adapter=RvCalendar(dates,activity!!)
+        recyclerView .adapter=CalendarAdapter(dates,activity!!)
     }
 
 

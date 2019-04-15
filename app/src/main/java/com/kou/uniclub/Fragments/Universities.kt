@@ -3,12 +3,13 @@ package com.kou.uniclub.Fragments
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
-import com.kou.uniclub.Adapter.RvUnivs
+import com.kou.uniclub.Adapter.UnivsAdapter
 import com.kou.uniclub.Model.UniversityResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
@@ -27,6 +28,8 @@ class Universities: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v=inflater.inflate(R.layout.fragment_clubs,container,false)
+        val searchview=v.findViewById<SearchView>(R.id.searchView)
+
 
         //TODO(" network faullure causes null pointer exception")
         val uniclub=UniclubApi.create()
@@ -39,7 +42,7 @@ class Universities: Fragment() {
             override fun onResponse(call: Call<UniversityResponse>, response: Response<UniversityResponse>) {
                 if(response.isSuccessful) {
                     rvUnivs.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
-                    rvUnivs.adapter = RvUnivs(response.body()!!.data, activity!!)
+                    rvUnivs.adapter = UnivsAdapter(response.body()!!.data, activity!!)
                 }
             }
 

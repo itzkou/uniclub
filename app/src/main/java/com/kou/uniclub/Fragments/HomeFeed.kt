@@ -7,7 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.kou.uniclub.Adapter.RvHomeFeed
+import com.kou.uniclub.Adapter.HomeFeedAdapter
+import com.kou.uniclub.Fragments.ClubDetails.Upcoming
 import com.kou.uniclub.Model.FeedResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
@@ -18,7 +19,7 @@ import retrofit2.Response
 
 class HomeFeed: Fragment() {
     private var cities = arrayOf("Tozeur","Ariana", "Tunis", "Bizerte")
-    private var timings = arrayOf("All dates","Today")
+    private var timings = arrayOf("All dates","Today","Upcoming")
 
     private var city:String?=null
 
@@ -61,6 +62,7 @@ class HomeFeed: Fragment() {
                 when(position)
                 {0->FeedAlldates()
                     1-> Today()
+                        2-> Upcoming()
 
                 }
             }
@@ -80,7 +82,7 @@ class HomeFeed: Fragment() {
                 if(response.isSuccessful)
                 {
                     rvHome.layoutManager=LinearLayoutManager(activity!!,LinearLayout.VERTICAL,false)
-                    rvHome.adapter=RvHomeFeed(response.body()!!.data,activity!!)
+                    rvHome.adapter=HomeFeedAdapter(response.body()!!.data,activity!!)
                 }
             }
 
@@ -99,13 +101,27 @@ class HomeFeed: Fragment() {
                 if(response.isSuccessful)
                 {
                     rvHome.layoutManager=LinearLayoutManager(activity!!,LinearLayout.VERTICAL,false)
-                    rvHome.adapter=RvHomeFeed(response.body()!!.data,activity!!)
+                    rvHome.adapter=HomeFeedAdapter(response.body()!!.data,activity!!)
 
                 }
             }
 
         })
 
+    }
+
+    fun Upcoming(){
+        val service=UniclubApi.create()
+        service.getUpcomingEvents().enqueue(object:Callback<FeedResponse>{
+            override fun onFailure(call: Call<FeedResponse>, t: Throwable) {
+                Toast.makeText(activity!!,"There are no upcoming events",Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<FeedResponse>, response: Response<FeedResponse>) {
+                rvHome.layoutManager=LinearLayoutManager(activity!!,LinearLayout.VERTICAL,false)
+                rvHome.adapter=HomeFeedAdapter(response.body()!!.data,activity!!)            }
+
+        })
     }
 
 }

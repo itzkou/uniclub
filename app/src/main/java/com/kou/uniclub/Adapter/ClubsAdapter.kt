@@ -11,7 +11,7 @@ import com.kou.uniclub.Model.Club
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.row_club.view.*
 
-class RvClubs(val clubs :List<Club>, val context: Context): RecyclerView.Adapter<RvClubs.Holder>() {
+class ClubsAdapter(val clubs :List<Club>, val context: Context): RecyclerView.Adapter<ClubsAdapter.Holder>() {
     companion object {
         var club_id:Int?=null
     }

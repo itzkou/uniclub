@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.row_day.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class RvCalendar(val dates:ArrayList<Date>, context: Context) : RecyclerView.Adapter<RvCalendar.Holder>() {
+class CalendarAdapter(val dates:ArrayList<Date>, context: Context) : RecyclerView.Adapter<CalendarAdapter.Holder>() {
     private val context=context
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): Holder {
         return Holder(LayoutInflater.from(parent.context).inflate(R.layout.row_day, parent, false))

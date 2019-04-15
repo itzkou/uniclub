@@ -51,6 +51,9 @@ interface UniclubApi{
             @GET("today")
             fun getEvenToday():Call<FeedResponse>
 
+            @GET("upcomingEvents")
+            fun getUpcomingEvents():Call<FeedResponse>
+
 /*
 @GET("events/club/{club_id}")
 fun getEventByclub(@Path("club_id")id:Int):Call<EventResponse>

@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 
-class VpHome internal constructor(fm: FragmentManager) : FragmentStatePagerAdapter(fm)  {
+class HomeAdapter internal constructor(fm: FragmentManager) : FragmentStatePagerAdapter(fm)  {
     private val mFragmentList=  ArrayList<Fragment> () //This is a fragments array
 
     override fun getItem(position: Int): Fragment {

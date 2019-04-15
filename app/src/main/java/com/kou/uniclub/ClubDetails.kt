@@ -3,7 +3,7 @@ package com.kou.uniclub
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.view.ViewPager
-import com.kou.uniclub.Adapter.VpClubDetails
+import com.kou.uniclub.Adapter.ClubDetailsAdapter
 import com.kou.uniclub.Fragments.ClubDetails.Passed
 import com.kou.uniclub.Fragments.ClubDetails.Sponsors
 import com.kou.uniclub.Fragments.ClubDetails.Today
@@ -24,7 +24,7 @@ class ClubDetails : AppCompatActivity() {
     }
 
     private fun setupViewPager(viewPager: ViewPager) {
-        val adapter=VpClubDetails(supportFragmentManager)
+        val adapter=ClubDetailsAdapter(supportFragmentManager)
         val passed= Passed.newInstance()
         val today= Today.newInstance()
         val upcoming=Upcoming.newInstance()

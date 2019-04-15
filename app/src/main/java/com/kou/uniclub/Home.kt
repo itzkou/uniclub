@@ -1,7 +1,6 @@
 package com.kou.uniclub
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 
@@ -9,10 +8,8 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
-import com.kou.uniclub.Adapter.VpHome
-import com.kou.uniclub.Authentication.SignUP
+import com.kou.uniclub.Adapter.HomeAdapter
 import com.kou.uniclub.Fragments.*
-import com.kou.uniclub.SharedUtils.PrefsManager
 import kotlinx.android.synthetic.main.activity_home.*
 
 class Home : AppCompatActivity() {
@@ -83,7 +80,7 @@ class Home : AppCompatActivity() {
     }
 
     private fun setupViewPager(viewPager: ViewPager) {
-        val adapter=VpHome(supportFragmentManager)
+        val adapter=HomeAdapter(supportFragmentManager)
 
         val homeFeed=HomeFeed.newInstance()
         val calendar=Calendar.newInstance()

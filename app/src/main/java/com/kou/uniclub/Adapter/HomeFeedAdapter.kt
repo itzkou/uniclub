@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class RvHomeFeed (val events :List<Event>, val context: Context): RecyclerView.Adapter<RvHomeFeed.Holder>() {
+class HomeFeedAdapter (val events :List<Event>, val context: Context): RecyclerView.Adapter<HomeFeedAdapter.Holder>() {
     companion object {
         var event_id: Int? = null
 
@@ -56,6 +56,7 @@ class RvHomeFeed (val events :List<Event>, val context: Context): RecyclerView.A
 
         //Event details
         holder.pic.setOnClickListener {
+
 
             event_id=event.id
             Log.d("id_ev", event_id.toString())
