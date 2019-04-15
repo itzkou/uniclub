@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.kou.uniclub.EventDetails
 import com.kou.uniclub.Model.Event
+import com.kou.uniclub.UI.ImagePreviewer
 import kotlinx.android.synthetic.main.row_event_feed.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -61,6 +62,14 @@ class RvHomeFeed (val events :List<Event>, val context: Context): RecyclerView.A
             context.startActivity(Intent(context,EventDetails::class.java))
 
         }
+
+        holder.pic.setOnLongClickListener(object :View.OnLongClickListener{
+            override fun onLongClick(v: View?): Boolean {
+                ImagePreviewer().show(v!!.context,holder.pic)
+                return false
+            }
+
+        })
 
 
 
