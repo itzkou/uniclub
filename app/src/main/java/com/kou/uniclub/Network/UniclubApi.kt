@@ -32,8 +32,8 @@ interface UniclubApi{
             @POST("login")
             fun signIN( @Field("email")email:String,
                         @Field("password")password:String):Call<Token>
-    @GET("user")
-    fun getUser(@Header("Authorization") authToken:String?):Call<UserResponse>
+            @GET("user")
+            fun getUser(@Header("Authorization") authToken:String?):Call<UserResponse>
 
 
             @GET("events/{id}")

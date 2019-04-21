@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import com.kou.uniclub.Adapter.HomeFeedAdapter
+import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Model.FeedResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
@@ -37,7 +37,7 @@ class Passed:Fragment() {
                 if(response.isSuccessful)
                 {
                     rvPassed.layoutManager= LinearLayoutManager(activity!!, LinearLayout.VERTICAL,false)
-                    rvPassed.adapter= HomeFeedAdapter(response.body()!!.data,activity!!)
+                    rvPassed.adapter= RvHomeFeedAdapter(response.body()!!.data,activity!!)
                 }
             }
 

@@ -23,7 +23,9 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ClubDetails">
+        <activity android:name=".Activities.EditProfile">
+        </activity>
+        <activity android:name=".Activities.ClubDetails">
         </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -37,35 +39,32 @@
                 android:name="com.google.android.geo.API_KEY"
                 android:value="@string/google_maps_key"/>
 
-        <activity android:name=".EventDetails">
+        <activity android:name=".Activities.EventDetails">
         </activity>
         <activity
-                android:name=".ClubsFilter"
+                android:name=".Activities.ClubsFilter"
                 android:launchMode="singleTask">
         </activity>
         <activity
-                android:name=".Splash"
+                android:name=".Activities.Splash"
                 android:label="@string/title_activity_home"
                 android:launchMode="singleTask">
         </activity>
         <activity
-                android:name=".Authentication.Auth"
+                android:name=".Activities.Authentification.SignUP"
+                android:exported="true"
                 android:launchMode="singleTask">
         </activity>
         <activity
-                android:name=".Authentication.SignUP"
+                android:name=".Activities.Authentification.SignIN"
                 android:launchMode="singleTask">
         </activity>
         <activity
-                android:name=".Authentication.SignIN"
-                android:launchMode="singleTask">
-        </activity>
-        <activity
-                android:name=".Intro"
+                android:name=".Activities.Intro"
                 android:label="@string/title_activity_intro"
                 android:theme="@style/AppTheme">
         </activity>
-        <activity android:name=".Home">
+        <activity android:name=".Activities.Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -97,7 +96,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="@string/fb_login_protocol_scheme" tools:ignore="AppLinkUrlError"/>
+                <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
 

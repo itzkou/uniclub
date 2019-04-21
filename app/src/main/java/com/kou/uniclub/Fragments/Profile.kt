@@ -1,24 +1,27 @@
 package com.kou.uniclub.Fragments
 
 
+import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
+import android.support.design.widget.CollapsingToolbarLayout
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewPager
+import android.support.v4.widget.NestedScrollView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import com.kou.uniclub.Model.UserResponse
-import com.kou.uniclub.Network.UniclubApi
+import com.kou.uniclub.Activities.EditProfile
+import com.kou.uniclub.Adapter.VpProfileAdapter
+import com.kou.uniclub.Fragments.Likes.Clubs
+import com.kou.uniclub.Fragments.Likes.Events
+
 import com.kou.uniclub.R
-import com.kou.uniclub.SharedUtils.PrefsManager
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_profile.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.IOException
+
+
 
 class Profile:Fragment() {
     companion object {
@@ -30,52 +33,38 @@ class Profile:Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v=inflater.inflate(R.layout.fragment_profile,container,false)
-            val edEmail=v.findViewById<EditText>(R.id.edEmail)
-            val edPhone=v.findViewById<EditText>(R.id.edPhone)
-            val edRegion=v.findViewById<EditText>(R.id.edRegion)
-            val edUniv=v.findViewById<EditText>(R.id.edUniv)
-            val edit=v.findViewById<ImageView>(R.id.edit)
-            Profile()
-
-        edEmail.isEnabled=false
-        edPhone.isEnabled=false
-        edRegion.isEnabled=false
-        edUniv.isEnabled=false
-
-        edEmail.hint="test"
-
+        val vpProfile=v.findViewById<ViewPager>(R.id.vpProfile)
+        val tabLikes=v.findViewById<TabLayout>(R.id.tabLikes)
+        //TODO("hide appBar divider")
+        //val appBar=v.findViewById<AppBarLayout>(R.id.appBar)
+        //val collapsingBar=appBar.findViewById<CollapsingToolbarLayout>(R.id.collapse)
+        val edit=v.findViewById<ImageView>(R.id.editProfile)
+        val nested=v.findViewById<NestedScrollView>(R.id.nestedVprofile)
+        nested.isFillViewport=true
+        setupViewPager(vpProfile,tabLikes)
         edit.setOnClickListener {
-            edEmail.isEnabled=true
-            edPhone.isEnabled=true
-            edRegion.isEnabled=true
-            edUniv.isEnabled=true
+            startActivity(Intent(activity!!,EditProfile::class.java))
         }
+
 
 
         return v
     }
 
-    fun Profile(){
-        val service=UniclubApi.create()
-        service.getUser("Bearer "+PrefsManager.geToken(activity!!)).enqueue(object: Callback<UserResponse>{
-            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                if(response.isSuccessful){
-                val user=response.body()!!.user
-                edEmail.hint=user.email
-                    Picasso.get().load("http://10.0.2.2:8000/"+user.image).into(im_profile)
-                }
-            }
 
-            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                if(t  is IOException)
-                    Toast.makeText(activity!!,"Network faillure ", Toast.LENGTH_SHORT).show()
+    private fun setupViewPager(viewPager: ViewPager,tab:TabLayout) {
+        val adapter= VpProfileAdapter(childFragmentManager)
 
-            }
-
-        })
+        val likedEvents= Events.newInstance()
+        val followedClubs= Clubs.newInstance()
+        adapter.addFragment(likedEvents)
+        adapter.addFragment(followedClubs)
+        viewPager.adapter=adapter
+        tab.setupWithViewPager(viewPager)
 
 
 
-        }
+    }
+
 
     }

@@ -18,21 +18,21 @@
                 android:textSize="17sp"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/textView8"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="@+id/bar" android:layout_marginEnd="8dp"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
                 app:layout_constraintTop_toTopOf="@+id/bar"
                 app:layout_constraintBottom_toBottomOf="@+id/bar"/>
-        <ImageView android:id="@+id/filter"
-                   android:src="@drawable/icon_notify"
+        <ImageView
+                android:src="@drawable/ic_notify"
                    android:layout_width="24dp"
                    android:layout_height="24dp"
                    app:layout_constraintEnd_toEndOf="@+id/bar" android:layout_marginEnd="18dp"
                    app:layout_constraintTop_toTopOf="@+id/bar"
                    app:layout_constraintBottom_toBottomOf="@+id/bar"/>
 
-        <ImageView android:id="@+id/settings"
-                   android:src="@drawable/ic_settings"
+        <ImageView
+                android:src="@drawable/ic_settings"
                    android:layout_width="24dp"
                    android:layout_height="24dp"
                    app:layout_constraintStart_toStartOf="parent"
@@ -104,13 +104,7 @@
     </android.support.v7.widget.CardView>
 
 
-
-
-
-
-
-
-    <android.support.v7.widget.RecyclerView android:id="@+id/rvMyevents"
+    <android.support.v7.widget.RecyclerView android:id="@+id/rvMyEvents"
                                             android:layout_width="match_parent"
                                             android:layout_height="0dp"
                                             app:layout_constraintEnd_toEndOf="parent"
@@ -121,13 +115,11 @@
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@drawable/back_orange"
-            android:id="@+id/imageView3"
             app:layout_constraintTop_toTopOf="@id/today" app:layout_constraintBottom_toBottomOf="@id/today"
             app:layout_constraintStart_toEndOf="@id/today" android:layout_marginStart="8dp"/>
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@drawable/back_orange"
-            android:id="@+id/imageView8"
             android:rotation="180"
             app:layout_constraintTop_toTopOf="@id/today" app:layout_constraintBottom_toBottomOf="@id/today"
             app:layout_constraintEnd_toStartOf="@id/today" android:layout_marginEnd="8dp"/>

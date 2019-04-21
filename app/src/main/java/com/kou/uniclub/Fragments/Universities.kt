@@ -9,11 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
-import com.kou.uniclub.Adapter.UnivsAdapter
+import com.kou.uniclub.Adapter.RvUnivsAdapter
 import com.kou.uniclub.Model.UniversityResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
-import kotlinx.android.synthetic.main.fragment_clubs.*
+import kotlinx.android.synthetic.main.fragment_univs.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,7 +27,7 @@ class Universities: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v=inflater.inflate(R.layout.fragment_clubs,container,false)
+        val v=inflater.inflate(R.layout.fragment_univs,container,false)
         val searchview=v.findViewById<SearchView>(R.id.searchView)
 
 
@@ -42,7 +42,7 @@ class Universities: Fragment() {
             override fun onResponse(call: Call<UniversityResponse>, response: Response<UniversityResponse>) {
                 if(response.isSuccessful) {
                     rvUnivs.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
-                    rvUnivs.adapter = UnivsAdapter(response.body()!!.data, activity!!)
+                    rvUnivs.adapter = RvUnivsAdapter(response.body()!!.data, activity!!)
                 }
             }
 

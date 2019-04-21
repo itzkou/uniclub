@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
-import com.kou.uniclub.Adapter.HomeFeedAdapter
+import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Model.FeedResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
@@ -39,7 +39,7 @@ class Today:Fragment() {
                 if(response.isSuccessful)
                 {
                     rvToday.layoutManager= LinearLayoutManager(activity!!, LinearLayout.VERTICAL,false)
-                    rvToday.adapter= HomeFeedAdapter(response.body()!!.data,activity!!)
+                    rvToday.adapter= RvHomeFeedAdapter(response.body()!!.data,activity!!)
 
                 }
             }

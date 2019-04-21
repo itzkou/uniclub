@@ -13,4 +13,7 @@
     <style name="ImagePreviewerTheme" >
         <item name="android:windowIsFloating">false</item>
     </style>
+
+
+
 </resources>

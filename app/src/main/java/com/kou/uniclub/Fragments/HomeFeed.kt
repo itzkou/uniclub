@@ -7,8 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.kou.uniclub.Adapter.HomeFeedAdapter
-import com.kou.uniclub.Fragments.ClubDetails.Upcoming
+import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Model.FeedResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
@@ -82,7 +81,7 @@ class HomeFeed: Fragment() {
                 if(response.isSuccessful)
                 {
                     rvHome.layoutManager=LinearLayoutManager(activity!!,LinearLayout.VERTICAL,false)
-                    rvHome.adapter=HomeFeedAdapter(response.body()!!.data,activity!!)
+                    rvHome.adapter=RvHomeFeedAdapter(response.body()!!.data,activity!!)
                 }
             }
 
@@ -101,7 +100,7 @@ class HomeFeed: Fragment() {
                 if(response.isSuccessful)
                 {
                     rvHome.layoutManager=LinearLayoutManager(activity!!,LinearLayout.VERTICAL,false)
-                    rvHome.adapter=HomeFeedAdapter(response.body()!!.data,activity!!)
+                    rvHome.adapter=RvHomeFeedAdapter(response.body()!!.data,activity!!)
 
                 }
             }
@@ -119,7 +118,7 @@ class HomeFeed: Fragment() {
 
             override fun onResponse(call: Call<FeedResponse>, response: Response<FeedResponse>) {
                 rvHome.layoutManager=LinearLayoutManager(activity!!,LinearLayout.VERTICAL,false)
-                rvHome.adapter=HomeFeedAdapter(response.body()!!.data,activity!!)            }
+                rvHome.adapter=RvHomeFeedAdapter(response.body()!!.data,activity!!)            }
 
         })
     }

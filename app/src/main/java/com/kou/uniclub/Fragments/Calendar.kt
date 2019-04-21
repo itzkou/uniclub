@@ -11,8 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import com.kou.uniclub.Adapter.CalendarAdapter
-import com.kou.uniclub.Adapter.MyEventsAdapter
+import com.kou.uniclub.Adapter.RvCalendarAdapter
+import com.kou.uniclub.Adapter.RvMyEventsAdapter
 import com.kou.uniclub.Model.FeedResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
@@ -43,7 +43,7 @@ class Calendar: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_calendar, container, false)
         val rvCalendar = v.findViewById<RecyclerView>(R.id.rvCalendar)
-        val rvMyevents = v.findViewById<RecyclerView>(R.id.rvMyevents)
+        val rvMyevents = v.findViewById<RecyclerView>(R.id.rvMyEvents)
         val cv = v.findViewById<CardView>(R.id.calendarView)
         val show = v.findViewById<ImageView>(R.id.showCal)
         val hide = v.findViewById<ImageView>(R.id.hideCal)
@@ -90,7 +90,7 @@ class Calendar: Fragment() {
                 if(response.isSuccessful)
                 {   val participations=response.body()!!.data
                     recyclerView.layoutManager=LinearLayoutManager(activity!!, LinearLayout.VERTICAL,false)
-                   recyclerView.adapter= MyEventsAdapter(participations,activity!!)
+                   recyclerView.adapter= RvMyEventsAdapter(participations,activity!!)
 
                    for (i in 0 until participations.size)
 
@@ -134,7 +134,7 @@ class Calendar: Fragment() {
 
         }
         recyclerView.layoutManager=LinearLayoutManager(activity!!,LinearLayoutManager.HORIZONTAL,false)
-        recyclerView .adapter=CalendarAdapter(dates,activity!!)
+        recyclerView .adapter=RvCalendarAdapter(dates,activity!!)
     }
 
 
