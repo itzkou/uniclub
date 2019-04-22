@@ -2,21 +2,11 @@ package com.kou.uniclub.Fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import com.kou.uniclub.Adapter.RvHomeFeedAdapter
-import com.kou.uniclub.Model.FeedResponse
-import com.kou.uniclub.Network.UniclubApi
+import android.widget.Spinner
 import com.kou.uniclub.R
-import kotlinx.android.synthetic.main.fragment_homefeed.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.IOException
 
 class HomeFeed: Fragment() {
     private var cities = arrayOf("Tozeur","Ariana", "Tunis", "Bizerte")
@@ -33,11 +23,7 @@ class HomeFeed: Fragment() {
         val v=inflater.inflate(R.layout.fragment_homefeed,container,false)
         val sp_timing=v.findViewById<Spinner>(R.id.sp_timing)
         val sp_region=v.findViewById<Spinner>(R.id.sp_region)
-        FeedAlldates()
-
-
-
-
+        /*FeedAlldates()
         sp_region.adapter=ArrayAdapter(activity!!,android.R.layout.simple_spinner_dropdown_item,cities)
         sp_region.onItemSelectedListener=object: AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -68,11 +54,11 @@ class HomeFeed: Fragment() {
                 }
             }
 
-        }
+        }*/
         return v
     }
 
-    fun FeedAlldates(){
+    /*fun FeedAlldates(){
         val service=UniclubApi.create()
         service.getEventFeed().enqueue(object: Callback<FeedResponse> {
             override fun onFailure(call: Call<FeedResponse>, t: Throwable) {
@@ -125,5 +111,5 @@ class HomeFeed: Fragment() {
 
         })
     }
-
+*/
 }

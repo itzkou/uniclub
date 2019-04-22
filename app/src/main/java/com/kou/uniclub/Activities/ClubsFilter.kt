@@ -1,21 +1,19 @@
 package com.kou.uniclub.Activities
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.LinearLayout
-import android.widget.Toast
 import com.kou.uniclub.Adapter.RvClubsAdapter
 import com.kou.uniclub.Adapter.RvUnivsAdapter.Companion.mID
-import com.kou.uniclub.Model.ClubResponse
+import com.kou.uniclub.Model.Club.ClubsResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.activity_clubs_filter.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.IOException
 
 class ClubsFilter : AppCompatActivity() {
 
@@ -34,19 +32,17 @@ class ClubsFilter : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         val service= UniclubApi.create()
-        service.getClubsByUniv(mID!!).enqueue(object: Callback<ClubResponse> {
-            override fun onFailure(call: Call<ClubResponse>, t: Throwable) {
-                if (t is IOException)
-                    Toast.makeText(this@ClubsFilter,"Network faillure ClubsByuniv",Toast.LENGTH_SHORT).show()
+        service.getClubsByUniv(mID!!).enqueue(object: Callback<ClubsResponse> {
+            override fun onFailure(call: Call<ClubsResponse>, t: Throwable) {
             }
 
-            override fun onResponse(call: Call<ClubResponse>, response: Response<ClubResponse>) {
+            override fun onResponse(call: Call<ClubsResponse>, response: Response<ClubsResponse>) {
                 if (response.isSuccessful) {
                     rvClubs.layoutManager = LinearLayoutManager(this@ClubsFilter,LinearLayout.VERTICAL,false)
-                    rvClubs.adapter = RvClubsAdapter(response.body()!!.data, this@ClubsFilter)
+                    rvClubs.adapter = RvClubsAdapter(response.body()!!.clubs, this@ClubsFilter)
 
-                }
-            }
+                }            }
+
 
         })
     }

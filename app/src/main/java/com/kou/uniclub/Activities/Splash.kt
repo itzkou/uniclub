@@ -1,13 +1,13 @@
 package com.kou.uniclub.Activities
 
 
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.view.WindowManager
-import com.kou.uniclub.Extensions.Connectivity
 import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AppCompatActivity
+import android.view.WindowManager
+import com.kou.uniclub.Extensions.Connectivity
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
 import kotlinx.android.synthetic.main.activity_splash.*

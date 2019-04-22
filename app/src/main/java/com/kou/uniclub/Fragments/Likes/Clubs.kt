@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.kou.uniclub.Adapter.RvFollowedClubsAdapter
-import com.kou.uniclub.Model.FeedResponse
+import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import retrofit2.Call
@@ -28,18 +28,17 @@ class Clubs: Fragment() {
         val v=inflater.inflate(R.layout.fragment_liked_clubs,container,false)
         val rvFollowerClubs=v.findViewById<RecyclerView>(R.id.rvFollowedClubs)
         val service= UniclubApi.create()
-        service.getEventFeed().enqueue(object: Callback<FeedResponse> {
-            override fun onFailure(call: Call<FeedResponse>, t: Throwable) {
-
+        service.getEventFeed().enqueue(object: Callback<EventListResponse> {
+            override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
-            override fun onResponse(call: Call<FeedResponse>, response: Response<FeedResponse>) {
+            override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
                 if(response.isSuccessful)
                 {
                     rvFollowerClubs.layoutManager= LinearLayoutManager(activity!!, LinearLayout.VERTICAL,false)
-                   rvFollowerClubs.adapter= RvFollowedClubsAdapter(response.body()!!.data,activity!!)
-                }
-            }
+                    rvFollowerClubs.adapter= RvFollowedClubsAdapter(response.body()!!.pagination.events,activity!!)
+                }            }
 
         })
 

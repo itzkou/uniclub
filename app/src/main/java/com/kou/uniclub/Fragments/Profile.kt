@@ -3,8 +3,6 @@ package com.kou.uniclub.Fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
-import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
@@ -13,14 +11,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import com.kou.uniclub.Activities.EditProfile
 import com.kou.uniclub.Adapter.VpProfileAdapter
 import com.kou.uniclub.Fragments.Likes.Clubs
 import com.kou.uniclub.Fragments.Likes.Events
-
 import com.kou.uniclub.R
-
 
 
 class Profile:Fragment() {

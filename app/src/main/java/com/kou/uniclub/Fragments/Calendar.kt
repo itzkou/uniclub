@@ -13,14 +13,13 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import com.kou.uniclub.Adapter.RvCalendarAdapter
 import com.kou.uniclub.Adapter.RvMyEventsAdapter
-import com.kou.uniclub.Model.FeedResponse
+import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -79,21 +78,21 @@ class Calendar: Fragment() {
 
     fun MyEvents(recyclerView: RecyclerView){
         val service= UniclubApi.create()
-        service.getEventFeed().enqueue(object: Callback<FeedResponse> {
-            override fun onFailure(call: Call<FeedResponse>, t: Throwable) {
-
+        service.getEventFeed().enqueue(object: Callback<EventListResponse> {
+            override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
-            override fun onResponse(call: Call<FeedResponse>, response: Response<FeedResponse>) {
+            override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
                 if(response.isSuccessful)
-                {   val participations=response.body()!!.data
+                {   val participations=response.body()!!.pagination.events
                     recyclerView.layoutManager=LinearLayoutManager(activity!!, LinearLayout.VERTICAL,false)
-                   recyclerView.adapter= RvMyEventsAdapter(participations,activity!!)
+                    recyclerView.adapter= RvMyEventsAdapter(participations,activity!!)
 
-                   for (i in 0 until participations.size)
+                    for (i in 0 until participations.size)
 
                     {   val format = SimpleDateFormat("yyyy-MM-dd")
-                        val current=CalendarDay.from(format.parse(participations[i].date))
+                        val current=CalendarDay.from(format.parse(participations[i].startTime))
 
                         mCalendar.addDecorator(object : DayViewDecorator {
                             override fun shouldDecorate(day: CalendarDay?): Boolean {
@@ -111,8 +110,8 @@ class Calendar: Fragment() {
                         })
 
                     }
-                }
-            }
+                }            }
+
 
         })
     }

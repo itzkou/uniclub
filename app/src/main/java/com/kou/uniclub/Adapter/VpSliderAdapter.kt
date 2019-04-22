@@ -17,7 +17,7 @@ class VpSliderAdapter (context: Context):PagerAdapter() {
 
     //  Arrays used to bind data into a single layout file "slide_layout"
     var slider_image = intArrayOf(R.drawable.wiz1,R.drawable.wiz2,R.drawable.wiz3)
-    var slider_title = arrayOf("You’d rather create an account in order to follow your favorite event", "You will have a search access for all events of the universities clubs of Tunisia. ", "You can also have your own favorite Events as well as Universities.")
+    var slider_title = arrayOf("You’d rather create an account in order to follow your favorite event", "You will have a search access for all events of the universityOS clubOS of Tunisia. ", "You can also have your own favorite Events as well as Universities.")
     override fun isViewFromObject(view: View, obj: Any): Boolean {
         return view == obj as ConstraintLayout
     }

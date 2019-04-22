@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.row_day.view.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class RvCalendarAdapter(val dates:ArrayList<Date>, context: Context) : RecyclerView.Adapter<RvCalendarAdapter.Holder>() {
     private val context=context

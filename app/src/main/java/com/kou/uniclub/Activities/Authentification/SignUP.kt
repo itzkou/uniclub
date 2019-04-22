@@ -3,7 +3,6 @@ package com.kou.uniclub.Activities.Authentification
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -11,6 +10,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -27,19 +27,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.kou.uniclub.Extensions.Validation
-import com.kou.uniclub.Activities.Home
-import com.kou.uniclub.Model.Token
-import com.kou.uniclub.Model.User
-import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
-import com.kou.uniclub.SharedUtils.PrefsManager
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -250,9 +242,9 @@ signUP()        }
     }
 
     fun signUP(){
-        //retrofit
+        /*
             val service=UniclubApi.create()
-            val u=User(ed_email.text.toString(),ed_password.text.toString(),ed_username.text.toString(),1,1,"")
+            val u=UserO(ed_email.text.toString(),ed_password.text.toString(),ed_username.text.toString(),1,1,"")
             service.signUP(u.name,u.email,u.password,1,1,body).enqueue(object:Callback<Token>{
                 override fun onFailure(call: Call<Token>, t: Throwable) {
                     if(t  is IOException)
@@ -273,7 +265,7 @@ signUP()        }
                     }                }
 
             })
-
+*/
         }
 
     fun formFill(){
@@ -372,7 +364,7 @@ signUP()        }
                         val pic = me.getJSONObject("picture").getJSONObject("data").get("url").toString()
                         Log.d("mfacebook","$email $fn $ln $pic")
 
-                        //TODO("caching response >Saving to the remote server")
+                        //TODO("caching UserResponseO >Saving to the remote server")
 
 
 
@@ -418,7 +410,7 @@ signUP()        }
     private fun  handleSignInResult(task: Task<GoogleSignInAccount>){
 
         val  account= task.getResult(ApiException::class.java)!!
-        //TODO("caching response >Saving to the remote server")
+        //TODO("caching UserResponseO >Saving to the remote server")
         Log.d("mGoogle",account.displayName)
 
 

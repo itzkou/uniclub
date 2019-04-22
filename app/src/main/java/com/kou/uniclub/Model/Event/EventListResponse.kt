@@ -1,10 +1,10 @@
-package com.kou.uniclub.Model
+package com.kou.uniclub.Model.Event
 
 import com.google.gson.annotations.SerializedName
 
-data class FeedResponse(
+data class EventListResponse(
     @SerializedName("data")
-    val `data`: List<Event>,
+    val pagination: Pagination,
     @SerializedName("success")
     val success: Boolean
 )

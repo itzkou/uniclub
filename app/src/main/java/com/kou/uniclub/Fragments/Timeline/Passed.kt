@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
-import com.kou.uniclub.Model.FeedResponse
+import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.fragment_passed.*
@@ -28,19 +28,17 @@ class Passed:Fragment() {
         val v=inflater.inflate(R.layout.fragment_passed,container,false)
 
         val service= UniclubApi.create()
-        service.getEventFeed().enqueue(object: Callback<FeedResponse> {
-            override fun onFailure(call: Call<FeedResponse>, t: Throwable) {
-
+        service.getEventFeed().enqueue(object: Callback<EventListResponse> {
+            override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
-            override fun onResponse(call: Call<FeedResponse>, response: Response<FeedResponse>) {
+            override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
                 if(response.isSuccessful)
                 {
                     rvPassed.layoutManager= LinearLayoutManager(activity!!, LinearLayout.VERTICAL,false)
-                    rvPassed.adapter= RvHomeFeedAdapter(response.body()!!.data,activity!!)
-                }
-            }
-
+                    rvPassed.adapter= RvHomeFeedAdapter(response.body()!!.pagination.events,activity!!)
+                }            }
         })
         return v
     }

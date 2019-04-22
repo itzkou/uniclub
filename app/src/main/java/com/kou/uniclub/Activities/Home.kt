@@ -69,7 +69,7 @@ class Home : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_profile -> {
-                //TODO ALERT if User not loggedIN
+                //TODO ALERT if UserO not loggedIN
                 vp_home.currentItem=4
 
 

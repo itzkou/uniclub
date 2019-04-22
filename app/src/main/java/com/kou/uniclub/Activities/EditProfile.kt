@@ -2,12 +2,12 @@ package com.kou.uniclub.Activities
 
 import android.content.Intent
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import okhttp3.MediaType

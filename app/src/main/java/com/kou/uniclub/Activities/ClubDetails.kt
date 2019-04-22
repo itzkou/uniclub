@@ -1,8 +1,8 @@
 package com.kou.uniclub.Activities
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.view.ViewPager
+import android.support.v7.app.AppCompatActivity
 import com.kou.uniclub.Adapter.VpClubDetailsAdapter
 import com.kou.uniclub.Fragments.Timeline.Passed
 import com.kou.uniclub.Fragments.Timeline.Sponsors

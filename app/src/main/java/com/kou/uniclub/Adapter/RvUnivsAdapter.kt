@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.kou.uniclub.Activities.ClubsFilter
-import com.kou.uniclub.Model.University
+import com.kou.uniclub.Model.University.University
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.row_university.view.*
 
@@ -26,7 +26,7 @@ class RvUnivsAdapter(val universities :List<University>, val context: Context) :
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val univ: University = universities[position]
 
-        holder.title.text = univ.nom
+        holder.title.text = univ.name
 
 
         holder.card.setOnClickListener {
@@ -48,9 +48,9 @@ class RvUnivsAdapter(val universities :List<University>, val context: Context) :
 
 
     class Holder(view: View) : RecyclerView.ViewHolder(view)  {
-        val card=view.cardUniv
-        val image=view.im_university
-        val title =view.tv_univ_title
+        val card=view.cardUniv!!
+        val image=view.im_university!!
+        val title =view.tv_univ_title!!
 
 
     }
