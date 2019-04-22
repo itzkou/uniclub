@@ -4,7 +4,7 @@ import com.kou.uniclub.Model.Auth.LoginResponse
 import com.kou.uniclub.Model.Auth.SignUpResponse
 import com.kou.uniclub.Model.Club.ClubsResponse
 import com.kou.uniclub.Model.Event.EventListResponse
-import com.kou.uniclub.Model.Event.EventX
+import com.kou.uniclub.Model.Event.EventResponse
 import com.kou.uniclub.Model.University.UniversityResponse
 import com.kou.uniclub.Model.User.User
 import okhttp3.MultipartBody
@@ -52,7 +52,7 @@ interface UniclubApi{
             fun getEventFeed():Call<EventListResponse>
 
             @GET("EventDetails/{id}")
-            fun getEvent(@Path("id")id:Int):Call<EventX>
+            fun getEvent(@Path("id")id:Int):Call<EventResponse>
 
 
 

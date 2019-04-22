@@ -10,7 +10,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter.Companion.event_id
-import com.kou.uniclub.Model.Event.EventX
+import com.kou.uniclub.Model.Event.EventResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.activity_event_details.*
@@ -29,15 +29,15 @@ class EventDetails : AppCompatActivity(),OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        val service=UniclubApi.create()
-        service.getEvent(event_id!!).enqueue(object : Callback<EventX> {
-            override fun onFailure(call: Call<EventX>, t: Throwable) {
+        val service = UniclubApi.create()
+        service.getEvent(event_id!!).enqueue(object:Callback<EventResponse>{
+            override fun onFailure(call: Call<EventResponse>, t: Throwable) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
-            override fun onResponse(call: Call<EventX>, response: Response<EventX>) {
+            override fun onResponse(call: Call<EventResponse>, response: Response<EventResponse>) {
                 if (response.isSuccessful) {
-                    val event = response.body()!!
+                    val event = response.body()!!.event
                     collapse.title = event.name
                     collapse.setExpandedTitleColor(ContextCompat.getColor(this@EventDetails,
                         R.color.trans
@@ -45,18 +45,20 @@ class EventDetails : AppCompatActivity(),OnMapReadyCallback {
 
                     tv_program.text = event.startTime
                     tv_eventDesc.text = event.description
-                }            }
+                }               }
 
         })
+
+
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
-        mMap = googleMap!!
+        override fun onMapReady(googleMap: GoogleMap?) {
+            mMap = googleMap!!
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Uniclub Marker"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+            // Add a marker in Sydney and move the camera
+            val sydney = LatLng(-34.0, 151.0)
+            mMap.addMarker(MarkerOptions().position(sydney).title("Uniclub Marker"))
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        }
+
     }
-
-}
