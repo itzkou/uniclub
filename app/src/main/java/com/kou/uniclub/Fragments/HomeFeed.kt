@@ -3,6 +3,7 @@ package com.kou.uniclub.Fragments
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_homefeed.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 
 class HomeFeed: Fragment() {
     private var cities = arrayOf("Tozeur","Ariana", "Tunis", "Bizerte")
@@ -74,7 +76,8 @@ class HomeFeed: Fragment() {
         val service=UniclubApi.create()
         service.getEventFeed().enqueue(object: Callback<FeedResponse> {
             override fun onFailure(call: Call<FeedResponse>, t: Throwable) {
-
+                if (t is IOException)
+                    Toast.makeText(activity!!,"Network faillure",Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<FeedResponse>, response: Response<FeedResponse>) {

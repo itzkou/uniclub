@@ -20,6 +20,12 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.facebook.*
 import com.facebook.login.LoginResult
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.kou.uniclub.Extensions.Validation
 import com.kou.uniclub.Activities.Home
 import com.kou.uniclub.Model.Token
@@ -47,8 +53,11 @@ class SignUP : AppCompatActivity(),Validation {
 
     //REQUESTS FOR RESULTS
     private val SELECT_FILE=1
-    private val REQUEST_IMAGE_CAPTURE = 2
-    private  val PERMIS_REQUEST=1997
+    private val IMAGE_CAPTURE = 2
+    private  val PERMIS_REQUEST=3
+    //Social REQUESTS
+    private val GOOGLE_SIGN=4
+
     //IMAGE UPLOAD
     lateinit var chosenFile: File
     lateinit var chosenUri: Uri
@@ -57,8 +66,10 @@ class SignUP : AppCompatActivity(),Validation {
     //Permissions array
     private val appPermissions= arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
         android.Manifest.permission.READ_EXTERNAL_STORAGE)
-    //facebook callback manager
+    //facebook  manager
     private lateinit var callbackManager: CallbackManager
+    //google manager
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,6 +93,10 @@ class SignUP : AppCompatActivity(),Validation {
         btn_fb.setOnClickListener {
             facebook()
         }
+        //with google
+        btn_google.setOnClickListener {
+            google()
+        }
 
 
 
@@ -98,7 +113,7 @@ signUP()        }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        if (requestCode == IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
 
             icon_photo.setImageURI(Uri.parse(mCurrentPhotoPath))
@@ -121,6 +136,10 @@ signUP()        }
             val requestFile = RequestBody.create(MediaType.parse("image/*"),chosenFile)
             body = MultipartBody.Part.createFormData("image", chosenFile.name, requestFile)
 
+        }
+        else if (requestCode == GOOGLE_SIGN && resultCode == RESULT_OK) {
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
         }
         //facebook
         callbackManager.onActivityResult(requestCode, resultCode, data)
@@ -200,7 +219,7 @@ signUP()        }
                         it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                    startActivityForResult(takePictureIntent, IMAGE_CAPTURE)
                 }
             }
         }
@@ -379,6 +398,28 @@ signUP()        }
                 Log.e("FBLOGIN_FAILD", "ERROR", error)
             }
         })
+
+
+    }
+    //Google
+    private fun google(){
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()//request email id
+            .build()
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        val signInIntent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signInIntent,GOOGLE_SIGN)//pass the declared request code here
+    }
+
+    private fun  handleSignInResult(task: Task<GoogleSignInAccount>){
+
+        val  account= task.getResult(ApiException::class.java)!!
+        //TODO("caching response >Saving to the remote server")
+        Log.d("mGoogle",account.displayName)
 
 
     }

@@ -54,10 +54,8 @@ class Calendar: Fragment() {
         cv.visibility = View.INVISIBLE
         cv.alpha = 0F
         show.setOnClickListener {
-
-            cv.visibility = View.VISIBLE
             cv.animate().alpha(1F).duration = 1000
-
+            cv.visibility = View.VISIBLE
 
         }
 

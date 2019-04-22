@@ -13,7 +13,7 @@ interface UniclubApi{
             fun create():UniclubApi {
                 val retrofit = Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("http://10.0.2.2:8000/api/")
+                    .baseUrl("http://192.168.1.4:8000/api/")//10.0.2.2:8000 emulator //put ipv4 adress
                     .build()
                 return retrofit.create(UniclubApi::class.java)
             }
