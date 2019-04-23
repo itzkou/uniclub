@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.kou.uniclub.Model.Event.EventX
 import kotlinx.android.synthetic.main.row_liked_event.view.*
 
-class RvLikedEventsAdapter(val events :List<EventX>, val context: Context): RecyclerView.Adapter<RvLikedEventsAdapter.Holder>() {
+class RvLikedEventsAdapter(val events :MutableList<EventX>, val context: Context): RecyclerView.Adapter<RvLikedEventsAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, position: Int):RvLikedEventsAdapter.Holder {
         return Holder(LayoutInflater.from(parent.context).inflate(com.kou.uniclub.R.layout.row_liked_event, parent, false))
     }

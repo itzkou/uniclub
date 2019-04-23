@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class RvHomeFeedAdapter (val events :List<EventX>, val context: Context): RecyclerView.Adapter<RvHomeFeedAdapter.Holder>() {
+class RvHomeFeedAdapter (val events :MutableList<EventX>, val context: Context): RecyclerView.Adapter<RvHomeFeedAdapter.Holder>() {
     companion object {
         var event_id: Int? = null
 
@@ -52,7 +52,6 @@ class RvHomeFeedAdapter (val events :List<EventX>, val context: Context): Recycl
         holder.fav.setOnClickListener {
         }
 
-
         //EventO details
         holder.pic.setOnClickListener {
 
@@ -71,22 +70,7 @@ class RvHomeFeedAdapter (val events :List<EventX>, val context: Context): Recycl
 
         })
 
-        //pagination
-
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
 
 
 

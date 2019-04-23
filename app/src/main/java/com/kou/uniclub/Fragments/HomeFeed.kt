@@ -3,11 +3,14 @@ package com.kou.uniclub.Fragments
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Spinner
+import android.widget.Toast
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Network.UniclubApi
@@ -17,34 +20,59 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeFeed: Fragment() {
-    private var cities = arrayOf("Tozeur","Ariana", "Tunis", "Bizerte")
-    private var timings = arrayOf("All dates","Today","Upcoming")
+class HomeFeed : Fragment() {
+    private var cities = arrayOf("Tozeur", "Ariana", "Tunis", "Bizerte")
+    private var timings = arrayOf("All dates", "Today", "Upcoming")
 
-    private var city:String?=null
+    private var city: String? = null
 
     companion object {
 
-        fun newInstance():HomeFeed=HomeFeed()
+        fun newInstance(): HomeFeed = HomeFeed()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v=inflater.inflate(R.layout.fragment_homefeed,container,false)
-        val sp_timing=v.findViewById<Spinner>(R.id.sp_timing)
-        val sp_region=v.findViewById<Spinner>(R.id.sp_region)
+        val v = inflater.inflate(R.layout.fragment_homefeed, container, false)
+        val sp_timing = v.findViewById<Spinner>(R.id.sp_timing)
+        val sp_region = v.findViewById<Spinner>(R.id.sp_region)
 
 
-        val service= UniclubApi.create()
-        service.getEventFeed().enqueue(object: Callback<EventListResponse> {
+        val service = UniclubApi.create()
+        service.getEventFeed().enqueue(object : Callback<EventListResponse> {
             override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
-                if(response.isSuccessful)
-                {
-                    rvHome.layoutManager= LinearLayoutManager(activity!!, LinearLayout.VERTICAL,false)
-                    rvHome.adapter= RvHomeFeedAdapter(response.body()!!.pagination.events,activity!!)
+                if (response.isSuccessful) {
+                    val events = response.body()!!.pagination.events
+                    rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
+                    rvHome.adapter = RvHomeFeedAdapter(events, activity!!)
+
+                    //Pagination
+                    rvHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                            super.onScrollStateChanged(recyclerView, newState)
+                            if (!rvHome.canScrollVertically(1))
+                                Toast.makeText(activity!!, "Last", Toast.LENGTH_SHORT).show()
+                            service.paginate(response.body()!!.pagination.nextPageUrl)
+                                .enqueue(object : Callback<EventListResponse> {
+                                    override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
+                                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                    }
+
+                                    override fun onResponse(call: Call<EventListResponse>, response1: Response<EventListResponse>) {
+                                        if (response1.isSuccessful) {
+                                            events.clear()
+                                            events.addAll(response1.body()!!.pagination.events)
+                                            rvHome.adapter!!.notifyDataSetChanged()
+                                        }
+
+                                    }
+
+                                })
+                        }
+                    })
 
 
                 }
