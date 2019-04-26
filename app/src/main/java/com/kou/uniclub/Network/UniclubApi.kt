@@ -57,6 +57,16 @@ interface UniclubApi{
             @GET("Event/Upcoming")
             fun getUpcomingEvents():Call<EventListResponse>
 
+            @GET("Event/today")
+            fun getTodayEvents():Call<EventListResponse>
+
+            @GET("Event/Passed")
+            fun getPassedEvents():Call<EventListResponse>
+
+            @GET("Event/showByRegion/{region}")
+            fun showByRegion(@Path("region")re:String):Call<EventListResponse>
+
+
 
 
             //*************************University*******************

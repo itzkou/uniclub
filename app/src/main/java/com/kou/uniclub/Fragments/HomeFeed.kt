@@ -1,5 +1,6 @@
 package com.kou.uniclub.Fragments
 
+import android.graphics.Region
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -11,6 +12,9 @@ import android.view.ViewGroup
 import android.widget.*
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Extensions.PaginationListener
+import com.kou.uniclub.Fragments.Timeline.Passed
+import com.kou.uniclub.Fragments.Timeline.Today
+import com.kou.uniclub.Fragments.Timeline.Upcoming
 import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Network.UniclubApi
@@ -20,13 +24,13 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HomeFeed : Fragment() {
-    private var cities = arrayOf("Tozeur", "Ariana", "Tunis", "Bizerte")
-    private var timings = arrayOf("All dates", "Today", "Upcoming")
+    private var cities = arrayOf("Ariana", "Tunis", "Bizerte")
+    private var timings = arrayOf("All dates", "Today", "Upcoming","Passed")
     private var page: String? = null
     private var city: String? = null
     private var upEvents: ArrayList<EventX> = arrayListOf()
 
-
+//TODO("onDetaach close web service calls")
 
 
     companion object {
@@ -56,8 +60,15 @@ class HomeFeed : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 city=cities[position]
-            }
 
+                when (position)
+                { 0->RegionFilter(rvHome,city!!)
+                    1->RegionFilter(rvHome,city!!)
+                    2->RegionFilter(rvHome,city!!)
+
+                }
+
+        }
         }
 
         //filtre date
@@ -73,11 +84,9 @@ class HomeFeed : Fragment() {
                 when(position)
                 {
                     0-> AllDates(rvHome)
-
-
+                    1-> Today(rvHome)
                     2-> Upcoming(rvHome)
-
-
+                    3-> Passed(rvHome)
 
                 }
             }
@@ -145,7 +154,8 @@ class HomeFeed : Fragment() {
                     }
                 })*/
             }
-            private fun AllDates(rv:RecyclerView) {
+            private fun AllDates(rv:RecyclerView)
+            {
 
 
                 // All Dates
@@ -184,6 +194,111 @@ class HomeFeed : Fragment() {
 
 
             }
+            private  fun  Today(rv: RecyclerView)
+            {
+                // All Dates
+                val service = UniclubApi.create()
+                service.getTodayEvents().enqueue(object : Callback<EventListResponse> {
+                    override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
+                        null
+                    }
+
+                    override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
+                        if (response.isSuccessful) {
+                            page = response.body()!!.pagination.nextPageUrl
+                            val adapter=RvHomeFeedAdapter(response.body()!!.pagination.events,activity!!)
+                            rv.adapter=adapter
+
+                            //Pagination
+
+                            rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                                    super.onScrollStateChanged(recyclerView, newState)
+                                    if (!rv.canScrollVertically(1)) {
+                                        if (page!=null )
+                                            getMoreItems(adapter)
+
+                                    }
+                                }
+                            })
+
+
+                        }
+                    }
+
+
+                })}
+            private  fun  Passed(rv: RecyclerView)
+            {
+                // All Dates
+                val service = UniclubApi.create()
+                service.getPassedEvents().enqueue(object : Callback<EventListResponse> {
+                    override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
+                        null
+                    }
+
+                    override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
+                        if (response.isSuccessful) {
+                            page = response.body()!!.pagination.nextPageUrl
+                            val adapter=RvHomeFeedAdapter(response.body()!!.pagination.events,activity!!)
+                            rv.adapter=adapter
+
+                            //Pagination
+
+                            rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                                    super.onScrollStateChanged(recyclerView, newState)
+                                    if (!rv.canScrollVertically(1)) {
+                                        if (page!=null )
+                                            getMoreItems(adapter)
+
+                                    }
+                                }
+                            })
+
+
+                        }
+                    }
+
+
+                })}
+            private  fun RegionFilter(rv: RecyclerView,region:String)
+            {
+                val service=UniclubApi.create()
+                service.showByRegion(region).enqueue(object :Callback<EventListResponse>{
+                    override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
+                    }
+
+                    override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
+                        if (response.isSuccessful)
+                        {
+
+                               page = response.body()!!.pagination.nextPageUrl
+                                val adapter=RvHomeFeedAdapter(response.body()!!.pagination.events,activity!!)
+                                rv.adapter=adapter
+
+                                //Pagination
+
+                                rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                                        super.onScrollStateChanged(recyclerView, newState)
+                                        if (!rv.canScrollVertically(1)) {
+                                            if (page!=null )
+                                                getMoreItems(adapter)
+
+                                        }
+                                    }
+                                })
+
+                            if (!response.body()!!.success)
+                                Toast.makeText(activity!!,"No events here wait soon :)",Toast.LENGTH_SHORT).show()
+                        }
+
+
+                    }
+
+                })
+            }
 
     fun getMoreItems(adapter:RvHomeFeedAdapter) {
         val service=UniclubApi.create()
@@ -208,4 +323,4 @@ class HomeFeed : Fragment() {
             })
 
     }
-}
+        }
