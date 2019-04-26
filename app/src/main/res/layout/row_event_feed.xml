@@ -18,11 +18,11 @@
 
         <ImageView android:id="@+id/im_event"
 
-                   android:layout_width="320dp"
+                   android:layout_width="match_parent"
                    android:layout_height="160dp"
-                   android:src="@drawable/im_event" app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintEnd_toEndOf="parent"
                    app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toTopOf="parent"/>
+                   app:layout_constraintTop_toTopOf="parent" android:scaleType="centerCrop"/>
 
         <TextView android:id="@+id/title"
                   app:layout_constraintTop_toBottomOf="@id/im_event"

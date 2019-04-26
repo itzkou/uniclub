@@ -19,11 +19,9 @@ class RvFollowedClubsAdapter(val events :MutableList<EventX>, val context: Conte
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val event: EventX = events[position]
         holder.title.text=event.name
-
-
     }
 
     class Holder( view: View):RecyclerView.ViewHolder(view){
-        val  title=view.title
+        val  title= view.title!!
     }
 }

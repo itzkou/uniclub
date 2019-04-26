@@ -8,10 +8,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
+import com.kou.uniclub.Extensions.PaginationListener
 import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Network.UniclubApi
@@ -25,9 +24,9 @@ class HomeFeed : Fragment() {
     private var timings = arrayOf("All dates", "Today", "Upcoming")
     private var page: String? = null
     private var city: String? = null
-    private val eventResponse: MutableList<EventX> = arrayListOf()
-    private var oldSize: Int? = null
-    private var newSize: Int? = null
+    private var upEvents: ArrayList<EventX> = arrayListOf()
+
+
 
 
     companion object {
@@ -35,75 +34,22 @@ class HomeFeed : Fragment() {
         fun newInstance(): HomeFeed = HomeFeed()
     }
 
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_homefeed, container, false)
         val rvHome = v.findViewById<RecyclerView>(R.id.rvHome)
-        val sp_timing = v.findViewById<Spinner>(R.id.sp_timing)
-        val sp_region = v.findViewById<Spinner>(R.id.sp_region)
+        val spTiming = v.findViewById<Spinner>(R.id.sp_timing)
+        val spRegion = v.findViewById<Spinner>(R.id.sp_region)
 
 
 
-            val service = UniclubApi.create()
-            service.getEventFeed().enqueue(object : Callback<EventListResponse> {
-                override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
-
-                override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
-                    if (response.isSuccessful) {
-                        eventResponse.addAll(response.body()!!.pagination.events)
-                        oldSize = eventResponse.size
-                        page = response.body()!!.pagination.nextPageUrl
-                        rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
-                        rvHome.adapter = RvHomeFeedAdapter(eventResponse, activity!!)
-
-                    }
-                }
+            rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
 
 
-            })
 
-
-        //Pagination
-        rvHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (!rvHome.canScrollVertically(1)) {
-                    Toast.makeText(activity!!, "Last", Toast.LENGTH_SHORT).show()
-
-                   service.paginate(page!!).enqueue(object : Callback<EventListResponse> {
-                                        override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
-                                            Log.d("bo", "boo")
-                                        }
-
-                                        override fun onResponse(call: Call<EventListResponse>, response1: Response<EventListResponse>)
-                                        {
-                                            if (response1.isSuccessful) {
-                                                newSize = response1.body()!!.pagination.events.size
-
-
-                                                if (page != "null" && (eventResponse.size < oldSize!! + newSize!!)) {
-                                                    eventResponse.addAll(response1.body()!!.pagination.events)
-                                                    rvHome.adapter!!.notifyItemRangeInserted(
-                                                        oldSize!!,
-                                                        response1.body()!!.pagination.events.size
-                                                    )
-                                                } else Toast.makeText(activity!!, "next page null", Toast.LENGTH_SHORT).show()
-
-                                            }
-
-                                        }
-
-                        })
-                }
-
-            }
-        })
-
-
-        /*FeedAlldates()
-        sp_region.adapter=ArrayAdapter(activity!!,android.R.layout.simple_spinner_dropdown_item,cities)
-        sp_region.onItemSelectedListener=object: AdapterView.OnItemSelectedListener{
+        spRegion.adapter= ArrayAdapter(activity!!,android.R.layout.simple_spinner_dropdown_item,cities)
+        spRegion.onItemSelectedListener=object: AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("not implemented") //To change body of created functions use File | ic_settings | File Templates.
             }
@@ -115,79 +61,151 @@ class HomeFeed : Fragment() {
         }
 
         //filtre date
-        sp_timing.adapter=ArrayAdapter(activity!!,android.R.layout.simple_spinner_dropdown_item,timings)
-        sp_timing.onItemSelectedListener=object: AdapterView.OnItemSelectedListener{
+        spTiming.adapter=ArrayAdapter(activity!!,android.R.layout.simple_spinner_dropdown_item,timings)
+        spTiming.onItemSelectedListener=object: AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | ic_settings | File Templates.
+                    null
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
 
                 when(position)
-                {0->FeedAlldates()
-                    1-> Today()
-                        2-> Upcoming()
+                {
+                    0-> AllDates(rvHome)
+
+
+                    2-> Upcoming(rvHome)
+
+
 
                 }
             }
 
-        }*/
+        }
         return v
     }
 
-    /*fun FeedAlldates(){
-        val service=UniclubApi.create()
-        service.getEventFeed().enqueue(object: Callback<FeedResponse> {
-            override fun onFailure(call: Call<FeedResponse>, t: Throwable) {
-                if (t is IOException)
-                    Toast.makeText(activity!!,"Network faillure",Toast.LENGTH_SHORT).show()
+
+            private fun Upcoming(rv:RecyclerView)
+            {upEvents.clear()
+
+                val service = UniclubApi.create()
+                service.getUpcomingEvents().enqueue(object : Callback<EventListResponse> {
+                    override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
+                        null            }
+
+                    override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
+                        if (response.isSuccessful) {
+                            upEvents.addAll(response.body()!!.pagination.events)
+                            page = response.body()!!.pagination.nextPageUrl
+                            rv.adapter=RvHomeFeedAdapter(upEvents,activity!!)
+
+
+                        }
+                    }
+
+
+                })
+
+
+                //Pagination
+             /*  rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                        super.onScrollStateChanged(recyclerView, newState)
+                        if (!rv.canScrollVertically(1) ) {
+                            if(page!=null)
+                            service.paginate(page!!).enqueue(object : Callback<EventListResponse> {
+                                override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
+                                    Log.d("bo", "boo")
+                                }
+
+                                override fun onResponse(call: Call<EventListResponse>, response1: Response<EventListResponse>)
+                                {
+                                    if (response1.isSuccessful) {
+                                        newSize = response1.body()!!.pagination.events.size
+
+
+                                        if (page != "null" && (upEvents.size < oldSize!! + newSize!!)) {
+                                            upEvents.addAll(response1.body()!!.pagination.events)
+                                            rv.adapter!!.notifyItemRangeInserted(oldSize!!, response1.body()!!.pagination.events.size
+                                            )
+                                        }
+
+                                        else Toast.makeText(activity!!, "next page null", Toast.LENGTH_SHORT).show()
+
+                                    }
+
+                                }
+
+                            })
+
+                        }
+
+                    }
+                })*/
+            }
+            private fun AllDates(rv:RecyclerView) {
+
+
+                // All Dates
+                val service = UniclubApi.create()
+                service.getEventFeed().enqueue(object : Callback<EventListResponse> {
+                    override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
+                        null
+                    }
+
+                    override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
+                        if (response.isSuccessful) {
+                             page = response.body()!!.pagination.nextPageUrl
+                            val adapter=RvHomeFeedAdapter(response.body()!!.pagination.events,activity!!)
+                            rv.adapter=adapter
+
+                            //Pagination
+
+                            rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                                    super.onScrollStateChanged(recyclerView, newState)
+                                    if (!rv.canScrollVertically(1)) {
+                                        if (page!=null )
+                                            getMoreItems(adapter)
+
+                                    }
+                                }
+                            })
+
+
+                        }
+                    }
+
+
+                })
+
+
+
             }
 
-            override fun onResponse(call: Call<FeedResponse>, response: Response<FeedResponse>) {
-                if(response.isSuccessful)
-                {
-                    rvHome.layoutManager=LinearLayoutManager(activity!!,LinearLayout.VERTICAL,false)
-                    rvHome.adapter=RvHomeFeedAdapter(response.body()!!.data,activity!!)
+    fun getMoreItems(adapter:RvHomeFeedAdapter) {
+        val service=UniclubApi.create()
+            if (page!=null)
+            service.paginate(page!!).enqueue(object :Callback<EventListResponse>{
+                override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
                 }
-            }
 
-        })
-    }
+                override fun onResponse(call: Call<EventListResponse>, response1: Response<EventListResponse>) {
+                               if (response1.isSuccessful){
 
-    fun Today(){
-        val service=UniclubApi.create()
-        service.getEvenToday().enqueue(object: Callback<FeedResponse> {
-            override fun onFailure(call: Call<FeedResponse>, t: Throwable) {
-                Toast.makeText(activity!!,"There are no events Today",Toast.LENGTH_SHORT).show()
+                                   if (page!="null") {
+                                       Log.d("paginatos","${response1.body()!!.pagination.nextPageUrl}")
+                                        adapter.addData(response1.body()!!.pagination.events)
+                                       page= response1.body()!!.pagination.nextPageUrl
 
-            }
+                                   }
+                                   else Toast.makeText(activity!!,"No more items",Toast.LENGTH_SHORT).show()
+                               }
+                                }
 
-            override fun onResponse(call: Call<FeedResponse>, response: Response<FeedResponse>) {
-                if(response.isSuccessful)
-                {
-                    rvHome.layoutManager=LinearLayoutManager(activity!!,LinearLayout.VERTICAL,false)
-                    rvHome.adapter=RvHomeFeedAdapter(response.body()!!.data,activity!!)
-
-                }
-            }
-
-        })
+            })
 
     }
-
-    fun Upcoming(){
-        val service=UniclubApi.create()
-        service.getUpcomingEvents().enqueue(object:Callback<FeedResponse>{
-            override fun onFailure(call: Call<FeedResponse>, t: Throwable) {
-                Toast.makeText(activity!!,"There are no upcoming events",Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onResponse(call: Call<FeedResponse>, response: Response<FeedResponse>) {
-                rvHome.layoutManager=LinearLayoutManager(activity!!,LinearLayout.VERTICAL,false)
-                rvHome.adapter=RvHomeFeedAdapter(response.body()!!.data,activity!!)            }
-
-        })
-    }
-*/
 }

@@ -14,6 +14,15 @@
         <item name="android:windowIsFloating">false</item>
     </style>
 
+    <style name="searchView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginRight">@dimen/searchMarginRL</item>
+        <item name="android:layout_marginLeft">@dimen/searchMarginRL</item>
+        <item name="android:layout_marginBottom">@dimen/searchMarginBM</item>
+    </style>
+
+
+
 
 
 </resources>

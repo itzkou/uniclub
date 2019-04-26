@@ -1,3 +1,4 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="searchMarginRL">20dp</dimen>
+    <dimen name="searchMarginBM">12dp</dimen>
 </resources>

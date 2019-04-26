@@ -20,7 +20,7 @@ interface UniclubApi{
             fun create():UniclubApi {
                 val retrofit = Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("http://10.54.234.189:8000/api/")//10.0.2.2:8000 emulator //put ipv4 adress
+                    .baseUrl("http://192.168.1.3:8000/api/")//10.0.2.2:8000 emulator //put ipv4 adress//me192.168.1.4//orange 10.54.234.189
                     .build()
                 return retrofit.create(UniclubApi::class.java)
             }
@@ -54,20 +54,23 @@ interface UniclubApi{
             @GET("EventDetails/{id}")
             fun getEvent(@Path("id")id:Int):Call<EventResponse>
 
+            @GET("Event/Upcoming")
+            fun getUpcomingEvents():Call<EventListResponse>
 
 
-    //*************************University*******************
 
-            @GET("University/List ")
-            fun getUniversities():retrofit2.Call<UniversityResponse>
-    //*************************Clubs*******************
+            //*************************University*******************
 
-            @GET("Club/showByUniversity/{univ_id}")
-            fun getClubsByUniv(@Path("univ_id") id:Int): Call<ClubsResponse>
+                    @GET("University/List ")
+                    fun getUniversities():retrofit2.Call<UniversityResponse>
+            //*************************Clubs*******************
 
-    //*************************Pagination*******************
-    @GET
-    fun paginate(@Url next_page_url:String):Call<EventListResponse>
+                    @GET("Club/showByUniversity/{univ_id}")
+                    fun getClubsByUniv(@Path("univ_id") id:Int): Call<ClubsResponse>
+
+            //*************************Pagination*******************
+            @GET
+            fun paginate(@Url next_page_url:String):Call<EventListResponse>
 
 
 

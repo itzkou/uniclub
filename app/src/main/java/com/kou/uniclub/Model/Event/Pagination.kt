@@ -6,7 +6,7 @@ data class Pagination(
     @SerializedName("current_page")
     val currentPage: Int,
     @SerializedName("data")
-    val events:MutableList<EventX>,
+    val events: ArrayList<EventX>,
     @SerializedName("first_page_url")
     val firstPageUrl: String,
     @SerializedName("from")

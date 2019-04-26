@@ -80,8 +80,7 @@ class Calendar: Fragment() {
         val service= UniclubApi.create()
         service.getEventFeed().enqueue(object: Callback<EventListResponse> {
             override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+null            }
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
                 if(response.isSuccessful)
