@@ -3,7 +3,8 @@
 
 <android.support.v7.widget.CardView
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="250dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="1.5dp"
@@ -27,39 +28,44 @@
         <TextView android:id="@+id/title"
                   app:layout_constraintTop_toBottomOf="@id/im_event"
                   android:textSize="20sp"
-                  android:layout_width="wrap_content"
+                  android:textAlignment="viewStart"
+
+                  android:layout_width="212dp"
                   android:layout_height="wrap_content"
-                  app:layout_constraintStart_toEndOf="@id/day"
-                  android:layout_marginStart="20dp" android:layout_marginTop="20dp"/>
+                  android:layout_marginTop="20dp"
+                  app:layout_constraintStart_toEndOf="@+id/day" android:layout_marginStart="19dp"/>
         <TextView android:id="@+id/day"
-                  android:textSize="20sp"
+                  android:textSize="22sp"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="20dp"
-                  app:layout_constraintTop_toBottomOf="@+id/im_event" app:layout_constraintStart_toStartOf="parent"
-                  android:layout_marginStart="20dp"/>
+                  app:layout_constraintTop_toBottomOf="@+id/im_event"
+                  app:layout_constraintStart_toStartOf="parent"
+                  android:layout_marginStart="19dp"
+        />
         <TextView android:id="@+id/month"
-                  app:layout_constraintTop_toBottomOf="@id/day"
                   android:textSize="14sp"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="20dp"
-                  android:layout_marginTop="1dp"/>
+                  app:layout_constraintEnd_toEndOf="@+id/day" app:layout_constraintStart_toStartOf="@+id/day"
+                  app:layout_constraintTop_toBottomOf="@+id/day" android:layout_marginBottom="25dp"
+                  app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"/>
         <TextView android:id="@+id/place"
+                  android:textAlignment="viewStart"
                   android:textSize="13sp"
-                  android:layout_width="wrap_content"
+                  android:layout_width="212dp"
                   android:layout_height="wrap_content"
-                  app:layout_constraintTop_toBottomOf="@id/title"
-                  app:layout_constraintStart_toEndOf="@id/month"
-                  android:layout_marginStart="20dp"/>
+                  app:layout_constraintTop_toBottomOf="@+id/title"
+                  app:layout_constraintStart_toStartOf="@+id/title" android:layout_marginBottom="20dp"
+                  app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"/>
         <ImageView
                 android:id="@+id/favorite"
                 android:layout_width="27dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_favorite"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/im_event" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="12dp"/>
+                app:layout_constraintTop_toTopOf="@+id/title"
+                app:layout_constraintBottom_toBottomOf="@+id/place" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="12dp" app:layout_constraintVertical_bias="0.0"/>
 
     </android.support.constraint.ConstraintLayout>
 

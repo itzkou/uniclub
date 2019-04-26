@@ -20,19 +20,19 @@ data class User(
     @SerializedName("Phone_Number")
     val phoneNumber: Any?,
     @SerializedName("active")
-    val active: Int,
+    val active: Int?,
     @SerializedName("created_at")
-    val createdAt: String,
+    val createdAt: String?,
     @SerializedName("deleted_at")
     val deletedAt: Any?,
     @SerializedName("id")
-    val id: Int,
+    val id: Int?,
     @SerializedName("image")
-    val image: String,
+    val image: String?,
     @SerializedName("role_id")
-    val roleId: Int,
+    val roleId: Int?,
     @SerializedName("status")
     val status: Any?,
     @SerializedName("updated_at")
-    val updatedAt: String
+    val updatedAt: String?
 )

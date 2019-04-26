@@ -1,12 +1,15 @@
 package com.kou.uniclub.Adapter
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.kou.uniclub.Model.Event.EventX
+import com.kou.uniclub.R
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.row_event_feed.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -33,12 +36,17 @@ class RvMyEventsAdapter(val events :MutableList<EventX>, val context: Context): 
         holder.place.text=event.location
         holder.month.text=month
         holder.day.text=day
+
+        if(!event.photo.isEmpty())
+            Picasso.get().load(event.photo).into(holder.pic)
+        else holder.pic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.im_event))
     }
 class Holder(view: View):RecyclerView.ViewHolder(view){
     val title = view.title!!
     val day = view.day!!
     val month = view.month!!
     val place = view.place!!
+    val pic=view.im_event
 
 }
 

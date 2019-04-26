@@ -19,9 +19,9 @@ class VpClubDetailsAdapter internal constructor(fm: FragmentManager) : FragmentS
         {
             0->"Passed"
             1->"Today"
-            2->"Upcoming"
+            2->"Soon"
 
-            else -> return "Sponsors"
+            else -> return "Infos"
         }
     }
 

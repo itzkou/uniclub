@@ -8,10 +8,10 @@
             android:layout_height="match_parent"
             tools:context=".Activities.Authentification.SignUP">
 <android.support.constraint.ConstraintLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+
 
     <TextView
             android:text="Sign up"
@@ -43,7 +43,7 @@
               android:layout_height="wrap_content"
               android:drawableLeft="@drawable/ic_userg"
               android:hint="Username*"
-              android:inputType="text"
+              android:inputType="textPersonName"
               android:textSize="15sp"
               android:drawablePadding="8dp"
               app:layout_constraintTop_toBottomOf="@id/icon_photo" app:layout_constraintEnd_toEndOf="parent"
@@ -61,15 +61,12 @@
               app:layout_constraintTop_toBottomOf="@+id/ed_username" app:layout_constraintEnd_toEndOf="parent"
               android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
               android:layout_marginStart="8dp" android:layout_marginTop="42dp"/>
-    <EditText android:id="@+id/ed_mobile"
+    <TextView android:id="@+id/ed_birth"
               android:layout_width="292dp"
               android:layout_height="wrap_content"
-              android:drawableLeft="@drawable/ic_phoneg"
-              android:hint="Mobile Number*"
+              android:hint="Birthdate*"
               android:textSize="15sp"
-
               android:drawablePadding="8dp"
-              android:inputType="phone"
               app:layout_constraintTop_toBottomOf="@+id/ed_email" app:layout_constraintEnd_toEndOf="parent"
               android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
               android:layout_marginStart="8dp" android:layout_marginTop="42dp"/>
@@ -82,7 +79,7 @@
              android:gravity="center"
              android:drawablePadding="8dp"
              android:inputType="text"
-             app:layout_constraintTop_toBottomOf="@+id/ed_mobile" app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/ed_birth" app:layout_constraintEnd_toEndOf="parent"
              android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
              android:layout_marginStart="8dp" android:layout_marginTop="42dp"/>
     <ImageView android:layout_width="wrap_content" android:layout_height="match_parent"
@@ -90,11 +87,10 @@
                app:layout_constraintTop_toTopOf="@+id/sp_region"
                app:layout_constraintBottom_toBottomOf="@+id/sp_region"
                app:layout_constraintStart_toStartOf="@+id/sp_region" android:layout_marginStart="4dp"/>
-    <EditText android:id="@+id/ed_university"
+    <EditText android:id="@+id/ed_gender"
               android:layout_width="292dp"
               android:layout_height="wrap_content"
-              android:drawableLeft="@drawable/ic_universityg"
-              android:hint="University*"
+              android:hint="Gender*"
               android:textSize="15sp"
               android:drawablePadding="8dp"
               android:inputType="text"
@@ -110,7 +106,7 @@
 
               android:drawablePadding="8dp"
               android:inputType="textPassword"
-              app:layout_constraintTop_toBottomOf="@+id/ed_university" app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/ed_gender" app:layout_constraintEnd_toEndOf="parent"
               android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
               android:layout_marginStart="8dp" android:layout_marginTop="42dp"/>
     <EditText android:id="@+id/ed_passConfirm"
@@ -154,6 +150,18 @@
                                                 android:layout_marginEnd="8dp"
                                                 app:layout_constraintStart_toStartOf="parent"
                                                 android:layout_marginStart="8dp"/>
-
+    <android.support.v7.widget.CardView  android:id="@+id/datePicker" android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="@+id/ed_birth">
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView android:layout_width="match_parent"
+                                                                           android:layout_height="wrap_content"
+                                                                           android:id="@+id/calendar"
+        />
+    </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>
+
+
+
 </ScrollView>

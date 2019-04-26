@@ -26,7 +26,6 @@ class Universities: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v=inflater.inflate(R.layout.fragment_univs,container,false)
-        val searchview=v.findViewById<SearchView>(R.id.searchView)
 
 
         //TODO(" network faullure causes null pointer exception")
