@@ -43,8 +43,9 @@
 
         <EditText android:id="@+id/edUsername"
                   style="@style/signUPField"
-                  android:drawableLeft="@drawable/ic_userg"
-                  android:hint="Username*"
+         android:drawableLeft="@drawable/ic_userg"
+
+        android:hint="Username*"
                   android:inputType="textPersonName"
                   app:layout_constraintTop_toBottomOf="@id/imProfile" app:layout_constraintEnd_toEndOf="parent"
                   app:layout_constraintStart_toStartOf="parent"
@@ -63,20 +64,22 @@
         <EditText android:id="@+id/edBirth"
                   style="@style/signUPField"
                   android:hint="Birthdate*"
+                  android:focusable="false"
                   android:inputType="text"
                   app:layout_constraintTop_toBottomOf="@+id/edEmail" app:layout_constraintEnd_toEndOf="parent"
                   app:layout_constraintStart_toStartOf="parent"
         />
 
         <Spinner android:id="@+id/spRegion"
-                 style="@style/SpinnerSignUP"
+                 android:layout_width="292dp"
+                 android:layout_height="wrap_content"
                  android:hint="Region*"
-                 android:focusable="true"
                  android:drawableStart="@drawable/ic_regiong"
                  android:gravity="center"
-                 app:layout_constraintTop_toBottomOf="@+id/edBirth" app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintTop_toBottomOf="@+id/edBirth"
+                 app:layout_constraintEnd_toEndOf="parent"
                  app:layout_constraintStart_toStartOf="parent"
-        />
+                 android:layout_marginTop="35dp"/>
 
         <ImageView android:layout_width="wrap_content" android:layout_height="match_parent"
                    android:src="@drawable/ic_regiong"
@@ -85,13 +88,14 @@
                    app:layout_constraintStart_toStartOf="@+id/spRegion" android:layout_marginStart="4dp"
                    android:id="@+id/ic_region"/>
 
-        <EditText android:id="@+id/edGender"
-                  style="@style/signUPField"
-                  android:hint="Gender*"
-                  android:inputType="text"
-                  app:layout_constraintTop_toBottomOf="@id/spRegion" app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-        />
+        <Spinner android:id="@+id/spGender"
+                 android:layout_width="292dp"
+                 android:layout_height="wrap_content"
+                 android:hint="Gender*"
+                 android:inputType="text"
+                 app:layout_constraintTop_toBottomOf="@id/spRegion" app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"
+                 android:layout_marginTop="35dp"/>
 
         <EditText android:id="@+id/edPassword"
                   style="@style/signUPField"
@@ -99,7 +103,7 @@
                   android:drawableLeft="@drawable/ic_password"
                   android:hint="Password*"
                   android:inputType="textPassword"
-                  app:layout_constraintTop_toBottomOf="@+id/edGender" app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintTop_toBottomOf="@+id/spGender" app:layout_constraintEnd_toEndOf="parent"
                   app:layout_constraintStart_toStartOf="parent"
         />
 

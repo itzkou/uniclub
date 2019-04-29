@@ -1,5 +1,6 @@
 package com.kou.uniclub.Activities.Authentification
 
+
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
@@ -27,10 +28,17 @@ import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.format.DateFormat
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import com.kou.uniclub.Model.Auth.SignUpResponse
+import com.kou.uniclub.Model.User.User
+import com.kou.uniclub.Network.UniclubApi
+import com.kou.uniclub.R
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.io.IOException
@@ -41,30 +49,44 @@ class SignUP : AppCompatActivity(), Validation {
 
     //TODO("when the image is empty the app crashes")
 //TODO("prevention contre l'erreur lors de signup form validation (+) >> if email already exists!!")
-    private var cities = arrayOf("  ","Ariana", "Tunis", "Bizerte")
-    private var city: String? = null
+    private var cities = arrayOf("Ariana", "Tunis", "Bizerte")
+    private var genders = arrayOf("Male", "Female")
 
-    //REQUESTS FOR RESULTS
+    private var city: String? = null
+    private var gender: String? = null
+
+    /******* REQUESTS FOR RESULTS*******/
     private val SELECT_FILE = 1
     private val IMAGE_CAPTURE = 2
     private val PERMIS_REQUEST = 3
-    //Social REQUESTS
+
+    /******* SOCIAL AUTH *******/
     private val GOOGLE_SIGN = 4
 
-    //IMAGE UPLOAD
+    /******* IMAGE UPLOAD*******/
     lateinit var chosenFile: File
     lateinit var chosenUri: Uri
     lateinit var body: MultipartBody.Part
     private var mCurrentPhotoPath: String = ""
-    //Permissions array
+
+    /******* ARRAY PERMISS*******/
     private val appPermissions = arrayOf(
         android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
         android.Manifest.permission.READ_EXTERNAL_STORAGE
     )
-    //facebook  manager
+    /******* Social MANAGERS *******/
     private lateinit var callbackManager: CallbackManager
-    //google manager
     private lateinit var mGoogleSignInClient: GoogleSignInClient
+    /******* User attributes *******/
+
+    private var mBirthday:String?=null
+    private var FName:String?=null
+    private var LName:String?=null
+    private var Gender:String?=null
+    private var Email:String?=null
+    private var password:String?=null
+    private var Adress:String?=null
+    private var passwordC:String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,8 +111,50 @@ class SignUP : AppCompatActivity(), Validation {
             google()
         }
 
+        val dialogView = LayoutInflater.from(this@SignUP).inflate(R.layout.time_picker, null)
+        val builder= AlertDialog.Builder(this@SignUP)
+        val timePicker=dialogView.findViewById<MaterialCalendarView>(R.id.timePicker)
+        builder.setView(dialogView)
+        builder.setPositiveButton("confirm") { dialog, which ->
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
+            mBirthday=dateFormat.format(timePicker.selectedDate.date)
+            edBirth.hint=mBirthday
+            edBirth.setHintTextColor(ContextCompat.getColor(this@SignUP,R.color.black))
+            dialog?.dismiss()
+        }
 
+        builder.setNegativeButton("Cancel"
+        ) { dialog, which -> dialog?.dismiss()
+        }
+        val dialog=builder.create()
+
+        edBirth.setOnClickListener {
+            dialog.show()
+
+        }
+
+        /******************* Spinner Values *****************/
+        spRegion.adapter = ArrayAdapter(this@SignUP, android.R.layout.simple_spinner_dropdown_item, cities)
+        spRegion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                city = cities[position]
+            }
+
+        }
+
+        spGender.adapter = ArrayAdapter(this@SignUP, android.R.layout.simple_spinner_dropdown_item, genders)
+        spGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                gender=genders[position]            }
+
+        }
 
 
     }
@@ -226,12 +290,10 @@ class SignUP : AppCompatActivity(), Validation {
 
     }
 
-/*fun signUP() {
+private fun signUP() {
     val service = UniclubApi.create()
-    val username = ed_username.text.toString()
-    val fn = "LOL"//username.substring(0, username.lastIndexOf(" "))
-    val ln = "LOL"//username.substring(username.lastIndexOf(" "),username.length-1)
-    val user = User(
+
+    /*val user = User(
         sp_region.selectedItem.toString(),
         ed_birth.text.toString(),
         ed_email.text.toString(),
@@ -250,9 +312,6 @@ class SignUP : AppCompatActivity(), Validation {
         null
     )
 
-
-    val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-    val date = format.parse("1997-02-13")
         service.signUP(user.firstName,user.lastName,date,user.email,ed_password.text.toString(),ed_passConfirm.text.toString(),sp_region.selectedItem.toString(),body).enqueue(object:
             Callback<SignUpResponse>{
             override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
@@ -267,14 +326,16 @@ class SignUP : AppCompatActivity(), Validation {
                 Toast.makeText(this@SignUpResponse,response.body()!!.message,Toast.LENGTH_SHORT)  .show()
             }
 
-        })
+        })*/
 
-}*/
+}
 
     fun formFill() {
         edUsername.afterTextChanged {
-            edUsername.error = if (it.isValidName()) null
-            else "invalid username"
+            if(!it.isValidName())
+                edUsername.error="invalid username"
+            else{null }
+
 
 
         }
@@ -282,25 +343,12 @@ class SignUP : AppCompatActivity(), Validation {
             edEmail.error = if (it.isValidEmail()) null
             else "invalid email"
         }
-
-
-
         edPassword.afterTextChanged {
             edPassword.error = if (it.isValidPassword()) null
             else "enter at least 6 digits that include a lower case an uppercase and a special character"
 
         }
-        //spinner values
-        spRegion.adapter = ArrayAdapter(this@SignUP, android.R.layout.simple_spinner_dropdown_item, cities)
-        spRegion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                city = cities[position]
-            }
-
-        }
     }
 
     fun formValidation() {
@@ -316,6 +364,11 @@ class SignUP : AppCompatActivity(), Validation {
                 val u = edUsername.text.toString().isValidName()
                 val e = edEmail.text.toString().isValidEmail()
                 val p = edPassword.text.toString().isValidPassword()
+
+                val username = edUsername.text.toString()
+                val fn = username.substring(0, username.lastIndexOf(" "))
+                val ln = username.substring(username.lastIndexOf(" "),username.length)
+                Log.d("nameO",fn +"*" +ln)
 
                 btnSignup.isEnabled = u && e && p
             }

@@ -11,7 +11,7 @@ import com.kou.uniclub.R
 
 class ImagePreviewer {
     fun show(context: Context, source: ImageView) {
-        val background = ImagePreviewerUtils.getBlurredScreenDrawable(context, source.getRootView())
+        val background = ImagePreviewerUtils.getBlurredScreenDrawable(context, source.rootView)
 
         val dialogView = LayoutInflater.from(context).inflate(R.layout.view_image_previewer, null)
         val imageView = dialogView.findViewById(R.id.previewer_image) as ImageView
