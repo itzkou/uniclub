@@ -54,7 +54,7 @@
         />
     </android.support.constraint.ConstraintLayout>
 
-    <Spinner android:id="@+id/sp_region"
+    <Spinner android:id="@+id/spRegion"
              android:layout_width="120dp"
              android:background="@drawable/spinner_bg"
              android:textAlignment="center"
@@ -81,6 +81,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sp_region"
+            app:layout_constraintTop_toBottomOf="@+id/spRegion"
             android:layout_marginTop="16dp"/>
 </android.support.constraint.ConstraintLayout>

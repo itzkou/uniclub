@@ -1,7 +1,6 @@
 package com.kou.uniclub.Network
 
 import com.kou.uniclub.Model.Auth.LoginResponse
-import com.kou.uniclub.Model.Auth.SignUP
 import com.kou.uniclub.Model.Auth.SignUpResponse
 import com.kou.uniclub.Model.Club.ClubsResponse
 import com.kou.uniclub.Model.Event.EventListResponse
@@ -13,7 +12,6 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
-import java.util.*
 
 interface UniclubApi{
 
@@ -38,7 +36,7 @@ interface UniclubApi{
                        @Query("password")pass:String,
                        @Query("password_confirmation") passC:String,
                        @Query("Adress") address:String,
-                       @Part file: MultipartBody.Part?) :Call<SignUP>
+                       @Part file: MultipartBody.Part?) :Call<SignUpResponse>
 
 
             @FormUrlEncoded

@@ -1,4 +1,11 @@
 <resources>
     <dimen name="searchMarginRL">20dp</dimen>
     <dimen name="searchMarginBM">12dp</dimen>
+    <dimen name="SignUpRL">34dp</dimen>
+    <dimen name="SignUpTB">35dp</dimen>
+    <dimen name="SignUpEditext">292dp</dimen>
+    <dimen name="SignUpDrawablePadding">6dp</dimen>
+
+
+
 </resources>

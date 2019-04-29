@@ -1,26 +1,12 @@
 package com.kou.uniclub.Activities.Authentification
 
-import android.app.DatePickerDialog
-import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.support.v4.content.FileProvider
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.DatePicker
-import android.widget.Toast
 import com.facebook.*
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -30,29 +16,32 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.kou.uniclub.Extensions.Validation
-import com.kou.uniclub.Model.Auth.SignUP
-import com.kou.uniclub.Model.Auth.SignUpResponse
-import com.kou.uniclub.Model.User.User
-import com.kou.uniclub.Network.UniclubApi
-import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.activity_sign_up.*
-import okhttp3.MediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.File
-import java.io.IOException
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
+import android.content.Intent
+import android.os.Environment
+import android.provider.MediaStore
+import android.support.v4.content.FileProvider
+import android.support.v7.app.AlertDialog
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import okhttp3.MediaType
+import okhttp3.RequestBody
+import java.io.IOException
+import java.text.SimpleDateFormat
 
-class SignUP : AppCompatActivity(),Validation {
+
+class SignUP : AppCompatActivity(), Validation {
+
     //TODO("when the image is empty the app crashes")
 //TODO("prevention contre l'erreur lors de signup form validation (+) >> if email already exists!!")
-    private var cities = arrayOf("Ariana", "Tunis", "Bizerte")
+    private var cities = arrayOf("  ","Ariana", "Tunis", "Bizerte")
     private var city: String? = null
 
     //REQUESTS FOR RESULTS
@@ -77,72 +66,42 @@ class SignUP : AppCompatActivity(),Validation {
     //google manager
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
+        setContentView(com.kou.uniclub.R.layout.activity_sign_up)
 
-       datePicker.visibility=View.INVISIBLE
 
-        //redirect
-        back.setOnClickListener {
-            //startActivity(Intent(this@SignUP,Auth::class.java))
-        }
-        //photos
-        icon_photo.setOnClickListener {
+
+        /******************* camera  *****************/
+        imProfile.setOnClickListener {
             if (checkPermis())
                 selectImage()
         }
 
-        //form Validation
-        //formValidation()
 
-        //with facebook
+        /******************* with facebook *****************/
         callbackManager = CallbackManager.Factory.create()
-        btn_fb.setOnClickListener {
+        btnFb.setOnClickListener {
             facebook()
         }
-        //with google
-        btn_google.setOnClickListener {
+        /******************* with google *****************/
+        btnGoogle.setOnClickListener {
             google()
         }
 
 
 
 
-    }
-
-    override fun onStart() {
-        super.onStart()
-        formFill()
-        btn_signup.setOnClickListener {
-            val service=UniclubApi.create()
-            service.signUP("LOL","LOL","1997-10-12","male","Azerty123@gmail.com","Azerty123&","Azerty123&","tunis",body).enqueue(object:
-                Callback<SignUP>{
-                override fun onFailure(call: Call<SignUP>, t: Throwable) {
-                    if(t is IOException)
-                        Toast.makeText(this@SignUP,t.message,Toast.LENGTH_SHORT)  .show()
-
-
-                }
-
-                override fun onResponse(call: Call<SignUP>, response: Response<SignUP>) {
-                    if(response.isSuccessful)
-                        Toast.makeText(this@SignUP,response.body()!!.message,Toast.LENGTH_SHORT)  .show()
-                }
-
-            })
-        }
-
 
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
 
-            icon_photo.setImageURI(Uri.parse(mCurrentPhotoPath))
+            imProfile.setImageURI(Uri.parse(mCurrentPhotoPath))
             chosenFile = File(mCurrentPhotoPath)
             //multipart stuff
             val requestFile = RequestBody.create(MediaType.parse("image/*"), chosenFile)
@@ -150,7 +109,7 @@ class SignUP : AppCompatActivity(),Validation {
 
 
         } else if (requestCode == SELECT_FILE && resultCode == RESULT_OK) {
-            icon_photo.setImageURI(data!!.data)
+            imProfile.setImageURI(data!!.data)
             chosenUri = data.data!!
             val filePath = arrayOf(MediaStore.Images.Media.DATA)
             val c = contentResolver.query(chosenUri, filePath, null, null, null)
@@ -237,7 +196,7 @@ class SignUP : AppCompatActivity(),Validation {
                         it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, IMAGE_CAPTURE)
+                    startActivityForResult(takePictureIntent,IMAGE_CAPTURE)
                 }
             }
         }
@@ -267,198 +226,200 @@ class SignUP : AppCompatActivity(),Validation {
 
     }
 
-    /*fun signUP() {
-        val service = UniclubApi.create()
-        val username = ed_username.text.toString()
-        val fn = "LOL"//username.substring(0, username.lastIndexOf(" "))
-        val ln = "LOL"//username.substring(username.lastIndexOf(" "),username.length-1)
-        val user = User(
-            sp_region.selectedItem.toString(),
-            ed_birth.text.toString(),
-            ed_email.text.toString(),
-            fn,
-            ed_gender.text.toString(),
-            ln,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        )
+/*fun signUP() {
+    val service = UniclubApi.create()
+    val username = ed_username.text.toString()
+    val fn = "LOL"//username.substring(0, username.lastIndexOf(" "))
+    val ln = "LOL"//username.substring(username.lastIndexOf(" "),username.length-1)
+    val user = User(
+        sp_region.selectedItem.toString(),
+        ed_birth.text.toString(),
+        ed_email.text.toString(),
+        fn,
+        ed_gender.text.toString(),
+        ln,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    )
 
 
-        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val date = format.parse("1997-02-13")
-            service.signUP(user.firstName,user.lastName,date,user.email,ed_password.text.toString(),ed_passConfirm.text.toString(),sp_region.selectedItem.toString(),body).enqueue(object:
-                Callback<SignUP>{
-                override fun onFailure(call: Call<SignUP>, t: Throwable) {
-                    if(t is IOException)
-                        Toast.makeText(this@SignUP,t.message,Toast.LENGTH_SHORT)  .show()
-
-
-                }
-
-                override fun onResponse(call: Call<SignUP>, response: Response<SignUP>) {
-                if(response.isSuccessful)
-                    Toast.makeText(this@SignUP,response.body()!!.message,Toast.LENGTH_SHORT)  .show()
-                }
-
-            })
-
-    }*/
-
-        fun formFill() {
-            ed_username.afterTextChanged {
-                ed_username.error = if (it.isValidName()) null
-                else "invalid username"
+    val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val date = format.parse("1997-02-13")
+        service.signUP(user.firstName,user.lastName,date,user.email,ed_password.text.toString(),ed_passConfirm.text.toString(),sp_region.selectedItem.toString(),body).enqueue(object:
+            Callback<SignUpResponse>{
+            override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
+                if(t is IOException)
+                    Toast.makeText(this@SignUpResponse,t.message,Toast.LENGTH_SHORT)  .show()
 
 
             }
-            ed_email.afterTextChanged {
-                ed_email.error = if (it.isValidEmail()) null
-                else "invalid email"
+
+            override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
+            if(response.isSuccessful)
+                Toast.makeText(this@SignUpResponse,response.body()!!.message,Toast.LENGTH_SHORT)  .show()
             }
 
+        })
+
+}*/
+
+    fun formFill() {
+        edUsername.afterTextChanged {
+            edUsername.error = if (it.isValidName()) null
+            else "invalid username"
 
 
-            ed_password.afterTextChanged {
-                ed_password.error = if (it.isValidPassword()) null
-                else "enter at least 6 digits that include a lower case an uppercase and a special character"
+        }
+        edEmail.afterTextChanged {
+            edEmail.error = if (it.isValidEmail()) null
+            else "invalid email"
+        }
 
+
+
+        edPassword.afterTextChanged {
+            edPassword.error = if (it.isValidPassword()) null
+            else "enter at least 6 digits that include a lower case an uppercase and a special character"
+
+        }
+        //spinner values
+        spRegion.adapter = ArrayAdapter(this@SignUP, android.R.layout.simple_spinner_dropdown_item, cities)
+        spRegion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
             }
-            //spinner values
-            sp_region.adapter = ArrayAdapter(this@SignUP, android.R.layout.simple_spinner_dropdown_item, cities)
-            sp_region.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                }
 
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    city = cities[position]
-                }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                city = cities[position]
+            }
+
+        }
+    }
+
+    fun formValidation() {
+        btnSignup.isEnabled = false
+        val formValidation = object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val u = edUsername.text.toString().isValidName()
+                val e = edEmail.text.toString().isValidEmail()
+                val p = edPassword.text.toString().isValidPassword()
+
+                btnSignup.isEnabled = u && e && p
+            }
+
+        }
+        edUsername.addTextChangedListener(formValidation)
+        edBirth.addTextChangedListener(formValidation)
+        edPassword.addTextChangedListener(formValidation)
+        edUsername.addTextChangedListener(formValidation)
+    }
+
+
+    private fun checkPermis(): Boolean {
+        val listPermis = ArrayList<String>()
+
+        for (i in appPermissions) {
+            if (ContextCompat.checkSelfPermission(this@SignUP, i) != PackageManager.PERMISSION_GRANTED) {
+                listPermis.add(i)
 
             }
         }
 
-        fun formValidation() {
-            btn_signup.isEnabled = false
-            val formValidation = object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                }
+        if (listPermis.isNotEmpty()) {
+            ActivityCompat.requestPermissions(
+                this@SignUP,
+                listPermis.toArray(arrayOfNulls(listPermis.size)),
+                PERMIS_REQUEST
+            )
+            return false
+        }
 
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                }
+        return true
+    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    val u = ed_username.text.toString().isValidName()
-                    val e = ed_email.text.toString().isValidEmail()
-                    val p = ed_password.text.toString().isValidPassword()
+    //Facebook
+    private fun facebook() {
+        btnFb.setReadPermissions(Arrays.asList("email", "public_profile"))
+        btnFb.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
 
-                    btn_signup.isEnabled = u && e && p
-                }
+            override fun onSuccess(loginResult: LoginResult) {
+
+                if (AccessToken.getCurrentAccessToken() != null) {
+                    val request = GraphRequest.newMeRequest(
+                        AccessToken.getCurrentAccessToken()
+                    ) { me, _ ->
+                        val email = me.get("email").toString() //?: ""
+                        val fn = me.get("first_name").toString()
+                        val ln = me.get("last_name").toString()
+                        val pic = me.getJSONObject("picture").getJSONObject("data").get("url").toString()
+                        Log.d("mfacebook", "$email $fn $ln $pic")
+
+                        //TODO("caching UserResponseO >Saving to the remote server")
+
+
+                    }
+
+                    val parameters = Bundle()
+                    parameters.putString("fields", "id,first_name,last_name,picture.type(large), email")
+                    request.parameters = parameters
+                    request.executeAsync()
+
+
+                } else Log.d("mtoken", "is null")
+
 
             }
-            ed_username.addTextChangedListener(formValidation)
-            ed_birth.addTextChangedListener(formValidation)
-            ed_password.addTextChangedListener(formValidation)
-            ed_username.addTextChangedListener(formValidation)
-        }
 
-
-        private fun checkPermis(): Boolean {
-            val listPermis = ArrayList<String>()
-
-            for (i in appPermissions) {
-                if (ContextCompat.checkSelfPermission(this@SignUP, i) != PackageManager.PERMISSION_GRANTED) {
-                    listPermis.add(i)
-
-                }
+            override fun onCancel() {
+                Log.e("FBLOGIN_FAILD", "Cancel")
             }
 
-            if (listPermis.isNotEmpty()) {
-                ActivityCompat.requestPermissions(
-                    this@SignUP,
-                    listPermis.toArray(arrayOfNulls(listPermis.size)),
-                    PERMIS_REQUEST
-                )
-                return false
+            override fun onError(error: FacebookException) {
+                Log.e("FBLOGIN_FAILD", "ERROR", error)
             }
-
-            return true
-        }
-
-        //Facebook
-        private fun facebook() {
-            btn_fb.setReadPermissions(Arrays.asList("email", "public_profile"))
-            btn_fb.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
-
-                override fun onSuccess(loginResult: LoginResult) {
-
-                    if (AccessToken.getCurrentAccessToken() != null) {
-                        val request = GraphRequest.newMeRequest(
-                            AccessToken.getCurrentAccessToken()
-                        ) { me, _ ->
-                            val email = me.get("email").toString() //?: ""
-                            val fn = me.get("first_name").toString()
-                            val ln = me.get("last_name").toString()
-                            val pic = me.getJSONObject("picture").getJSONObject("data").get("url").toString()
-                            Log.d("mfacebook", "$email $fn $ln $pic")
-
-                            //TODO("caching UserResponseO >Saving to the remote server")
-
-
-                        }
-
-                        val parameters = Bundle()
-                        parameters.putString("fields", "id,first_name,last_name,picture.type(large), email")
-                        request.parameters = parameters
-                        request.executeAsync()
-
-
-                    } else Log.d("mtoken", "is null")
-
-
-                }
-
-                override fun onCancel() {
-                    Log.e("FBLOGIN_FAILD", "Cancel")
-                }
-
-                override fun onError(error: FacebookException) {
-                    Log.e("FBLOGIN_FAILD", "ERROR", error)
-                }
-            })
-
-
-        }
-
-        //Google
-        private fun google() {
-
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()//request email id
-                .build()
-
-            // Build a GoogleSignInClient with the options specified by gso.
-            mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-
-            val signInIntent = mGoogleSignInClient.signInIntent
-            startActivityForResult(signInIntent, GOOGLE_SIGN)//pass the declared request code here
-        }
-
-        private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
-
-            val account = task.getResult(ApiException::class.java)!!
-            //TODO("caching UserResponseO >Saving to the remote server")
-            Log.d("mGoogle", account.displayName)
-
-
-        }
+        })
 
 
     }
 
+    //Google
+    private fun google() {
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()//request email id
+            .build()
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        val signInIntent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signInIntent, GOOGLE_SIGN)//pass the declared request code here
+    }
+
+    private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
+
+        val account = task.getResult(ApiException::class.java)!!
+        //TODO("caching UserResponseO >Saving to the remote server")
+        Log.d("mGoogle", account.displayName)
+
+
+    }
+
+
+
+
+
+}

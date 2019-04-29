@@ -38,7 +38,7 @@ class HomeFeed : Fragment() {
         val v = inflater.inflate(R.layout.fragment_homefeed, container, false)
         val rvHome = v.findViewById<RecyclerView>(R.id.rvHome)
         val spTiming = v.findViewById<Spinner>(R.id.sp_timing)
-        val spRegion = v.findViewById<Spinner>(R.id.sp_region)
+        val spRegion = v.findViewById<Spinner>(R.id.spRegion)
 
 
 

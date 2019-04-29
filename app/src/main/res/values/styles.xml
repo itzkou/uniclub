@@ -21,6 +21,29 @@
         <item name="android:layout_marginBottom">@dimen/searchMarginBM</item>
     </style>
 
+    <style name="signUPField">
+        <item name="android:background">@drawable/ed_signup</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">@dimen/SignUpEditext</item>
+        <item name="android:layout_marginStart">@dimen/SignUpRL</item>
+        <item name="android:layout_marginEnd">@dimen/SignUpRL</item>
+        <item name="android:layout_marginBottom">@dimen/SignUpTB</item>
+        <item name="android:layout_marginTop">@dimen/SignUpTB</item>
+        <item name="android:drawablePadding">@dimen/SignUpDrawablePadding</item>
+        <item name="android:layout_height">26dp</item>
+    </style>
+
+    <style name="SpinnerSignUP">
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">@dimen/SignUpEditext</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/SignUpRL</item>
+        <item name="android:layout_marginEnd">@dimen/SignUpRL</item>
+        <item name="android:layout_marginBottom">@dimen/SignUpTB</item>
+        <item name="android:layout_marginTop">@dimen/SignUpTB</item>
+    </style>
+
+
 
 
 
