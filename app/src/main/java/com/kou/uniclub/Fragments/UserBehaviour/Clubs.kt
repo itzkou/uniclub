@@ -1,4 +1,4 @@
-package com.kou.uniclub.Fragments.Likes
+package com.kou.uniclub.Fragments.UserBehaviour
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

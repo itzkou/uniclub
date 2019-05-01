@@ -1,13 +1,25 @@
 package com.kou.uniclub.Activities.Authentification
 
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.FileProvider
+import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.facebook.*
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -17,33 +29,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.kou.uniclub.Extensions.Validation
-import kotlinx.android.synthetic.main.activity_sign_up.*
-import okhttp3.MultipartBody
-import java.io.File
-import java.util.*
-import android.content.Intent
-import android.os.Environment
-import android.provider.MediaStore
-import android.support.v4.content.FileProvider
-import android.support.v7.app.AlertDialog
-import android.text.Editable
-import android.text.TextWatcher
-import android.text.format.DateFormat
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
-import com.kou.uniclub.Model.Auth.SignUpResponse
-import com.kou.uniclub.Model.User.User
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import kotlinx.android.synthetic.main.activity_sign_up.*
 import okhttp3.MediaType
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
-
+import java.util.*
 
 class SignUP : AppCompatActivity(), Validation {
 
@@ -240,7 +236,7 @@ class SignUP : AppCompatActivity(), Validation {
         }
     }
 
-    fun TakePicture() {
+    private fun takePicture() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(packageManager)?.also {
@@ -266,7 +262,7 @@ class SignUP : AppCompatActivity(), Validation {
         }
     }
 
-    fun selectImage() {
+    private fun selectImage() {
 
         val items = arrayOf<CharSequence>("Camera", "Gallery", "Cancel")
 
@@ -275,7 +271,7 @@ class SignUP : AppCompatActivity(), Validation {
 
         builder.setItems(items) { dialogInterface, i ->
             when {
-                items[i] == "Camera" -> TakePicture()
+                items[i] == "Camera" -> takePicture()
                 items[i] == "Gallery" -> {
 
                     val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -290,7 +286,7 @@ class SignUP : AppCompatActivity(), Validation {
 
     }
 
-private fun signUP() {
+    private fun signUP() {
     val service = UniclubApi.create()
 
     /*val user = User(
@@ -330,14 +326,11 @@ private fun signUP() {
 
 }
 
-    fun formFill() {
+    private fun formFill() {
+
         edUsername.afterTextChanged {
-            if(!it.isValidName())
-                edUsername.error="invalid username"
-            else{null }
-
-
-
+            edUsername.error = if (it.isValidEmail()) null
+            else "invalid username"
         }
         edEmail.afterTextChanged {
             edEmail.error = if (it.isValidEmail()) null
@@ -349,9 +342,14 @@ private fun signUP() {
 
         }
 
+        /******* Form Validation *******/
+        formValidation()
+
+
+
     }
 
-    fun formValidation() {
+    private fun formValidation() {
         btnSignup.isEnabled = false
         val formValidation = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -364,21 +362,14 @@ private fun signUP() {
                 val u = edUsername.text.toString().isValidName()
                 val e = edEmail.text.toString().isValidEmail()
                 val p = edPassword.text.toString().isValidPassword()
-
-                val username = edUsername.text.toString()
-                val fn = username.substring(0, username.lastIndexOf(" "))
-                val ln = username.substring(username.lastIndexOf(" "),username.length)
-                Log.d("nameO",fn +"*" +ln)
-
                 btnSignup.isEnabled = u && e && p
             }
-
         }
         edUsername.addTextChangedListener(formValidation)
         edBirth.addTextChangedListener(formValidation)
         edPassword.addTextChangedListener(formValidation)
         edUsername.addTextChangedListener(formValidation)
-    }
+                                }
 
 
     private fun checkPermis(): Boolean {

@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import com.kou.uniclub.Adapter.VpClubDetailsAdapter
-import com.kou.uniclub.Fragments.Timeline.Passed
-import com.kou.uniclub.Fragments.Timeline.Sponsors
-import com.kou.uniclub.Fragments.Timeline.Today
-import com.kou.uniclub.Fragments.Timeline.Upcoming
+import com.kou.uniclub.Fragments.ClubTimeline.Passed
+import com.kou.uniclub.Fragments.ClubTimeline.Sponsors
+import com.kou.uniclub.Fragments.ClubTimeline.Today
+import com.kou.uniclub.Fragments.ClubTimeline.Upcoming
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.activity_club_details.*
 

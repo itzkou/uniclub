@@ -10,7 +10,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter.Companion.event_id
-import com.kou.uniclub.Model.Event.EventResponse
+import com.kou.uniclub.Model.Event.EventDetailsResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.activity_event_details.*
@@ -30,12 +30,12 @@ class EventDetails : AppCompatActivity(),OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         val service = UniclubApi.create()
-        service.getEvent(event_id!!).enqueue(object:Callback<EventResponse>{
-            override fun onFailure(call: Call<EventResponse>, t: Throwable) {
+        service.getEvent(event_id!!).enqueue(object:Callback<EventDetailsResponse>{
+            override fun onFailure(call: Call<EventDetailsResponse>, t: Throwable) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
-            override fun onResponse(call: Call<EventResponse>, response: Response<EventResponse>) {
+            override fun onResponse(call: Call<EventDetailsResponse>, response: Response<EventDetailsResponse>) {
                 if (response.isSuccessful) {
                     val event = response.body()!!.event
                     collapse.title = event.name

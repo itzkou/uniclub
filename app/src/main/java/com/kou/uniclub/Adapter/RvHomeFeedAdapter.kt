@@ -17,7 +17,6 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.row_event_feed.view.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class RvHomeFeedAdapter (val events :ArrayList<EventX>, val context: Context): RecyclerView.Adapter<RvHomeFeedAdapter.Holder>() {

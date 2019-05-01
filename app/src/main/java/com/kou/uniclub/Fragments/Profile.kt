@@ -13,8 +13,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.kou.uniclub.Activities.EditProfile
 import com.kou.uniclub.Adapter.VpProfileAdapter
-import com.kou.uniclub.Fragments.Likes.Clubs
-import com.kou.uniclub.Fragments.Likes.Events
+import com.kou.uniclub.Fragments.UserBehaviour.Clubs
+import com.kou.uniclub.Fragments.UserBehaviour.Events
 import com.kou.uniclub.R
 
 

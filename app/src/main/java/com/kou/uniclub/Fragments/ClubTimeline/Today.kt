@@ -1,4 +1,4 @@
-package com.kou.uniclub.Fragments.Timeline
+package com.kou.uniclub.Fragments.ClubTimeline
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
