@@ -34,6 +34,7 @@ import com.kou.uniclub.Model.Auth.LoginResponse
 import com.kou.uniclub.Model.Auth.SignUpResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
+import com.kou.uniclub.SharedUtils.PrefsManager
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -301,7 +302,7 @@ class SignUP : AppCompatActivity(), Validation {
 
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(this@SignUP, response.body()!!.accessToken, Toast.LENGTH_SHORT).show()
+                    PrefsManager.seToken(this@SignUP,response.body()!!.accessToken)
                 }
             }
 
