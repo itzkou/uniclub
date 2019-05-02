@@ -9,7 +9,7 @@ interface Validation {
 
     fun String.isValidEmail(): Boolean
             = this.isNotEmpty() &&
-            Patterns.EMAIL_ADDRESS.matcher(this).matches()&&this.length >= 6
+            Patterns.EMAIL_ADDRESS.matcher(this).matches()&&this.length >= 2
 
 
     fun String.isValidName():Boolean
@@ -19,7 +19,7 @@ interface Validation {
             =this.isNotEmpty()&&Patterns.PHONE.matcher(this).matches()&&this.length==8
 
     fun String.isValidPassword():Boolean
-            =this.isNotEmpty()&&this.matches(Regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#'&\$%]).{6,20}$"))&&this.length>=6
+            =this.isNotEmpty()&&this.matches(Regex("^(?=.*\\d).{6,15}\$"))
 
 
 

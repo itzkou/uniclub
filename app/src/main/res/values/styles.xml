@@ -24,6 +24,7 @@
     <style name="signUPField">
         <item name="android:background">@drawable/ed_signup</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:textColorHint">@color/gray</item>
         <item name="android:layout_width">@dimen/SignUpEditext</item>
         <item name="android:layout_marginStart">@dimen/SignUpRL</item>
         <item name="android:layout_marginEnd">@dimen/SignUpRL</item>

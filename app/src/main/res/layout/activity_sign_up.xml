@@ -43,9 +43,9 @@
 
         <EditText android:id="@+id/edUsername"
                   style="@style/signUPField"
-         android:drawableLeft="@drawable/ic_userg"
+                  android:drawableLeft="@drawable/ic_userg"
 
-        android:hint="Username*"
+                  android:hint="Name*"
                   android:inputType="textPersonName"
                   app:layout_constraintTop_toBottomOf="@id/imProfile" app:layout_constraintEnd_toEndOf="parent"
                   app:layout_constraintStart_toStartOf="parent"
@@ -87,23 +87,20 @@
                    app:layout_constraintBottom_toBottomOf="@+id/spRegion"
                    app:layout_constraintStart_toStartOf="@+id/spRegion" android:layout_marginStart="4dp"
                    android:id="@+id/ic_region"/>
-
-        <Spinner android:id="@+id/spGender"
-                 android:layout_width="292dp"
-                 android:layout_height="wrap_content"
-                 android:hint="Gender*"
-                 android:inputType="text"
-                 app:layout_constraintTop_toBottomOf="@id/spRegion" app:layout_constraintEnd_toEndOf="parent"
-                 app:layout_constraintStart_toStartOf="parent"
-                 android:layout_marginTop="35dp"/>
-
+        <EditText android:id="@+id/edGender"
+                  style="@style/signUPField"
+                  android:hint="Gender*"
+                  app:layout_constraintTop_toBottomOf="@+id/spRegion"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"/>
         <EditText android:id="@+id/edPassword"
                   style="@style/signUPField"
 
                   android:drawableLeft="@drawable/ic_password"
                   android:hint="Password*"
                   android:inputType="textPassword"
-                  app:layout_constraintTop_toBottomOf="@+id/spGender" app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintTop_toBottomOf="@+id/edGender"
+                  app:layout_constraintEnd_toEndOf="parent"
                   app:layout_constraintStart_toStartOf="parent"
         />
 

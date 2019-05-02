@@ -6,10 +6,7 @@ import com.kou.uniclub.Model.Club.ClubsResponse
 import com.kou.uniclub.Model.Event.EventDetailsResponse
 import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Model.University.UniversityResponse
-import com.kou.uniclub.Model.User.FavoriteResponse
-import com.kou.uniclub.Model.User.SavedEventsResponse
-import com.kou.uniclub.Model.User.ParticipateResponse
-import com.kou.uniclub.Model.User.User
+import com.kou.uniclub.Model.User.*
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -30,45 +27,59 @@ interface UniclubApi{
 
         /************************* User ********************/
 
-            @Multipart
-            @POST("auth/signup")
-            fun signUP(@Query("First_Name") fname:String,
-                       @Query("Last_Name")lname:String,
-                       @Query("Birth_Date")birth: String,
-                       @Query("Gender")gender:String,
-                       @Query("Email")email:String,
-                       @Query("password")pass:String,
-                       @Query("password_confirmation") passC:String,
-                       @Query("Adress") address:String,
-                       @Part file: MultipartBody.Part?) :Call<SignUpResponse>
+                    @Multipart
+                    @POST("auth/signup")
+                    fun signUP(@Query("First_Name") fname:String,
+                               @Query("Last_Name")lname:String,
+                               @Query("Birth_Date")birth: String,
+                               @Query("Gender")gender:String,
+                               @Query("Email")email:String,
+                               @Query("password")pass:String,
+                               @Query("password_confirmation") passC:String,
+                               @Query("Adress") address:String,
+                               @Part file: MultipartBody.Part?) :Call<SignUpResponse>
 
 
-            @FormUrlEncoded
-            @POST("auth/login")
-            fun signIN( @Field("Email")email:String,
-                        @Field("password")password:String):Call<LoginResponse>
+                    @FormUrlEncoded
+                    @POST("auth/login")
+                    fun signIN( @Field("Email")email:String,
+                                @Field("password")password:String):Call<LoginResponse>
 
-            @GET("auth/user")
-            fun getUser(@Header("Authorization") authToken:String?):Call<User>
+                    @GET("auth/user")
+                    fun getUser(@Header("Authorization") authToken:String):Call<User>
 
-            @POST("auth/favourite/{id}")
-            fun favorite(@Header("Authorization") authToken:String?,@Path("id")eventID:Int):Call<FavoriteResponse>
+                /************************* User favorites ********************/
 
-            @DELETE("auth/unfavourite/{id}")
-            fun unfavorite(@Header("Authorization") authToken:String?,@Path("id")eventID:Int):Call<FavoriteResponse>
+                    @POST("auth/favourite/{id}")
+                    fun favorite(@Header("Authorization") authToken:String,@Path("id")eventID:Int):Call<FavoriteResponse>
 
-            @GET("auth/getUserFavouriteEvents")
-            fun getFavorites(@Header("Authorization") authToken:String?):Call<SavedEventsResponse>
+                    @DELETE("auth/unfavourite/{id}")
+                    fun unfavorite(@Header("Authorization") authToken:String,@Path("id")eventID:Int):Call<FavoriteResponse>
 
+                    @GET("auth/getUserFavouriteEvents")
+                    fun getFavorites(@Header("Authorization") authToken:String):Call<MyfavoritesResponse>
 
-            @POST("auth/participate/{id}")
-            fun participate(@Header("Authorization") authToken:String?,@Path("id")eventID:Int):Call<ParticipateResponse>
+                /************************* User Participations ********************/
 
-            @DELETE("auth/leave/{id}")
-            fun leave(@Header("Authorization") authToken:String?,@Path("id")eventID:Int):Call<ParticipateResponse>
+                    @POST("auth/participate/{id}")
+                    fun participate(@Header("Authorization") authToken:String,@Path("id")eventID:Int):Call<ParticipateResponse>
 
-            @GET("auth/getUserParticipatedEvents")
-            fun getParticipations(@Header("Authorization") authToken:String?,@Path("id")eventID:Int):Call<EventListResponse>
+                    @DELETE("auth/leave/{id}")
+                    fun leave(@Header("Authorization") authToken:String,@Path("id")eventID:Int):Call<ParticipateResponse>
+
+                    @GET("auth/getUserParticipatedEvents")
+                    fun getParticipations(@Header("Authorization") authToken:String,@Path("id")eventID:Int):Call<EventListResponse>
+
+                /************************* User Follows ********************/
+                    @POST("auth/follow/{id}")
+                    fun follow(@Header("Authorization") authToken:String,@Path("id")clubID:Int):Call<FollowResponse>
+
+                    @DELETE("auth/unfollow/{id}")
+                    fun unfollow(@Header("Authorization") authToken:String,@Path("id")clubID:Int):Call<FollowResponse>
+
+                    @GET("auth/getUserParticipatedEvents")
+                    fun getFollows(@Header("Authorization") authToken:String):Call<EventListResponse>
+
 
 
         /************************* Events ********************/
@@ -109,7 +120,7 @@ interface UniclubApi{
             fun paginate(@Url next_page_url:String):Call<EventListResponse>
 
             @GET
-            fun paginateToken(@Url next_page_url:String,@Header("Authorization") authToken:String?):Call<EventListResponse>
+            fun paginateToken(@Url next_page_url:String,@Header("Authorization") authToken:String):Call<EventListResponse>
 
 
 

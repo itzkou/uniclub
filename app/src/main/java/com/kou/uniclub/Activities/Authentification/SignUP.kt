@@ -19,6 +19,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.DatePicker
 import android.widget.Toast
 import com.facebook.*
 import com.facebook.login.LoginResult
@@ -29,13 +30,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.kou.uniclub.Extensions.Validation
+import com.kou.uniclub.Model.Auth.SignUpResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -43,13 +47,11 @@ import java.util.*
 
 class SignUP : AppCompatActivity(), Validation {
 
-    //TODO("when the image is empty the app crashes")
-//TODO("prevention contre l'erreur lors de signup form validation (+) >> if email already exists!!")
-    private var cities = arrayOf("Ariana", "Tunis", "Bizerte")
-    private var genders = arrayOf("Male", "Female")
+    //TODO("Make all fields Nullable")
 
-    private var city: String? = null
-    private var gender: String? = null
+
+    private var cities = arrayOf("Ariana", "Tunis", "Bizerte")
+
 
     /******* REQUESTS FOR RESULTS*******/
     private val SELECT_FILE = 1
@@ -62,7 +64,7 @@ class SignUP : AppCompatActivity(), Validation {
     /******* IMAGE UPLOAD*******/
     lateinit var chosenFile: File
     lateinit var chosenUri: Uri
-    lateinit var body: MultipartBody.Part
+    lateinit var image: MultipartBody.Part
     private var mCurrentPhotoPath: String = ""
 
     /******* ARRAY PERMISS*******/
@@ -75,19 +77,18 @@ class SignUP : AppCompatActivity(), Validation {
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     /******* User attributes *******/
 
-    private var mBirthday:String?=null
-    private var FName:String?=null
-    private var LName:String?=null
-    private var Gender:String?=null
-    private var Email:String?=null
-    private var password:String?=null
-    private var Adress:String?=null
-    private var passwordC:String?=null
+    private lateinit var birthday: String
+    private lateinit var fName: String
+    private lateinit var lName: String
+    private lateinit var gender: String
+    private lateinit var mail: String
+    private lateinit var password: String
+    private lateinit var adress: String
+    private lateinit var passwordC: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.kou.uniclub.R.layout.activity_sign_up)
-
 
 
         /******************* camera  *****************/
@@ -97,33 +98,25 @@ class SignUP : AppCompatActivity(), Validation {
         }
 
 
-        /******************* with facebook *****************/
-        callbackManager = CallbackManager.Factory.create()
-        btnFb.setOnClickListener {
-            facebook()
-        }
-        /******************* with google *****************/
-        btnGoogle.setOnClickListener {
-            google()
-        }
-
         val dialogView = LayoutInflater.from(this@SignUP).inflate(R.layout.time_picker, null)
-        val builder= AlertDialog.Builder(this@SignUP)
-        val timePicker=dialogView.findViewById<MaterialCalendarView>(R.id.timePicker)
+        val builder = AlertDialog.Builder(this@SignUP)
+        val timePicker = dialogView.findViewById<DatePicker>(R.id.timePicker)
         builder.setView(dialogView)
         builder.setPositiveButton("confirm") { dialog, which ->
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
-            mBirthday=dateFormat.format(timePicker.selectedDate.date)
-            edBirth.hint=mBirthday
-            edBirth.setHintTextColor(ContextCompat.getColor(this@SignUP,R.color.black))
+            birthday = timePicker.year.toString()+"-"+timePicker.month.toString()+"-"+timePicker.dayOfMonth.toString()
+            edBirth.hint = birthday
+            edBirth.setHintTextColor(ContextCompat.getColor(this@SignUP, R.color.black))
             dialog?.dismiss()
         }
 
-        builder.setNegativeButton("Cancel"
-        ) { dialog, which -> dialog?.dismiss()
+        builder.setNegativeButton(
+            "Cancel"
+        ) { dialog, which ->
+            dialog?.dismiss()
         }
-        val dialog=builder.create()
+        val dialog = builder.create()
 
         edBirth.setOnClickListener {
             dialog.show()
@@ -137,24 +130,31 @@ class SignUP : AppCompatActivity(), Validation {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                city = cities[position]
+                adress= cities[position]
             }
 
         }
 
-        spGender.adapter = ArrayAdapter(this@SignUP, android.R.layout.simple_spinner_dropdown_item, genders)
-        spGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                gender=genders[position]            }
-
-        }
-
+        formFill()
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        btnSignup.setOnClickListener {
+        uniSignUP()
+        }
+        /******************* with facebook *****************/
+        callbackManager = CallbackManager.Factory.create()
+        btnFb.setOnClickListener {
+            facebook()
+        }
+        /******************* with google *****************/
+        btnGoogle.setOnClickListener {
+            google()
+        }
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -165,7 +165,7 @@ class SignUP : AppCompatActivity(), Validation {
             chosenFile = File(mCurrentPhotoPath)
             //multipart stuff
             val requestFile = RequestBody.create(MediaType.parse("image/*"), chosenFile)
-            body = MultipartBody.Part.createFormData("image", chosenFile.name, requestFile)
+            image = MultipartBody.Part.createFormData("image", chosenFile.name, requestFile)
 
 
         } else if (requestCode == SELECT_FILE && resultCode == RESULT_OK) {
@@ -179,7 +179,7 @@ class SignUP : AppCompatActivity(), Validation {
             c.close()
             chosenFile = File(filePathStr!!)
             val requestFile = RequestBody.create(MediaType.parse("image/*"), chosenFile)
-            body = MultipartBody.Part.createFormData("image", chosenFile.name, requestFile)
+            image = MultipartBody.Part.createFormData("image", chosenFile.name, requestFile)
 
         } else if (requestCode == GOOGLE_SIGN && resultCode == RESULT_OK) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
@@ -256,7 +256,7 @@ class SignUP : AppCompatActivity(), Validation {
                         it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent,IMAGE_CAPTURE)
+                    startActivityForResult(takePictureIntent, IMAGE_CAPTURE)
                 }
             }
         }
@@ -286,73 +286,36 @@ class SignUP : AppCompatActivity(), Validation {
 
     }
 
-    private fun signUP() {
-    val service = UniclubApi.create()
-
-    /*val user = User(
-        sp_region.selectedItem.toString(),
-        ed_birth.text.toString(),
-        ed_email.text.toString(),
-        fn,
-        ed_gender.text.toString(),
-        ln,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-    )
-
-        service.signUP(user.firstName,user.lastName,date,user.email,ed_password.text.toString(),ed_passConfirm.text.toString(),sp_region.selectedItem.toString(),body).enqueue(object:
-            Callback<SignUpResponse>{
-            override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
-                if(t is IOException)
-                    Toast.makeText(this@SignUpResponse,t.message,Toast.LENGTH_SHORT)  .show()
-
-
-            }
-
-            override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
-            if(response.isSuccessful)
-                Toast.makeText(this@SignUpResponse,response.body()!!.message,Toast.LENGTH_SHORT)  .show()
-            }
-
-        })*/
-
-}
 
     private fun formFill() {
 
         edUsername.afterTextChanged {
-            edUsername.error = if (it.isValidEmail()) null
-            else "invalid username"
+            edUsername.error = if (it.isValidName()) null
+            else "Invalid name"
         }
         edEmail.afterTextChanged {
             edEmail.error = if (it.isValidEmail()) null
-            else "invalid email"
+            else "Invalid email"
         }
+
         edPassword.afterTextChanged {
             edPassword.error = if (it.isValidPassword()) null
-            else "enter at least 6 digits that include a lower case an uppercase and a special character"
-
+            else "Password is 6 digits long and includes at least one numeric digit."
         }
 
+        edPasswordC.afterTextChanged {
+            edPasswordC.error = if (it == edPassword.text.toString()) null
+            else "Passwords don't match"
+        }
+
+
         /******* Form Validation *******/
-        formValidation()
-
-
-
-    }
-
-    private fun formValidation() {
         btnSignup.isEnabled = false
-        val formValidation = object : TextWatcher {
+        val validator = object : TextWatcher {
+
+
             override fun afterTextChanged(s: Editable?) {
+
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -362,14 +325,32 @@ class SignUP : AppCompatActivity(), Validation {
                 val u = edUsername.text.toString().isValidName()
                 val e = edEmail.text.toString().isValidEmail()
                 val p = edPassword.text.toString().isValidPassword()
-                btnSignup.isEnabled = u && e && p
+                val pc = edPassword.text.toString() == edPasswordC.text.toString()
+                btnSignup.isEnabled = u && e && p && pc
+                if (btnSignup.isEnabled) {
+                    val name = edUsername.text.toString()
+
+                    fName = name.substring(0, name.indexOf(" ")+1)
+                    lName = name.substring(name.lastIndexOf(" ") + 1, name.length)
+                    gender = edGender.text.toString()
+                    mail = edEmail.text.toString()
+                    password = edPassword.text.toString()
+                    passwordC = edPasswordC.text.toString()
+
+
+                }
+
+
             }
         }
-        edUsername.addTextChangedListener(formValidation)
-        edBirth.addTextChangedListener(formValidation)
-        edPassword.addTextChangedListener(formValidation)
-        edUsername.addTextChangedListener(formValidation)
-                                }
+        edUsername.addTextChangedListener(validator)
+        edBirth.addTextChangedListener(validator)
+        edPassword.addTextChangedListener(validator)
+        edUsername.addTextChangedListener(validator)
+        edPasswordC.addTextChangedListener(validator)
+
+
+    }
 
 
     private fun checkPermis(): Boolean {
@@ -394,7 +375,54 @@ class SignUP : AppCompatActivity(), Validation {
         return true
     }
 
-    //Facebook
+
+    private fun uniSignUP() {
+        val service = UniclubApi.create()
+        if (mCurrentPhotoPath!=""){
+            service.signUP(fName,lName,birthday,gender,mail,password,password,adress,image).enqueue(object : Callback<SignUpResponse>{
+                override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
+
+                    if (t is IOException)
+                        Toast.makeText(this@SignUP,"Network faillure",Toast.LENGTH_SHORT).show()
+                    else
+                        Toast.makeText(this@SignUP,"conversion error",Toast.LENGTH_SHORT).show()
+
+                }
+
+                override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
+                    if (response.isSuccessful){
+                        Toast.makeText(this@SignUP,response.body()!!.message,Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+
+            })
+        }
+
+        else{
+            service.signUP(fName,lName,birthday,gender,mail,password,password,adress,MultipartBody.Part.createFormData("attachment", "", RequestBody.create(MediaType.parse("text/plain"), ""))).enqueue(object : Callback<SignUpResponse>{
+                override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
+                    if (t is IOException)
+                        Toast.makeText(this@SignUP,"Network faillure",Toast.LENGTH_SHORT).show()
+                    else
+                        Toast.makeText(this@SignUP,"conversion error",Toast.LENGTH_SHORT).show()
+
+                }
+
+                override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
+                    if (response.isSuccessful){
+                        Toast.makeText(this@SignUP,response.body()!!.message,Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+
+            })
+        }
+    }
+
+
+
+
     private fun facebook() {
         btnFb.setReadPermissions(Arrays.asList("email", "public_profile"))
         btnFb.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
@@ -439,7 +467,6 @@ class SignUP : AppCompatActivity(), Validation {
 
     }
 
-    //Google
     private fun google() {
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -461,9 +488,6 @@ class SignUP : AppCompatActivity(), Validation {
 
 
     }
-
-
-
 
 
 }
