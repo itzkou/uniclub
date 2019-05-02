@@ -3,18 +3,27 @@ package com.kou.uniclub.Adapter
 import android.content.Context
 import android.content.Intent
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.airbnb.lottie.LottieAnimationView
 import com.kou.uniclub.Activities.EventDetails
 import com.kou.uniclub.Model.Event.EventX
+import com.kou.uniclub.Model.User.FavoriteResponse
+import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
+import com.kou.uniclub.SharedUtils.PrefsManager
 import com.kou.uniclub.UI.ImagePreviewer
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.row_event_feed.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -57,8 +66,43 @@ class RvHomeFeedAdapter (val events :ArrayList<EventX>, val context: Context): R
 
 
 
-        //TODO("token null show alert")
         holder.fav.setOnClickListener {
+            if(PrefsManager.geToken(context)!=null)
+            { //TODO("change drawable color")
+                val service=UniclubApi.create()
+                service.favorite(PrefsManager.geToken(context)!!,event.id).enqueue(object: Callback<FavoriteResponse>{
+                    override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
+                            Toast.makeText(context,t.message,Toast.LENGTH_SHORT).show()
+                            }
+
+                    override fun onResponse(call: Call<FavoriteResponse>, response: Response<FavoriteResponse>) {
+                        Toast.makeText(context,response.body()!!.message,Toast.LENGTH_SHORT).show()
+
+                    }
+
+                })
+            }
+            else
+            {
+
+                val dialogView = LayoutInflater.from(context).inflate(R.layout.builder_feature_access, null)
+                val anim=dialogView.findViewById<LottieAnimationView>(R.id.animAuth)
+                val builder = AlertDialog.Builder(context)
+                builder.setView(dialogView)
+                builder.setPositiveButton("confirm") { dialog, which ->
+
+                }
+
+                builder.setNegativeButton(
+                    "Cancel"
+                ) { dialog, which ->
+                    dialog?.dismiss()
+                }
+                val dialog = builder.create()
+                dialog.show()
+                anim.playAnimation()
+
+            }
         }
 
         //EventO details

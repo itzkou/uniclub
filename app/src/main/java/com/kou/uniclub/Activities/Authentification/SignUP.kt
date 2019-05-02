@@ -100,7 +100,7 @@ class SignUP : AppCompatActivity(), Validation {
         }
 
 
-        val dialogView = LayoutInflater.from(this@SignUP).inflate(R.layout.time_picker, null)
+        val dialogView = LayoutInflater.from(this@SignUP).inflate(R.layout.builder_time_picker, null)
         val builder = AlertDialog.Builder(this@SignUP)
         val timePicker = dialogView.findViewById<DatePicker>(R.id.timePicker)
         builder.setView(dialogView)
