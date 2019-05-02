@@ -30,6 +30,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.kou.uniclub.Extensions.Validation
+import com.kou.uniclub.Model.Auth.LoginResponse
 import com.kou.uniclub.Model.Auth.SignUpResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
@@ -62,9 +63,9 @@ class SignUP : AppCompatActivity(), Validation {
     private val GOOGLE_SIGN = 4
 
     /******* IMAGE UPLOAD*******/
-    lateinit var chosenFile: File
-    lateinit var chosenUri: Uri
-    lateinit var image: MultipartBody.Part
+    private var chosenFile: File? = null
+    private var chosenUri: Uri? = null
+    private var image: MultipartBody.Part? = null
     private var mCurrentPhotoPath: String = ""
 
     /******* ARRAY PERMISS*******/
@@ -105,7 +106,8 @@ class SignUP : AppCompatActivity(), Validation {
         builder.setPositiveButton("confirm") { dialog, which ->
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
-            birthday = timePicker.year.toString()+"-"+timePicker.month.toString()+"-"+timePicker.dayOfMonth.toString()
+            birthday =
+                timePicker.year.toString() + "-" + timePicker.month.toString() + "-" + timePicker.dayOfMonth.toString()
             edBirth.hint = birthday
             edBirth.setHintTextColor(ContextCompat.getColor(this@SignUP, R.color.black))
             dialog?.dismiss()
@@ -130,7 +132,7 @@ class SignUP : AppCompatActivity(), Validation {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                adress= cities[position]
+                adress = cities[position]
             }
 
         }
@@ -143,7 +145,7 @@ class SignUP : AppCompatActivity(), Validation {
     override fun onStart() {
         super.onStart()
         btnSignup.setOnClickListener {
-        uniSignUP()
+            uniSignUP()
         }
         /******************* with facebook *****************/
         callbackManager = CallbackManager.Factory.create()
@@ -165,7 +167,7 @@ class SignUP : AppCompatActivity(), Validation {
             chosenFile = File(mCurrentPhotoPath)
             //multipart stuff
             val requestFile = RequestBody.create(MediaType.parse("image/*"), chosenFile)
-            image = MultipartBody.Part.createFormData("image", chosenFile.name, requestFile)
+            image = MultipartBody.Part.createFormData("image", chosenFile!!.name, requestFile)
 
 
         } else if (requestCode == SELECT_FILE && resultCode == RESULT_OK) {
@@ -179,7 +181,7 @@ class SignUP : AppCompatActivity(), Validation {
             c.close()
             chosenFile = File(filePathStr!!)
             val requestFile = RequestBody.create(MediaType.parse("image/*"), chosenFile)
-            image = MultipartBody.Part.createFormData("image", chosenFile.name, requestFile)
+            image = MultipartBody.Part.createFormData("image", chosenFile!!.name, requestFile)
 
         } else if (requestCode == GOOGLE_SIGN && resultCode == RESULT_OK) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
@@ -219,6 +221,92 @@ class SignUP : AppCompatActivity(), Validation {
 
     }
 
+    private fun uniSignUP() {
+        val service = UniclubApi.create()
+        if (image != null) {
+            service.signUP(fName, lName, birthday, gender, mail, password, password, adress, image)
+                .enqueue(object : Callback<SignUpResponse> {
+                    override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
+
+                        if (t is IOException)
+                            Toast.makeText(this@SignUP, "Network faillure", Toast.LENGTH_SHORT).show()
+                        else
+                            Toast.makeText(this@SignUP, "conversion error", Toast.LENGTH_SHORT).show()
+
+                    }
+
+                    override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
+                        if (response.isSuccessful) {
+                            if (response.code() == 201)
+                                uniSignIn(service)
+
+                        } else if (response.code() == 404)
+                            Toast.makeText(
+                                this@SignUP,
+                                "Email already exists or missing field",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                    }
+
+                })
+        } else {
+            service.signUP(
+                fName,
+                lName,
+                birthday,
+                gender,
+                mail,
+                password,
+                password,
+                adress,
+                MultipartBody.Part.createFormData(
+                    "attachment",
+                    "",
+                    RequestBody.create(MediaType.parse("text/plain"), "")
+                )
+            ).enqueue(object : Callback<SignUpResponse> {
+                override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
+                    if (t is IOException)
+                        Toast.makeText(this@SignUP, "Network faillure", Toast.LENGTH_SHORT).show()
+
+
+                }
+
+                override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
+                    if (response.isSuccessful) {
+                        if (response.code() == 201)
+                            uniSignIn(service)
+
+                    } else if (response.code() == 404)
+                        Toast.makeText(
+                            this@SignUP,
+                            "Email already exists or missing field",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                }
+
+
+            })
+        }
+    }
+
+    private fun uniSignIn(service: UniclubApi) {
+        service.signIN(mail, password).enqueue(object : Callback<LoginResponse> {
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                if (t is IOException)
+                    Log.d("lol", "lol")
+            }
+
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(this@SignUP, response.body()!!.accessToken, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        })
+    }
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
@@ -286,7 +374,6 @@ class SignUP : AppCompatActivity(), Validation {
 
     }
 
-
     private fun formFill() {
 
         edUsername.afterTextChanged {
@@ -330,7 +417,7 @@ class SignUP : AppCompatActivity(), Validation {
                 if (btnSignup.isEnabled) {
                     val name = edUsername.text.toString()
 
-                    fName = name.substring(0, name.indexOf(" ")+1)
+                    fName = name.substring(0, name.indexOf(" ") + 1)
                     lName = name.substring(name.lastIndexOf(" ") + 1, name.length)
                     gender = edGender.text.toString()
                     mail = edEmail.text.toString()
@@ -351,7 +438,6 @@ class SignUP : AppCompatActivity(), Validation {
 
 
     }
-
 
     private fun checkPermis(): Boolean {
         val listPermis = ArrayList<String>()
@@ -374,54 +460,6 @@ class SignUP : AppCompatActivity(), Validation {
 
         return true
     }
-
-
-    private fun uniSignUP() {
-        val service = UniclubApi.create()
-        if (mCurrentPhotoPath!=""){
-            service.signUP(fName,lName,birthday,gender,mail,password,password,adress,image).enqueue(object : Callback<SignUpResponse>{
-                override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
-
-                    if (t is IOException)
-                        Toast.makeText(this@SignUP,"Network faillure",Toast.LENGTH_SHORT).show()
-                    else
-                        Toast.makeText(this@SignUP,"conversion error",Toast.LENGTH_SHORT).show()
-
-                }
-
-                override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
-                    if (response.isSuccessful){
-                        Toast.makeText(this@SignUP,response.body()!!.message,Toast.LENGTH_SHORT).show()
-
-                    }
-                }
-
-            })
-        }
-
-        else{
-            service.signUP(fName,lName,birthday,gender,mail,password,password,adress,MultipartBody.Part.createFormData("attachment", "", RequestBody.create(MediaType.parse("text/plain"), ""))).enqueue(object : Callback<SignUpResponse>{
-                override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
-                    if (t is IOException)
-                        Toast.makeText(this@SignUP,"Network faillure",Toast.LENGTH_SHORT).show()
-                    else
-                        Toast.makeText(this@SignUP,"conversion error",Toast.LENGTH_SHORT).show()
-
-                }
-
-                override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
-                    if (response.isSuccessful){
-                        Toast.makeText(this@SignUP,response.body()!!.message,Toast.LENGTH_SHORT).show()
-
-                    }
-                }
-
-            })
-        }
-    }
-
-
-
 
     private fun facebook() {
         btnFb.setReadPermissions(Arrays.asList("email", "public_profile"))
