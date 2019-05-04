@@ -29,6 +29,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.kou.uniclub.Activities.Home
 import com.kou.uniclub.Extensions.Validation
 import com.kou.uniclub.Model.Auth.LoginResponse
 import com.kou.uniclub.Model.Auth.SignUpResponse
@@ -303,6 +304,7 @@ class SignUP : AppCompatActivity(), Validation {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
                     PrefsManager.seToken(this@SignUP,response.body()!!.accessToken)
+                    startActivity(Intent(this@SignUP,Home::class.java))
                 }
             }
 

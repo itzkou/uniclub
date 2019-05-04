@@ -3,6 +3,7 @@ package com.kou.uniclub.Fragments
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,9 +23,10 @@ class Universities: Fragment() {
 
         fun newInstance():Universities = Universities()
     }
-
+//TODO("u fudging dumb findview by id all recycler views")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v=inflater.inflate(R.layout.fragment_univs,container,false)
+        val rvUnivs=v.findViewById<RecyclerView>(R.id.rvUnivs)
 
 
         //TODO(" network faullure causes null pointer exception")
@@ -36,6 +38,8 @@ class Universities: Fragment() {
 
             override fun onResponse(call: Call<UniversityResponse>, response: Response<UniversityResponse>) {
                 if(response.isSuccessful) {
+                    //TODO(" causes null pointer exception")
+
                     rvUnivs.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
                     rvUnivs.adapter = RvUnivsAdapter(response.body()!!.pagination.universities, activity!!)
                 }            }

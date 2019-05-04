@@ -17,9 +17,10 @@ import com.kou.uniclub.R
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 
 class HomeFeed : Fragment() {
-    private var cities = arrayOf("Ariana", "Tunis", "Bizerte")
+    private var cities = arrayOf("Region", "Ariana", "Tunis", "Bizerte")
     private var timings = arrayOf("All dates", "today", "upcoming", "passed")
     private var page: String? = null
     private var city: String? = null
@@ -43,24 +44,15 @@ class HomeFeed : Fragment() {
 
 
         rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
-
-
-
         spRegion.adapter = ArrayAdapter(activity!!, android.R.layout.simple_spinner_dropdown_item, cities)
         spRegion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | ic_settings | File Templates.
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 city = cities[position]
-
-                when (position) {
-                    0 -> regionFilter(rvHome, city!!)
-                    1 -> regionFilter(rvHome, city!!)
-                    2 -> regionFilter(rvHome, city!!)
-
-                }
+                if (position!=0)
+                regionFilter(rvHome, city!!)
 
             }
         }
@@ -69,13 +61,14 @@ class HomeFeed : Fragment() {
         spTiming.adapter = ArrayAdapter(activity!!, android.R.layout.simple_spinner_dropdown_item, timings)
         spTiming.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                null
+                Toast.makeText(activity!!,"on nothing sp timing",Toast.LENGTH_SHORT).show()
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
 
                 when (position) {
+                    //TODO("all dates will be by prefs")
                     0 -> allDates(rvHome)
                     1 -> today(rvHome)
                     2 -> upcoming(rvHome)
@@ -95,14 +88,19 @@ class HomeFeed : Fragment() {
         val service = UniclubApi.create()
         service.getUpcomingEvents().enqueue(object : Callback<EventListResponse> {
             override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
-                null
+                if (t is IOException)
+                    Toast.makeText(activity!!, "Network Faillure", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
                 if (response.isSuccessful) {
-                    upEvents.addAll(response.body()!!.pagination.events)
-                    page = response.body()!!.pagination.nextPageUrl
-                    rv.adapter = RvHomeFeedAdapter(upEvents, activity!!)
+                    if (response.body()!!.pagination.events.size > 0) {
+                        upEvents.addAll(response.body()!!.pagination.events)
+                        page = response.body()!!.pagination.nextPageUrl
+                        rv.adapter = RvHomeFeedAdapter(upEvents, activity!!)
+
+                    } else
+                        Toast.makeText(activity!!, "There are no upcoming events", Toast.LENGTH_SHORT).show()
 
 
                 }
@@ -256,15 +254,14 @@ class HomeFeed : Fragment() {
         })
     }
 
-    private fun regionFilter(rv: RecyclerView, region: String) {
+    private fun regionFilter(rv: RecyclerView, city: String) {
         val service = UniclubApi.create()
-        service.showByRegion(region).enqueue(object : Callback<EventListResponse> {
+        service.showByRegion(city).enqueue(object : Callback<EventListResponse> {
             override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
             }
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
                 if (response.isSuccessful) {
-
                     page = response.body()!!.pagination.nextPageUrl
                     val adapter = RvHomeFeedAdapter(response.body()!!.pagination.events, activity!!)
                     rv.adapter = adapter
@@ -281,10 +278,11 @@ class HomeFeed : Fragment() {
                             }
                         }
                     })
-
-                    if (!response.body()!!.success)
-                        Toast.makeText(activity!!, "No events here wait soon :)", Toast.LENGTH_SHORT).show()
                 }
+
+                else if(response.code()==404)
+                    Toast.makeText(activity!!, "There are no events here!", Toast.LENGTH_SHORT).show()
+
 
 
             }
@@ -302,7 +300,7 @@ class HomeFeed : Fragment() {
                 override fun onResponse(call: Call<EventListResponse>, response1: Response<EventListResponse>) {
                     if (response1.isSuccessful) {
 
-                        if (page != "null") {
+                        if (page != null) {
                             Log.d("paginatos", "${response1.body()!!.pagination.nextPageUrl}")
                             adapter.addData(response1.body()!!.pagination.events)
                             page = response1.body()!!.pagination.nextPageUrl

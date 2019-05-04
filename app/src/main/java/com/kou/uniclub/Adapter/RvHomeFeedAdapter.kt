@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.airbnb.lottie.LottieAnimationView
+import com.kou.uniclub.Activities.Authentification.SignUP
 import com.kou.uniclub.Activities.EventDetails
 import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Model.User.FavoriteResponse
@@ -24,6 +25,7 @@ import kotlinx.android.synthetic.main.row_event_feed.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -70,27 +72,30 @@ class RvHomeFeedAdapter (val events :ArrayList<EventX>, val context: Context): R
             if(PrefsManager.geToken(context)!=null)
             { //TODO("change drawable color")
                 val service=UniclubApi.create()
-                service.favorite(PrefsManager.geToken(context)!!,event.id).enqueue(object: Callback<FavoriteResponse>{
+                service.favorite("Bearer "+PrefsManager.geToken(context)!!,event.id).enqueue(object: Callback<FavoriteResponse>{
                     override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
-                            Toast.makeText(context,t.message,Toast.LENGTH_SHORT).show()
+                        if (t is IOException)
+                            Toast.makeText(context,"Network faillure",Toast.LENGTH_SHORT).show()
                             }
 
                     override fun onResponse(call: Call<FavoriteResponse>, response: Response<FavoriteResponse>) {
                         Toast.makeText(context,response.body()!!.message,Toast.LENGTH_SHORT).show()
-
+                        holder.fav.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_logo))
                     }
 
                 })
             }
             else
             {
+                holder.fav.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite))
 
                 val dialogView = LayoutInflater.from(context).inflate(R.layout.builder_feature_access, null)
                 val anim=dialogView.findViewById<LottieAnimationView>(R.id.animAuth)
                 val builder = AlertDialog.Builder(context)
                 builder.setView(dialogView)
+                anim.playAnimation()
                 builder.setPositiveButton("confirm") { dialog, which ->
-
+                    context.startActivity(Intent(context,SignUP::class.java))
                 }
 
                 builder.setNegativeButton(
@@ -100,7 +105,6 @@ class RvHomeFeedAdapter (val events :ArrayList<EventX>, val context: Context): R
                 }
                 val dialog = builder.create()
                 dialog.show()
-                anim.playAnimation()
 
             }
         }
@@ -143,7 +147,6 @@ class RvHomeFeedAdapter (val events :ArrayList<EventX>, val context: Context): R
     fun addData(listItems: ArrayList<EventX>) {
         val size = this.events.size
         val sizeNew = listItems.size
-        Log.d("sizespoo",events.size.toString())
 
         if (size<sizeNew+size) {
             this.events.addAll(listItems)

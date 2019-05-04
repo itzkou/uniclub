@@ -6,5 +6,9 @@ data class EventListResponse(
     @SerializedName("data")
     val pagination: Pagination,
     @SerializedName("success")
-    val success: Boolean
-)
+    val success: Boolean,
+    @SerializedName("message")
+    val msg: String
+
+
+    )

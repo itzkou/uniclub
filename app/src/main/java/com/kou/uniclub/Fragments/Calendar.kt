@@ -3,9 +3,10 @@ package com.kou.uniclub.Fragments
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.CardView
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,10 +32,9 @@ class Calendar: Fragment() {
 
     companion object {
         fun newInstance(): Calendar = Calendar()
-
     }
 
-    lateinit var mCalendar:MaterialCalendarView
+    var mCalendar:MaterialCalendarView?=null
 
 
 
@@ -43,25 +43,28 @@ class Calendar: Fragment() {
         val v = inflater.inflate(R.layout.fragment_calendar, container, false)
         val rvCalendar = v.findViewById<RecyclerView>(R.id.rvCalendar)
         val rvMyevents = v.findViewById<RecyclerView>(R.id.rvMyEvents)
-        val cv = v.findViewById<CardView>(R.id.calendarView)
         val show = v.findViewById<ImageView>(R.id.showCal)
-        val hide = v.findViewById<ImageView>(R.id.hideCal)
-         mCalendar = v.findViewById(R.id.mCalendar)
-        MyEvents(rvMyevents)
-        Days(rvCalendar)
+        miniCalendar(rvCalendar)
 
-        cv.visibility = View.INVISIBLE
-        cv.alpha = 0F
+
         show.setOnClickListener {
-            cv.animate().alpha(1F).duration = 1000
-            cv.visibility = View.VISIBLE
+            val dialogView = LayoutInflater.from(activity!!).inflate(R.layout.builder_my_calendar, null)
+            val hide = dialogView .findViewById<ImageView>(R.id.hideCal)
+
+            mCalendar = dialogView.findViewById(R.id.mCalendar)
+
+            val builder = AlertDialog.Builder(activity!!)
+            builder.setView(dialogView)
+
+            val dialog = builder.create()
+            dialog.show()
+            participations(rvMyevents)
+
+            hide.setOnClickListener { dialog.dismiss() }
 
         }
 
 
-        hide.setOnClickListener {
-            cv.visibility = View.INVISIBLE
-        }
 
 
 
@@ -76,11 +79,12 @@ class Calendar: Fragment() {
 
 
 
-    fun MyEvents(recyclerView: RecyclerView){
+
+    private fun participations(recyclerView: RecyclerView){
         val service= UniclubApi.create()
         service.getEventFeed().enqueue(object: Callback<EventListResponse> {
             override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
-null            }
+         }
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
                 if(response.isSuccessful)
@@ -93,15 +97,15 @@ null            }
                     {   val format = SimpleDateFormat("yyyy-MM-dd")
                         val current=CalendarDay.from(format.parse(participations[i].startTime))
 
-                        mCalendar.addDecorator(object : DayViewDecorator {
+                        mCalendar!!.addDecorator(object : DayViewDecorator {
                             override fun shouldDecorate(day: CalendarDay?): Boolean {
 
-                                return day!!.equals(current)
+                                return day!! == current
                             }
 
                             override fun decorate(view: DayViewFacade?) {
                                 view!!.setSelectionDrawable(ContextCompat.getDrawable(activity!!,R.drawable.orange_circle)!!)
-
+                                view.addSpan(ForegroundColorSpan(ContextCompat.getColor(activity!!,R.color.white)))
 
 
                             }
@@ -115,7 +119,8 @@ null            }
         })
     }
 
-    fun Days(recyclerView: RecyclerView){
+
+    private fun miniCalendar(recyclerView: RecyclerView){
         val calendar=java.util.Calendar.getInstance()
         calendar.add(java.util.Calendar.DAY_OF_MONTH,-2)
 
