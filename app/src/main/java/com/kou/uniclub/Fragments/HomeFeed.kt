@@ -291,7 +291,7 @@ class HomeFeed : Fragment() {
         })
     }
 
-    fun getMoreItems(adapter: RvHomeFeedAdapter) {
+    private fun getMoreItems(adapter: RvHomeFeedAdapter) {
         val service = UniclubApi.create()
         if (page != null)
             service.paginate(page!!).enqueue(object : Callback<EventListResponse> {

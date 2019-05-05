@@ -68,7 +68,7 @@ interface UniclubApi{
                     fun leave(@Header("Authorization") authToken:String,@Path("id")eventID:Int):Call<ParticipateResponse>
 
                     @GET("auth/getUserParticipatedEvents")
-                    fun getParticipations(@Header("Authorization") authToken:String,@Path("id")eventID:Int):Call<EventListResponse>
+                    fun getParticipations(@Header("Authorization") authToken:String):Call<EventListResponse>
 
                 /************************* User Follows ********************/
                     @POST("auth/follow/{id}")

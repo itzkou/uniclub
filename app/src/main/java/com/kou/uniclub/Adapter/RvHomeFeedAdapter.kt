@@ -90,6 +90,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
                             ) {
                                 Toast.makeText(context, response.body()!!.message, Toast.LENGTH_SHORT).show()
                                 isLiked = true
+                                holder.sparkle.playAnimation()
                                 holder.fav.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_logo))
                             }
 
@@ -99,8 +100,6 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
                     service.unfavorite("Bearer " + PrefsManager.geToken(context)!!, event.id)
                         .enqueue(object : Callback<FavoriteResponse> {
                             override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
-                                if (t is IOException)
-                                    Log.d("mylikes", t.message.toString())
                             }
 
                             override fun onResponse(
@@ -173,7 +172,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
         val place = view.place!!
         val fav = view.favorite!!
         val pic = view.im_event!!
-        val card = view.card_feed!!
+        val sparkle = view.sparkle!!
 
     }
 

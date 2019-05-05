@@ -30,7 +30,7 @@
                        app:srcCompat="@drawable/eventos"
                        app:layout_collapseMode="parallax"
                        android:fitsSystemWindows="true"
-                       android:scaleType="center" />
+                       android:scaleType="center" android:id="@+id/imEvent"/>
 
             <android.support.v7.widget.Toolbar
                     android:layout_width="match_parent"
@@ -62,7 +62,7 @@
             <TextView android:layout_gravity="left"
                       android:layout_width="320dp"
                       android:layout_height="wrap_content"
-                      android:id="@+id/tv_program"
+                      android:id="@+id/tvTime"
                       android:layout_marginTop="16dp"
                       android:layout_marginStart="8dp"
                       android:layout_marginEnd="8dp"
@@ -81,10 +81,10 @@
                       android:drawableStart="@drawable/ic_regiong"
                       android:drawablePadding="16dp"
 
-            />
+                      android:id="@+id/tvLocation"/>
 
             <TextView android:layout_gravity="left"
-                      android:id="@+id/tv_eventDesc"
+                      android:id="@+id/tvEventDesc"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:layout_marginTop="16dp"
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_participate"
                     android:layout_marginTop="16dp"
-            />
+                    android:id="@+id/btnParticipate"/>
             <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                       xmlns:tools="http://schemas.android.com/tools"
                       android:layout_width="match_parent"

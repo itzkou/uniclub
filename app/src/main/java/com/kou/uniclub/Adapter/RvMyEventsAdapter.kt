@@ -51,4 +51,15 @@ class Holder(view: View):RecyclerView.ViewHolder(view){
 
 }
 
+    fun addData(listItems: java.util.ArrayList<EventX>) {
+        val size = this.events.size
+        val sizeNew = listItems.size
+
+        if (size < sizeNew + size) {
+            this.events.addAll(listItems)
+            notifyItemRangeInserted(size, sizeNew)
+        }
+
+    }
+
 }
