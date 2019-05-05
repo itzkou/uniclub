@@ -26,6 +26,7 @@ class HomeFeed : Fragment() {
     private var city: String? = null
     private var upEvents: ArrayList<EventX> = arrayListOf()
 
+
 //TODO("onDetaach close web service calls")
 
 
@@ -41,9 +42,9 @@ class HomeFeed : Fragment() {
         val spTiming = v.findViewById<Spinner>(R.id.sp_timing)
         val spRegion = v.findViewById<Spinner>(R.id.spRegion)
 
+    rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
 
 
-        rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
         spRegion.adapter = ArrayAdapter(activity!!, android.R.layout.simple_spinner_dropdown_item, cities)
         spRegion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -152,7 +153,6 @@ class HomeFeed : Fragment() {
         val service = UniclubApi.create()
         service.getEventFeed().enqueue(object : Callback<EventListResponse> {
             override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
-                null
             }
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
@@ -160,6 +160,7 @@ class HomeFeed : Fragment() {
                     page = response.body()!!.pagination.nextPageUrl
                     val adapter = RvHomeFeedAdapter(response.body()!!.pagination.events, activity!!)
                     rv.adapter = adapter
+
 
                     //Pagination
 
@@ -281,7 +282,7 @@ class HomeFeed : Fragment() {
                 }
 
                 else if(response.code()==404)
-                    Toast.makeText(activity!!, "There are no events here!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity!!, "There are no events !", Toast.LENGTH_SHORT).show()
 
 
 

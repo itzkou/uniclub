@@ -6,12 +6,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import com.kou.uniclub.Activities.ClubDetails
 import com.kou.uniclub.Model.Club.Club
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.row_club.view.*
 
-class RvClubsAdapter(val clubs :List<Club>, val context: Context): RecyclerView.Adapter<RvClubsAdapter.Holder>() {
+class RvClubsAdapter(val clubs :ArrayList<Club>, val context: Context): RecyclerView.Adapter<RvClubsAdapter.Holder>() {
     companion object {
         var club_id:Int?=null
     }
@@ -24,7 +25,10 @@ class RvClubsAdapter(val clubs :List<Club>, val context: Context): RecyclerView.
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val club: Club = clubs[position]
-            holder.title.text=club.name
+        val anim= AnimationUtils.loadAnimation(context,R.anim.anim_homefeed)
+        holder.root.animation=anim
+        holder.title.text=club.name
+
         holder.root.setOnClickListener {
             club_id=club.id
             context.startActivity(Intent(context, ClubDetails::class.java))
@@ -32,8 +36,8 @@ class RvClubsAdapter(val clubs :List<Club>, val context: Context): RecyclerView.
     }
 
     class Holder(view: View) : RecyclerView.ViewHolder(view)
-    { val title= view.club_title
-        val root=view.rootClub
+    { val title= view.club_title!!
+        val root= view.rootClub!!
         //val image= view.im_club
     }
 

@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.airbnb.lottie.LottieAnimationView
 import com.kou.uniclub.Activities.Authentification.SignUP
@@ -30,7 +31,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class RvHomeFeedAdapter (val events :ArrayList<EventX>, val context: Context): RecyclerView.Adapter<RvHomeFeedAdapter.Holder>() {
+class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
+    RecyclerView.Adapter<RvHomeFeedAdapter.Holder>() {
 
     companion object {
         var event_id: Int? = null
@@ -38,11 +40,15 @@ class RvHomeFeedAdapter (val events :ArrayList<EventX>, val context: Context): R
     }
 
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): Holder {
 
-        return Holder(LayoutInflater.from(parent.context).inflate(com.kou.uniclub.R.layout.row_event_feed, parent, false))
+        return Holder(
+            LayoutInflater.from(parent.context).inflate(
+                com.kou.uniclub.R.layout.row_event_feed,
+                parent,
+                false
+            )
+        )
     }
 
     override fun getItemCount(): Int {
@@ -51,51 +57,81 @@ class RvHomeFeedAdapter (val events :ArrayList<EventX>, val context: Context): R
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val event: EventX = events[position]
-            //date stuff
+        //date stuff
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date = format.parse(event.startTime)
         val day = DateFormat.format("dd", date) as String
-        val month=DateFormat.format("MMM",date) as String
+        val month = DateFormat.format("MMM", date) as String
 
-
-        holder.title.text=event.name
-        holder.place.text=event.location
-        holder.month.text=month
-        holder.day.text=day
-            if(!event.photo.isEmpty())
+        holder.title.text = event.name
+        holder.place.text = event.location
+        holder.month.text = month
+        holder.day.text = day
+        if (!event.photo.isEmpty())
             Picasso.get().load(event.photo).into(holder.pic)
         else holder.pic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.im_event))
 
 
-
+        var isLiked = false
         holder.fav.setOnClickListener {
-            if(PrefsManager.geToken(context)!=null)
-            { //TODO("change drawable color")
-                val service=UniclubApi.create()
-                service.favorite("Bearer "+PrefsManager.geToken(context)!!,event.id).enqueue(object: Callback<FavoriteResponse>{
-                    override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
-                        if (t is IOException)
-                            Toast.makeText(context,"Network faillure",Toast.LENGTH_SHORT).show()
+            if (PrefsManager.geToken(context) != null) {
+                if (!isLiked) {
+                    val service = UniclubApi.create()
+                    service.favorite("Bearer " + PrefsManager.geToken(context)!!, event.id)
+                        .enqueue(object : Callback<FavoriteResponse> {
+                            override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
+                                if (t is IOException)
+                                    Toast.makeText(context, "Network faillure", Toast.LENGTH_SHORT).show()
                             }
 
-                    override fun onResponse(call: Call<FavoriteResponse>, response: Response<FavoriteResponse>) {
-                        Toast.makeText(context,response.body()!!.message,Toast.LENGTH_SHORT).show()
-                        holder.fav.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_logo))
-                    }
+                            override fun onResponse(
+                                call: Call<FavoriteResponse>,
+                                response: Response<FavoriteResponse>
+                            ) {
+                                Toast.makeText(context, response.body()!!.message, Toast.LENGTH_SHORT).show()
+                                isLiked = true
+                                holder.fav.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_logo))
+                            }
 
-                })
-            }
-            else
-            {
-                holder.fav.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite))
+                        })
+                } else if (isLiked) {
+                    val service = UniclubApi.create()
+                    service.unfavorite("Bearer " + PrefsManager.geToken(context)!!, event.id)
+                        .enqueue(object : Callback<FavoriteResponse> {
+                            override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
+                                if (t is IOException)
+                                    Log.d("mylikes", t.message.toString())
+                            }
+
+                            override fun onResponse(
+                                call: Call<FavoriteResponse>,
+                                response: Response<FavoriteResponse>
+                            ) {
+                                if (response.isSuccessful) {
+                                    Toast.makeText(context, response.body()!!.message, Toast.LENGTH_SHORT).show()
+                                    isLiked = false
+                                    holder.fav.setImageDrawable(
+                                        ContextCompat.getDrawable(
+                                            context,
+                                            R.drawable.ic_favorite
+                                        )
+                                    )
+                                }
+                            }
+
+                        })
+
+                }
+            } else {
+                holder.fav.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite))
 
                 val dialogView = LayoutInflater.from(context).inflate(R.layout.builder_feature_access, null)
-                val anim=dialogView.findViewById<LottieAnimationView>(R.id.animAuth)
+                val anim = dialogView.findViewById<LottieAnimationView>(R.id.animAuth)
                 val builder = AlertDialog.Builder(context)
                 builder.setView(dialogView)
                 anim.playAnimation()
                 builder.setPositiveButton("confirm") { dialog, which ->
-                    context.startActivity(Intent(context,SignUP::class.java))
+                    context.startActivity(Intent(context, SignUP::class.java))
                 }
 
                 builder.setNegativeButton(
@@ -113,15 +149,15 @@ class RvHomeFeedAdapter (val events :ArrayList<EventX>, val context: Context): R
         holder.pic.setOnClickListener {
 
 
-            event_id=event.id
+            event_id = event.id
             Log.d("id_ev", event_id.toString())
             context.startActivity(Intent(context, EventDetails::class.java))
 
         }
 
-        holder.pic.setOnLongClickListener(object :View.OnLongClickListener{
+        holder.pic.setOnLongClickListener(object : View.OnLongClickListener {
             override fun onLongClick(v: View?): Boolean {
-                ImagePreviewer().show(v!!.context,holder.pic)
+                ImagePreviewer().show(v!!.context, holder.pic)
                 return false
             }
 
@@ -130,25 +166,23 @@ class RvHomeFeedAdapter (val events :ArrayList<EventX>, val context: Context): R
     }
 
 
-
     class Holder(view: View) : RecyclerView.ViewHolder(view) {
         val title = view.title!!
         val day = view.day!!
         val month = view.month!!
         val place = view.place!!
-        val fav= view.favorite!!
-        //TODO("don forget parsing image with picasso in On bindViewholder")
-        val pic= view.im_event!!
+        val fav = view.favorite!!
+        val pic = view.im_event!!
+        val card = view.card_feed!!
 
     }
-
 
 
     fun addData(listItems: ArrayList<EventX>) {
         val size = this.events.size
         val sizeNew = listItems.size
 
-        if (size<sizeNew+size) {
+        if (size < sizeNew + size) {
             this.events.addAll(listItems)
             notifyItemRangeInserted(size, sizeNew)
         }

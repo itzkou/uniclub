@@ -11,7 +11,7 @@ import com.kou.uniclub.Model.University.University
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.row_university.view.*
 
-class RvUnivsAdapter(val universities :List<University>, val context: Context) : RecyclerView.Adapter<RvUnivsAdapter.Holder>(){
+class RvUnivsAdapter(val universities :ArrayList<University>, val context: Context) : RecyclerView.Adapter<RvUnivsAdapter.Holder>(){
 
     companion object {
         var mID: Int? = null

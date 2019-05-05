@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ClubsResponse(
     @SerializedName("data")
-    val clubs: List<Club>,
+    val clubs: ArrayList<Club>,
     @SerializedName("success")
     val success: Boolean
 )

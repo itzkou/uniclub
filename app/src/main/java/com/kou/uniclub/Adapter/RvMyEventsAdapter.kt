@@ -13,8 +13,9 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.row_event_feed.view.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
-class RvMyEventsAdapter(val events :MutableList<EventX>, val context: Context): RecyclerView.Adapter<RvMyEventsAdapter.Holder>() {
+class RvMyEventsAdapter(val events :ArrayList<EventX>, val context: Context): RecyclerView.Adapter<RvMyEventsAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): RvMyEventsAdapter.Holder {
         return Holder(LayoutInflater.from(parent.context).inflate(com.kou.uniclub.R.layout.row_event_feed, parent, false))
 

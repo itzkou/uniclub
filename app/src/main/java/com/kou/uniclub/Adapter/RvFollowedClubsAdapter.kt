@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.kou.uniclub.Model.Event.EventX
 import kotlinx.android.synthetic.main.row_followed_clubs.view.*
 
-class RvFollowedClubsAdapter(val events :MutableList<EventX>, val context: Context): RecyclerView.Adapter<RvFollowedClubsAdapter.Holder>() {
+class RvFollowedClubsAdapter(val events :ArrayList<EventX>, val context: Context): RecyclerView.Adapter<RvFollowedClubsAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, position: Int):RvFollowedClubsAdapter.Holder {
         return Holder(LayoutInflater.from(parent.context).inflate(com.kou.uniclub.R.layout.row_liked_event, parent, false))
     }
