@@ -8,7 +8,6 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.kou.uniclub.Adapter.RvCalendarAdapter
-import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Adapter.RvMyEventsAdapter
 import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Model.Event.EventX
@@ -41,7 +39,8 @@ class Calendar : Fragment() {
         fun newInstance(): Calendar = Calendar()
     }
 
-    private var mCalendar: MaterialCalendarView? = null
+    private lateinit var mCalendar: MaterialCalendarView
+    private var eventList:ArrayList<EventX>?=null
     private var page: String? = null
 
 
@@ -50,39 +49,32 @@ class Calendar : Fragment() {
         val rvCalendar = v.findViewById<RecyclerView>(R.id.rvCalendar)
         val rvMyevents = v.findViewById<RecyclerView>(R.id.rvMyEvents)
         val show = v.findViewById<ImageView>(R.id.showCal)
+
+
+        myEvents(rvMyevents)
+
         miniCalendar(rvCalendar)
-
-
         show.setOnClickListener {
             val dialogView = LayoutInflater.from(activity!!).inflate(R.layout.builder_my_calendar, null)
-            val hide = dialogView.findViewById<ImageView>(R.id.hideCal)
-
             mCalendar = dialogView.findViewById(R.id.mCalendar)
-
+            val hide = dialogView.findViewById<ImageView>(R.id.hideCal)
             val builder = AlertDialog.Builder(activity!!)
             builder.setView(dialogView)
-
             val dialog = builder.create()
+
+            decoration(eventList!!,activity!!,mCalendar)
             dialog.show()
-            participations(rvMyevents)
 
             hide.setOnClickListener { dialog.dismiss() }
 
         }
 
 
-
-
-
-
-
-
-
         return v
     }
 
 
-    private fun participations(recyclerView: RecyclerView) {
+    private fun myEvents(recyclerView: RecyclerView) {
         val service = UniclubApi.create()
         service.getParticipations("Bearer " + PrefsManager.geToken(activity!!))
             .enqueue(object : Callback<EventListResponse> {
@@ -96,7 +88,7 @@ class Calendar : Fragment() {
                         recyclerView.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
                         val adapter = RvMyEventsAdapter(participations, activity!!)
                         recyclerView.adapter = adapter
-                        decoration(participations,activity!!)
+                        eventList=response.body()!!.pagination.events
 
                         //Pagination
 
@@ -110,8 +102,6 @@ class Calendar : Fragment() {
                                 }
                             }
                         })
-
-
 
 
                     }
@@ -151,7 +141,6 @@ class Calendar : Fragment() {
                     if (response1.isSuccessful) {
 
                         if (page != null) {
-                            Log.d("paginatos", "${response1.body()!!.pagination.nextPageUrl}")
                             adapter.addData(response1.body()!!.pagination.events)
                             page = response1.body()!!.pagination.nextPageUrl
 
@@ -163,12 +152,12 @@ class Calendar : Fragment() {
 
     }
 
-    private fun decoration(events:ArrayList<EventX>,context: Context) {
+    private fun decoration(events: ArrayList<EventX>, context: Context, calendarView: MaterialCalendarView) {
         for (i in 0 until events.size) {
             val format = SimpleDateFormat("yyyy-MM-dd")
             val current = CalendarDay.from(format.parse(events[i].startTime))
 
-            mCalendar!!.addDecorator(object : DayViewDecorator {
+            calendarView.addDecorator(object : DayViewDecorator {
                 override fun shouldDecorate(day: CalendarDay?): Boolean {
 
                     return day!! == current
