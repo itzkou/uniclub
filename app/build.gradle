@@ -64,6 +64,9 @@ dependencies {
     implementation 'com.airbnb.android:lottie:2.7.0'
    //toasty
     implementation 'com.github.GrenderG:Toasty:1.4.2'
+    //shazam navigation_menu
+    implementation 'com.github.ittianyu:BottomNavigationViewEx:2.0.4'
+
 
 
 

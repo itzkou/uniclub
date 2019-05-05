@@ -8,21 +8,32 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kou.uniclub.Adapter.VpHomeAdapter
+import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Fragments.*
 import com.kou.uniclub.R
+import com.kou.uniclub.SharedUtils.PrefsManager
 import kotlinx.android.synthetic.main.activity_home.*
 
 class Home : AppCompatActivity() {
-    //navigation stuff
+    //navigation_menu stuff
     private var prevMenuItem: MenuItem? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        //navigation
+        //navigation_menu
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        navigation.enableAnimation(false)
+        navigation.enableShiftingMode(false)
+        navigation.enableItemShiftingMode(false)
+        navigation.itemHeight = BottomNavigationViewEx.dp2px(this, 56f)
+        navigation.setIconsMarginTop(BottomNavigationViewEx.dp2px(this, 16f))
+
+
 
         //viewpager
 
@@ -53,8 +64,7 @@ class Home : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_calendar -> {
-
-                vp_home.currentItem=1
+                    vp_home.currentItem=1
 
                 return@OnNavigationItemSelectedListener true
             }
@@ -69,8 +79,8 @@ class Home : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_profile -> {
-                //TODO ALERT if UserO not loggedIN
                 vp_home.currentItem=4
+
 
 
 
@@ -85,15 +95,17 @@ class Home : AppCompatActivity() {
 
         val homeFeed=HomeFeed.newInstance()
         val calendar=Calendar.newInstance()
-        val univs=Universities.newInstance()
-        val notif=Notification.newInstance()
+        val clubs=Universities.newInstance()
+        val messagerie=Notification.newInstance()
         val profile=Profile.newInstance()
+        val notAuth=NotAuth.newInstance()
 
         adapter.addFragment(homeFeed)
         adapter.addFragment(calendar)
-        adapter.addFragment(univs)
-        adapter.addFragment(notif)
+        adapter.addFragment(clubs)
+        adapter.addFragment(messagerie)
         adapter.addFragment(profile)
+
         viewPager.adapter=adapter
 
 

@@ -16,11 +16,13 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.kou.uniclub.Adapter.RvCalendarAdapter
 import com.kou.uniclub.Adapter.RvMyEventsAdapter
+import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
+import com.kou.uniclub.SharedUtils.PrefsManager.Companion.geToken
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
@@ -50,13 +52,14 @@ class Calendar : Fragment() {
         rvMyevents = v.findViewById(R.id.rvMyEvents)
         val show = v.findViewById<ImageView>(R.id.showCal)
 
-
+        if (PrefsManager.geToken(activity!!)!=null)
         myEvents(rvMyevents)
 
         miniCalendar(rvCalendar)
         show.setOnClickListener {
             val dialogView = LayoutInflater.from(activity!!).inflate(R.layout.builder_my_calendar, null)
             mCalendar = dialogView.findViewById(R.id.mCalendar)
+
             val hide = dialogView.findViewById<ImageView>(R.id.hideCal)
             val builder = AlertDialog.Builder(activity!!)
             builder.setView(dialogView)
@@ -75,12 +78,15 @@ class Calendar : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        if (PrefsManager.geToken(activity!!)!=null)
         myEvents(rvMyevents)
+        else
+            BuilderAuth.showDialog(activity!!)
     }
 
     private fun myEvents(recyclerView: RecyclerView) {
         val service = UniclubApi.create()
-        service.getParticipations("Bearer " + PrefsManager.geToken(activity!!))
+        service.getParticipations("Bearer "+PrefsManager.geToken(activity!!))
             .enqueue(object : Callback<EventListResponse> {
                 override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
                 }
