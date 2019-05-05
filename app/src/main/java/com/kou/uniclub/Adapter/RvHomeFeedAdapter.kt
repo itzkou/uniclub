@@ -10,11 +10,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.airbnb.lottie.LottieAnimationView
 import com.kou.uniclub.Activities.Authentification.SignUP
 import com.kou.uniclub.Activities.EventDetails
+import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Model.User.FavoriteResponse
 import com.kou.uniclub.Network.UniclubApi
@@ -22,6 +22,7 @@ import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
 import com.kou.uniclub.UI.ImagePreviewer
 import com.squareup.picasso.Picasso
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.row_event_feed.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -81,17 +82,15 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
                         .enqueue(object : Callback<FavoriteResponse> {
                             override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
                                 if (t is IOException)
-                                    Toast.makeText(context, "Network faillure", Toast.LENGTH_SHORT).show()
-                            }
+                                    Toasty.warning(context, "Network faillure", Toast.LENGTH_SHORT, true).show()                            }
 
                             override fun onResponse(
                                 call: Call<FavoriteResponse>,
                                 response: Response<FavoriteResponse>
                             ) {
-                                Toast.makeText(context, response.body()!!.message, Toast.LENGTH_SHORT).show()
                                 isLiked = true
                                 holder.sparkle.playAnimation()
-                                holder.fav.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_logo))
+                                holder.fav.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorito))
                             }
 
                         })
@@ -100,6 +99,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
                     service.unfavorite("Bearer " + PrefsManager.geToken(context)!!, event.id)
                         .enqueue(object : Callback<FavoriteResponse> {
                             override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
+                                Toasty.warning(context,"Network faillure",Toast.LENGTH_SHORT,true).show()
                             }
 
                             override fun onResponse(
@@ -107,12 +107,11 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
                                 response: Response<FavoriteResponse>
                             ) {
                                 if (response.isSuccessful) {
-                                    Toast.makeText(context, response.body()!!.message, Toast.LENGTH_SHORT).show()
                                     isLiked = false
                                     holder.fav.setImageDrawable(
                                         ContextCompat.getDrawable(
                                             context,
-                                            R.drawable.ic_favorite
+                                            R.drawable.ic_favoriteg
                                         )
                                     )
                                 }
@@ -122,24 +121,8 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
 
                 }
             } else {
-                holder.fav.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite))
 
-                val dialogView = LayoutInflater.from(context).inflate(R.layout.builder_feature_access, null)
-                val anim = dialogView.findViewById<LottieAnimationView>(R.id.animAuth)
-                val builder = AlertDialog.Builder(context)
-                builder.setView(dialogView)
-                anim.playAnimation()
-                builder.setPositiveButton("confirm") { dialog, which ->
-                    context.startActivity(Intent(context, SignUP::class.java))
-                }
-
-                builder.setNegativeButton(
-                    "Cancel"
-                ) { dialog, which ->
-                    dialog?.dismiss()
-                }
-                val dialog = builder.create()
-                dialog.show()
+                BuilderAuth.showDialog(context)
 
             }
         }

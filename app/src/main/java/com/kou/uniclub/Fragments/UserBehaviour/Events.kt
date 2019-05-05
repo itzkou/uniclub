@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.Toast
 import com.kou.uniclub.Adapter.RvFavoEventsAdapter
 import com.kou.uniclub.Model.User.MyfavoritesResponse
 import com.kou.uniclub.Network.UniclubApi
@@ -18,7 +17,6 @@ import com.kou.uniclub.SharedUtils.PrefsManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.IOException
 
 class Events : Fragment() {
     companion object {

@@ -62,7 +62,9 @@ dependencies {
     implementation 'com.facebook.android:facebook-login:4.40.0'
     //lottie
     implementation 'com.airbnb.android:lottie:2.7.0'
-   
+   //toasty
+    implementation 'com.github.GrenderG:Toasty:1.4.2'
+
 
 
 }

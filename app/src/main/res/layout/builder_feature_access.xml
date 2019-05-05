@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="wrap_content">
-    <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animAuth"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            app:lottie_fileName="authi.json"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-    <TextView   style="@style/builderAuth"
-              app:layout_constraintTop_toBottomOf="@id/animAuth" app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="16dp"/>
-</android.support.constraint.ConstraintLayout>
+<android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp" xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animAuth"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:lottie_fileName="authi.json"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+        <TextView style="@style/builderAuth"
+                  app:layout_constraintTop_toBottomOf="@id/animAuth" app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintStart_toStartOf="parent"/>
+    </android.support.constraint.ConstraintLayout>
+

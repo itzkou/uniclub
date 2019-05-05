@@ -12,7 +12,6 @@ import com.kou.uniclub.Adapter.RvUnivsAdapter
 import com.kou.uniclub.Model.University.UniversityResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
-import kotlinx.android.synthetic.main.fragment_univs.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

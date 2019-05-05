@@ -1,5 +1,6 @@
 package com.kou.uniclub.Fragments
 
+import android.media.Image
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
+import com.kou.uniclub.Extensions.BuilderSettings
 import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Network.UniclubApi
@@ -39,30 +41,30 @@ class HomeFeed : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_homefeed, container, false)
         val rvHome = v.findViewById<RecyclerView>(R.id.rvHome)
-        val spTiming = v.findViewById<Spinner>(R.id.sp_timing)
+        val spTiming = v.findViewById<Spinner>(R.id.spTiming)
         val spRegion = v.findViewById<Spinner>(R.id.spRegion)
+        val settings=v.findViewById<ImageView>(R.id.settings)
 
-    rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
 
-
+        rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
+        /********Filtre région ******/
         spRegion.adapter = ArrayAdapter(activity!!, android.R.layout.simple_spinner_dropdown_item, cities)
         spRegion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
+
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 city = cities[position]
-                if (position!=0)
-                regionFilter(rvHome, city!!)
+                if (position != 0)
+                    regionFilter(rvHome, city!!)
 
             }
         }
-
-        //filtre date
+        /********Filtre date ******/
         spTiming.adapter = ArrayAdapter(activity!!, android.R.layout.simple_spinner_dropdown_item, timings)
         spTiming.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                Toast.makeText(activity!!,"on nothing sp timing",Toast.LENGTH_SHORT).show()
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -78,6 +80,10 @@ class HomeFeed : Fragment() {
                 }
             }
 
+        }
+
+        settings.setOnClickListener {
+            BuilderSettings.showSettings(activity!!)
         }
         return v
     }
@@ -279,11 +285,8 @@ class HomeFeed : Fragment() {
                             }
                         }
                     })
-                }
-
-                else if(response.code()==404)
+                } else if (response.code() == 404)
                     Toast.makeText(activity!!, "There are no events !", Toast.LENGTH_SHORT).show()
-
 
 
             }
