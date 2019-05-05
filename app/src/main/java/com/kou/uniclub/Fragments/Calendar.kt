@@ -40,6 +40,7 @@ class Calendar : Fragment() {
     }
 
     private lateinit var mCalendar: MaterialCalendarView
+    private  lateinit var rvMyevents:RecyclerView
     private var eventList:ArrayList<EventX>?=null
     private var page: String? = null
 
@@ -47,7 +48,7 @@ class Calendar : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_calendar, container, false)
         val rvCalendar = v.findViewById<RecyclerView>(R.id.rvCalendar)
-        val rvMyevents = v.findViewById<RecyclerView>(R.id.rvMyEvents)
+        rvMyevents = v.findViewById(R.id.rvMyEvents)
         val show = v.findViewById<ImageView>(R.id.showCal)
 
 
@@ -61,7 +62,7 @@ class Calendar : Fragment() {
             val builder = AlertDialog.Builder(activity!!)
             builder.setView(dialogView)
             val dialog = builder.create()
-
+            //TODO("optimize decoration")
             decoration(eventList!!,activity!!,mCalendar)
             dialog.show()
 
@@ -73,6 +74,10 @@ class Calendar : Fragment() {
         return v
     }
 
+    override fun onResume() {
+        super.onResume()
+        myEvents(rvMyevents)
+    }
 
     private fun myEvents(recyclerView: RecyclerView) {
         val service = UniclubApi.create()

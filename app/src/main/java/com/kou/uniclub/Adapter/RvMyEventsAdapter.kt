@@ -41,13 +41,14 @@ class RvMyEventsAdapter(val events :ArrayList<EventX>, val context: Context): Re
         if(!event.photo.isEmpty())
             Picasso.get().load(event.photo).into(holder.pic)
         else holder.pic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.im_event))
+
     }
 class Holder(view: View):RecyclerView.ViewHolder(view){
     val title = view.title!!
     val day = view.day!!
     val month = view.month!!
     val place = view.place!!
-    val pic=view.im_event
+    val pic=view.im_event!!
 
 }
 
