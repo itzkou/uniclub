@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="300dp" xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
         <com.airbnb.lottie.LottieAnimationView
@@ -12,8 +12,11 @@
                 app:lottie_loop="true"
                 app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
-        <TextView style="@style/builderAuth"
-                  app:layout_constraintTop_toBottomOf="@id/animAuth" app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"/>
+    <TextView style="@style/builderAuth"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              android:layout_marginTop="8dp"
+              app:layout_constraintTop_toBottomOf="@+id/animAuth" app:layout_constraintBottom_toBottomOf="parent"
+              android:layout_marginBottom="8dp"/>
     </android.support.constraint.ConstraintLayout>
 

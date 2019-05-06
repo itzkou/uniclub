@@ -14,6 +14,7 @@ import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Fragments.*
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_home.*
 
 class Home : AppCompatActivity() {
@@ -65,6 +66,8 @@ class Home : AppCompatActivity() {
             }
             R.id.nav_calendar -> {
                     vp_home.currentItem=1
+                if(PrefsManager.geToken(this@Home)==null)
+                    BuilderAuth.showDialog(this@Home)
 
                 return@OnNavigationItemSelectedListener true
             }
@@ -75,11 +78,16 @@ class Home : AppCompatActivity() {
             }
             R.id.nav_notifications -> {
                 vp_home.currentItem=3
+                if(PrefsManager.geToken(this@Home)==null)
+                    BuilderAuth.showDialog(this@Home)
 
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_profile -> {
                 vp_home.currentItem=4
+                if(PrefsManager.geToken(this@Home)==null)
+                    BuilderAuth.showDialog(this@Home)
+
 
 
 
@@ -98,7 +106,7 @@ class Home : AppCompatActivity() {
         val clubs=Universities.newInstance()
         val messagerie=Notification.newInstance()
         val profile=Profile.newInstance()
-        val notAuth=NotAuth.newInstance()
+
 
         adapter.addFragment(homeFeed)
         adapter.addFragment(calendar)

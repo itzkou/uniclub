@@ -29,23 +29,26 @@ class Events : Fragment() {
         val v = inflater.inflate(R.layout.fragment_favorite_events, container, false)
         val rvFavo = v.findViewById<RecyclerView>(R.id.rvFavoEvents)
 
-        Log.d("toto", PrefsManager.geToken(activity!!).toString())
         rvFavo.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
+            if (PrefsManager.geToken(activity!!)!=null) {
+                val service = UniclubApi.create()
+                service.getFavorites("Bearer " + PrefsManager.geToken(activity!!)!!)
+                    .enqueue(object : Callback<MyfavoritesResponse> {
+                        override fun onFailure(call: Call<MyfavoritesResponse>, t: Throwable) {
 
-        val service = UniclubApi.create()
-        service.getFavorites("Bearer "+PrefsManager.geToken(activity!!)!!).enqueue(object : Callback<MyfavoritesResponse> {
-            override fun onFailure(call: Call<MyfavoritesResponse>, t: Throwable) {
+                        }
 
+                        override fun onResponse(
+                            call: Call<MyfavoritesResponse>,
+                            response: Response<MyfavoritesResponse>
+                        ) {
+                            if (response.isSuccessful) {
+                                rvFavo.adapter = RvFavoEventsAdapter(response.body()!!.events, activity!!)
+                            }
+                        }
+
+                    })
             }
-
-            override fun onResponse(call: Call<MyfavoritesResponse>, response: Response<MyfavoritesResponse>) {
-                if (response.isSuccessful) {
-                    rvFavo.adapter = RvFavoEventsAdapter(response.body()!!.events, activity!!)
-                }
-            }
-
-        })
-
         return v
     }
 

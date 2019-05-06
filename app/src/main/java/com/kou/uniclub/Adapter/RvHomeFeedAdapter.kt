@@ -82,7 +82,8 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
                         .enqueue(object : Callback<FavoriteResponse> {
                             override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
                                 if (t is IOException)
-                                    Toasty.warning(context, "Network faillure", Toast.LENGTH_SHORT, true).show()                            }
+                                    Toasty.warning(context, "Network faillure", Toast.LENGTH_SHORT, true).show()
+                            }
 
                             override fun onResponse(
                                 call: Call<FavoriteResponse>,
@@ -99,7 +100,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
                     service.unfavorite("Bearer " + PrefsManager.geToken(context)!!, event.id)
                         .enqueue(object : Callback<FavoriteResponse> {
                             override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
-                                Toasty.warning(context,"Network faillure",Toast.LENGTH_SHORT,true).show()
+                                Toasty.warning(context, "Network faillure", Toast.LENGTH_SHORT, true).show()
                             }
 
                             override fun onResponse(
@@ -121,8 +122,8 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
 
                 }
             } else {
-
-                BuilderAuth.showDialog(context)
+                Toasty.custom(context,"Connect to use this feature",ContextCompat.getDrawable(context, R.drawable.ic_nav_profile),
+                    ContextCompat.getColor(context, R.color.orange),true).show()
 
             }
         }

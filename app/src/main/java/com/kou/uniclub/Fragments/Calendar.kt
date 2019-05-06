@@ -22,11 +22,11 @@ import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
-import com.kou.uniclub.SharedUtils.PrefsManager.Companion.geToken
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import es.dmoral.toasty.Toasty
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,39 +49,45 @@ class Calendar : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_calendar, container, false)
         val rvCalendar = v.findViewById<RecyclerView>(R.id.rvCalendar)
+        val token=PrefsManager.geToken(activity!!)
+
         rvMyevents = v.findViewById(R.id.rvMyEvents)
         val show = v.findViewById<ImageView>(R.id.showCal)
 
-        if (PrefsManager.geToken(activity!!)!=null)
-        myEvents(rvMyevents)
-
         miniCalendar(rvCalendar)
-        show.setOnClickListener {
-            val dialogView = LayoutInflater.from(activity!!).inflate(R.layout.builder_my_calendar, null)
-            mCalendar = dialogView.findViewById(R.id.mCalendar)
 
-            val hide = dialogView.findViewById<ImageView>(R.id.hideCal)
-            val builder = AlertDialog.Builder(activity!!)
-            builder.setView(dialogView)
-            val dialog = builder.create()
-            //TODO("optimize decoration")
-            decoration(eventList!!,activity!!,mCalendar)
-            dialog.show()
+        if (token!=null) {
+            myEvents(rvMyevents)
 
-            hide.setOnClickListener { dialog.dismiss() }
+            show.setOnClickListener {
+                val dialogView = LayoutInflater.from(activity!!).inflate(R.layout.builder_my_calendar, null)
+                mCalendar = dialogView.findViewById(R.id.mCalendar)
 
+                val hide = dialogView.findViewById<ImageView>(R.id.hideCal)
+                val builder = AlertDialog.Builder(activity!!)
+                builder.setView(dialogView)
+                val dialog = builder.create()
+                //TODO("optimize decoration")
+                decoration(eventList!!, activity!!, mCalendar)
+                dialog.show()
+
+                hide.setOnClickListener { dialog.dismiss() }
+
+            }
         }
 
 
         return v
     }
 
+
+
+
     override fun onResume() {
         super.onResume()
         if (PrefsManager.geToken(activity!!)!=null)
         myEvents(rvMyevents)
-        else
-            BuilderAuth.showDialog(activity!!)
+
     }
 
     private fun myEvents(recyclerView: RecyclerView) {
