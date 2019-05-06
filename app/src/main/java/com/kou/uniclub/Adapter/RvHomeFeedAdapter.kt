@@ -3,7 +3,6 @@ package com.kou.uniclub.Adapter
 import android.content.Context
 import android.content.Intent
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
 import android.util.Log
@@ -11,10 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.airbnb.lottie.LottieAnimationView
-import com.kou.uniclub.Activities.Authentification.SignUP
 import com.kou.uniclub.Activities.EventDetails
-import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Model.User.FavoriteResponse
 import com.kou.uniclub.Network.UniclubApi
@@ -122,8 +118,8 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
 
                 }
             } else {
-                Toasty.custom(context,"Connect to use this feature",ContextCompat.getDrawable(context, R.drawable.ic_nav_profile),
-                    ContextCompat.getColor(context, R.color.orange),true).show()
+                Toasty.custom(context, "Connect to use this feature", R.drawable.ic_nav_profile,R.color.moventa, Toasty.LENGTH_SHORT, true,
+                    true).show()
 
             }
         }

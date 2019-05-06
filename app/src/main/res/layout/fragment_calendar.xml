@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             android:layout_width="match_parent"
+                                             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                                              android:layout_height="match_parent">
 
 
@@ -54,7 +54,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" android:id="@+id/rvCalendar"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toBottomOf="@id/bar" android:layout_marginTop="16dp"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView7" android:layout_marginTop="13dp"/>
     <ImageView android:id="@+id/today"
                android:src="@drawable/today"
                android:layout_width="86dp"
@@ -71,7 +71,8 @@
 
               android:textColor="@color/white"
               app:layout_constraintEnd_toEndOf="@id/today" app:layout_constraintStart_toStartOf="@id/today"
-              app:layout_constraintBottom_toBottomOf="@id/today" app:layout_constraintTop_toTopOf="@id/today"/>
+              app:layout_constraintBottom_toBottomOf="@id/today" app:layout_constraintTop_toTopOf="@id/today"
+              android:id="@+id/textView7"/>
     <ImageView android:id="@+id/showCal" android:layout_width="22dp" android:layout_height="3dp"
           android:src="@drawable/stripo"
                android:layout_marginBottom="8dp"

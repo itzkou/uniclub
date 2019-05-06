@@ -16,6 +16,7 @@ import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
+import es.dmoral.toasty.Toasty
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,7 +44,7 @@ class HomeFeed : Fragment() {
         val rvHome = v.findViewById<RecyclerView>(R.id.rvHome)
         val spTiming = v.findViewById<Spinner>(R.id.spTiming)
         val spRegion = v.findViewById<Spinner>(R.id.spRegion)
-        val settings=v.findViewById<ImageView>(R.id.settings)
+        val settings = v.findViewById<ImageView>(R.id.settings)
 
 
         rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
@@ -106,11 +107,14 @@ class HomeFeed : Fragment() {
                         page = response.body()!!.pagination.nextPageUrl
                         rv.adapter = RvHomeFeedAdapter(upEvents, activity!!)
 
-                    } else
-                        Toast.makeText(activity!!, "There are no upcoming events", Toast.LENGTH_SHORT).show()
+                    }
 
 
-                }
+                } else if (response.code() == 404)
+                    Toasty.warning(
+                        activity!!, "No upcoming events", Toasty.LENGTH_SHORT,
+                        true
+                    ).show()
             }
 
 
@@ -182,7 +186,11 @@ class HomeFeed : Fragment() {
                     })
 
 
-                }
+                } else if (response.code() == 404)
+                    Toasty.warning(
+                        activity!!, "No events ", Toasty.LENGTH_SHORT,
+                        true
+                    ).show()
             }
 
 
@@ -219,7 +227,11 @@ class HomeFeed : Fragment() {
                     })
 
 
-                }
+                } else if (response.code() == 404)
+                    Toasty.warning(
+                        activity!!, "No events today", Toasty.LENGTH_SHORT,
+                        true
+                    ).show()
             }
 
 
@@ -254,7 +266,11 @@ class HomeFeed : Fragment() {
                     })
 
 
-                }
+                } else if (response.code() == 404)
+                    Toasty.warning(
+                        activity!!, "No passed events", Toasty.LENGTH_SHORT,
+                        true
+                    ).show()
             }
 
 
@@ -286,8 +302,10 @@ class HomeFeed : Fragment() {
                         }
                     })
                 } else if (response.code() == 404)
-                    Toast.makeText(activity!!, "There are no events !", Toast.LENGTH_SHORT).show()
-
+                    Toasty.warning(
+                        activity!!, "No events there", Toasty.LENGTH_SHORT,
+                        true
+                    ).show()
 
             }
 
@@ -305,12 +323,12 @@ class HomeFeed : Fragment() {
                     if (response1.isSuccessful) {
 
                         if (page != null) {
-                            Log.d("paginatos", "${response1.body()!!.pagination.nextPageUrl}")
                             adapter.addData(response1.body()!!.pagination.events)
                             page = response1.body()!!.pagination.nextPageUrl
 
-                        } else Toast.makeText(activity!!, "No more items", Toast.LENGTH_SHORT).show()
+                        } else Toasty.info(activity!!, "No more items", Toasty.LENGTH_SHORT).show()
                     }
+
                 }
 
             })

@@ -3,6 +3,8 @@ package com.kou.uniclub.Activities
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.text.format.DateFormat
+import android.view.View
 import android.widget.Toast
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -22,6 +24,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class EventDetails : AppCompatActivity(),OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
@@ -66,10 +70,21 @@ class EventDetails : AppCompatActivity(),OnMapReadyCallback {
                     collapse.setExpandedTitleColor(ContextCompat.getColor(this@EventDetails,
                         R.color.trans
                     ))
-                    if(event.photo!="")
-                    Picasso.get().load(event.photo).into(imEvent)
+                    if(event.photo!="") {
+                        Picasso.get().load(event.photo).into(imEvent)
+                        progress.visibility= View.GONE
+                    }
+                    val format = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault())
+                    val startDate = format.parse(event.startTime)
+                    val day = DateFormat.format("EEEE", startDate) as String
+                    val dayNum=DateFormat.format("dd",startDate) as String
+                    val month = DateFormat.format("MMM", startDate) as String
+                    val timeline=DateFormat.format("HH:mm", startDate) as String
+                    tvOrganizer.text=event.animatedBy
+                    tvTime.text = "$day , $dayNum $month  $timeline"
 
-                    tvTime.text = event.startTime
+
+                    tvLocation.text=event.location
                     tvEventDesc.text = event.description
 
                     btnParticipate.setOnClickListener {

@@ -8,8 +8,9 @@
         tools:context=".Activities.EventDetails">
     <android.support.design.widget.AppBarLayout
             android:id="@+id/appBar"
+            android:backgroundTint="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="255dp"
+            android:layout_height="216dp"
             android:theme="@style/ThemeOverlay.MaterialComponents.Light"
             android:fitsSystemWindows="true">
 
@@ -23,20 +24,29 @@
                 android:fitsSystemWindows="true"
                 app:contentScrim="@color/white"
 
-                >
+        >
 
             <ImageView android:layout_width="match_parent"
                        android:layout_height="255dp"
-                       app:srcCompat="@drawable/eventos"
                        app:layout_collapseMode="parallax"
                        android:fitsSystemWindows="true"
-                       android:scaleType="center" android:id="@+id/imEvent"/>
+                       android:scaleType="centerCrop" android:id="@+id/imEvent"/>
+
+            <ProgressBar android:id="@+id/progress"
+                         android:layout_width="50dp"
+                         android:layout_height="50dp"
+                         android:layout_gravity="center"
+                         app:layout_collapseMode="parallax"
+                         android:indeterminate="true"
+
+                         android:fitsSystemWindows="true"/>
+
 
             <android.support.v7.widget.Toolbar
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
-                    app:layout_collapseMode="pin" />
+                    app:layout_collapseMode="pin"/>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -48,61 +58,40 @@
         <LinearLayout
                 android:orientation="vertical" android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-
+            <ImageView
+                    android:layout_gravity="right"
+                    android:layout_width="33dp"
+                       android:layout_height="36dp"
+                       android:src="@drawable/ic_favorite"
+                       android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="0dp"
+                       android:id="@+id/imFavorite"/>
 
             <TextView android:layout_gravity="left"
-                      android:layout_width="320dp"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="16dp"
-                      android:layout_marginStart="8dp"
-                      android:layout_marginEnd="8dp"
+                      style="@style/EventDetails"
 
-            />
-            <TextView android:layout_gravity="left"
-                      android:layout_width="320dp"
-                      android:layout_height="wrap_content"
+                      android:id="@+id/tvOrganizer"/>
+
+
+            <TextView style="@style/EventDetails"
                       android:id="@+id/tvTime"
-                      android:layout_marginTop="16dp"
-                      android:layout_marginStart="8dp"
-                      android:layout_marginEnd="8dp"
                       android:drawableStart="@drawable/ic_calendar"
                       android:drawablePadding="16dp"
 
 
             />
 
-            <TextView android:layout_gravity="left"
-                      android:layout_width="320dp"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="16dp"
-                      android:layout_marginStart="8dp"
-                      android:layout_marginEnd="8dp"
+            <TextView style="@style/EventDetails"
                       android:drawableStart="@drawable/ic_regiong"
                       android:drawablePadding="16dp"
-
                       android:id="@+id/tvLocation"/>
 
-            <TextView android:layout_gravity="left"
+            <TextView style="@style/EventDetails"
                       android:id="@+id/tvEventDesc"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="16dp"
-                      android:layout_marginStart="8dp"
-                      android:layout_marginEnd="8dp"
-
-
             />
-            <Button android:layout_gravity="center"
-                    android:textColor="@color/white"
-                    android:layout_width="320dp"
-                    android:text="Participate"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/btn_participate"
-                    android:layout_marginTop="16dp"
+            <Button style="@style/BtnParticipate"
                     android:id="@+id/btnParticipate"/>
-            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                      xmlns:tools="http://schemas.android.com/tools"
+            <fragment
                       android:layout_width="match_parent"
                       android:layout_height="200dp"
                       android:id="@+id/map"
@@ -113,7 +102,9 @@
             />
 
         </LinearLayout>
+
     </android.support.v4.widget.NestedScrollView>
+
 
 
 </android.support.design.widget.CoordinatorLayout>
