@@ -111,11 +111,8 @@ class HomeFeed : Fragment() {
 
 
                 } else if (response.code() == 404)
-                    Toasty.warning(
-                        activity!!, "No upcoming events", Toasty.LENGTH_SHORT,
-                        true
-                    ).show()
-            }
+                    Toasty.custom(activity!!, "No more events", R.drawable.ic_error_outline_white_24dp, R.color.black, Toasty.LENGTH_SHORT,false,
+                        true).show()           }
 
 
         })
@@ -187,10 +184,8 @@ class HomeFeed : Fragment() {
 
 
                 } else if (response.code() == 404)
-                    Toasty.warning(
-                        activity!!, "No events ", Toasty.LENGTH_SHORT,
-                        true
-                    ).show()
+                    Toasty.custom(activity!!, "No more events", R.drawable.ic_error_outline_white_24dp, R.color.black, Toasty.LENGTH_SHORT,false,
+                        true).show()
             }
 
 
@@ -228,10 +223,8 @@ class HomeFeed : Fragment() {
 
 
                 } else if (response.code() == 404)
-                    Toasty.warning(
-                        activity!!, "No events today", Toasty.LENGTH_SHORT,
-                        true
-                    ).show()
+                    Toasty.custom(activity!!, "No events today", R.drawable.ic_error_outline_white_24dp, R.color.black, Toasty.LENGTH_SHORT,false,
+                        true).show()
             }
 
 
@@ -267,10 +260,8 @@ class HomeFeed : Fragment() {
 
 
                 } else if (response.code() == 404)
-                    Toasty.warning(
-                        activity!!, "No passed events", Toasty.LENGTH_SHORT,
-                        true
-                    ).show()
+                    Toasty.custom(activity!!, "No passed events", R.drawable.ic_error_outline_white_24dp, R.color.black, Toasty.LENGTH_SHORT,false,
+                        true).show()
             }
 
 
@@ -302,10 +293,8 @@ class HomeFeed : Fragment() {
                         }
                     })
                 } else if (response.code() == 404)
-                    Toasty.warning(
-                        activity!!, "No events there", Toasty.LENGTH_SHORT,
-                        true
-                    ).show()
+                    Toasty.custom(activity!!, "No events in $city", R.drawable.ic_error_outline_white_24dp, R.color.black, Toasty.LENGTH_SHORT,false,
+                        true).show()
 
             }
 
@@ -326,7 +315,8 @@ class HomeFeed : Fragment() {
                             adapter.addData(response1.body()!!.pagination.events)
                             page = response1.body()!!.pagination.nextPageUrl
 
-                        } else Toasty.info(activity!!, "No more items", Toasty.LENGTH_SHORT).show()
+                        } else Toasty.custom(activity!!, "No more items", R.drawable.ic_error_outline_white_24dp, R.color.black, Toasty.LENGTH_SHORT,false,
+                            true).show()
                     }
 
                 }

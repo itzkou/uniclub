@@ -7,7 +7,18 @@
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/black</item>
         <item name="android:windowBackground">@color/white</item>
+        <item name="android:textViewStyle">@style/ralewayTextview</item>
+        <item name="android:buttonStyle">@style/raylewayButton</item>
 
+    </style>
+
+    <style name="ralewayTextview" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/raleway_light</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="raylewayButton" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">@font/raleway_bold</item>
     </style>
 
     <style name="ImagePreviewerTheme">
@@ -24,7 +35,7 @@
     <style name="signUPField">
         <item name="android:background">@drawable/ed_signup</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textColorHint">@color/graySignUp</item>
         <item name="android:layout_width">@dimen/formWidth</item>
         <item name="android:layout_marginStart">@dimen/formRL</item>
         <item name="android:layout_marginEnd">@dimen/formRL</item>
@@ -42,6 +53,15 @@
         <item name="android:layout_marginEnd">@dimen/formRL</item>
         <item name="android:layout_marginBottom">@dimen/formTB</item>
         <item name="android:layout_marginTop">@dimen/formTB</item>
+    </style>
+
+    <style name="SpinnerHomeFeed">
+        <item name="android:fontFamily">@font/raleway_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">128dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:background">@drawable/spinner_bg</item>
+        <item name="android:textAlignment">center</item>
     </style>
 
     <style name="btnSignUP">
@@ -63,11 +83,14 @@
         <item name="android:layout_marginTop">32dp</item>
         <item name="android:text">Connect to use this feature</item>
         <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/raleway_light</item>
         <item name="android:textSize">20sp</item>
     </style>
 
 
     <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:fontFamily">@font/raleway_semi_bold</item>
+
         <item name="android:windowBackground">@drawable/builder_round</item>
         <item name="colorAccent">@color/orange</item>
     </style>
@@ -96,6 +119,8 @@
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
     </style>
+
+
 
 
 </resources>

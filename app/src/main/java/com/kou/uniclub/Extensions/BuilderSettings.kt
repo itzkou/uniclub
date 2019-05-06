@@ -26,6 +26,7 @@ class BuilderSettings {
             logout.setOnClickListener {
                 PrefsManager.seToken(context,null)
                 context.startActivity(Intent(context,SignUP::class.java))
+
             }
         }
     }

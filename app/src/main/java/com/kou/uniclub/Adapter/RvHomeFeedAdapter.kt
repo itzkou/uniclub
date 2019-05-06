@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.kou.uniclub.Activities.EventDetails
+import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Model.User.FavoriteResponse
 import com.kou.uniclub.Network.UniclubApi
@@ -118,8 +119,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
 
                 }
             } else {
-                Toasty.custom(context, "Connect to use this feature", R.drawable.ic_nav_profile,R.color.moventa, Toasty.LENGTH_SHORT, true,
-                    true).show()
+                BuilderAuth.showDialog(context)
 
             }
         }

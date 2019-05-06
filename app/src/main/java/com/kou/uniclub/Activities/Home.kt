@@ -27,7 +27,7 @@ class Home : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         //navigation_menu
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        navigation.onNavigationItemSelectedListener = mOnNavigationItemSelectedListener
         navigation.enableAnimation(false)
         navigation.enableShiftingMode(false)
         navigation.enableItemShiftingMode(false)
@@ -43,13 +43,25 @@ class Home : AppCompatActivity() {
             }
 
             override fun onPageScrolled(position: Int, p1: Float, p2: Int) {
-                Log.d("myTag","Page scrolled")
+
+
             }
 
             override fun onPageSelected(position: Int) {
+
                 prevMenuItem?.isChecked = false
                 navigation.menu.getItem(position).isChecked = true
                 prevMenuItem = navigation.menu.getItem(position)
+
+                when(position)
+                {
+                    1-> {if(PrefsManager.geToken(this@Home)==null)
+                        BuilderAuth.showDialog(this@Home)}
+                    3-> {if(PrefsManager.geToken(this@Home)==null)
+                        BuilderAuth.showDialog(this@Home)}
+                    4->  {if(PrefsManager.geToken(this@Home)==null)
+                        BuilderAuth.showDialog(this@Home)}
+                }
             }
 
         }
@@ -66,8 +78,6 @@ class Home : AppCompatActivity() {
             }
             R.id.nav_calendar -> {
                     vp_home.currentItem=1
-                if(PrefsManager.geToken(this@Home)==null)
-                    BuilderAuth.showDialog(this@Home)
 
                 return@OnNavigationItemSelectedListener true
             }
@@ -78,19 +88,11 @@ class Home : AppCompatActivity() {
             }
             R.id.nav_notifications -> {
                 vp_home.currentItem=3
-                if(PrefsManager.geToken(this@Home)==null)
-                    BuilderAuth.showDialog(this@Home)
 
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_profile -> {
                 vp_home.currentItem=4
-                if(PrefsManager.geToken(this@Home)==null)
-                    BuilderAuth.showDialog(this@Home)
-
-
-
-
 
                 return@OnNavigationItemSelectedListener true
             }

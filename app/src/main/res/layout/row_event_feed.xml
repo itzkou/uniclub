@@ -30,19 +30,22 @@
                   app:layout_constraintTop_toBottomOf="@id/im_event"
                   android:textSize="20sp"
                   android:textAlignment="viewStart"
+                  android:fontFamily="@font/raleway_semi_bold"
 
                   android:layout_width="212dp"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="20dp"
-                  app:layout_constraintStart_toEndOf="@+id/day" android:layout_marginStart="19dp"/>
+                  app:layout_constraintStart_toEndOf="@+id/day" android:layout_marginStart="16dp"/>
         <TextView android:id="@+id/day"
                   android:textSize="22sp"
+                  android:fontFamily="@font/raleway_semi_bold"
+
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="20dp"
                   app:layout_constraintTop_toBottomOf="@+id/im_event"
                   app:layout_constraintStart_toStartOf="parent"
-                  android:layout_marginStart="19dp"
+                  android:layout_marginStart="16dp"
         />
         <TextView android:id="@+id/month"
                   android:textSize="14sp"

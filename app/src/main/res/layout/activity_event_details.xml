@@ -58,14 +58,6 @@
         <LinearLayout
                 android:orientation="vertical" android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <ImageView
-                    android:layout_gravity="right"
-                    android:layout_width="33dp"
-                       android:layout_height="36dp"
-                       android:src="@drawable/ic_favorite"
-                       android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="0dp"
-                       android:id="@+id/imFavorite"/>
 
             <TextView android:layout_gravity="left"
                       style="@style/EventDetails"

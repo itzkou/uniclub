@@ -13,6 +13,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter.Companion.event_id
+import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Model.Event.EventDetailsResponse
 import com.kou.uniclub.Model.User.ParticipateResponse
 import com.kou.uniclub.Network.UniclubApi
@@ -80,7 +81,7 @@ class EventDetails : AppCompatActivity(),OnMapReadyCallback {
                     val dayNum=DateFormat.format("dd",startDate) as String
                     val month = DateFormat.format("MMM", startDate) as String
                     val timeline=DateFormat.format("HH:mm", startDate) as String
-                    tvOrganizer.text=event.animatedBy
+                    tvOrganizer.text= "Par ${event.animatedBy}"
                     tvTime.text = "$day , $dayNum $month  $timeline"
 
 
@@ -88,7 +89,9 @@ class EventDetails : AppCompatActivity(),OnMapReadyCallback {
                     tvEventDesc.text = event.description
 
                     btnParticipate.setOnClickListener {
-                        participate(event.id)
+                        if(PrefsManager.geToken(this@EventDetails)==null)
+                            BuilderAuth.showDialog(this@EventDetails)
+                        else participate(event.id)
                     }
 
                 }               }
