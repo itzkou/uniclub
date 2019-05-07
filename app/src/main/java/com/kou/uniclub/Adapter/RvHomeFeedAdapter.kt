@@ -1,8 +1,11 @@
 package com.kou.uniclub.Adapter
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
 import android.util.Log
@@ -119,7 +122,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
 
                 }
             } else {
-                BuilderAuth.showDialog(context)
+                BuilderAuth.showDialog(context )
 
             }
         }

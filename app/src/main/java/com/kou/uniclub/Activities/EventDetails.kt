@@ -61,7 +61,6 @@ class EventDetails : AppCompatActivity(),OnMapReadyCallback {
         val service = UniclubApi.create()
         service.getEvent(event_id!!).enqueue(object:Callback<EventDetailsResponse>{
             override fun onFailure(call: Call<EventDetailsResponse>, t: Throwable) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onResponse(call: Call<EventDetailsResponse>, response: Response<EventDetailsResponse>) {

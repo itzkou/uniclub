@@ -32,7 +32,6 @@ class Universities: Fragment() {
         val uniclub=UniclubApi.create()
         uniclub.getUniversities().enqueue(object: Callback<UniversityResponse>{
             override fun onFailure(call: Call<UniversityResponse>, t: Throwable) {
-                null
              }
 
             override fun onResponse(call: Call<UniversityResponse>, response: Response<UniversityResponse>) {

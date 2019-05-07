@@ -18,8 +18,12 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_home.*
 
 class Home : AppCompatActivity() {
+
     //navigation_menu stuff
     private var prevMenuItem: MenuItem? = null
+
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,27 +76,27 @@ class Home : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.nav_home -> {
-                vp_home.currentItem=0
+                vp_home.setCurrentItem(0,false)
 
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_calendar -> {
-                    vp_home.currentItem=1
+                vp_home.setCurrentItem(1,false)
 
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_clubs -> {
-                vp_home.currentItem=2
+                vp_home.setCurrentItem(2,false)
 
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_notifications -> {
-                vp_home.currentItem=3
+                vp_home.setCurrentItem(3,false)
 
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_profile -> {
-                vp_home.currentItem=4
+                vp_home.setCurrentItem(4,false)
 
                 return@OnNavigationItemSelectedListener true
             }

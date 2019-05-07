@@ -90,6 +90,7 @@
 
     <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:fontFamily">@font/raleway_semi_bold</item>
+        <item name="android:textSize">18sp</item>
 
         <item name="android:windowBackground">@drawable/builder_round</item>
         <item name="colorAccent">@color/orange</item>
