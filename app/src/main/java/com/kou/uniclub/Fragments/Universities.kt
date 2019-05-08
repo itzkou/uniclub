@@ -26,9 +26,9 @@ class Universities: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v=inflater.inflate(R.layout.fragment_univs,container,false)
         val rvUnivs=v.findViewById<RecyclerView>(R.id.rvUnivs)
+            rvUnivs.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
 
 
-        //TODO(" network faullure causes null pointer exception")
         val uniclub=UniclubApi.create()
         uniclub.getUniversities().enqueue(object: Callback<UniversityResponse>{
             override fun onFailure(call: Call<UniversityResponse>, t: Throwable) {
@@ -38,7 +38,6 @@ class Universities: Fragment() {
                 if(response.isSuccessful) {
                     //TODO(" causes null pointer exception")
 
-                    rvUnivs.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
                     rvUnivs.adapter = RvUnivsAdapter(response.body()!!.pagination.universities, activity!!)
                 }            }
 

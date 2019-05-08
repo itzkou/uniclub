@@ -2,6 +2,7 @@ package com.kou.uniclub.Fragments
 
 import android.media.Image
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
+import com.kou.uniclub.Extensions.BuilderSearchFilter
 import com.kou.uniclub.Extensions.BuilderSettings
 import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Model.Event.EventX
@@ -45,6 +47,7 @@ class HomeFeed : Fragment() {
         val spTiming = v.findViewById<Spinner>(R.id.spTiming)
         val spRegion = v.findViewById<Spinner>(R.id.spRegion)
         val settings = v.findViewById<ImageView>(R.id.settings)
+        val fab=v.findViewById<FloatingActionButton>(R.id.fabSearch)
 
 
         rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
@@ -82,10 +85,13 @@ class HomeFeed : Fragment() {
             }
 
         }
-
+        /********Settings ******/
         settings.setOnClickListener {
             BuilderSettings.showSettings(activity!!)
         }
+        /********Floating button ******/
+        fab.setOnClickListener {BuilderSearchFilter.showDialog(activity!!) }
+
         return v
     }
 

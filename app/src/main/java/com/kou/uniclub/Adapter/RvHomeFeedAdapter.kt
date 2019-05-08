@@ -76,9 +76,10 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
         var isLiked = false
         holder.fav.setOnClickListener {
             if (PrefsManager.geToken(context) != null) {
+
                 if (!isLiked) {
                     val service = UniclubApi.create()
-                    service.favorite("Bearer " + PrefsManager.geToken(context)!!, event.id)
+                    service.favorite("Bearer " +PrefsManager.geToken(context)!!, event.id)
                         .enqueue(object : Callback<FavoriteResponse> {
                             override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
                                 if (t is IOException)
