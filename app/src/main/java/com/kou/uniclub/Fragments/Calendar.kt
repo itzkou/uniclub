@@ -39,15 +39,14 @@ class Calendar : Fragment() {
     }
 
     private lateinit var mCalendar: MaterialCalendarView
-    private  lateinit var rvMyevents:RecyclerView
-    private var eventList:ArrayList<EventX>?=null
+    private lateinit var rvMyevents: RecyclerView
     private var page: String? = null
-
+//TODO("check the decoration")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_calendar, container, false)
         val rvCalendar = v.findViewById<RecyclerView>(R.id.rvCalendar)
-        val token=PrefsManager.geToken(activity!!)
+        val token = PrefsManager.geToken(activity!!)
 
         rvMyevents = v.findViewById(R.id.rvMyEvents)
         val show = v.findViewById<ImageView>(R.id.showCal)
@@ -61,8 +60,8 @@ class Calendar : Fragment() {
 
         miniCalendar(rvCalendar)
 
-        if (token!=null) {
-            myEvents(rvMyevents,activity!!)
+        if (token != null) {
+            myEvents(rvMyevents, activity!!)
 
             show.setOnClickListener {
                 dialog.show()
@@ -77,30 +76,28 @@ class Calendar : Fragment() {
     }
 
 
-
-
     override fun onResume() {
         super.onResume()
-        if (PrefsManager.geToken(activity!!)!=null)
-        myEvents(rvMyevents,activity!! )
+        if (PrefsManager.geToken(activity!!) != null)
+            myEvents(rvMyevents, activity!!)
 
     }
 
-    private fun myEvents(recyclerView: RecyclerView,context:Context) {
+    private fun myEvents(recyclerView: RecyclerView, context: Context) {
         val service = UniclubApi.create()
-        service.getParticipations("Bearer "+PrefsManager.geToken(activity!!))
+        service.getParticipations("Bearer " + PrefsManager.geToken(activity!!))
             .enqueue(object : Callback<EventListResponse> {
                 override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
                 }
 
                 override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
-                    if (response.isSuccessful) {
+                    if (response.isSuccessful && isAdded) {
                         page = response.body()!!.pagination.nextPageUrl
                         val participations = response.body()!!.pagination.events
                         recyclerView.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
                         val adapter = RvMyEventsAdapter(participations, activity!!)
                         recyclerView.adapter = adapter
-                            decoration(response.body()!!.pagination.events,activity!!,mCalendar)
+                        decoration(response.body()!!.pagination.events, activity!!, mCalendar)
                         //Pagination
 
                         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -149,7 +146,7 @@ class Calendar : Fragment() {
                 }
 
                 override fun onResponse(call: Call<EventListResponse>, response1: Response<EventListResponse>) {
-                    if (response1.isSuccessful) {
+                    if (response1.isSuccessful && isAdded) {
 
                         if (page != null) {
                             adapter.addData(response1.body()!!.pagination.events)

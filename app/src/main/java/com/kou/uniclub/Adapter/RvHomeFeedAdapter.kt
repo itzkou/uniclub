@@ -126,7 +126,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
         }
 
         //EventO details
-        holder.pic.setOnClickListener {
+        holder.root.setOnClickListener {
 
 
             event_id = event.id
@@ -154,6 +154,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
         val fav = view.favorite!!
         val pic = view.im_event!!
         val sparkle = view.sparkle!!
+        val root=view.rootEvent!!
 
     }
 

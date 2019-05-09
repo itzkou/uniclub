@@ -35,7 +35,7 @@ class Universities: Fragment() {
              }
 
             override fun onResponse(call: Call<UniversityResponse>, response: Response<UniversityResponse>) {
-                if(response.isSuccessful) {
+                if(response.isSuccessful&&isAdded) {
                     //TODO(" causes null pointer exception")
 
                     rvUnivs.adapter = RvUnivsAdapter(response.body()!!.pagination.universities, activity!!)

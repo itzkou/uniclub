@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.kou.uniclub.Model.Event.EventX
-import kotlinx.android.synthetic.main.row_followed_clubs.view.*
+import kotlinx.android.synthetic.main.row_event_feed.view.*
 
 class RvFollowedClubsAdapter(val events :ArrayList<EventX>, val context: Context): RecyclerView.Adapter<RvFollowedClubsAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, position: Int):RvFollowedClubsAdapter.Holder {

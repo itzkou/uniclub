@@ -3,14 +3,17 @@ package com.kou.uniclub.Fragments
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
+import com.airbnb.lottie.LottieAnimationView
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Extensions.BuilderSearchFilter
 import com.kou.uniclub.Extensions.BuilderSettings
@@ -25,10 +28,8 @@ import retrofit2.Response
 import java.io.IOException
 
 class HomeFeed : Fragment() {
-    private var cities = arrayOf("Region", "Ariana", "Tunis", "Bizerte")
-    private var timings = arrayOf("All dates", "today", "upcoming", "passed")
+
     private var page: String? = null
-    private var city: String? = null
     private var upEvents: ArrayList<EventX> = arrayListOf()
 
 
@@ -45,17 +46,27 @@ class HomeFeed : Fragment() {
         val v = inflater.inflate(R.layout.fragment_homefeed, container, false)
         val rvHome = v.findViewById<RecyclerView>(R.id.rvHome)
         val settings = v.findViewById<ImageView>(R.id.settings)
-        val fab=v.findViewById<FloatingActionButton>(R.id.fabSearch)
+        val fab = v.findViewById<FloatingActionButton>(R.id.fabSearch)
+        val liveAnim = v.findViewById<LottieAnimationView>(R.id.live)
+        val btnUpcoming = v.findViewById<Button>(R.id.btnUpcoming)
+        val btnToday = v.findViewById<Button>(R.id.btnToday)
 
 
         rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
-
+        allDates(rvHome)
         /********Settings ******/
         settings.setOnClickListener {
             BuilderSettings.showSettings(activity!!)
         }
         /********Floating button ******/
-        fab.setOnClickListener {BuilderSearchFilter.showDialog(activity!!) }
+        fab.setOnClickListener { BuilderSearchFilter.showDialog(activity!!) }
+        /***Buttons****/
+
+        btnUpcoming.setOnClickListener {
+            upcoming(rvHome)
+
+        }
+
 
         return v
     }
@@ -72,7 +83,7 @@ class HomeFeed : Fragment() {
             }
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
-                if (response.isSuccessful) {
+                if (response.isSuccessful && isAdded) {
                     if (response.body()!!.pagination.events.size > 0) {
                         upEvents.addAll(response.body()!!.pagination.events)
                         page = response.body()!!.pagination.nextPageUrl
@@ -82,48 +93,21 @@ class HomeFeed : Fragment() {
 
 
                 } else if (response.code() == 404)
-                    Toasty.custom(activity!!, "No more events", R.drawable.ic_error_outline_white_24dp, R.color.black, Toasty.LENGTH_SHORT,false,
-                        true).show()           }
+                    Toasty.custom(
+                        activity!!,
+                        "No more events",
+                        R.drawable.ic_error_outline_white_24dp,
+                        R.color.black,
+                        Toasty.LENGTH_SHORT,
+                        false,
+                        true
+                    ).show()
+            }
 
 
         })
 
 
-        //Pagination
-        /*  rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-               override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                   super.onScrollStateChanged(recyclerView, newState)
-                   if (!rv.canScrollVertically(1) ) {
-                       if(page!=null)
-                       service.paginate(page!!).enqueue(object : Callback<EventListResponse> {
-                           override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
-                               Log.d("bo", "boo")
-                           }
-
-                           override fun onResponse(call: Call<EventListResponse>, response1: Response<EventListResponse>)
-                           {
-                               if (response1.isSuccessful) {
-                                   newSize = response1.body()!!.pagination.events.size
-
-
-                                   if (page != "null" && (upEvents.size < oldSize!! + newSize!!)) {
-                                       upEvents.addAll(response1.body()!!.pagination.events)
-                                       rv.adapter!!.notifyItemRangeInserted(oldSize!!, response1.body()!!.pagination.events.size
-                                       )
-                                   }
-
-                                   else Toast.makeText(activity!!, "next page null", Toast.LENGTH_SHORT).show()
-
-                               }
-
-                           }
-
-                       })
-
-                   }
-
-               }
-           })*/
     }
 
     private fun allDates(rv: RecyclerView) {
@@ -134,7 +118,7 @@ class HomeFeed : Fragment() {
             }
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
-                if (response.isSuccessful) {
+                if (response.isSuccessful && isAdded) {
                     page = response.body()!!.pagination.nextPageUrl
                     val adapter = RvHomeFeedAdapter(response.body()!!.pagination.events, activity!!)
                     rv.adapter = adapter
@@ -155,8 +139,15 @@ class HomeFeed : Fragment() {
 
 
                 } else if (response.code() == 404)
-                    Toasty.custom(activity!!, "No more events", R.drawable.ic_error_outline_white_24dp, R.color.black, Toasty.LENGTH_SHORT,false,
-                        true).show()
+                    Toasty.custom(
+                        activity!!,
+                        "No more events",
+                        R.drawable.ic_error_outline_white_24dp,
+                        R.color.black,
+                        Toasty.LENGTH_SHORT,
+                        false,
+                        true
+                    ).show()
             }
 
 
@@ -174,7 +165,7 @@ class HomeFeed : Fragment() {
             }
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
-                if (response.isSuccessful) {
+                if (response.isSuccessful && isAdded) {
                     page = response.body()!!.pagination.nextPageUrl
                     val adapter = RvHomeFeedAdapter(response.body()!!.pagination.events, activity!!)
                     rv.adapter = adapter
@@ -194,8 +185,15 @@ class HomeFeed : Fragment() {
 
 
                 } else if (response.code() == 404)
-                    Toasty.custom(activity!!, "No events today", R.drawable.ic_error_outline_white_24dp, R.color.black, Toasty.LENGTH_SHORT,false,
-                        true).show()
+                    Toasty.custom(
+                        activity!!,
+                        "No events today",
+                        R.drawable.ic_error_outline_white_24dp,
+                        R.color.black,
+                        Toasty.LENGTH_SHORT,
+                        false,
+                        true
+                    ).show()
             }
 
 
@@ -211,7 +209,7 @@ class HomeFeed : Fragment() {
             }
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
-                if (response.isSuccessful) {
+                if (response.isSuccessful && isAdded) {
                     page = response.body()!!.pagination.nextPageUrl
                     val adapter = RvHomeFeedAdapter(response.body()!!.pagination.events, activity!!)
                     rv.adapter = adapter
@@ -231,8 +229,15 @@ class HomeFeed : Fragment() {
 
 
                 } else if (response.code() == 404)
-                    Toasty.custom(activity!!, "No passed events", R.drawable.ic_error_outline_white_24dp, R.color.black, Toasty.LENGTH_SHORT,false,
-                        true).show()
+                    Toasty.custom(
+                        activity!!,
+                        "No passed events",
+                        R.drawable.ic_error_outline_white_24dp,
+                        R.color.black,
+                        Toasty.LENGTH_SHORT,
+                        false,
+                        true
+                    ).show()
             }
 
 
@@ -246,7 +251,7 @@ class HomeFeed : Fragment() {
             }
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
-                if (response.isSuccessful) {
+                if (response.isSuccessful && isAdded) {
                     page = response.body()!!.pagination.nextPageUrl
                     val adapter = RvHomeFeedAdapter(response.body()!!.pagination.events, activity!!)
                     rv.adapter = adapter
@@ -264,8 +269,15 @@ class HomeFeed : Fragment() {
                         }
                     })
                 } else if (response.code() == 404)
-                    Toasty.custom(activity!!, "No events in $city", R.drawable.ic_error_outline_white_24dp, R.color.black, Toasty.LENGTH_SHORT,false,
-                        true).show()
+                    Toasty.custom(
+                        activity!!,
+                        "No events in $city",
+                        R.drawable.ic_error_outline_white_24dp,
+                        R.color.black,
+                        Toasty.LENGTH_SHORT,
+                        false,
+                        true
+                    ).show()
 
             }
 
@@ -280,14 +292,21 @@ class HomeFeed : Fragment() {
                 }
 
                 override fun onResponse(call: Call<EventListResponse>, response1: Response<EventListResponse>) {
-                    if (response1.isSuccessful) {
+                    if (response1.isSuccessful && isAdded) {
 
                         if (page != null) {
                             adapter.addData(response1.body()!!.pagination.events)
                             page = response1.body()!!.pagination.nextPageUrl
 
-                        } else Toasty.custom(activity!!, "No more items", R.drawable.ic_error_outline_white_24dp, R.color.black, Toasty.LENGTH_SHORT,false,
-                            true).show()
+                        } else Toasty.custom(
+                            activity!!,
+                            "No more items",
+                            R.drawable.ic_error_outline_white_24dp,
+                            R.color.black,
+                            Toasty.LENGTH_SHORT,
+                            false,
+                            true
+                        ).show()
                     }
 
                 }

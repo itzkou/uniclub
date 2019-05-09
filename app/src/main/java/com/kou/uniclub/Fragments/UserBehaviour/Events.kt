@@ -41,7 +41,7 @@ class Events : Fragment() {
                             call: Call<MyfavoritesResponse>,
                             response: Response<MyfavoritesResponse>
                         ) {
-                            if (response.isSuccessful) {
+                            if (response.isSuccessful&&isAdded) {
                                 rvFavo.adapter = RvFavoEventsAdapter(response.body()!!.events, activity!!)
                             }
                         }
