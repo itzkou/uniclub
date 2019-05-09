@@ -1,5 +1,6 @@
 package com.kou.uniclub.Activities
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
@@ -16,7 +17,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class Stories : AppCompatActivity() {
-    private var ressources = arrayListOf<Int>(R.drawable.logo_bar, R.drawable.im_event)
+    private var ressources = arrayListOf<String>()
     private var counter = 0
     private var pressTime = 0L
     private var limit = 500L
@@ -45,32 +46,52 @@ class Stories : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_stories)
 
-        val service=UniclubApi.create()
-        service.getUpcomingEvents().enqueue(object : Callback<EventListResponse>{
+        reverse.setOnClickListener {
+            storyView.reverse()
+        }
+        reverse.setOnTouchListener(listener)
+
+        skip.setOnClickListener {
+            storyView.skip()
+        }
+       skip.setOnTouchListener(listener)
+
+        val service = UniclubApi.create()
+        service.getUpcomingEvents().enqueue(object : Callback<EventListResponse> {
             override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
             }
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
 
-                if (response.isSuccessful)
-                { storyView.setStoriesListener(object :StoriesProgressView.StoriesListener{
-                    override fun onComplete() {
-                    }
-
-                    override fun onPrev() {
-
-                    }
-
-                    override fun onNext() {
-
-                    }
-
-                })
-                    Picasso.get().load(response.body()!!.pagination.events[0].photo).into(sImage)
-                    counter=1
-                    storyView.setStoriesCount(counter)
+                if (response.isSuccessful) {
+                    storyView.setStoriesCount(response.body()!!.pagination.events.size)
                     storyView.setStoryDuration(3000L)
                     storyView.startStories()
+
+
+                    for (i in 0 until response.body()!!.pagination.events.size)
+                        ressources.add(response.body()!!.pagination.events[i].photo)
+
+                    Picasso.get().load(ressources[counter]).into(sImage)
+                    storyView.setStoriesListener(object : StoriesProgressView.StoriesListener {
+                        override fun onComplete() {
+                            startActivity(Intent(this@Stories,Home::class.java))
+                        }
+
+                        override fun onPrev() {
+                            if (counter - 1 < 0)
+                                return
+                            Picasso.get().load(ressources[--counter]).into(sImage)
+
+                        }
+
+                        override fun onNext() {
+                            Picasso.get().load(ressources[++counter]).into(sImage)
+
+                        }
+
+                    })
+
 
                 }
             }
@@ -78,6 +99,12 @@ class Stories : AppCompatActivity() {
         })
 
 
+    }
+
+    override fun onDestroy() {
+        storyView.destroy()
+
+        super.onDestroy()
     }
 
 
