@@ -86,7 +86,7 @@
                    app:layout_constraintTop_toTopOf="@+id/spRegion"
                    app:layout_constraintBottom_toBottomOf="@+id/spRegion"
                    app:layout_constraintStart_toStartOf="@+id/spRegion" android:layout_marginStart="4dp"
-                   android:id="@+id/ic_region"/>
+        />
         <EditText android:id="@+id/edGender"
                   style="@style/signUPField"
                   android:hint="Gender*"

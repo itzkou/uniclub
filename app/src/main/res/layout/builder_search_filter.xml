@@ -27,7 +27,7 @@
                                                  app:layout_constraintTop_toBottomOf="@id/searchPrefs"
                                                  android:layout_marginTop="16dp"
                                                  android:layout_width="match_parent"
-                                                 android:layout_height="match_parent" android:id="@+id/choices">
+                                                 android:layout_height="match_parent">
         <android.support.v7.widget.CardView android:id="@+id/business"
                                             android:layout_width="0dp"
                                             android:layout_height="60dp"

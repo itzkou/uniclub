@@ -4,15 +4,11 @@
     <color name="black">#000000</color>
     <color name="transparent">#C0BBBB</color>
     <color name="white">#FFF</color>
-    <color name="gray">#F5F5F5</color>
     <color name="grayBar">#EEEEEE</color>
     <color name="grayShadow">#79CACACA</color>
 
     <color name="graySignUp">#CCCCCC</color>
     <color name="trans">#00FFFFFF</color>
-    <color name="moventa">#A885D8</color>
-    <color name="banana">#FFD200</color>
-
 
 
 </resources>
