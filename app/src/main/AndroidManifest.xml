@@ -25,6 +25,8 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".Activities.Stories">
+        </activity>
         <activity
                 android:name=".Activities.Authentification.SignUP"
                 android:exported="true">

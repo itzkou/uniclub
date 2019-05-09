@@ -20,7 +20,6 @@
                                                         app:borderWidth="0dp"
                                                         android:backgroundTint="@color/white"
     />
-
     <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -126,7 +125,7 @@
                         android:layout_marginBottom="16dp" app:layout_constraintBottom_toBottomOf="parent"
                         android:id="@+id/imageView3"/>
 
-                <com.airbnb.lottie.LottieAnimationView android:id="@+id/live"
+                <com.airbnb.lottie.LottieAnimationView android:id="@+id/btnStory"
                                                        android:layout_width="28dp"
                                                        android:layout_height="28dp"
                                                        app:lottie_fileName="story.json"
@@ -142,6 +141,7 @@
 
 
     </android.support.design.widget.AppBarLayout>
+
 
 
 </android.support.design.widget.CoordinatorLayout>

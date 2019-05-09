@@ -1,9 +1,9 @@
 package com.kou.uniclub.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.airbnb.lottie.LottieAnimationView
+import com.kou.uniclub.Activities.Stories
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Extensions.BuilderSearchFilter
 import com.kou.uniclub.Extensions.BuilderSettings
@@ -22,15 +23,16 @@ import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import es.dmoral.toasty.Toasty
+import jp.shts.android.storiesprogressview.StoriesProgressView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
 
 class HomeFeed : Fragment() {
-
     private var page: String? = null
     private var upEvents: ArrayList<EventX> = arrayListOf()
+
 
 
 //TODO("onDetaach close web service calls")
@@ -47,9 +49,11 @@ class HomeFeed : Fragment() {
         val rvHome = v.findViewById<RecyclerView>(R.id.rvHome)
         val settings = v.findViewById<ImageView>(R.id.settings)
         val fab = v.findViewById<FloatingActionButton>(R.id.fabSearch)
-        val liveAnim = v.findViewById<LottieAnimationView>(R.id.live)
+        val liveAnim = v.findViewById<LottieAnimationView>(R.id.btnStory)
         val btnUpcoming = v.findViewById<Button>(R.id.btnUpcoming)
         val btnToday = v.findViewById<Button>(R.id.btnToday)
+        val btnLive=v.findViewById<Button>(R.id.btnLive)
+
 
 
         rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
@@ -64,9 +68,15 @@ class HomeFeed : Fragment() {
 
         btnUpcoming.setOnClickListener {
             upcoming(rvHome)
-
         }
 
+        btnToday.setOnClickListener {
+            today(rvHome)
+        }
+
+        btnLive.setOnClickListener {
+            startActivity(Intent(activity!!,Stories::class.java))
+        }
 
         return v
     }
@@ -157,7 +167,6 @@ class HomeFeed : Fragment() {
     }
 
     private fun today(rv: RecyclerView) {
-        // All Dates
         val service = UniclubApi.create()
         service.getTodayEvents().enqueue(object : Callback<EventListResponse> {
             override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
