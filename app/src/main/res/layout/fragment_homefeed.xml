@@ -85,32 +85,6 @@
                                                              app:layout_constraintStart_toStartOf="parent"
                                                              app:layout_constraintEnd_toEndOf="parent">
 
-                    <Spinner
-                            android:id="@+id/spRegion"
-                            style="@style/SpinnerHomeFeed"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/spTiming"
-                            android:layout_marginEnd="16dp"/>
-
-                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                               android:src="@drawable/ic_down_arrow"
-                               app:layout_constraintTop_toTopOf="@+id/spRegion"
-                               app:layout_constraintBottom_toBottomOf="@+id/spRegion"
-                               app:layout_constraintEnd_toEndOf="@+id/spRegion" android:layout_marginEnd="8dp"/>
-
-
-                    <Spinner android:id="@+id/spTiming"
-                             style="@style/SpinnerHomeFeed"
-                             app:layout_constraintTop_toTopOf="parent"
-                             app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                               android:src="@drawable/ic_down_arrow"
-                               app:layout_constraintTop_toTopOf="@+id/spTiming"
-                               app:layout_constraintBottom_toBottomOf="@+id/spTiming"
-                               app:layout_constraintEnd_toEndOf="@+id/spTiming" android:layout_marginEnd="8dp"/>
 
                 </android.support.constraint.ConstraintLayout>
             </android.support.constraint.ConstraintLayout>

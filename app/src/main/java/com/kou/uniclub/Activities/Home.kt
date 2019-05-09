@@ -3,10 +3,8 @@ package com.kou.uniclub.Activities
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.MenuItem
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kou.uniclub.Adapter.VpHomeAdapter
@@ -14,7 +12,6 @@ import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Fragments.*
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
-import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_home.*
 
 class Home : AppCompatActivity() {

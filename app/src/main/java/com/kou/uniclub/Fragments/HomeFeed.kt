@@ -1,16 +1,16 @@
 package com.kou.uniclub.Fragments
 
-import android.media.Image
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.Toast
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Extensions.BuilderSearchFilter
 import com.kou.uniclub.Extensions.BuilderSettings
@@ -44,47 +44,12 @@ class HomeFeed : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_homefeed, container, false)
         val rvHome = v.findViewById<RecyclerView>(R.id.rvHome)
-        val spTiming = v.findViewById<Spinner>(R.id.spTiming)
-        val spRegion = v.findViewById<Spinner>(R.id.spRegion)
         val settings = v.findViewById<ImageView>(R.id.settings)
         val fab=v.findViewById<FloatingActionButton>(R.id.fabSearch)
 
 
         rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
-        /********Filtre région ******/
-        spRegion.adapter = ArrayAdapter(activity!!, android.R.layout.simple_spinner_dropdown_item, cities)
-        spRegion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
 
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                city = cities[position]
-                if (position != 0)
-                    regionFilter(rvHome, city!!)
-
-            }
-        }
-        /********Filtre date ******/
-        spTiming.adapter = ArrayAdapter(activity!!, android.R.layout.simple_spinner_dropdown_item, timings)
-        spTiming.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
-
-                when (position) {
-                    //TODO("all dates will be by prefs")
-                    0 -> allDates(rvHome)
-                    1 -> today(rvHome)
-                    2 -> upcoming(rvHome)
-                    3 -> passed(rvHome)
-
-                }
-            }
-
-        }
         /********Settings ******/
         settings.setOnClickListener {
             BuilderSettings.showSettings(activity!!)

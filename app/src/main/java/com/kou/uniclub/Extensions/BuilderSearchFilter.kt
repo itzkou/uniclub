@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
-import com.airbnb.lottie.LottieAnimationView
 import com.kou.uniclub.Activities.Authentification.SignUP
 import com.kou.uniclub.R
 
