@@ -33,9 +33,8 @@
 
         <EditText android:id="@+id/edUsername"
                   style="@style/signUPField"
-                  android:drawableStart="@drawable/ic_edprofileg"
-
-                  android:hint="Name*"
+                  android:drawableStart="@drawable/ic_profile_signup"
+                  android:hint="Name*   Surname*"
                   android:inputType="textPersonName"
                   app:layout_constraintTop_toBottomOf="@id/imProfile" app:layout_constraintEnd_toEndOf="parent"
                   app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +42,7 @@
 
         <EditText android:id="@+id/edEmail"
                   style="@style/signUPField"
-                  android:drawableStart="@drawable/ic_edmailg"
+                  android:drawableStart="@drawable/ic_mail_signup"
                   android:hint="Email address*"
                   android:inputType="text"
                   app:layout_constraintTop_toBottomOf="@+id/edUsername"
@@ -54,7 +53,7 @@
         <EditText android:id="@+id/edBirth"
                   style="@style/signUPField"
                   android:hint="Birthdate*"
-                  android:drawableStart="@drawable/ic_birthg"
+                  android:drawableStart="@drawable/ic_birth_signup"
                   android:focusable="false"
                   android:inputType="text"
                   app:layout_constraintTop_toBottomOf="@+id/edEmail" app:layout_constraintEnd_toEndOf="parent"
@@ -63,21 +62,21 @@
 
         <EditText android:id="@+id/edUniv"
                   style="@style/signUPField"
-                 android:layout_width="292dp"
-                 android:layout_height="wrap_content"
-                 android:hint="Region*"
-                 android:drawableStart="@drawable/ic_univg"
-                 app:layout_constraintTop_toBottomOf="@+id/edBirth"
-                 app:layout_constraintEnd_toEndOf="parent"
-                 app:layout_constraintStart_toStartOf="parent"
-                 android:layout_marginTop="35dp"/>
+                  android:inputType="text"
+                  android:layout_width="292dp"
+                  android:layout_height="wrap_content"
+                  android:hint="University*"
+                  android:drawableStart="@drawable/ic_univ_signup"
+                  app:layout_constraintTop_toBottomOf="@+id/edBirth"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintStart_toStartOf="parent"
+                  android:layout_marginTop="35dp"/>
 
-        />
 
         <EditText android:id="@+id/edPassword"
                   style="@style/signUPField"
 
-                  android:drawableLeft="@drawable/edpassg"
+                  android:drawableStart="@drawable/ic_pass_signup"
                   android:hint="Password*"
                   android:inputType="textPassword"
                   app:layout_constraintTop_toBottomOf="@+id/edUniv"
@@ -87,7 +86,7 @@
 
         <EditText android:id="@+id/edPasswordC"
                   style="@style/signUPField"
-                  android:drawableLeft="@drawable/edpassg"
+                  android:drawableStart="@drawable/ic_pass_signup"
                   android:hint="Confirm Password*"
                   android:inputType="textPassword"
                   app:layout_constraintTop_toBottomOf="@id/edPassword" app:layout_constraintEnd_toEndOf="parent"

@@ -151,7 +151,7 @@ class StudentSignUP : AppCompatActivity(), Validation {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
-
+            PrefsManager.setPicture(this@StudentSignUP,mCurrentPhotoPath)
             imProfile.setImageURI(Uri.parse(mCurrentPhotoPath))
             chosenFile = File(mCurrentPhotoPath)
             //multipart stuff
@@ -160,7 +160,9 @@ class StudentSignUP : AppCompatActivity(), Validation {
 
 
         } else if (requestCode == SELECT_FILE && resultCode == RESULT_OK) {
-            imProfile.setImageURI(data!!.data)
+            PrefsManager.setPicture(this@StudentSignUP,data!!.data!!.toString())
+
+            imProfile.setImageURI(data.data)
             chosenUri = data.data!!
             val filePath = arrayOf(MediaStore.Images.Media.DATA)
             val c = contentResolver.query(chosenUri!!, filePath, null, null, null)
@@ -365,6 +367,7 @@ class StudentSignUP : AppCompatActivity(), Validation {
 
     private fun formFill() {
 
+
         edUsername.afterTextChanged {
             edUsername.error = if (it.isValidName()) null
             else "Invalid name"
@@ -382,6 +385,7 @@ class StudentSignUP : AppCompatActivity(), Validation {
         edPasswordC.afterTextChanged {
             edPasswordC.error = if (it == edPassword.text.toString()) null
             else "Passwords don't match"
+
         }
 
 

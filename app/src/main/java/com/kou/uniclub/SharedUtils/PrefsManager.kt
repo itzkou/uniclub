@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.kou.uniclub.SharedUtils.Preferences.Companion.IS_FIRSTIME
+import com.kou.uniclub.SharedUtils.Preferences.Companion.PICTURE
 import com.kou.uniclub.SharedUtils.Preferences.Companion.TOKEN
 
 class PrefsManager {
@@ -34,6 +35,18 @@ class PrefsManager {
             return getPreferences(context).getString(TOKEN,null)
 
 
+        }
+
+        //Set image
+        fun setPicture(context: Context, p: String) {
+            val editor = getPreferences(context).edit()
+            editor.putString(PICTURE, p)
+            editor.apply()
+        }
+
+        //Get Picture
+        fun getPicture(context: Context): String? {
+            return getPreferences(context).getString(PICTURE, "no_image")
         }
 
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
                                                  android:layout_width="match_parent"
                                                  android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
@@ -46,24 +47,31 @@
                         android:elevation="16dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent">
-                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    <ImageView android:layout_width="18dp" android:layout_height="23dp"
                                android:src="@drawable/ic_notifs"
                                android:id="@+id/editProfile"
                                app:layout_constraintEnd_toStartOf="@+id/settings" android:layout_marginEnd="24dp"
                                android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
                                android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
-                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                               android:src="@drawable/ic_profilp"
-                               android:id="@+id/settings"
-                               app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="12dp"
-                               android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
-                               android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"/>
+                    <com.mikhaellopez.circularimageview.CircularImageView android:layout_width="30dp"
+                                                                          android:layout_height="30dp"
+                                                                          android:src="@drawable/ic_profilep"
+                                                                          android:id="@+id/settings"
+                                                                          app:civ_border="false"
+                                                                          app:civ_shadow="false"
+                                                                          app:layout_constraintEnd_toEndOf="parent"
+                                                                          android:layout_marginEnd="12dp"
+                                                                          android:layout_marginBottom="8dp"
+                                                                          app:layout_constraintBottom_toBottomOf="parent"
+                                                                          android:layout_marginTop="8dp"
+                                                                          app:layout_constraintTop_toTopOf="parent"/>
+
 
                     <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
                                android:src="@drawable/logo_bar" android:layout_marginBottom="8dp"
                                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
                                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-                               android:layout_marginStart="12dp" android:id="@+id/imageView2"/>
+                               android:layout_marginStart="12dp"/>
                 </android.support.constraint.ConstraintLayout>
                 <android.support.constraint.ConstraintLayout
                         android:layout_gravity="center"
@@ -140,7 +148,6 @@
 
 
     </android.support.design.widget.AppBarLayout>
-
 
 
 </android.support.design.widget.CoordinatorLayout>

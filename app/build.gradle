@@ -68,6 +68,9 @@ dependencies {
     implementation 'com.github.ittianyu:BottomNavigationViewEx:2.0.4'
     //stories
     implementation 'com.github.shts:StoriesProgressView:3.0.0'
+    //circularview
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'
+
 
 
 }

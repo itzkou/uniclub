@@ -23,6 +23,7 @@ class BuilderAuth {
             anim.playAnimation()
             builder.setPositiveButton("confirm") { dialog, which ->
                 context.startActivity(Intent(context, StudentSignUP::class.java))
+
             }
 
 

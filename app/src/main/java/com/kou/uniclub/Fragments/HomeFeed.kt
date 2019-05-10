@@ -1,6 +1,7 @@
 package com.kou.uniclub.Fragments
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
@@ -22,6 +23,9 @@ import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
+import com.kou.uniclub.SharedUtils.PrefsManager
+import com.mikhaellopez.circularimageview.CircularImageView
+import com.squareup.picasso.Picasso
 import es.dmoral.toasty.Toasty
 import retrofit2.Call
 import retrofit2.Callback
@@ -46,19 +50,23 @@ class HomeFeed : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_homefeed, container, false)
         val rvHome = v.findViewById<RecyclerView>(R.id.rvHome)
-        val settings = v.findViewById<ImageView>(R.id.settings)
         val fab = v.findViewById<FloatingActionButton>(R.id.fabSearch)
         val liveAnim = v.findViewById<LottieAnimationView>(R.id.btnStory)
+        val imProfile=v.findViewById<CircularImageView>(R.id.settings)
         val btnUpcoming = v.findViewById<Button>(R.id.btnUpcoming)
         val btnToday = v.findViewById<Button>(R.id.btnToday)
         val btnLive=v.findViewById<Button>(R.id.btnLive)
+
+        if (PrefsManager.geToken(activity!!)!=null)
+        imProfile.setImageURI(Uri.parse(PrefsManager.getPicture(activity!!)))
+
 
 
 
         rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
         allDates(rvHome)
         /********Settings ******/
-        settings.setOnClickListener {
+        imProfile.setOnClickListener {
             BuilderSettings.showSettings(activity!!)
         }
         /********Floating button ******/
