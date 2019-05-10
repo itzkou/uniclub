@@ -28,7 +28,7 @@
         <activity android:name=".Activities.Stories">
         </activity>
         <activity
-                android:name=".Activities.Authentification.SignUP"
+                android:name=".Activities.Authentification.StudentSignUP"
                 android:exported="true">
         </activity>
         <activity android:name=".Activities.EditProfile">

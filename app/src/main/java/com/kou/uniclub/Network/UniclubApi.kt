@@ -31,8 +31,7 @@ interface UniclubApi{
                     @POST("auth/signup")
                     fun signUP(@Query("First_Name") fname:String,
                                @Query("Last_Name")lname:String,
-                               @Query("Birth_Date")birth: String,
-                               @Query("Gender")gender:String,
+                               @Query("Birth_Date")birth: String?,
                                @Query("Email")email:String,
                                @Query("password")pass:String,
                                @Query("password_confirmation") passC:String,

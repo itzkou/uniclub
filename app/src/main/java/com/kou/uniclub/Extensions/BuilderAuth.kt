@@ -5,7 +5,7 @@ import android.content.Intent
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import com.airbnb.lottie.LottieAnimationView
-import com.kou.uniclub.Activities.Authentification.SignUP
+import com.kou.uniclub.Activities.Authentification.StudentSignUP
 import com.kou.uniclub.R
 
 
@@ -22,7 +22,7 @@ class BuilderAuth {
 
             anim.playAnimation()
             builder.setPositiveButton("confirm") { dialog, which ->
-                context.startActivity(Intent(context, SignUP::class.java))
+                context.startActivity(Intent(context, StudentSignUP::class.java))
             }
 
 

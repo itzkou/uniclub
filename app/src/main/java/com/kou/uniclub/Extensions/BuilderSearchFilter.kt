@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
-import com.kou.uniclub.Activities.Authentification.SignUP
+import com.kou.uniclub.Activities.Authentification.StudentSignUP
 import com.kou.uniclub.R
 
 class BuilderSearchFilter {
@@ -18,7 +18,7 @@ class BuilderSearchFilter {
             builder.setView(dialogView)
 
             builder.setPositiveButton("confirm") { dialog, which ->
-                context.startActivity(Intent(context, SignUP::class.java))
+                context.startActivity(Intent(context, StudentSignUP::class.java))
             }
 
 

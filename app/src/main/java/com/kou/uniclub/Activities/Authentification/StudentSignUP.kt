@@ -16,9 +16,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.Toast
 import com.facebook.*
@@ -48,7 +45,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SignUP : AppCompatActivity(), Validation {
+class StudentSignUP : AppCompatActivity(), Validation {
 
     //TODO("Make all fields Nullable")
 
@@ -80,10 +77,9 @@ class SignUP : AppCompatActivity(), Validation {
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     /******* User attributes *******/
 
-    private lateinit var birthday: String
+    private var  birthday: String?=null
     private lateinit var fName: String
     private lateinit var lName: String
-    private lateinit var gender: String
     private lateinit var mail: String
     private lateinit var password: String
     private lateinit var adress: String
@@ -101,8 +97,8 @@ class SignUP : AppCompatActivity(), Validation {
         }
 
 
-        val dialogView = LayoutInflater.from(this@SignUP).inflate(R.layout.builder_time_picker, null)
-        val builder = AlertDialog.Builder(this@SignUP)
+        val dialogView = LayoutInflater.from(this@StudentSignUP).inflate(R.layout.builder_time_picker, null)
+        val builder = AlertDialog.Builder(this@StudentSignUP)
         val timePicker = dialogView.findViewById<DatePicker>(R.id.timePicker)
         builder.setView(dialogView)
         builder.setPositiveButton("confirm") { dialog, which ->
@@ -111,7 +107,7 @@ class SignUP : AppCompatActivity(), Validation {
             birthday =
                 timePicker.year.toString() + "-" + timePicker.month.toString() + "-" + timePicker.dayOfMonth.toString()
             edBirth.hint = birthday
-            edBirth.setHintTextColor(ContextCompat.getColor(this@SignUP, R.color.black))
+            edBirth.setHintTextColor(ContextCompat.getColor(this@StudentSignUP, R.color.black))
             dialog?.dismiss()
         }
 
@@ -127,17 +123,8 @@ class SignUP : AppCompatActivity(), Validation {
 
         }
 
-        /******************* Spinner Values *****************/
-        spRegion.adapter = ArrayAdapter(this@SignUP, android.R.layout.simple_spinner_dropdown_item, cities)
-        spRegion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                adress = cities[position]
-            }
-
-        }
+        //TODO("add university fiels and company field for both pro and student")
+       adress="deprectaed"
 
 
         formFill()
@@ -176,7 +163,7 @@ class SignUP : AppCompatActivity(), Validation {
             imProfile.setImageURI(data!!.data)
             chosenUri = data.data!!
             val filePath = arrayOf(MediaStore.Images.Media.DATA)
-            val c = contentResolver.query(chosenUri, filePath, null, null, null)
+            val c = contentResolver.query(chosenUri!!, filePath, null, null, null)
             c!!.moveToFirst()
             val columnIndex = c.getColumnIndex(filePath[0])
             val filePathStr = c.getString(columnIndex)
@@ -226,14 +213,14 @@ class SignUP : AppCompatActivity(), Validation {
     private fun uniSignUP() {
         val service = UniclubApi.create()
         if (image != null) {
-            service.signUP(fName, lName, birthday, gender, mail, password, password, adress, image)
+            service.signUP(fName, lName, birthday, mail, password, password, adress, image)
                 .enqueue(object : Callback<SignUpResponse> {
                     override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
 
                         if (t is IOException)
-                            Toast.makeText(this@SignUP, "Network faillure", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@StudentSignUP, "Network faillure", Toast.LENGTH_SHORT).show()
                         else
-                            Toast.makeText(this@SignUP, "conversion error", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@StudentSignUP, "conversion error", Toast.LENGTH_SHORT).show()
 
                     }
 
@@ -244,7 +231,7 @@ class SignUP : AppCompatActivity(), Validation {
 
                         } else if (response.code() == 404)
                             Toast.makeText(
-                                this@SignUP,
+                                this@StudentSignUP,
                                 "Email already exists or missing field",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -257,7 +244,6 @@ class SignUP : AppCompatActivity(), Validation {
                 fName,
                 lName,
                 birthday,
-                gender,
                 mail,
                 password,
                 password,
@@ -270,7 +256,7 @@ class SignUP : AppCompatActivity(), Validation {
             ).enqueue(object : Callback<SignUpResponse> {
                 override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
                     if (t is IOException)
-                        Toast.makeText(this@SignUP, "Network faillure", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@StudentSignUP, "Network faillure", Toast.LENGTH_SHORT).show()
 
 
                 }
@@ -282,7 +268,7 @@ class SignUP : AppCompatActivity(), Validation {
 
                     } else if (response.code() == 404)
                         Toast.makeText(
-                            this@SignUP,
+                            this@StudentSignUP,
                             "Email already exists or missing field",
                             Toast.LENGTH_SHORT
                         ).show()
@@ -303,8 +289,8 @@ class SignUP : AppCompatActivity(), Validation {
 
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
-                    PrefsManager.seToken(this@SignUP,response.body()!!.accessToken)
-                    startActivity(Intent(this@SignUP,Home::class.java))
+                    PrefsManager.seToken(this@StudentSignUP,response.body()!!.accessToken)
+                    startActivity(Intent(this@StudentSignUP,Home::class.java))
                 }
             }
 
@@ -422,7 +408,6 @@ class SignUP : AppCompatActivity(), Validation {
 
                     fName = name.substring(0, name.indexOf(" ") + 1)
                     lName = name.substring(name.lastIndexOf(" ") + 1, name.length)
-                    gender = edGender.text.toString()
                     mail = edEmail.text.toString()
                     password = edPassword.text.toString()
                     passwordC = edPasswordC.text.toString()
@@ -446,7 +431,7 @@ class SignUP : AppCompatActivity(), Validation {
         val listPermis = ArrayList<String>()
 
         for (i in appPermissions) {
-            if (ContextCompat.checkSelfPermission(this@SignUP, i) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this@StudentSignUP, i) != PackageManager.PERMISSION_GRANTED) {
                 listPermis.add(i)
 
             }
@@ -454,7 +439,7 @@ class SignUP : AppCompatActivity(), Validation {
 
         if (listPermis.isNotEmpty()) {
             ActivityCompat.requestPermissions(
-                this@SignUP,
+                this@StudentSignUP,
                 listPermis.toArray(arrayOfNulls(listPermis.size)),
                 PERMIS_REQUEST
             )

@@ -23,7 +23,6 @@ import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import es.dmoral.toasty.Toasty
-import jp.shts.android.storiesprogressview.StoriesProgressView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

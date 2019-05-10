@@ -52,7 +52,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
     override fun getItemCount(): Int {
         return events.size
     }
-
+//TODO("root clickability")
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val event: EventX = events[position]
         //date stuff

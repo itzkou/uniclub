@@ -6,23 +6,13 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".Activities.Authentification.SignUP">
+            tools:context=".Activities.Authentification.StudentSignUP">
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
     >
 
-
-        <TextView
-                android:text="Sign up"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="22dp"
-                android:layout_marginTop="32dp"
-                app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView android:id="@+id/back"
                    android:layout_width="wrap_content"
@@ -43,7 +33,7 @@
 
         <EditText android:id="@+id/edUsername"
                   style="@style/signUPField"
-                  android:drawableLeft="@drawable/ic_userg"
+                  android:drawableStart="@drawable/ic_edprofileg"
 
                   android:hint="Name*"
                   android:inputType="textPersonName"
@@ -53,7 +43,7 @@
 
         <EditText android:id="@+id/edEmail"
                   style="@style/signUPField"
-                  android:drawableStart="@drawable/ic_mailg"
+                  android:drawableStart="@drawable/ic_edmailg"
                   android:hint="Email address*"
                   android:inputType="text"
                   app:layout_constraintTop_toBottomOf="@+id/edUsername"
@@ -64,49 +54,40 @@
         <EditText android:id="@+id/edBirth"
                   style="@style/signUPField"
                   android:hint="Birthdate*"
+                  android:drawableStart="@drawable/ic_birthg"
                   android:focusable="false"
                   android:inputType="text"
                   app:layout_constraintTop_toBottomOf="@+id/edEmail" app:layout_constraintEnd_toEndOf="parent"
                   app:layout_constraintStart_toStartOf="parent"
         />
 
-        <Spinner android:id="@+id/spRegion"
+        <EditText android:id="@+id/edUniv"
+                  style="@style/signUPField"
                  android:layout_width="292dp"
                  android:layout_height="wrap_content"
                  android:hint="Region*"
-                 android:drawableStart="@drawable/ic_regiong"
-                 android:gravity="center"
+                 android:drawableStart="@drawable/ic_univg"
                  app:layout_constraintTop_toBottomOf="@+id/edBirth"
                  app:layout_constraintEnd_toEndOf="parent"
                  app:layout_constraintStart_toStartOf="parent"
                  android:layout_marginTop="35dp"/>
 
-        <ImageView android:layout_width="wrap_content" android:layout_height="match_parent"
-                   android:src="@drawable/ic_regiong"
-                   app:layout_constraintTop_toTopOf="@+id/spRegion"
-                   app:layout_constraintBottom_toBottomOf="@+id/spRegion"
-                   app:layout_constraintStart_toStartOf="@+id/spRegion" android:layout_marginStart="4dp"
         />
-        <EditText android:id="@+id/edGender"
-                  style="@style/signUPField"
-                  android:hint="Gender*"
-                  app:layout_constraintTop_toBottomOf="@+id/spRegion"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintEnd_toEndOf="parent"/>
+
         <EditText android:id="@+id/edPassword"
                   style="@style/signUPField"
 
-                  android:drawableLeft="@drawable/ic_password"
+                  android:drawableLeft="@drawable/edpassg"
                   android:hint="Password*"
                   android:inputType="textPassword"
-                  app:layout_constraintTop_toBottomOf="@+id/edGender"
+                  app:layout_constraintTop_toBottomOf="@+id/edUniv"
                   app:layout_constraintEnd_toEndOf="parent"
                   app:layout_constraintStart_toStartOf="parent"
         />
 
         <EditText android:id="@+id/edPasswordC"
                   style="@style/signUPField"
-                  android:drawableLeft="@drawable/ic_password"
+                  android:drawableLeft="@drawable/edpassg"
                   android:hint="Confirm Password*"
                   android:inputType="textPassword"
                   app:layout_constraintTop_toBottomOf="@id/edPassword" app:layout_constraintEnd_toEndOf="parent"

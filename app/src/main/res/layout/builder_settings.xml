@@ -6,38 +6,47 @@
 
     <TextView
             android:text="Notifications"
+            android:textSize="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView2" android:layout_marginTop="25dp"
+            android:id="@+id/tvNotifs" android:layout_marginTop="24dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="20dp"/>
     <TextView
             android:text="Remind me"
+            android:textSize="15sp"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" android:layout_marginTop="30dp"
-            app:layout_constraintStart_toStartOf="@+id/textView2"/>
+            android:id="@+id/tvRemind"
+            app:layout_constraintTop_toBottomOf="@+id/tvNotifs" android:layout_marginTop="30dp"
+            app:layout_constraintStart_toStartOf="@+id/tvNotifs"/>
     <TextView
             android:text="Preferences"
+            android:textSize="15sp"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView5" android:layout_marginTop="30dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" app:layout_constraintStart_toStartOf="@+id/textView4"
-    />
-    <TextView
-            android:text="Change password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView6" android:layout_marginTop="30dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" app:layout_constraintStart_toStartOf="@+id/textView5"
+            android:id="@+id/tvPreferences" android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvRemind" app:layout_constraintStart_toStartOf="@+id/tvRemind"
     />
     <TextView
             android:text="Log out"
+            android:textSize="15sp"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvLogout" android:layout_marginTop="30dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" android:layout_marginBottom="25dp"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="@+id/textView6"
+            android:id="@+id/tvLogout"
+            android:layout_marginBottom="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvPreferences"
+            app:layout_constraintStart_toStartOf="@+id/tvPreferences"
     />
+    <RadioButton android:buttonTint="@color/orange"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioNotifs" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="20dp"
+            app:layout_constraintTop_toTopOf="@+id/tvNotifs" app:layout_constraintBottom_toBottomOf="@+id/tvNotifs"/>
 </android.support.constraint.ConstraintLayout>
