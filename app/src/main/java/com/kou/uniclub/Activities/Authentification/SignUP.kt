@@ -45,7 +45,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class StudentSignUP : AppCompatActivity(), Validation {
+class SignUP : AppCompatActivity(), Validation {
 
     //TODO("Make all fields Nullable")
 
@@ -89,6 +89,9 @@ class StudentSignUP : AppCompatActivity(), Validation {
         super.onCreate(savedInstanceState)
         setContentView(com.kou.uniclub.R.layout.activity_sign_up)
 
+        btnFb.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
+
+
 
         /******************* camera  *****************/
         imProfile.setOnClickListener {
@@ -97,8 +100,8 @@ class StudentSignUP : AppCompatActivity(), Validation {
         }
 
 
-        val dialogView = LayoutInflater.from(this@StudentSignUP).inflate(R.layout.builder_time_picker, null)
-        val builder = AlertDialog.Builder(this@StudentSignUP)
+        val dialogView = LayoutInflater.from(this@SignUP).inflate(R.layout.builder_time_picker, null)
+        val builder = AlertDialog.Builder(this@SignUP)
         val timePicker = dialogView.findViewById<DatePicker>(R.id.timePicker)
         builder.setView(dialogView)
         builder.setPositiveButton("confirm") { dialog, which ->
@@ -107,7 +110,7 @@ class StudentSignUP : AppCompatActivity(), Validation {
             birthday =
                 timePicker.year.toString() + "-" + timePicker.month.toString() + "-" + timePicker.dayOfMonth.toString()
             edBirth.hint = birthday
-            edBirth.setHintTextColor(ContextCompat.getColor(this@StudentSignUP, R.color.black))
+            edBirth.setHintTextColor(ContextCompat.getColor(this@SignUP, R.color.black))
             dialog?.dismiss()
         }
 
@@ -151,7 +154,7 @@ class StudentSignUP : AppCompatActivity(), Validation {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
-            PrefsManager.setPicture(this@StudentSignUP,mCurrentPhotoPath)
+            PrefsManager.setPicture(this@SignUP,mCurrentPhotoPath)
             imProfile.setImageURI(Uri.parse(mCurrentPhotoPath))
             chosenFile = File(mCurrentPhotoPath)
             //multipart stuff
@@ -160,7 +163,7 @@ class StudentSignUP : AppCompatActivity(), Validation {
 
 
         } else if (requestCode == SELECT_FILE && resultCode == RESULT_OK) {
-            PrefsManager.setPicture(this@StudentSignUP,data!!.data!!.toString())
+            PrefsManager.setPicture(this@SignUP,data!!.data!!.toString())
 
             imProfile.setImageURI(data.data)
             chosenUri = data.data!!
@@ -220,9 +223,9 @@ class StudentSignUP : AppCompatActivity(), Validation {
                     override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
 
                         if (t is IOException)
-                            Toast.makeText(this@StudentSignUP, "Network faillure", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@SignUP, "Network faillure", Toast.LENGTH_SHORT).show()
                         else
-                            Toast.makeText(this@StudentSignUP, "conversion error", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@SignUP, "conversion error", Toast.LENGTH_SHORT).show()
 
                     }
 
@@ -233,7 +236,7 @@ class StudentSignUP : AppCompatActivity(), Validation {
 
                         } else if (response.code() == 404)
                             Toast.makeText(
-                                this@StudentSignUP,
+                                this@SignUP,
                                 "Email already exists or missing field",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -258,7 +261,7 @@ class StudentSignUP : AppCompatActivity(), Validation {
             ).enqueue(object : Callback<SignUpResponse> {
                 override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
                     if (t is IOException)
-                        Toast.makeText(this@StudentSignUP, "Network faillure", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SignUP, "Network faillure", Toast.LENGTH_SHORT).show()
 
 
                 }
@@ -270,7 +273,7 @@ class StudentSignUP : AppCompatActivity(), Validation {
 
                     } else if (response.code() == 404)
                         Toast.makeText(
-                            this@StudentSignUP,
+                            this@SignUP,
                             "Email already exists or missing field",
                             Toast.LENGTH_SHORT
                         ).show()
@@ -291,8 +294,8 @@ class StudentSignUP : AppCompatActivity(), Validation {
 
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
-                    PrefsManager.seToken(this@StudentSignUP,response.body()!!.accessToken)
-                    startActivity(Intent(this@StudentSignUP,Home::class.java))
+                    PrefsManager.seToken(this@SignUP,response.body()!!.accessToken)
+                    startActivity(Intent(this@SignUP,Home::class.java))
                 }
             }
 
@@ -435,7 +438,7 @@ class StudentSignUP : AppCompatActivity(), Validation {
         val listPermis = ArrayList<String>()
 
         for (i in appPermissions) {
-            if (ContextCompat.checkSelfPermission(this@StudentSignUP, i) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this@SignUP, i) != PackageManager.PERMISSION_GRANTED) {
                 listPermis.add(i)
 
             }
@@ -443,7 +446,7 @@ class StudentSignUP : AppCompatActivity(), Validation {
 
         if (listPermis.isNotEmpty()) {
             ActivityCompat.requestPermissions(
-                this@StudentSignUP,
+                this@SignUP,
                 listPermis.toArray(arrayOfNulls(listPermis.size)),
                 PERMIS_REQUEST
             )
