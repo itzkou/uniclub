@@ -107,6 +107,7 @@
 
 <style name="Choices">
     <item name="android:textColor">@color/white</item>
+    <item name="android:backgroundTint">#999999</item>
 </style>
 
 

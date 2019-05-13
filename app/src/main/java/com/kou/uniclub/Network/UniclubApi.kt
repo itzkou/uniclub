@@ -114,6 +114,7 @@ interface UniclubApi{
             @GET("Club/showByUniversity/{univ_id}")
             fun getClubsByUniv(@Path("univ_id") id:Int): Call<ClubsResponse>
 
+
         /************************* Pagination ********************/
             @GET
             fun paginate(@Url next_page_url:String):Call<EventListResponse>
