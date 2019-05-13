@@ -22,14 +22,19 @@
                    android:layout_marginStart="20dp" android:layout_marginTop="32dp"
                    app:layout_constraintTop_toTopOf="parent"/>
 
-        <ImageView android:id="@+id/imProfile"
-                   android:layout_width="80dp"
-                   android:layout_height="80dp"
-                   android:src="@drawable/ic_launcher_background"
-                   app:layout_constraintTop_toTopOf="parent"
-                   android:layout_marginTop="32dp"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"/>
+        <com.mikhaellopez.circularimageview.CircularImageView android:id="@+id/imProfile"
+                                                              android:layout_width="82dp"
+                                                              android:layout_height="82dp"
+                                                              android:src="@drawable/ic_picupload"
+                                                              app:layout_constraintTop_toTopOf="parent"
+                                                              android:layout_marginTop="32dp"
+                                                              app:layout_constraintEnd_toEndOf="parent"
+                                                              app:layout_constraintStart_toStartOf="parent"/>
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                   android:src="@drawable/ic_plus"
+                   app:layout_constraintTop_toTopOf="@+id/imProfile"
+                   app:layout_constraintBottom_toBottomOf="@+id/imProfile"
+                   app:layout_constraintEnd_toEndOf="@+id/imProfile" app:layout_constraintVertical_bias="1.0"/>
 
         <EditText android:id="@+id/edUsername"
                   style="@style/signUPField"
@@ -38,7 +43,7 @@
                   android:inputType="textPersonName"
                   app:layout_constraintTop_toBottomOf="@id/imProfile" app:layout_constraintEnd_toEndOf="parent"
                   app:layout_constraintStart_toStartOf="parent"
-        />
+                  android:layout_marginTop="24dp"/>
 
         <EditText android:id="@+id/edEmail"
                   style="@style/signUPField"

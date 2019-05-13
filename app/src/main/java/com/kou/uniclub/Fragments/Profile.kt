@@ -16,6 +16,9 @@ import com.kou.uniclub.Adapter.VpProfileAdapter
 import com.kou.uniclub.Fragments.UserBehaviour.Clubs
 import com.kou.uniclub.Fragments.UserBehaviour.Events
 import com.kou.uniclub.R
+import com.kou.uniclub.SharedUtils.PrefsManager
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 
 class Profile:Fragment() {
@@ -29,10 +32,9 @@ class Profile:Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v=inflater.inflate(R.layout.fragment_profile,container,false)
         val vpProfile=v.findViewById<ViewPager>(R.id.vpProfile)
+        val imProfile=v.findViewById<ImageView>(R.id.imProfile)
         val tabLikes=v.findViewById<TabLayout>(R.id.tabLikes)
-        //TODO("hide appBar divider")
-        //val appBar=v.findViewById<AppBarLayout>(R.id.appBar)
-        //val collapsingBar=appBar.findViewById<CollapsingToolbarLayout>(R.id.collapse)
+
         val edit=v.findViewById<ImageView>(R.id.editProfile)
         val nested=v.findViewById<NestedScrollView>(R.id.nestedVprofile)
         nested.isFillViewport=true
@@ -40,7 +42,8 @@ class Profile:Fragment() {
         edit.setOnClickListener {
             startActivity(Intent(activity!!,EditProfile::class.java))
         }
-
+        if (PrefsManager.geToken(activity!!)!=null)
+        Picasso.get().load(PrefsManager.getPicture(activity!!)).into(imProfile)
 
 
         return v

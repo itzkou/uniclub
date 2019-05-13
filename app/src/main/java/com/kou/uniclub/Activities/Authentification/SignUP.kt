@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
@@ -18,6 +19,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.DatePicker
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.facebook.*
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -33,6 +36,7 @@ import com.kou.uniclub.Model.Auth.SignUpResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -47,7 +51,7 @@ import java.util.*
 
 class SignUP : AppCompatActivity(), Validation {
 
-    //TODO("Make all fields Nullable")
+    //TODO("Make all fields Nullable + Upload facebook & google pictures to server")
 
 
     private var cities = arrayOf("Ariana", "Tunis", "Bizerte")
@@ -77,7 +81,7 @@ class SignUP : AppCompatActivity(), Validation {
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     /******* User attributes *******/
 
-    private var  birthday: String?=null
+    private var birthday: String? = null
     private lateinit var fName: String
     private lateinit var lName: String
     private lateinit var mail: String
@@ -88,9 +92,9 @@ class SignUP : AppCompatActivity(), Validation {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.kou.uniclub.R.layout.activity_sign_up)
-
-        btnFb.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
-
+        //TODO("add university fiels and company field for both pro and student")
+        adress = "deprectaed"
+        btnFb.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
 
 
         /******************* camera  *****************/
@@ -105,7 +109,6 @@ class SignUP : AppCompatActivity(), Validation {
         val timePicker = dialogView.findViewById<DatePicker>(R.id.timePicker)
         builder.setView(dialogView)
         builder.setPositiveButton("confirm") { dialog, which ->
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
             birthday =
                 timePicker.year.toString() + "-" + timePicker.month.toString() + "-" + timePicker.dayOfMonth.toString()
@@ -126,18 +129,12 @@ class SignUP : AppCompatActivity(), Validation {
 
         }
 
-        //TODO("add university fiels and company field for both pro and student")
-       adress="deprectaed"
 
 
         formFill()
 
-    }
-
-    override fun onStart() {
-        super.onStart()
         btnSignup.setOnClickListener {
-            uniSignUP()
+            uniSignUP(fName,lName,birthday,mail,password,passwordC,adress,image)
         }
         /******************* with facebook *****************/
         callbackManager = CallbackManager.Factory.create()
@@ -150,11 +147,12 @@ class SignUP : AppCompatActivity(), Validation {
         }
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
-            PrefsManager.setPicture(this@SignUP,mCurrentPhotoPath)
+            PrefsManager.setPicture(this@SignUP, mCurrentPhotoPath)
             imProfile.setImageURI(Uri.parse(mCurrentPhotoPath))
             chosenFile = File(mCurrentPhotoPath)
             //multipart stuff
@@ -163,7 +161,7 @@ class SignUP : AppCompatActivity(), Validation {
 
 
         } else if (requestCode == SELECT_FILE && resultCode == RESULT_OK) {
-            PrefsManager.setPicture(this@SignUP,data!!.data!!.toString())
+            PrefsManager.setPicture(this@SignUP, data!!.data!!.toString())
 
             imProfile.setImageURI(data.data)
             chosenUri = data.data!!
@@ -205,7 +203,6 @@ class SignUP : AppCompatActivity(), Validation {
                 Toast.makeText(this, "All permissions are granted", Toast.LENGTH_SHORT).show()
                 selectImage()
 
-                //TODO("Unlock Sign UP button")
             } else
                 Toast.makeText(this, "All permissions are required", Toast.LENGTH_SHORT).show()
 
@@ -215,10 +212,10 @@ class SignUP : AppCompatActivity(), Validation {
 
     }
 
-    private fun uniSignUP() {
+    private fun uniSignUP(fname:String,lname:String,birth:String?,mail:String,pass:String,passc:String,adress:String,image:MultipartBody.Part?) {
         val service = UniclubApi.create()
         if (image != null) {
-            service.signUP(fName, lName, birthday, mail, password, password, adress, image)
+            service.signUP(fname, lname, birth, mail, pass,passc, adress, image)
                 .enqueue(object : Callback<SignUpResponse> {
                     override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
 
@@ -294,8 +291,8 @@ class SignUP : AppCompatActivity(), Validation {
 
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
-                    PrefsManager.seToken(this@SignUP,response.body()!!.accessToken)
-                    startActivity(Intent(this@SignUP,Home::class.java))
+                    PrefsManager.seToken(this@SignUP, response.body()!!.accessToken)
+                    startActivity(Intent(this@SignUP, Home::class.java))
                 }
             }
 
@@ -466,13 +463,19 @@ class SignUP : AppCompatActivity(), Validation {
                     val request = GraphRequest.newMeRequest(
                         AccessToken.getCurrentAccessToken()
                     ) { me, _ ->
-                        val email = me.get("email").toString() //?: ""
+                        val email = me.get("email").toString()
                         val fn = me.get("first_name").toString()
                         val ln = me.get("last_name").toString()
                         val pic = me.getJSONObject("picture").getJSONObject("data").get("url").toString()
-                        Log.d("mfacebook", "$email $fn $ln $pic")
+                       fName=fn
+                        lName=ln
+                        mail=email
+                        password="123facebook"
+                        passwordC="123facebook"
 
-                        //TODO("caching UserResponseO >Saving to the remote server")
+                        uniSignUP(fn,ln,"null",email,"123facebook","123facebook","unknown",null)
+                        //TODO("response caching")
+                        PrefsManager.setPicture(this@SignUP, pic)
 
 
                     }
@@ -483,8 +486,7 @@ class SignUP : AppCompatActivity(), Validation {
                     request.executeAsync()
 
 
-                } else Log.d("mtoken", "is null")
-
+                }
 
             }
 
@@ -516,10 +518,14 @@ class SignUP : AppCompatActivity(), Validation {
     private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
 
         val account = task.getResult(ApiException::class.java)!!
-        //TODO("caching UserResponseO >Saving to the remote server")
-        Log.d("mGoogle", account.displayName)
-
-
+        fName=account.familyName.toString()
+        lName=account.displayName.toString()
+        mail=account.email.toString()
+        password="123facebook"
+        passwordC="123facebook"
+        uniSignUP(fName,lName,birthday,mail,passwordC,passwordC,adress,image)
+        //TODO("response caching")
+        PrefsManager.setPicture(this@SignUP, account.photoUrl.toString())
     }
 
 
