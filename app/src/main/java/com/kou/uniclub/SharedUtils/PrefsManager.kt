@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.kou.uniclub.SharedUtils.Preferences.Companion.IS_FIRSTIME
 import com.kou.uniclub.SharedUtils.Preferences.Companion.PICTURE
+import com.kou.uniclub.SharedUtils.Preferences.Companion.UNI
 import com.kou.uniclub.SharedUtils.Preferences.Companion.TOKEN
 
 class PrefsManager {
@@ -49,7 +50,18 @@ class PrefsManager {
             return getPreferences(context).getString(PICTURE, "no_image")
         }
 
+        //Set social
+        fun setUnigate(context: Context, p: Boolean) {
+            val editor = getPreferences(context).edit()
+            editor.putBoolean(UNI, p)
+            editor.apply()
 
+        }
+
+        //Get Picture
+        fun getUnigate(context: Context): Boolean? {
+            return getPreferences(context).getBoolean(UNI,false)
+        }
 
     }
 }

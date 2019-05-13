@@ -30,6 +30,7 @@ import com.kou.uniclub.Activities.Home
 import com.kou.uniclub.Extensions.Validation
 import com.kou.uniclub.Model.Auth.LoginResponse
 import com.kou.uniclub.Model.Auth.SignUpResponse
+import com.kou.uniclub.Model.User.UserX
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
@@ -47,10 +48,7 @@ import java.util.*
 
 class SignUP : AppCompatActivity(), Validation {
 
-    //TODO("Make all fields Nullable + Upload facebook & google pictures to server")
-
-
-    private var cities = arrayOf("Ariana", "Tunis", "Bizerte")
+    //TODO("Make all fields Nullable ")
 
 
     /******* REQUESTS FOR RESULTS*******/
@@ -130,7 +128,9 @@ class SignUP : AppCompatActivity(), Validation {
         formFill()
 
         btnSignup.setOnClickListener {
-            uniSignUP(fName,lName,birthday,mail,password,passwordC,adress,image)
+            uniSignUP(fName, lName, birthday, mail, password, passwordC, adress, image)
+            PrefsManager.setUnigate(this@SignUP,true)
+
         }
         /******************* with facebook *****************/
         callbackManager = CallbackManager.Factory.create()
@@ -208,10 +208,19 @@ class SignUP : AppCompatActivity(), Validation {
 
     }
 
-    private fun uniSignUP(fname:String,lname:String,birth:String?,mail:String,pass:String,passc:String,adress:String,image:MultipartBody.Part?) {
+    private fun uniSignUP(
+        fname: String,
+        lname: String,
+        birth: String?,
+        mail: String,
+        pass: String,
+        passc: String,
+        adress: String,
+        image: MultipartBody.Part?
+    ) {
         val service = UniclubApi.create()
         if (image != null) {
-            service.signUP(fname, lname, birth, mail, pass,passc, adress, image)
+            service.signUP(fname, lname, birth, mail, pass, passc, adress, image)
                 .enqueue(object : Callback<SignUpResponse> {
                     override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
 
@@ -463,13 +472,13 @@ class SignUP : AppCompatActivity(), Validation {
                         val fn = me.get("first_name").toString()
                         val ln = me.get("last_name").toString()
                         val pic = me.getJSONObject("picture").getJSONObject("data").get("url").toString()
-                       fName=fn
-                        lName=ln
-                        mail=email
-                        password="123social"
-                        passwordC="123social"
+                        fName = fn
+                        lName = ln
+                        mail = email
+                        password = "123social"
+                        passwordC = "123social"
 
-                        uniSignUP(fn,ln,"null",email,"123facebook","123facebook","unknown",null)
+                        uniSignUP(fn, ln, "null", email, "123facebook", "123facebook", "unknown", null)
                         //TODO("response caching")
                         PrefsManager.setPicture(this@SignUP, pic)
 
@@ -514,12 +523,12 @@ class SignUP : AppCompatActivity(), Validation {
     private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
 
         val account = task.getResult(ApiException::class.java)!!
-        fName=account.familyName.toString()
-        lName=account.displayName.toString()
-        mail=account.email.toString()
-        password="123social"
-        passwordC="123social"
-        uniSignUP(fName,lName,birthday,mail,passwordC,passwordC,adress,image)
+        fName = account.familyName.toString()
+        lName = account.displayName.toString()
+        mail = account.email.toString()
+        password = "123social"
+        passwordC = "123social"
+        uniSignUP(fName, lName, birthday, mail, passwordC, passwordC, adress, image)
         //TODO("response caching")
         PrefsManager.setPicture(this@SignUP, account.photoUrl.toString())
     }

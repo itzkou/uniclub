@@ -36,7 +36,6 @@ class HomeFeed : Fragment() {
     private var upEvents: ArrayList<EventX> = arrayListOf()
 
 
-
 //TODO("404 verification inside or outside isuccessful")
 
 
@@ -51,19 +50,21 @@ class HomeFeed : Fragment() {
         val rvHome = v.findViewById<RecyclerView>(R.id.rvHome)
         val fab = v.findViewById<FloatingActionButton>(R.id.fabSearch)
         val liveAnim = v.findViewById<LottieAnimationView>(R.id.btnStory)
-        val imProfile=v.findViewById<ImageView>(R.id.settings)
+        val imProfile = v.findViewById<ImageView>(R.id.settings)
         val btnUpcoming = v.findViewById<Button>(R.id.btnUpcoming)
         val btnToday = v.findViewById<Button>(R.id.btnToday)
-        val btnLive=v.findViewById<Button>(R.id.btnLive)
+        val btnLive = v.findViewById<Button>(R.id.btnLive)
 
 
-        if (PrefsManager.geToken(activity!!)!=null)
-            Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).apply(RequestOptions.circleCropTransform()).into(imProfile)
+        if (PrefsManager.geToken(activity!!) != null)
+            Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).apply(RequestOptions.circleCropTransform()).into(
+                imProfile
+            )
 
         rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
         allDates(rvHome)
         /********Settings ******/
-       imProfile.setOnClickListener {
+        imProfile.setOnClickListener {
             BuilderSettings.showSettings(activity!!)
         }
         /********Floating button ******/
@@ -79,7 +80,7 @@ class HomeFeed : Fragment() {
         }
 
         btnLive.setOnClickListener {
-            startActivity(Intent(activity!!,Stories::class.java))
+            startActivity(Intent(activity!!, Stories::class.java))
         }
 
         return v

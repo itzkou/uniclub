@@ -52,6 +52,12 @@ class SignIN : AppCompatActivity(), Validation {
 
 
         /******************* with google *****************/
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()//request email id
+            .build()
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         btnGoogle.setOnClickListener { google() }
 
         tvSignUp.setOnClickListener {
@@ -81,6 +87,7 @@ class SignIN : AppCompatActivity(), Validation {
                 if (response.isSuccessful) {
                     PrefsManager.seToken(this@SignIN, response.body()!!.accessToken)
                     startActivity(Intent(this@SignIN, Home::class.java))
+                    finish()
                 }
                 else
                 {
@@ -146,12 +153,6 @@ class SignIN : AppCompatActivity(), Validation {
 
     private fun google() {
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()//request email id
-            .build()
-
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
         val signInIntent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, GOOGLE_SIGN)//pass the declared request code here

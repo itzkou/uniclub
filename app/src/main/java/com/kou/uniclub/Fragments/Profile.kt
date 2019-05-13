@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.kou.uniclub.Activities.EditProfile
 import com.kou.uniclub.Adapter.VpProfileAdapter
 import com.kou.uniclub.Fragments.UserBehaviour.Clubs
@@ -20,19 +21,17 @@ import com.kou.uniclub.Model.User.UserX
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_profile.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+//TODO("Photos taken with camera not loading ")
 
 class Profile : Fragment() {
     companion object {
 
         fun newInstance(): Profile = Profile()
     }
-
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -48,9 +47,10 @@ class Profile : Fragment() {
         edit.setOnClickListener {
             startActivity(Intent(activity!!, EditProfile::class.java))
         }
-        if (PrefsManager.geToken(activity!!)!=null)
-        {  Picasso.get().load(PrefsManager.getPicture(activity!!)).into(imProfile)
-
+        if (PrefsManager.geToken(activity!!) != null) {
+            Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).into(
+                imProfile
+            )
         }
 
 
@@ -61,8 +61,6 @@ class Profile : Fragment() {
 
         return v
     }
-
-
 
 
     private fun setupViewPager(viewPager: ViewPager, tab: TabLayout) {
@@ -88,7 +86,7 @@ class Profile : Fragment() {
                 if (response.isSuccessful && isAdded) {
                     val u = response.body()!!
 
-                    Toast.makeText(activity!!,u.firstName,Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity!!, u.firstName, Toast.LENGTH_SHORT).show()
 
 
                 }
