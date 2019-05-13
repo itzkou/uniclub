@@ -45,7 +45,7 @@ interface UniclubApi{
                                 @Field("password")password:String):Call<LoginResponse>
 
                     @GET("auth/user")
-                    fun getUser(@Header("Authorization") authToken:String):Call<User>
+                    fun getUser(@Header("Authorization") authToken:String):Call<UserX>
 
                 /************************* User favorites ********************/
 

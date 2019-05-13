@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
-import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
@@ -19,8 +18,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.DatePicker
 import android.widget.Toast
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.facebook.*
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -36,7 +33,6 @@ import com.kou.uniclub.Model.Auth.SignUpResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -470,8 +466,8 @@ class SignUP : AppCompatActivity(), Validation {
                        fName=fn
                         lName=ln
                         mail=email
-                        password="123facebook"
-                        passwordC="123facebook"
+                        password="123social"
+                        passwordC="123social"
 
                         uniSignUP(fn,ln,"null",email,"123facebook","123facebook","unknown",null)
                         //TODO("response caching")
@@ -521,8 +517,8 @@ class SignUP : AppCompatActivity(), Validation {
         fName=account.familyName.toString()
         lName=account.displayName.toString()
         mail=account.email.toString()
-        password="123facebook"
-        passwordC="123facebook"
+        password="123social"
+        passwordC="123social"
         uniSignUP(fName,lName,birthday,mail,passwordC,passwordC,adress,image)
         //TODO("response caching")
         PrefsManager.setPicture(this@SignUP, account.photoUrl.toString())

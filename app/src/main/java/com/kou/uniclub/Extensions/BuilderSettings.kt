@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.RadioButton
 import android.widget.TextView
+import com.kou.uniclub.Activities.Authentification.SignIN
 import com.kou.uniclub.Activities.Authentification.SignUP
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
@@ -27,7 +28,7 @@ class BuilderSettings {
 
             logout.setOnClickListener {
                 PrefsManager.seToken(context,null)
-                context.startActivity(Intent(context,SignUP::class.java))
+                context.startActivity(Intent(context,SignIN::class.java))
 
             }
             var radio=false

@@ -55,7 +55,8 @@
                 android:name=".Activities.Splash"
                 android:label="@string/title_activity_home">
         </activity>
-        <activity android:name=".Activities.Authentification.SignIN">
+        <activity android:name=".Activities.Authentification.SignIN"
+        android:exported="true">
         </activity>
         <activity
                 android:name=".Activities.Intro"
