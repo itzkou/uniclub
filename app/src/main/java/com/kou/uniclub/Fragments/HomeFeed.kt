@@ -37,7 +37,7 @@ class HomeFeed : Fragment() {
 
 
 
-//TODO("onDetaach close web service calls")
+//TODO("404 verification inside or outside isuccessful")
 
 
     companion object {

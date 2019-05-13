@@ -11,11 +11,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import com.kou.uniclub.Activities.EditProfile
 import com.kou.uniclub.Adapter.VpProfileAdapter
 import com.kou.uniclub.Fragments.UserBehaviour.Clubs
 import com.kou.uniclub.Fragments.UserBehaviour.Events
-import com.kou.uniclub.Model.User.User
 import com.kou.uniclub.Model.User.UserX
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
@@ -48,11 +48,21 @@ class Profile : Fragment() {
         edit.setOnClickListener {
             startActivity(Intent(activity!!, EditProfile::class.java))
         }
-        if (PrefsManager.geToken(activity!!) != null)
-            userInfos(PrefsManager.geToken(activity!!)!!)
+        if (PrefsManager.geToken(activity!!)!=null)
+        {  Picasso.get().load(PrefsManager.getPicture(activity!!)).into(imProfile)
+
+        }
+
+
+
+
+
+
 
         return v
     }
+
+
 
 
     private fun setupViewPager(viewPager: ViewPager, tab: TabLayout) {
@@ -70,14 +80,15 @@ class Profile : Fragment() {
 
     private fun userInfos(token: String) {
         val service = UniclubApi.create()
-        service.getUser(token).enqueue(object : Callback<UserX> {
+        service.getUser("Bearer $token").enqueue(object : Callback<UserX> {
             override fun onFailure(call: Call<UserX>, t: Throwable) {
             }
 
             override fun onResponse(call: Call<UserX>, response: Response<UserX>) {
                 if (response.isSuccessful && isAdded) {
                     val u = response.body()!!
-                    Picasso.get().load(u.image).into(imProfile)
+
+                    Toast.makeText(activity!!,u.firstName,Toast.LENGTH_SHORT).show()
 
 
                 }
