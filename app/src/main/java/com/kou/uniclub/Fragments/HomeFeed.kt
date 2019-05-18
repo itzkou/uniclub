@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.kou.uniclub.Activities.Stories
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
+import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Extensions.BuilderSearchFilter
 import com.kou.uniclub.Extensions.BuilderSettings
 import com.kou.uniclub.Model.Event.EventListResponse
@@ -49,11 +50,9 @@ class HomeFeed : Fragment() {
         val v = inflater.inflate(R.layout.fragment_homefeed, container, false)
         val rvHome = v.findViewById<RecyclerView>(R.id.rvHome)
         val fab = v.findViewById<FloatingActionButton>(R.id.fabSearch)
-        val liveAnim = v.findViewById<LottieAnimationView>(R.id.btnStory)
         val imProfile = v.findViewById<ImageView>(R.id.settings)
         val btnUpcoming = v.findViewById<Button>(R.id.btnUpcoming)
         val btnToday = v.findViewById<Button>(R.id.btnToday)
-        val btnLive = v.findViewById<Button>(R.id.btnLive)
 
 
         if (PrefsManager.geToken(activity!!) != null)
@@ -65,7 +64,10 @@ class HomeFeed : Fragment() {
         allDates(rvHome)
         /********Settings ******/
         imProfile.setOnClickListener {
+            if(PrefsManager.geToken(activity!!)!=null)
             BuilderSettings.showSettings(activity!!)
+            else
+                BuilderAuth.showDialog(activity!!)
         }
         /********Floating button ******/
         fab.setOnClickListener { BuilderSearchFilter.showDialog(activity!!) }
@@ -79,9 +81,7 @@ class HomeFeed : Fragment() {
             today(rvHome)
         }
 
-        btnLive.setOnClickListener {
-            startActivity(Intent(activity!!, Stories::class.java))
-        }
+
 
         return v
     }

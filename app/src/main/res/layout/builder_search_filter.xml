@@ -8,26 +8,30 @@
                                              android:paddingEnd="16dp"
                                              android:paddingStart="16dp">
 
-    <android.support.v7.widget.SearchView android:id="@+id/searchPrefs" android:layout_width="match_parent"
+    <android.support.v7.widget.SearchView android:id="@+id/searchPrefs"
+                                          android:layout_width="match_parent"
                                           android:layout_height="35dp"
                                           style="@style/searchView"
                                           android:iconifiedByDefault="false"
                                           app:queryHint="Rechercher"
                                           android:layout_centerHorizontal="true"
+                                          android:background="@drawable/searchview"
                                           android:queryBackground="@android:color/transparent"
                                           app:layout_constraintEnd_toEndOf="parent"
                                           app:layout_constraintStart_toStartOf="parent"
-                                          app:layout_constraintTop_toTopOf="parent"
-                                          android:layout_marginTop="16dp"
-    />
-
+                                          app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"/>
+    <TextView android:id="@+id/textview" android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="Choose your fields"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@id/searchPrefs" android:layout_marginTop="16dp"/>
     <android.support.constraint.ConstraintLayout app:layout_constraintEnd_toEndOf="parent"
                                                  app:layout_constraintStart_toStartOf="parent"
-                                                 app:layout_constraintTop_toBottomOf="@id/searchPrefs"
+                                                 app:layout_constraintTop_toBottomOf="@id/textview"
                                                  android:layout_marginTop="16dp"
                                                  android:layout_width="match_parent"
                                                  android:layout_height="match_parent">
         <android.support.v7.widget.CardView android:id="@+id/business"
+                                            style="@style/Choices"
                                             android:layout_width="0dp"
                                             android:layout_height="60dp"
                                             app:cardCornerRadius="15dp"
@@ -40,8 +44,7 @@
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_gravity="center"
-                      style="@style/Choices"
-
+                      android:textColor="@color/white"
                       android:text="Business"/>
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView android:id="@+id/design"
@@ -49,6 +52,7 @@
                                             android:layout_height="60dp"
                                             app:cardCornerRadius="15dp"
                                             app:cardElevation="0dp"
+                                            style="@style/Choices"
 
                                             app:layout_constraintStart_toStartOf="parent"
                                             android:layout_marginTop="16dp"
@@ -60,10 +64,12 @@
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_gravity="center"
-                      style="@style/Choices"
+                      android:textColor="@color/white"
                       android:text="Design"/>
         </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView android:id="@+id/gaming"
+        <android.support.v7.widget.CardView style="@style/Choices"
+
+                                            android:id="@+id/gaming"
                                             android:layout_width="184dp"
                                             android:layout_height="60dp"
                                             app:cardElevation="0dp"
@@ -75,25 +81,28 @@
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_gravity="center"
-                      style="@style/Choices"
+                      android:textColor="@color/white"
                       android:text="Gaming"/>
         </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView android:id="@+id/culture"
-                                            android:layout_width="92dp"
-                                            android:layout_height="60dp"
-                                            app:cardCornerRadius="15dp"
-                                            app:cardElevation="0dp"
-                                            android:layout_marginTop="16dp"
-                                            app:layout_constraintTop_toBottomOf="@+id/business"
-                                            app:layout_constraintStart_toStartOf="parent">
+        <android.support.v7.widget.CardView
+                android:id="@+id/culture" style="@style/Choices"
+
+                android:layout_width="92dp"
+                android:layout_height="60dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="0dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/business"
+                app:layout_constraintStart_toStartOf="parent">
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_gravity="center"
-                      style="@style/Choices"
-
+                      android:textColor="@color/white"
                       android:text="Culture"/>
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView android:id="@+id/tech"
+                                            style="@style/Choices"
+
                                             android:layout_width="0dp"
                                             android:layout_height="60dp"
                                             app:cardCornerRadius="15dp"
@@ -106,11 +115,11 @@
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_gravity="center"
-                      style="@style/Choices"
-
+                      android:textColor="@color/white"
                       android:text="Technology"/>
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView android:id="@+id/sports"
+                                            style="@style/Choices"
                                             android:layout_width="178dp"
                                             android:layout_height="60dp"
                                             app:cardCornerRadius="15dp"
@@ -122,26 +131,28 @@
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_gravity="center"
-                      style="@style/Choices"
-
+                      android:textColor="@color/white"
                       android:text="Sports"/>
         </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView android:id="@+id/photography"
-                                            android:layout_width="92dp"
-                                            android:layout_height="60dp"
-                                            app:cardCornerRadius="15dp"
-                                            app:cardElevation="0dp"
-                                            app:layout_constraintTop_toTopOf="@+id/social"
-                                            app:layout_constraintBottom_toBottomOf="@+id/social"
-                                            app:layout_constraintEnd_toEndOf="parent"
+        <android.support.v7.widget.CardView
+                style="@style/Choices"
+                android:id="@+id/photography"
+                android:layout_width="92dp"
+                android:layout_height="60dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toTopOf="@+id/social"
+                app:layout_constraintBottom_toBottomOf="@+id/social"
+                app:layout_constraintEnd_toEndOf="parent"
         >
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_gravity="center"
-                      style="@style/Choices"
+                      android:textColor="@color/white"
                       android:text="Photography"/>
         </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView android:id="@+id/social"
+        <android.support.v7.widget.CardView style="@style/Choices"
+                                            android:id="@+id/social"
                                             android:layout_width="0dp"
                                             android:layout_height="60dp"
                                             app:cardElevation="0dp"
@@ -154,9 +165,8 @@
                                             android:layout_marginStart="8dp">
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      style="@style/Choices"
-
                       android:layout_gravity="center"
+                      android:textColor="@color/white"
                       android:text="Social"/>
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView android:id="@+id/learning"
@@ -164,13 +174,14 @@
                                             android:layout_height="60dp"
                                             app:cardCornerRadius="15dp"
                                             app:cardElevation="0dp"
+                                            style="@style/Choices"
                                             app:layout_constraintEnd_toEndOf="parent"
                                             app:layout_constraintTop_toTopOf="parent"
                                             android:layout_marginTop="8dp">
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_gravity="center"
-                      style="@style/Choices"
+                      android:textColor="@color/white"
                       android:text="Learning"/>
         </android.support.v7.widget.CardView>
 

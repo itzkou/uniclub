@@ -49,7 +49,7 @@ class Calendar : Fragment() {
         val token = PrefsManager.geToken(activity!!)
 
         rvMyevents = v.findViewById(R.id.rvMyEvents)
-        val show = v.findViewById<ImageView>(R.id.showCal)
+        val show = v.findViewById<View>(R.id.showCal)
         val dialogView = LayoutInflater.from(activity!!).inflate(R.layout.builder_my_calendar, null)
         mCalendar = dialogView.findViewById(R.id.mCalendar)
 

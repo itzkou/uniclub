@@ -39,7 +39,6 @@ class BuilderSettings {
             dialog.show()
 
             logout.setOnClickListener {
-                if (PrefsManager.geToken(context) != null) {
                     PrefsManager.seToken(context, null)
                     //facebook log out
                     LoginManager.getInstance().logOut()
@@ -50,9 +49,6 @@ class BuilderSettings {
                     context.startActivity(Intent(context, SignIN::class.java))
                     val activity = context as Home
                     activity.finish()
-
-
-                } else Toasty.warning(context,"Connect to use this feature",Toasty.LENGTH_SHORT).show()
 
             }
             var radio = false

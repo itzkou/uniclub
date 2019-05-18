@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                  xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 android:id="@+id/rootHomefeed"
+                                                 xmlns:tools="http://schemas.android.com/tools"
                                                  android:layout_width="match_parent"
                                                  android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
@@ -82,7 +82,7 @@
                         android:layout_marginTop="16dp"
                         app:layout_constraintTop_toBottomOf="@id/bar"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" android:id="@+id/constraintLayout"
+                        app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="24dp" android:layout_marginStart="24dp">
                     <Button android:id="@+id/btnToday"
                             android:text="Today"
@@ -95,8 +95,8 @@
                             android:textColor="@drawable/btn_feed_text"
                             android:layout_width="100dp" android:layout_height="35dp"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
-                            app:layout_constraintEnd_toStartOf="@+id/btnLive"/>
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
                     <Button android:id="@+id/btnUpcoming"
                             android:text="Upcoming"
                             android:background="@drawable/btn_feed"
@@ -108,42 +108,11 @@
                             android:layout_width="100dp"
                             android:layout_height="35dp"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="24dp"
                             app:layout_constraintEnd_toStartOf="@+id/btnToday"/>
-                    <Button android:id="@+id/btnLive"
-                            android:layout_width="62dp"
-                            android:layout_height="35dp"
-                            android:textSize="14sp"
-                            android:background="@drawable/btn_feed"
-                            android:text="Live"
-                            android:textColor="@drawable/btn_feed_text"
-
-                            android:fontFamily="@font/raleway_regular"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintVertical_bias="0.0" app:layout_constraintEnd_toEndOf="parent"/>
 
                 </android.support.constraint.ConstraintLayout>
 
-                <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/white_circle"
-                        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-                        app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-                        android:layout_marginBottom="16dp" app:layout_constraintBottom_toBottomOf="parent"
-                        android:id="@+id/imageView3"/>
-
-                <com.airbnb.lottie.LottieAnimationView android:id="@+id/btnStory"
-                                                       android:layout_width="28dp"
-                                                       android:layout_height="28dp"
-                                                       app:lottie_fileName="story.json"
-                                                       app:lottie_autoPlay="true"
-                                                       app:lottie_loop="true"
-                                                       app:layout_constraintTop_toTopOf="@+id/imageView3"
-                                                       app:layout_constraintStart_toStartOf="@+id/imageView3"
-                                                       app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-                                                       app:layout_constraintEnd_toEndOf="@+id/imageView3"/>
             </android.support.constraint.ConstraintLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
