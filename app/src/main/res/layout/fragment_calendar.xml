@@ -1,112 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-                                             android:layout_height="match_parent">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent">
 
-
-    <android.support.constraint.ConstraintLayout
-            android:id="@+id/bar"
-            android:background="@drawable/orange_bar"
-            android:layout_width="match_parent"
-            android:layout_height="57dp"
-            android:elevation="16dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent">
-
-        <ImageView android:layout_width="18dp" android:layout_height="23dp"
-                   android:src="@drawable/ic_notifs"
-                   android:id="@+id/editProfile"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   android:layout_marginEnd="16dp" android:layout_marginTop="8dp"
-                   app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
-                   app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <ImageView android:layout_width="30dp"
-                   android:layout_height="30dp"
-                   android:id="@+id/settings"
-                   android:src="@drawable/ic_profilp"
-                   android:fitsSystemWindows="true"
-                   app:layout_collapseMode="parallax"
-                   android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent"
-                   android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
-                   android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="My events" android:layout_marginTop="8dp"
-                  app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
-                  app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                  android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-                  android:layout_marginStart="8dp"/>
-
-
-    </android.support.constraint.ConstraintLayout>
-    <android.support.constraint.ConstraintLayout android:id="@+id/miniCal" android:layout_width="match_parent"
-                                                 android:layout_height="wrap_content"
-                                                 app:layout_constraintEnd_toEndOf="parent"
-                                                 app:layout_constraintStart_toStartOf="parent"
-                                                 app:layout_constraintTop_toBottomOf="@id/bar"
-                                                 android:layout_marginTop="16dp">
-        <android.support.v7.widget.RecyclerView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" android:id="@+id/rvCalendar"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintTop_toBottomOf="@+id/textView7" android:layout_marginTop="13dp"/>
-        <ImageView android:id="@+id/today"
-                   android:src="@drawable/today"
-                   android:layout_width="86dp"
-                   android:layout_height="32dp"
-                   android:layout_marginEnd="8dp"
-                   app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toTopOf="parent"
-        />
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textAlignment="center"
-                  android:textSize="15sp"
-                  android:text="Today"
-
-                  android:textColor="@color/white"
-                  app:layout_constraintEnd_toEndOf="@id/today" app:layout_constraintStart_toStartOf="@id/today"
-                  app:layout_constraintBottom_toBottomOf="@id/today" app:layout_constraintTop_toTopOf="@id/today"
-                  android:id="@+id/textView7"/>
-
-        <View
-                android:id="@+id/showCal"
-                android:layout_width="match_parent" android:layout_height="24dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/rvCalendar"
-                app:layout_constraintStart_toStartOf="@+id/rvCalendar"
-                app:layout_constraintEnd_toEndOf="@+id/rvCalendar"/>
-        <ImageView android:layout_width="22dp" android:layout_height="3dp"
-                   android:src="@drawable/stripo"
-                   android:layout_marginBottom="8dp"
-                   app:layout_constraintBottom_toBottomOf="@+id/rvCalendar"
-                   app:layout_constraintStart_toStartOf="@+id/rvCalendar"
-                   app:layout_constraintEnd_toEndOf="@+id/rvCalendar"/>
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"  android:src="@drawable/back_orange"
-                app:layout_constraintTop_toTopOf="@id/today" app:layout_constraintBottom_toBottomOf="@id/today"
-                app:layout_constraintStart_toEndOf="@id/today" android:layout_marginStart="8dp"/>
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:rotation="180" android:src="@drawable/back_orange"
-                app:layout_constraintTop_toTopOf="@id/today" app:layout_constraintBottom_toBottomOf="@id/today"
-                app:layout_constraintEnd_toStartOf="@id/today" android:layout_marginEnd="8dp"/>
-    </android.support.constraint.ConstraintLayout>
 
     <android.support.v7.widget.RecyclerView android:id="@+id/rvMyEvents"
                                             android:layout_width="match_parent"
-                                            android:layout_height="0dp"
-                                            app:layout_constraintEnd_toEndOf="parent"
-                                            app:layout_constraintStart_toStartOf="parent"
-                                            app:layout_constraintBottom_toBottomOf="parent"
-                                            android:layout_marginTop="21dp"
-                                            app:layout_constraintTop_toBottomOf="@id/miniCal"/>
+                                            android:layout_height="match_parent"
+                                            app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
+                                            />
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:clickable="false"
+            android:backgroundTint="@color/white"
+    >
+        <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapse"
+                app:collapsedTitleGravity="center"
+                app:expandedTitleGravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                android:fitsSystemWindows="true"
+                app:contentScrim="@color/white"
+        >
+
+            <android.support.constraint.ConstraintLayout
+                    android:id="@+id/bar"
+                    android:background="@drawable/orange_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="57dp"
+                    android:elevation="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="visible">
+
+                <ImageView android:layout_width="18dp" android:layout_height="23dp"
+                           android:src="@drawable/ic_notifs"
+                           android:id="@+id/editProfile"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           android:layout_marginEnd="16dp" android:layout_marginTop="8dp"
+                           app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                           app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <ImageView android:layout_width="30dp"
+                           android:layout_height="30dp"
+                           android:id="@+id/settings"
+                           android:src="@drawable/ic_profilp"
+                           android:fitsSystemWindows="true"
+                           app:layout_collapseMode="parallax"
+                           android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent"
+                           android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                           android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="My events" android:layout_marginTop="8dp"
+                          app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                          app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                          android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                          android:layout_marginStart="8dp"/>
+
+
+            </android.support.constraint.ConstraintLayout>
+            <android.support.constraint.ConstraintLayout android:id="@+id/miniCal" android:layout_width="match_parent"
+                                                         android:layout_height="wrap_content"
+                                                         android:background="@drawable/card_effect"
+                                                         android:elevation="2dp"
+                                                         app:layout_collapseMode="parallax"
+                                                         android:layout_marginBottom="16dp"
+            >
+                <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" android:id="@+id/rvCalendar"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                <ImageView android:id="@+id/today"
+                           android:src="@drawable/today"
+                           android:layout_width="86dp"
+                           android:layout_height="32dp"
+                           android:layout_marginEnd="8dp"
+                           app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintBottom_toTopOf="@id/rvCalendar"
+                           app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="68dp"
+                           android:layout_marginBottom="8dp"/>
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textAlignment="center"
+                          android:textSize="15sp"
+                          android:text="Today"
+
+                          android:textColor="@color/white"
+                          app:layout_constraintEnd_toEndOf="@id/today" app:layout_constraintStart_toStartOf="@id/today"
+                          app:layout_constraintBottom_toBottomOf="@id/today"
+                          app:layout_constraintTop_toTopOf="@id/today"
+                          android:id="@+id/textView7"/>
+
+                <View
+                        android:id="@+id/showCal"
+                        android:layout_width="match_parent" android:layout_height="24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+                <ImageView android:layout_width="22dp" android:layout_height="3dp"
+                           android:src="@drawable/stripo"
+                           android:layout_marginBottom="8dp"
+                           app:layout_constraintBottom_toBottomOf="@+id/rvCalendar"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:src="@drawable/back_orange"
+                        app:layout_constraintTop_toTopOf="@id/today" app:layout_constraintBottom_toBottomOf="@id/today"
+                        app:layout_constraintStart_toEndOf="@id/today" android:layout_marginStart="8dp"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:rotation="180" android:src="@drawable/back_orange"
+                        app:layout_constraintTop_toTopOf="@id/today" app:layout_constraintBottom_toBottomOf="@id/today"
+                        app:layout_constraintEnd_toStartOf="@id/today" android:layout_marginEnd="8dp"/>
+            </android.support.constraint.ConstraintLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+</android.support.design.widget.CoordinatorLayout>

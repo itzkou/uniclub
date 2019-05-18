@@ -203,9 +203,9 @@ class HomeFeed : Fragment() {
                         activity!!,
                         "No events today",
                         R.drawable.ic_error_outline_white_24dp,
-                        R.color.black,
+                        R.color.movento,
                         Toasty.LENGTH_SHORT,
-                        false,
+                        true,
                         true
                     ).show()
             }
@@ -219,7 +219,6 @@ class HomeFeed : Fragment() {
         val service = UniclubApi.create()
         service.getPassedEvents().enqueue(object : Callback<EventListResponse> {
             override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
-                null
             }
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {

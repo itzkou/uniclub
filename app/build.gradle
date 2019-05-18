@@ -70,7 +70,8 @@ dependencies {
     implementation 'com.github.shts:StoriesProgressView:3.0.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
-
+    //blur libs
+implementation 'jp.wasabeef:blurry:3.0.0'
 
 
 }
