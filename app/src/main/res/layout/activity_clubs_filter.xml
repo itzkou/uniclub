@@ -6,7 +6,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Activities.ClubsList">
+        tools:context=".Activities.SearchByUniv">
 
     <ImageView
             android:layout_width="0dp"

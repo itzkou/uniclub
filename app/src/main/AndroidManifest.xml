@@ -33,7 +33,7 @@
         </activity>
         <activity android:name=".Activities.EditProfile">
         </activity>
-        <activity android:name=".Activities.FiliterByUniv"
+        <activity android:name=".Activities.ClubDetails"
                   android:exported="true">
         </activity>
         <!--
@@ -50,7 +50,7 @@
 
         <activity android:name=".Activities.EventDetails">
         </activity>
-        <activity android:name=".Activities.ClubsList"
+        <activity android:name=".Activities.SearchByUniv"
         android:exported="true">
         </activity>
         <activity
@@ -65,7 +65,8 @@
                 android:label="@string/title_activity_intro"
                 android:theme="@style/AppTheme">
         </activity>
-        <activity android:name=".Activities.Home">
+        <activity android:name=".Activities.Home"
+                  android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

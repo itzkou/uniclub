@@ -6,6 +6,7 @@ import com.kou.uniclub.Model.Club.ClubsByUnivResponse
 import com.kou.uniclub.Model.Club.ClubsResponse
 import com.kou.uniclub.Model.Event.EventDetailsResponse
 import com.kou.uniclub.Model.Event.EventListResponse
+import com.kou.uniclub.Model.University.UniversityNameResponse
 import com.kou.uniclub.Model.University.UniversityResponse
 import com.kou.uniclub.Model.User.*
 import okhttp3.MultipartBody
@@ -118,9 +119,16 @@ interface UniclubApi{
             @GET("Clubs")
             fun getClubs(): Call<ClubsResponse>
 
-        /************************* Pagination ********************/
+    /************************* University ********************/
+    @GET("University/ShowByName/{name}")
+    fun getUniversity(@Path("name") name:String): Call<UniversityNameResponse>
+
+    /************************* Pagination ********************/
             @GET
-            fun paginate(@Url next_page_url:String):Call<EventListResponse>
+            fun paginateEvents(@Url next_page_url:String):Call<EventListResponse>
+
+            @GET
+            fun paginateClubs(@Url next_page_url:String):Call<ClubsResponse>
 
             @GET
             fun paginateToken(@Url next_page_url:String,@Header("Authorization") authToken:String):Call<EventListResponse>

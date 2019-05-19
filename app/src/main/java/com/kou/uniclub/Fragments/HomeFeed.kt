@@ -31,10 +31,8 @@ import java.io.IOException
 
 class HomeFeed : Fragment() {
     private var page: String? = null
-    private var upEvents: ArrayList<EventX> = arrayListOf()
 
 
-//TODO("404 verification inside or outside isuccessful")
 
 
     companion object {
@@ -85,7 +83,7 @@ class HomeFeed : Fragment() {
 
 
     private fun upcoming(rv: RecyclerView) {
-        upEvents.clear()
+
 
         val service = UniclubApi.create()
         service.getUpcomingEvents().enqueue(object : Callback<EventListResponse> {
@@ -96,22 +94,33 @@ class HomeFeed : Fragment() {
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
                 if (response.isSuccessful && isAdded) {
-                    if (response.body()!!.pagination.events.size > 0) {
-                        upEvents.addAll(response.body()!!.pagination.events)
-                        page = response.body()!!.pagination.nextPageUrl
-                        rv.adapter = RvHomeFeedAdapter(upEvents, activity!!)
+                    page = response.body()!!.pagination.nextPageUrl
+                    val adapter = RvHomeFeedAdapter(response.body()!!.pagination.events, activity!!)
+                    rv.adapter = adapter
 
-                    }
+                    //Pagination
+
+                    rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                            super.onScrollStateChanged(recyclerView, newState)
+                            if (!rv.canScrollVertically(1)) {
+                                if (page != null)
+                                    getMoreItems(adapter)
+
+                            }
+                        }
+                    })
 
 
-                } else if (response.code() == 404)
+                }
+                else if (response.code() == 404)
                     Toasty.custom(
                         activity!!,
-                        "No more events",
+                        "No upcoming events",
                         R.drawable.ic_error_outline_white_24dp,
-                        R.color.black,
+                        R.color.movento,
                         Toasty.LENGTH_SHORT,
-                        false,
+                        true,
                         true
                     ).show()
             }
@@ -172,7 +181,6 @@ class HomeFeed : Fragment() {
         val service = UniclubApi.create()
         service.getTodayEvents().enqueue(object : Callback<EventListResponse> {
             override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
-                null
             }
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
@@ -195,7 +203,8 @@ class HomeFeed : Fragment() {
                     })
 
 
-                } else if (response.code() == 404)
+                }
+                else if (response.code() == 404)
                     Toasty.custom(
                         activity!!,
                         "No events today",
@@ -297,7 +306,7 @@ class HomeFeed : Fragment() {
     private fun getMoreItems(adapter: RvHomeFeedAdapter) {
         val service = UniclubApi.create()
         if (page != null)
-            service.paginate(page!!).enqueue(object : Callback<EventListResponse> {
+            service.paginateEvents(page!!).enqueue(object : Callback<EventListResponse> {
                 override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
                 }
 
@@ -308,7 +317,9 @@ class HomeFeed : Fragment() {
                             adapter.addData(response1.body()!!.pagination.events)
                             page = response1.body()!!.pagination.nextPageUrl
 
-                        } else Toasty.custom(
+
+                        } else
+                            Toasty.custom(
                             activity!!,
                             "No more items",
                             R.drawable.ic_error_outline_white_24dp,

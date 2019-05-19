@@ -28,6 +28,7 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 android:fitsSystemWindows="true"
                 app:contentScrim="@color/white"
+
         >
 
             <android.support.constraint.ConstraintLayout

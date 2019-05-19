@@ -15,18 +15,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <ImageView android:id="@+id/im_university"
+        <ImageView android:id="@+id/imUniv"
                    android:layout_width="50dp"
                    android:layout_height="50dp"
                    android:src="@drawable/ic_logo" app:layout_constraintStart_toStartOf="parent"
                    android:layout_marginStart="16dp" app:layout_constraintTop_toTopOf="parent"
                    android:layout_marginTop="16dp"/>
 
-        <TextView android:id="@+id/tv_univ_title"
+        <TextView android:id="@+id/tvUniv"
                   android:layout_width="195dp"
                   android:textSize="12sp"
                   android:layout_height="wrap_content"
-                  app:layout_constraintStart_toEndOf="@id/im_university"
+                  app:layout_constraintStart_toEndOf="@id/imUniv"
                   android:layout_marginStart="16dp" android:layout_marginTop="16dp"
                   app:layout_constraintTop_toTopOf="parent"/>
 

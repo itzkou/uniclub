@@ -188,7 +188,7 @@ class Calendar : Fragment() {
     private fun getMoreItems(adapter: RvMyEventsAdapter) {
         val service = UniclubApi.create()
         if (page != null)
-            service.paginate(page!!).enqueue(object : Callback<EventListResponse> {
+            service.paginateEvents(page!!).enqueue(object : Callback<EventListResponse> {
                 override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
                 }
 

@@ -6,12 +6,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.kou.uniclub.Activities.FiliterByUniv
-import com.kou.uniclub.Model.Club.Club
+import com.kou.uniclub.Activities.ClubDetails
+import com.kou.uniclub.Model.Club.ClubX
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.row_club.view.*
 
-class RvClubsAdapter(val clubs :ArrayList<Club>, val context: Context): RecyclerView.Adapter<RvClubsAdapter.Holder>() {
+class RvClubsAdapter(val clubs :ArrayList<ClubX>, val context: Context): RecyclerView.Adapter<RvClubsAdapter.Holder>() {
     companion object {
         var club_id:Int?=null
     }
@@ -23,13 +23,13 @@ class RvClubsAdapter(val clubs :ArrayList<Club>, val context: Context): Recycler
         return clubs.size   }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val club: Club = clubs[position]
+        val club: ClubX = clubs[position]
 
         holder.title.text=club.name
 
         holder.root.setOnClickListener {
             club_id=club.id
-            context.startActivity(Intent(context, FiliterByUniv::class.java))
+            context.startActivity(Intent(context, ClubDetails::class.java))
         }
     }
 
@@ -38,6 +38,15 @@ class RvClubsAdapter(val clubs :ArrayList<Club>, val context: Context): Recycler
         val root= view.rootClub!!
         //val image= view.im_club
     }
+    fun addData(listItems: java.util.ArrayList<ClubX>) {
+        val size = this.clubs.size
+        val sizeNew = listItems.size
 
+        if (size < sizeNew + size) {
+            this.clubs.addAll(listItems)
+            notifyItemRangeInserted(size, sizeNew)
+        }
+
+    }
 
 }
