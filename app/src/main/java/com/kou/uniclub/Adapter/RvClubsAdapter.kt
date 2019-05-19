@@ -6,8 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import com.kou.uniclub.Activities.ClubDetails
+import com.kou.uniclub.Activities.FiliterByUniv
 import com.kou.uniclub.Model.Club.Club
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.row_club.view.*
@@ -25,13 +24,12 @@ class RvClubsAdapter(val clubs :ArrayList<Club>, val context: Context): Recycler
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val club: Club = clubs[position]
-        val anim= AnimationUtils.loadAnimation(context,R.anim.anim_homefeed)
-        holder.root.animation=anim
+
         holder.title.text=club.name
 
         holder.root.setOnClickListener {
             club_id=club.id
-            context.startActivity(Intent(context, ClubDetails::class.java))
+            context.startActivity(Intent(context, FiliterByUniv::class.java))
         }
     }
 

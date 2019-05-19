@@ -11,7 +11,7 @@ import com.kou.uniclub.Fragments.ClubTimeline.Upcoming
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.activity_club_details.*
 
-class ClubDetails : AppCompatActivity() {
+class FiliterByUniv : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

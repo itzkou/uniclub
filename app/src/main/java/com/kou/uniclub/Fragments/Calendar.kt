@@ -1,7 +1,6 @@
 package com.kou.uniclub.Fragments
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.AppBarLayout
@@ -17,8 +16,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.kou.uniclub.Adapter.RvCalendarAdapter
 import com.kou.uniclub.Adapter.RvMyEventsAdapter
+import com.kou.uniclub.Extensions.BuilderAuth
+import com.kou.uniclub.Extensions.BuilderSettings
 import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Network.UniclubApi
@@ -30,7 +33,6 @@ import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import es.dmoral.toasty.Toasty
 import jp.wasabeef.blurry.Blurry
-import kotlinx.android.synthetic.main.fragment_calendar.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -54,6 +56,7 @@ class Calendar : Fragment() {
         val rvCalendar = v.findViewById<RecyclerView>(R.id.rvCalendar)
         val miniCal = v.findViewById<ConstraintLayout>(R.id.miniCal)
         val appBar = v.findViewById<AppBarLayout>(R.id.appBar)
+        val imProfile = v.findViewById<ImageView>(R.id.settings)
         val token = PrefsManager.geToken(activity!!)
 
         rvMyevents = v.findViewById(R.id.rvMyEvents)
@@ -66,7 +69,17 @@ class Calendar : Fragment() {
         builder.setView(dialogView)
         val dialog = builder.create()
 
+        if (token != null)
+            Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).apply(RequestOptions.circleCropTransform()).into(imProfile)
+        imProfile.setOnClickListener {
+            if(token!=null)
+                BuilderSettings.showSettings(activity!!)
+            else
+                BuilderAuth.showDialog(activity!!)
+        }
+        /********** Custom mini calendar  ****************/
         miniCalendar(rvCalendar)
+        /********** My participations  ****************/
 
         if (token != null) {
             myEvents(rvMyevents, activity!!)
@@ -78,9 +91,8 @@ class Calendar : Fragment() {
 
             }
         }
-
+        /**********Blurring appBAr****************/
         var blurred = false
-
 
        appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { p0, p1 ->
             val alpha = (p0.totalScrollRange + p1).toFloat() / p0.totalScrollRange

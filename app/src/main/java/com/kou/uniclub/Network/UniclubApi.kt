@@ -2,6 +2,7 @@ package com.kou.uniclub.Network
 
 import com.kou.uniclub.Model.Auth.LoginResponse
 import com.kou.uniclub.Model.Auth.SignUpResponse
+import com.kou.uniclub.Model.Club.ClubsByUnivResponse
 import com.kou.uniclub.Model.Club.ClubsResponse
 import com.kou.uniclub.Model.Event.EventDetailsResponse
 import com.kou.uniclub.Model.Event.EventListResponse
@@ -112,8 +113,10 @@ interface UniclubApi{
         /************************* Clubs ********************/
 
             @GET("Club/showByUniversity/{univ_id}")
-            fun getClubsByUniv(@Path("univ_id") id:Int): Call<ClubsResponse>
+            fun getClubsByUniv(@Path("univ_id") id:Int): Call<ClubsByUnivResponse>
 
+            @GET("Clubs")
+            fun getClubs(): Call<ClubsResponse>
 
         /************************* Pagination ********************/
             @GET

@@ -6,7 +6,6 @@ import android.support.v7.app.AlertDialog
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.RadioButton
-
 import android.widget.TextView
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -14,7 +13,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.kou.uniclub.Activities.Authentification.SignIN
 import com.kou.uniclub.Activities.Home
 import com.kou.uniclub.SharedUtils.PrefsManager
-import es.dmoral.toasty.Toasty
 
 
 class BuilderSettings {

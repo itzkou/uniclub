@@ -39,7 +39,7 @@ class Profile : Fragment() {
         val vpProfile = v.findViewById<ViewPager>(R.id.vpProfile)
         val imProfile = v.findViewById<ImageView>(R.id.imProfile)
         val tabLikes = v.findViewById<TabLayout>(R.id.tabLikes)
-
+        val token = PrefsManager.geToken(activity!!)
         val edit = v.findViewById<ImageView>(R.id.editProfile)
         val nested = v.findViewById<NestedScrollView>(R.id.nestedVprofile)
         nested.isFillViewport = true
@@ -47,7 +47,7 @@ class Profile : Fragment() {
         edit.setOnClickListener {
             startActivity(Intent(activity!!, EditProfile::class.java))
         }
-        if (PrefsManager.geToken(activity!!) != null) {
+        if (token != null) {
             Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).into(
                 imProfile
             )

@@ -10,14 +10,9 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kou.uniclub.Adapter.VpHomeAdapter
 import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Fragments.*
-import com.kou.uniclub.Model.User.UserX
-import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
 import kotlinx.android.synthetic.main.activity_home.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class Home : AppCompatActivity() {
 

@@ -1,11 +1,10 @@
 package com.kou.uniclub.Model.Club
 
-
 import com.google.gson.annotations.SerializedName
 
-data class ClubsResponse(
+data class ClubsByUnivResponse(
     @SerializedName("data")
-    val pagination: Pagination,
+    val clubs: ArrayList<Club>,
     @SerializedName("success")
     val success: Boolean
 )

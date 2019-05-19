@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.kou.uniclub.Activities.ClubsFilter
+import com.kou.uniclub.Activities.ClubsList
 import com.kou.uniclub.Model.University.University
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.row_university.view.*
@@ -31,7 +31,7 @@ class RvUnivsAdapter(val universities :ArrayList<University>, val context: Conte
 
         holder.card.setOnClickListener {
             mID=univ.id
-            context.startActivity(Intent(context, ClubsFilter::class.java))
+            context.startActivity(Intent(context, ClubsList::class.java))
 
 
         }

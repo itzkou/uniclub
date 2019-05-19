@@ -5,8 +5,8 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.kou.uniclub.SharedUtils.Preferences.Companion.IS_FIRSTIME
 import com.kou.uniclub.SharedUtils.Preferences.Companion.PICTURE
-import com.kou.uniclub.SharedUtils.Preferences.Companion.UNI
 import com.kou.uniclub.SharedUtils.Preferences.Companion.TOKEN
+import com.kou.uniclub.SharedUtils.Preferences.Companion.UNI
 
 class PrefsManager {
 

@@ -1,6 +1,5 @@
 package com.kou.uniclub.Fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
@@ -13,10 +12,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
-import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.kou.uniclub.Activities.Stories
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Extensions.BuilderSearchFilter
@@ -53,18 +50,18 @@ class HomeFeed : Fragment() {
         val imProfile = v.findViewById<ImageView>(R.id.settings)
         val btnUpcoming = v.findViewById<Button>(R.id.btnUpcoming)
         val btnToday = v.findViewById<Button>(R.id.btnToday)
+        val token = PrefsManager.geToken(activity!!)
 
 
-        if (PrefsManager.geToken(activity!!) != null)
-            Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).apply(RequestOptions.circleCropTransform()).into(
-                imProfile
-            )
+
+        if (token != null)
+            Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).apply(RequestOptions.circleCropTransform()).into(imProfile)
 
         rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
         allDates(rvHome)
         /********Settings ******/
         imProfile.setOnClickListener {
-            if(PrefsManager.geToken(activity!!)!=null)
+            if(token!=null)
             BuilderSettings.showSettings(activity!!)
             else
                 BuilderAuth.showDialog(activity!!)

@@ -9,7 +9,7 @@
                                              android:paddingStart="16dp">
 
     <android.support.v7.widget.SearchView android:id="@+id/searchPrefs"
-                                          android:layout_width="match_parent"
+                                          android:layout_width="0dp"
                                           android:layout_height="35dp"
                                           style="@style/searchView"
                                           android:iconifiedByDefault="false"
