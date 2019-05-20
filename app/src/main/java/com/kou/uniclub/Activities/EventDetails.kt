@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -37,6 +38,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.function.Predicate
+import kotlin.collections.ArrayList
 
 class EventDetails : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
@@ -69,7 +71,6 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
         })
 
         rvMoreE.layoutManager = LinearLayoutManager(this@EventDetails, LinearLayout.HORIZONTAL, false)
-
         getDetails()
 
 
@@ -110,10 +111,12 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
                     tvLocation.text = event.location
                     tvEventDesc.text = event.description
 
-                    moreEvents(event.clubId, rvMoreE)
+                    moreEvents(event.id, rvMoreE)
 
 
-
+                    readMo.setOnClickListener {
+                        tvEventDesc.maxLines = 200
+                    }
                     btnParticipate.setOnClickListener {
                         if (PrefsManager.geToken(this@EventDetails) == null)
                             BuilderAuth.showDialog(this@EventDetails)
@@ -154,13 +157,19 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
                 if (response.isSuccessful) {
+
                     page = response.body()!!.pagination.nextPageUrl
                     val events = response.body()!!.pagination.events
-                    for (i in 0 until events.size)
-                        if (events[i].id == id) {
-                            events.removeAt(i)
+                    val filtered = arrayListOf<EventX>()
+
+                    for (i in 0 until events.size) {
+                        if (events[i].id != id) {
+                            filtered.add(events[i])
                         }
-                    val adapter = RvHomeFeedAdapter(events, this@EventDetails)
+
+                    }
+
+                    val adapter = RvHomeFeedAdapter(filtered, this@EventDetails)
                     rv.adapter = adapter
 
                     //Pagination
