@@ -1,10 +1,11 @@
 package com.kou.uniclub.Activities
 
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import android.support.design.widget.AppBarLayout
 import android.support.v7.app.AppCompatActivity
 import android.text.format.DateFormat
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -20,6 +21,7 @@ import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
 import com.squareup.picasso.Picasso
+import jp.wasabeef.blurry.Blurry
 import kotlinx.android.synthetic.main.activity_event_details.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,6 +40,25 @@ class EventDetails : AppCompatActivity(),OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        var blurred = false
+        appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { p0, p1 ->
+            val alpha = (p0.totalScrollRange + p1).toFloat() / p0.totalScrollRange
+            if ((alpha==0f || alpha==1f)) {
+                Blurry.delete(blurro as ViewGroup)
+                blurred = false
+            } else if ((alpha > 0 && alpha < 1) && !blurred) {
+                blurred = true
+                Blurry.with(this@EventDetails)
+                    .radius(25)
+                    .sampling(2)
+                    .async()
+                    .animate(125)
+                    .onto(blurro as ViewGroup)
+
+            }
+
+        })
+
 
         getDetails()
 
@@ -66,10 +87,8 @@ class EventDetails : AppCompatActivity(),OnMapReadyCallback {
             override fun onResponse(call: Call<EventDetailsResponse>, response: Response<EventDetailsResponse>) {
                 if (response.isSuccessful) {
                     val event = response.body()!!.event
-                    collapse.title = event.name
-                    collapse.setExpandedTitleColor(ContextCompat.getColor(this@EventDetails,
-                        R.color.trans
-                    ))
+                    evenTitle.text = event.name
+
                     if(event.photo!="") {
                         Picasso.get().load(event.photo).into(imEvent)
                         progress.visibility= View.GONE

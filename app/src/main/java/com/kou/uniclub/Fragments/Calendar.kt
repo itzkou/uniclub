@@ -96,7 +96,6 @@ class Calendar : Fragment() {
 
        appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { p0, p1 ->
             val alpha = (p0.totalScrollRange + p1).toFloat() / p0.totalScrollRange
-            Log.d("mAlpha", alpha.toString())
             if ((alpha==0f || alpha==1f)) {
                 Blurry.delete(miniCal as ViewGroup)
                 blurred = false

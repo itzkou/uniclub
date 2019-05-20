@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="216dp"
             android:theme="@style/ThemeOverlay.MaterialComponents.Light"
-            android:fitsSystemWindows="true">
+            android:fitsSystemWindows="true" android:id="@+id/appBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapse"
@@ -24,28 +24,68 @@
                 app:contentScrim="@color/white"
 
         >
-
-            <ImageView android:layout_width="match_parent"
-                       android:layout_height="255dp"
-                       app:layout_collapseMode="parallax"
-                       android:fitsSystemWindows="true"
-                       android:scaleType="centerCrop" android:id="@+id/imEvent"/>
-
-            <ProgressBar android:id="@+id/progress"
-                         android:layout_width="50dp"
-                         android:layout_height="50dp"
-                         android:layout_gravity="center"
-                         app:layout_collapseMode="parallax"
-                         android:indeterminate="true"
-
-                         android:fitsSystemWindows="true"/>
-
-
-            <android.support.v7.widget.Toolbar
+            <android.support.constraint.ConstraintLayout
+                    android:id="@+id/blurro"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
-                    app:layout_collapseMode="pin"/>
+                    android:layout_height="wrap_content">
+                <ImageView android:layout_width="match_parent"
+                           android:layout_height="255dp"
+                           app:layout_collapseMode="parallax"
+                           android:fitsSystemWindows="true"
+                           android:scaleType="centerCrop" android:id="@+id/imEvent"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           app:layout_constraintTop_toTopOf="parent"
+                           app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <ProgressBar android:id="@+id/progress"
+                             android:layout_width="50dp"
+                             android:layout_height="50dp"
+                             android:layout_gravity="center"
+                             app:layout_collapseMode="parallax"
+                             android:indeterminate="true"
+                             android:fitsSystemWindows="true"
+                             app:layout_constraintStart_toStartOf="parent"
+                             app:layout_constraintEnd_toEndOf="parent"
+                             app:layout_constraintTop_toTopOf="parent"
+                             app:layout_constraintBottom_toBottomOf="parent"/>
+            </android.support.constraint.ConstraintLayout>
+            <android.support.constraint.ConstraintLayout
+                    android:id="@+id/bar"
+                    android:background="@drawable/orange_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="57dp"
+                    android:elevation="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            >
+
+                <ImageView android:layout_width="18dp" android:layout_height="23dp"
+                           android:src="@drawable/ic_notifs"
+                           android:id="@+id/editProfile"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           android:layout_marginEnd="16dp" android:layout_marginTop="8dp"
+                           app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                           app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <ImageView android:layout_width="30dp"
+                           android:layout_height="30dp"
+                           android:id="@+id/settings"
+                           android:src="@drawable/ic_profilp"
+                           android:fitsSystemWindows="true"
+                           app:layout_collapseMode="parallax"
+                           android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent"
+                           android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                           android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:layout_marginTop="8dp"
+                          app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                          app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                          android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                          android:layout_marginStart="8dp" android:id="@+id/evenTitle"/>
+
+
+            </android.support.constraint.ConstraintLayout>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -83,19 +123,18 @@
             <Button style="@style/BtnParticipate"
                     android:id="@+id/btnParticipate"/>
             <fragment
-                      android:layout_width="match_parent"
-                      android:layout_height="200dp"
-                      android:id="@+id/map"
-                      tools:context=".MapsActivity"
-                      android:name="com.google.android.gms.maps.SupportMapFragment"
-                      android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:id="@+id/map"
+                    tools:context=".MapsActivity"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_marginTop="16dp"
 
             />
 
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
-
 
 
 </android.support.design.widget.CoordinatorLayout>
