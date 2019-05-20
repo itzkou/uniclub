@@ -51,8 +51,6 @@
             android:background="@drawable/searchview"
             android:queryBackground="@android:color/transparent"
             app:layout_constraintTop_toBottomOf="@id/bar"
-
-
             android:layout_marginTop="16dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="20dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="20dp"/>
     <android.support.v7.widget.RecyclerView android:id="@+id/rvClubs"

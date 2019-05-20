@@ -7,29 +7,55 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Activities.SearchByUniv">
+    <android.support.constraint.ConstraintLayout
+            android:id="@+id/bar"
+            android:background="@drawable/orange_bar"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:elevation="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="visible">
 
-    <ImageView
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:id="@+id/bar" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:scaleType="center" app:srcCompat="@drawable/orange_bar"/>
-    <ImageView android:id="@+id/back_black"
-               android:src="@drawable/back"
-               android:layout_width="16dp"
-               android:layout_height="16dp"
-               app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
-               app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="18dp"/>
-    <TextView
-            android:text="Clubs details"
-            android:textColor="@color/black"
-            android:textSize="17sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/tv_clubTitle"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toTopOf="@+id/bar" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"/>
+        <ImageView android:layout_width="18dp" android:layout_height="23dp"
+                   android:src="@drawable/ic_notifs"
+                   android:id="@+id/editProfile"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   android:layout_marginEnd="16dp" android:layout_marginTop="8dp"
+                   app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                   app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView android:layout_width="30dp"
+                   android:layout_height="30dp"
+                   android:id="@+id/settings"
+                   android:src="@drawable/ic_profilp"
+                   android:fitsSystemWindows="true"
+                   app:layout_collapseMode="parallax"
+                   android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent"
+                   android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                   android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="My events" android:layout_marginTop="8dp"
+                  app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                  app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                  android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                  android:layout_marginStart="8dp"/>
+
+
+    </android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.SearchView
+            android:id="@+id/searchUnivs"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            style="@style/searchView"
+            android:iconifiedByDefault="false"
+            app:defaultQueryHint="Type your university"
+            app:searchHintIcon="@null"
+            android:background="@drawable/searchview"
+            android:queryBackground="@android:color/transparent"
+            app:layout_constraintTop_toBottomOf="@id/bar"
+            android:layout_marginTop="16dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="20dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="20dp"/>
     <android.support.v7.widget.RecyclerView
             android:id="@+id/rvClubs"
             android:layout_width="match_parent"

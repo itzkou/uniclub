@@ -14,10 +14,6 @@ class SearchByUniv : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_clubs_filter)
-        back_black.setOnClickListener {
-            startActivity(Intent(this@SearchByUniv, Home::class.java))
-            finish()
-        }
 
 
     }

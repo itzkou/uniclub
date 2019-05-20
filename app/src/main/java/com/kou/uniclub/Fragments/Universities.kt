@@ -1,5 +1,6 @@
 package com.kou.uniclub.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
+import com.kou.uniclub.Activities.SearchByUniv
 import com.kou.uniclub.Adapter.RvClubsAdapter
 import com.kou.uniclub.Model.Club.ClubsResponse
 import com.kou.uniclub.Model.University.University
@@ -41,9 +43,16 @@ class Universities : Fragment() {
         autoComplete = searchUniv.findViewById(android.support.v7.appcompat.R.id.search_src_text)
         rvClubs.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
 
+        /***** List of all clubs ****/
         getClubs(rvClubs)
-        val service=UniclubApi.create()
 
+        /****Filter By univ***/
+
+        searchUniv.setOnClickListener {
+            startActivity(Intent(activity!!, SearchByUniv::class.java))
+        }
+
+        val service=UniclubApi.create()
         service.getUniversities().enqueue(object :Callback<UniversityResponse>{
             override fun onFailure(call: Call<UniversityResponse>, t: Throwable) {
             }
@@ -74,10 +83,10 @@ class Universities : Fragment() {
 
 
 
-        /***** List of all clubs ****/
 
 
-        /***** search university by name ****/
+
+
 
 
         return v
