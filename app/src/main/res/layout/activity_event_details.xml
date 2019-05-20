@@ -296,6 +296,12 @@
                         app:layout_constraintTop_toBottomOf="@id/tvEventDesc"
 
                 />
+                    <android.support.v7.widget.RecyclerView android:id="@+id/rvMoreE"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            app:layout_constraintStart_toStartOf="parent"
+                                                            app:layout_constraintEnd_toEndOf="parent"
+                                                            app:layout_constraintTop_toBottomOf="@id/map"/>
                 </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>

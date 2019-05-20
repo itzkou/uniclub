@@ -119,6 +119,13 @@ interface UniclubApi{
             @GET("Clubs")
             fun getClubs(): Call<ClubsResponse>
 
+            @GET("Club/{id}/UpcomingEvents")
+            fun getClubUpcomingE(@Path("id")id:Int): Call<EventListResponse>
+
+
+
+
+
     /************************* University ********************/
     @GET("University/ShowByName/{name}")
     fun getUniversity(@Path("name") name:String): Call<UniversityNameResponse>
