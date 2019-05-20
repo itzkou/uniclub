@@ -21,7 +21,7 @@ data class ClubX(
     @SerializedName("Name")
     val name: String,
     @SerializedName("Photo")
-    val photo: Any?,
+    val photo: String?,
     @SerializedName("President")
     val president: String,
     @SerializedName("remember_token")

@@ -42,7 +42,7 @@
                     android:background="@drawable/orange_bar"
                     android:layout_width="match_parent"
                     android:layout_height="57dp"
-                    android:elevation="16dp"
+                    android:elevation="4dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent">
 
@@ -64,7 +64,7 @@
                            android:layout_marginTop="8dp"
                            app:layout_constraintTop_toTopOf="parent"
                            android:fitsSystemWindows="true"
-                           app:layout_collapseMode="parallax"/>
+                           app:layout_collapseMode="pin"/>
 
 
                 <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"

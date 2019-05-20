@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.kou.uniclub.Activities.ClubDetails
 import com.kou.uniclub.Model.Club.ClubX
 import com.kou.uniclub.R
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.row_club.view.*
 
 class RvClubsAdapter(val clubs :ArrayList<ClubX>, val context: Context): RecyclerView.Adapter<RvClubsAdapter.Holder>() {
@@ -31,12 +32,13 @@ class RvClubsAdapter(val clubs :ArrayList<ClubX>, val context: Context): Recycle
             club_id=club.id
             context.startActivity(Intent(context, ClubDetails::class.java))
         }
+        Picasso.get().load(club.photo).into(holder.image)
     }
 
     class Holder(view: View) : RecyclerView.ViewHolder(view)
     { val title= view.club_title!!
         val root= view.rootClub!!
-        //val image= view.im_club
+        val image=view.imClub!!
     }
     fun addData(listItems: java.util.ArrayList<ClubX>) {
         val size = this.clubs.size

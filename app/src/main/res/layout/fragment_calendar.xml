@@ -36,7 +36,7 @@
                     android:background="@drawable/orange_bar"
                     android:layout_width="match_parent"
                     android:layout_height="57dp"
-                    android:elevation="16dp"
+                    android:elevation="4dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                     android:visibility="visible">
@@ -59,7 +59,9 @@
                            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
                            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:text="My events" android:layout_marginTop="8dp"
+                          android:text="Calendar"
+                          android:textSize="18sp"
+                          android:fontFamily="@font/raleway_semi_bold" android:layout_marginTop="8dp"
                           app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
                           app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
                           android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"

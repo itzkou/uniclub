@@ -19,7 +19,6 @@ import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Extensions.BuilderSearchFilter
 import com.kou.uniclub.Extensions.BuilderSettings
 import com.kou.uniclub.Model.Event.EventListResponse
-import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager

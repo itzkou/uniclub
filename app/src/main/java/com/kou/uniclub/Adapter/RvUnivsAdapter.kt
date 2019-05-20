@@ -6,15 +6,18 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.kou.uniclub.Activities.SearchByUniv
+import com.kou.uniclub.Activities.ClubsFiltered
 import com.kou.uniclub.Model.University.University
 import com.kou.uniclub.R
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.row_university.view.*
 
-class RvUnivsAdapter(val universities :ArrayList<University>, val context: Context) : RecyclerView.Adapter<RvUnivsAdapter.Holder>(){
+class RvUnivsAdapter(val universities: ArrayList<University>, val context: Context) :
+    RecyclerView.Adapter<RvUnivsAdapter.Holder>() {
 
     companion object {
-        var mID: Int? = null
+        var univID: Int? = null
+
     }
 
 
@@ -27,12 +30,12 @@ class RvUnivsAdapter(val universities :ArrayList<University>, val context: Conte
         val univ: University = universities[position]
 
         holder.title.text = univ.name
+        Picasso.get().load(univ.photo).into(holder.image)
 
 
         holder.card.setOnClickListener {
-            mID=univ.id
-            context.startActivity(Intent(context, SearchByUniv::class.java))
-
+            univID = univ.id
+            context.startActivity(Intent(context, ClubsFiltered::class.java))
 
         }
 
@@ -40,17 +43,15 @@ class RvUnivsAdapter(val universities :ArrayList<University>, val context: Conte
     }
 
 
-
-
     override fun getItemCount(): Int {
         return universities.size
     }
 
 
-    class Holder(view: View) : RecyclerView.ViewHolder(view)  {
-        val card=view.cardUniv!!
-        val image=view.imUniv!!
-        val title =view.tvUniv!!
+    class Holder(view: View) : RecyclerView.ViewHolder(view) {
+        val card = view.cardUniv!!
+        val image = view.imUniv!!
+        val title = view.tvUniv!!
 
 
     }

@@ -36,7 +36,6 @@ import retrofit2.Response
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class EventDetails : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap

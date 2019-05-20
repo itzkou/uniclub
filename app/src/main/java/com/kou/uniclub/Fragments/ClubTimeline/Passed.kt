@@ -34,7 +34,7 @@ class Passed:Fragment() {
             }
 
             override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
-                if(response.isSuccessful)
+                if(response.isSuccessful&&isAdded)
                 {
                     rvPassed.layoutManager= LinearLayoutManager(activity!!, LinearLayout.VERTICAL,false)
                     rvPassed.adapter= RvHomeFeedAdapter(response.body()!!.pagination.events,activity!!)
