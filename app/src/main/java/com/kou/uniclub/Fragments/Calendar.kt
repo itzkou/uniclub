@@ -10,7 +10,6 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,6 @@ import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.kou.uniclub.Adapter.RvCalendarAdapter
-import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Adapter.RvMyEventsAdapter
 import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Extensions.BuilderSettings
@@ -52,7 +50,7 @@ class Calendar : Fragment() {
     private lateinit var rvMyevents: RecyclerView
     private var page: String? = null
 
-        //TODO("RecyclerView not addding all data")
+        //TODO("RecyclerView not addding all data only first page is added")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_calendar, container, false)
         val rvCalendar = v.findViewById<RecyclerView>(R.id.rvCalendar)

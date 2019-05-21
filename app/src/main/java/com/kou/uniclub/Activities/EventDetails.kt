@@ -1,8 +1,11 @@
 package com.kou.uniclub.Activities
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
+import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -12,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -43,7 +47,7 @@ import java.util.*
 class EventDetails : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private var page: String? = null
-
+//TODO("when user reparticipates I want an eror code different than 200")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -141,17 +145,23 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
 
                 override fun onResponse(call: Call<ParticipateResponse>, response: Response<ParticipateResponse>) {
                     if (response.isSuccessful) {
-                        Snackbar.make(btnParticipate,"Your participation is confirmed",Snackbar.LENGTH_INDEFINITE)
+                      val snacko=  Snackbar.make(btnParticipate,"Your participation is confirmed",Snackbar.LENGTH_INDEFINITE)
                             .setAction("CANCEL") {
                                 leave(id)
-                            }
-                            .show()
+                                btnParticipate.animation=AnimationUtils.loadAnimation(this@EventDetails,R.anim.abc_slide_in_bottom)
+                                btnParticipate.visibility=View.VISIBLE                        }
+
+                        snacko.config(this@EventDetails)
+                        snacko.show()
 
                         btnParticipate.animation=AnimationUtils.loadAnimation(this@EventDetails,R.anim.btn_participate)
                         btnParticipate.visibility=View.INVISIBLE
 
 
                     }
+
+
+
 
                 }
 
@@ -169,6 +179,9 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
                 {
                     Log.d("Leave",response.body()!!.message)
                 }
+
+
+
             }
 
         })
@@ -244,6 +257,20 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
 
             })
 
+    }
+    fun Snackbar.config(context: Context){
+        val params = this.view.layoutParams as ViewGroup.MarginLayoutParams
+        params.setMargins(12, 24, 12, 12)
+        this.view.layoutParams = params
+        this.view.background = ContextCompat.getDrawable(context,R.drawable.bg_snackbar)
+
+        this.setActionTextColor(ContextCompat.getColor(context,R.color.orange))
+        val text=this.view.findViewById<TextView>(android.support.design.R.id.snackbar_text)
+        text.setTextColor(ContextCompat.getColor(context,R.color.white))
+        text.maxLines=1
+        text.textSize=12f
+
+        ViewCompat.setElevation(this.view, 6f)
     }
 
 }
