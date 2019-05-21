@@ -28,7 +28,6 @@ class ClubDetails : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_club_details)
-        token = PrefsManager.geToken(this@ClubDetails)!!
 
         setupViewPager(vpClubDetails)
 
@@ -52,7 +51,7 @@ class ClubDetails : AppCompatActivity() {
         getClubInfos(club_id!!)
         //
         cardFollow.setOnClickListener {
-            if (token != null)
+            if (PrefsManager.geToken(this@ClubDetails) != null)
                 follow(club_id!!)
             else
                 BuilderAuth.showDialog(this@ClubDetails)
