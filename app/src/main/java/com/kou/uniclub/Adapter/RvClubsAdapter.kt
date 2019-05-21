@@ -38,7 +38,7 @@ class RvClubsAdapter(val clubs :ArrayList<ClubX>, val context: Context): Recycle
     class Holder(view: View) : RecyclerView.ViewHolder(view)
     { val title= view.club_title!!
         val root= view.rootClub!!
-        val image=view.imClub!!
+        val image=view.cardPic!!
     }
     fun addData(listItems: java.util.ArrayList<ClubX>) {
         val size = this.clubs.size

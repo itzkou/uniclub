@@ -2,6 +2,7 @@ package com.kou.uniclub.Network
 
 import com.kou.uniclub.Model.Auth.LoginResponse
 import com.kou.uniclub.Model.Auth.SignUpResponse
+import com.kou.uniclub.Model.Club.ClubDetailsResponse
 import com.kou.uniclub.Model.Club.ClubsByUnivResponse
 import com.kou.uniclub.Model.Club.ClubsResponse
 import com.kou.uniclub.Model.Event.EventDetailsResponse
@@ -21,7 +22,7 @@ interface UniclubApi{
             fun create():UniclubApi {
                 val retrofit = Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("http://192.168.1.3:8000/api/")//10.0.2.2:8000 emulator //put ipv4 adress//me192.168.1.4//orange 10.54.234.189
+                    .baseUrl("http://10.54.234.189:8000/api/")//10.0.2.2:8000 emulator //put ipv4 adress//me192.168.1.4//orange 10.54.234.189
                     .build()
                 return retrofit.create(UniclubApi::class.java)
             }
@@ -121,6 +122,9 @@ interface UniclubApi{
 
             @GET("Club/{id}/UpcomingEvents")
             fun getClubUpcomingE(@Path("id")id:Int): Call<EventListResponse>
+
+            @GET("ClubDetails/{id}")
+            fun getClub(@Path("id")id:Int):Call<ClubDetailsResponse>
 
 
 
