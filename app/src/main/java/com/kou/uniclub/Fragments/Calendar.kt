@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +19,11 @@ import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.kou.uniclub.Adapter.RvCalendarAdapter
+import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Adapter.RvMyEventsAdapter
 import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Extensions.BuilderSettings
+import com.kou.uniclub.Extensions.OnBottomReachedListener
 import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Network.UniclubApi
@@ -48,7 +51,7 @@ class Calendar : Fragment() {
     private lateinit var mCalendar: MaterialCalendarView
     private lateinit var rvMyevents: RecyclerView
     private var page: String? = null
-//TODO("check the decoration")
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_calendar, container, false)
@@ -58,7 +61,10 @@ class Calendar : Fragment() {
         val imProfile = v.findViewById<ImageView>(R.id.settings)
         val token = PrefsManager.geToken(activity!!)
 
+
         rvMyevents = v.findViewById(R.id.rvMyEvents)
+        rvMyevents.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
+
         val show = v.findViewById<View>(R.id.showCal)
         val dialogView = LayoutInflater.from(activity!!).inflate(R.layout.builder_my_calendar, null)
         mCalendar = dialogView.findViewById(R.id.mCalendar)
@@ -69,9 +75,11 @@ class Calendar : Fragment() {
         val dialog = builder.create()
 
         if (token != null)
-            Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).apply(RequestOptions.circleCropTransform()).into(imProfile)
+            Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).apply(RequestOptions.circleCropTransform()).into(
+                imProfile
+            )
         imProfile.setOnClickListener {
-            if(token!=null)
+            if (token != null)
                 BuilderSettings.showSettings(activity!!)
             else
                 BuilderAuth.showDialog(activity!!)
@@ -81,7 +89,7 @@ class Calendar : Fragment() {
         /********** My participations  ****************/
 
         if (token != null) {
-            myEvents(rvMyevents, activity!!)
+            myEvents(rvMyevents)
 
             show.setOnClickListener {
                 dialog.show()
@@ -93,9 +101,9 @@ class Calendar : Fragment() {
         /**********Blurring appBAr****************/
         var blurred = false
 
-       appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { p0, p1 ->
+        appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { p0, p1 ->
             val alpha = (p0.totalScrollRange + p1).toFloat() / p0.totalScrollRange
-            if ((alpha==0f || alpha==1f)) {
+            if ((alpha == 0f || alpha == 1f)) {
                 Blurry.delete(miniCal as ViewGroup)
                 blurred = false
             } else if ((alpha > 0 && alpha < 1) && !blurred) {
@@ -124,11 +132,12 @@ class Calendar : Fragment() {
     override fun onResume() {
         super.onResume()
         if (PrefsManager.geToken(activity!!) != null)
-            myEvents(rvMyevents, activity!!)
+            myEvents(rvMyevents)
 
     }
 
-    private fun myEvents(recyclerView: RecyclerView, context: Context) {
+
+    private fun myEvents(rv: RecyclerView) {
         val service = UniclubApi.create()
         service.getParticipations("Bearer " + PrefsManager.geToken(activity!!))
             .enqueue(object : Callback<EventListResponse> {
@@ -138,23 +147,28 @@ class Calendar : Fragment() {
                 override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
                     if (response.isSuccessful && isAdded) {
                         page = response.body()!!.pagination.nextPageUrl
-                        val participations = response.body()!!.pagination.events
-                        recyclerView.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
-                        val adapter = RvMyEventsAdapter(participations, activity!!)
-                        recyclerView.adapter = adapter
+                        val adapter = RvMyEventsAdapter(response.body()!!.pagination.events, activity!!)
+                        rv.adapter = adapter
                         decoration(response.body()!!.pagination.events, activity!!, mCalendar)
-                        //Pagination
 
-                        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                        adapter.setOnBottomReachedListener(object : OnBottomReachedListener {
+                            override fun onBottomReached(position: Int) {
+                                if (page != null)
+                                    getMoreItems(adapter)
+                            }
+
+                        })
+
+                        //Pagination
+                        /*rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                                 super.onScrollStateChanged(recyclerView, newState)
                                 if (!recyclerView.canScrollVertically(1)) {
-                                    if (page != null)
-                                        getMoreItems(adapter)
+
 
                                 }
                             }
-                        })
+                        })*/
 
 
                     }
@@ -195,10 +209,25 @@ class Calendar : Fragment() {
 
                         if (page != null) {
                             adapter.addData(response1.body()!!.pagination.events)
+                            for (i in 0 until response1.body()!!.pagination.events.size)
+                                Log.d("MineEvents", response1.body()!!.pagination.events[i].name)
                             page = response1.body()!!.pagination.nextPageUrl
+                            if (page == null)
+                                Toasty.custom(
+                                    activity!!,
+                                    "No more items",
+                                    R.drawable.ic_error_outline_white_24dp,
+                                    R.color.black,
+                                    Toasty.LENGTH_SHORT,
+                                    false,
+                                    true
+                                ).show()
 
-                        } else Toasty.info(activity!!, "No more items", Toasty.LENGTH_SHORT).show()
+
+                        }
+
                     }
+
                 }
 
             })

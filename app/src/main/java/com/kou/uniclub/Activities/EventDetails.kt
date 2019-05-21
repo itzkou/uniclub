@@ -2,12 +2,15 @@ package com.kou.uniclub.Activities
 
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -138,13 +141,39 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
 
                 override fun onResponse(call: Call<ParticipateResponse>, response: Response<ParticipateResponse>) {
                     if (response.isSuccessful) {
-                        Toast.makeText(this@EventDetails, response.body()!!.message, Toast.LENGTH_SHORT).show()
+                        Snackbar.make(btnParticipate,"Your participation is confirmed",Snackbar.LENGTH_INDEFINITE)
+                            .setAction("CANCEL") {
+                                leave(id)
+                            }
+                            .show()
+
+                        btnParticipate.animation=AnimationUtils.loadAnimation(this@EventDetails,R.anim.btn_participate)
+                        btnParticipate.visibility=View.INVISIBLE
+
+
                     }
 
                 }
 
             })
     }
+
+    private fun leave(id: Int){
+        val service=UniclubApi.create()
+        service.leave("Bearer ${PrefsManager.geToken(this@EventDetails)}",id).enqueue(object:Callback<ParticipateResponse>{
+            override fun onFailure(call: Call<ParticipateResponse>, t: Throwable) {
+            }
+
+            override fun onResponse(call: Call<ParticipateResponse>, response: Response<ParticipateResponse>) {
+                if (response.isSuccessful)
+                {
+                    Log.d("Leave",response.body()!!.message)
+                }
+            }
+
+        })
+    }
+
 
     private fun moreEvents(clubID: Int, rv: RecyclerView,evenID:Int) {
         val service = UniclubApi.create()
@@ -157,7 +186,7 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
 
                     page = response.body()!!.pagination.nextPageUrl
                     val events = response.body()!!.pagination.events
-                    var filtered:List<EventX>
+                    val filtered:List<EventX>
 
                     filtered=events.filter { it.id!=evenID }
 

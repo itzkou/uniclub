@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.kou.uniclub.Activities.EventDetails
 import com.kou.uniclub.Extensions.BuilderAuth
+import com.kou.uniclub.Extensions.OnBottomReachedListener
 import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Model.User.FavoriteResponse
 import com.kou.uniclub.Network.UniclubApi
@@ -31,6 +32,7 @@ import java.util.*
 
 class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
     RecyclerView.Adapter<RvHomeFeedAdapter.Holder>() {
+    private var onBottomReachedListener: OnBottomReachedListener? = null
 
     companion object {
         var event_id: Int? = null
@@ -52,7 +54,8 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
     override fun getItemCount(): Int {
         return events.size
     }
-//TODO("root clickability")
+
+    //TODO("root clickability")
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val event: EventX = events[position]
         //date stuff
@@ -76,7 +79,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
 
                 if (!isLiked) {
                     val service = UniclubApi.create()
-                    service.favorite("Bearer " +PrefsManager.geToken(context)!!, event.id)
+                    service.favorite("Bearer " + PrefsManager.geToken(context)!!, event.id)
                         .enqueue(object : Callback<FavoriteResponse> {
                             override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
                                 if (t is IOException)
@@ -120,7 +123,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
 
                 }
             } else {
-                BuilderAuth.showDialog(context )
+                BuilderAuth.showDialog(context)
 
             }
         }
@@ -143,6 +146,12 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
 
         })
 
+        if (position == events.size - 1) {
+
+            onBottomReachedListener!!.onBottomReached(position)
+
+        }
+
     }
 
 
@@ -154,7 +163,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
         val fav = view.favorite!!
         val pic = view.im_event!!
         val sparkle = view.sparkle!!
-        val root=view.rootEvent!!
+        val root = view.rootEvent!!
 
     }
 
@@ -170,5 +179,9 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
 
     }
 
+    fun setOnBottomReachedListener(listener: OnBottomReachedListener) {
+
+        this.onBottomReachedListener = listener
+    }
 
 }

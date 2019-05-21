@@ -18,6 +18,7 @@ import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Extensions.BuilderSearchFilter
 import com.kou.uniclub.Extensions.BuilderSettings
+import com.kou.uniclub.Extensions.OnBottomReachedListener
 import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
@@ -32,14 +33,12 @@ class HomeFeed : Fragment() {
     private var page: String? = null
 
 
-
-
     companion object {
 
         fun newInstance(): HomeFeed = HomeFeed()
     }
 
-
+    //TODO("this is the pagination model")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_homefeed, container, false)
         val rvHome = v.findViewById<RecyclerView>(R.id.rvHome)
@@ -50,16 +49,18 @@ class HomeFeed : Fragment() {
         val token = PrefsManager.geToken(activity!!)
 
 
-
+        //TODO("when user sign in without foto set place holder")
         if (token != null)
-            Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).apply(RequestOptions.circleCropTransform()).into(imProfile)
+            Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).apply(RequestOptions.circleCropTransform()).into(
+                imProfile
+            )
 
         rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
         allDates(rvHome)
         /********Settings ******/
         imProfile.setOnClickListener {
-            if(token!=null)
-            BuilderSettings.showSettings(activity!!)
+            if (token != null)
+                BuilderSettings.showSettings(activity!!)
             else
                 BuilderAuth.showDialog(activity!!)
         }
@@ -111,8 +112,7 @@ class HomeFeed : Fragment() {
                     })
 
 
-                }
-                else if (response.code() == 404)
+                } else if (response.code() == 404)
                     Toasty.custom(
                         activity!!,
                         "No upcoming events",
@@ -145,29 +145,16 @@ class HomeFeed : Fragment() {
 
 
                     //Pagination
-
-                    rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                            super.onScrollStateChanged(recyclerView, newState)
-                            if (!rv.canScrollVertically(1)) {
-                                if (page != null)
-                                    getMoreItems(adapter)
-
-                            }
+                    adapter.setOnBottomReachedListener(object : OnBottomReachedListener {
+                        override fun onBottomReached(position: Int) {
+                            if (page != null)
+                                getMoreItems(adapter)
                         }
+
                     })
 
 
-                } else if (response.code() == 404)
-                    Toasty.custom(
-                        activity!!,
-                        "No more events",
-                        R.drawable.ic_error_outline_white_24dp,
-                        R.color.black,
-                        Toasty.LENGTH_SHORT,
-                        false,
-                        true
-                    ).show()
+                }
             }
 
 
@@ -202,8 +189,7 @@ class HomeFeed : Fragment() {
                     })
 
 
-                }
-                else if (response.code() == 404)
+                } else if (response.code() == 404)
                     Toasty.custom(
                         activity!!,
                         "No events today",
@@ -315,18 +301,20 @@ class HomeFeed : Fragment() {
                         if (page != null) {
                             adapter.addData(response1.body()!!.pagination.events)
                             page = response1.body()!!.pagination.nextPageUrl
+                            if (page == null)
+                                Toasty.custom(
+                                    activity!!,
+                                    "Load more",
+                                    R.drawable.ic_error_outline_white_24dp,
+                                    R.color.black,
+                                    Toasty.LENGTH_SHORT,
+                                    false,
+                                    true
+                                ).show()
 
 
-                        } else
-                            Toasty.custom(
-                            activity!!,
-                            "No more items",
-                            R.drawable.ic_error_outline_white_24dp,
-                            R.color.black,
-                            Toasty.LENGTH_SHORT,
-                            false,
-                            true
-                        ).show()
+                        }
+
                     }
 
                 }

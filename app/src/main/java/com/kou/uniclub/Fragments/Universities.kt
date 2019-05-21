@@ -5,15 +5,13 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import com.kou.uniclub.Activities.ClubsFilter
 import com.kou.uniclub.Adapter.RvClubsAdapter
-import com.kou.uniclub.Adapter.RvUnivsAdapter.Companion.univID
-import com.kou.uniclub.Model.Club.ClubsByUnivResponse
 import com.kou.uniclub.Model.Club.ClubsResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
@@ -36,11 +34,11 @@ class Universities : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(com.kou.uniclub.R.layout.fragment_clubs, container, false)
         val rvClubs = v.findViewById<RecyclerView>(com.kou.uniclub.R.id.rvClubs)
-        val searchUniv = v.findViewById<ImageView>(R.id.searchUnivs)
+        val searchUniv = v.findViewById<SearchView>(R.id.searchUnivs)
         rvClubs.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
 
         /***** List of all clubs ****/
-            getClubs(rvClubs)
+        getClubs(rvClubs)
 
 
 
@@ -82,7 +80,6 @@ class Universities : Fragment() {
 
         })
     }
-
 
 
     private fun getMoreItems(adapter: RvClubsAdapter) {
