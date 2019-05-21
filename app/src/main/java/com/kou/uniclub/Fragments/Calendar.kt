@@ -196,6 +196,8 @@ class Calendar : Fragment() {
 
                         if (page != null) {
                             adapter.addData(response1.body()!!.pagination.events)
+                            decoration(response1.body()!!.pagination.events, activity!!, mCalendar)
+
                             page = response1.body()!!.pagination.nextPageUrl
                             if (page == null)
                                 Toasty.custom(

@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter.Companion.event_id
 import com.kou.uniclub.Extensions.BuilderAuth
+import com.kou.uniclub.Extensions.OnBottomReachedListener
 import com.kou.uniclub.Model.Event.EventDetailsResponse
 import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Model.Event.EventX
@@ -207,16 +208,13 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
                     rv.adapter = adapter
 
                     //Pagination
-
-                    rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                            super.onScrollStateChanged(recyclerView, newState)
-                            if (!rv.canScrollHorizontally(1)) {
-                                if (page != null)
-                                    getMoreItems(adapter)
-
-                            }
+//Pagination
+                    adapter.setOnBottomReachedListener(object : OnBottomReachedListener {
+                        override fun onBottomReached(position: Int) {
+                            if (page != null)
+                                getMoreItems(adapter)
                         }
+
                     })
 
                 }
