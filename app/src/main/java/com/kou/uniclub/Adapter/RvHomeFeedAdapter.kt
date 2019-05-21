@@ -146,8 +146,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
 
         })
 
-        if (position == events.size - 1) {
-
+        if (position == events.size - 1 && onBottomReachedListener != null) {
             onBottomReachedListener!!.onBottomReached(position)
 
         }

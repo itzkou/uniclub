@@ -52,7 +52,7 @@ class Calendar : Fragment() {
     private lateinit var rvMyevents: RecyclerView
     private var page: String? = null
 
-
+        //TODO("RecyclerView not addding all data")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_calendar, container, false)
         val rvCalendar = v.findViewById<RecyclerView>(R.id.rvCalendar)
@@ -150,7 +150,7 @@ class Calendar : Fragment() {
                         val adapter = RvMyEventsAdapter(response.body()!!.pagination.events, activity!!)
                         rv.adapter = adapter
                         decoration(response.body()!!.pagination.events, activity!!, mCalendar)
-
+                        //Pagination
                         adapter.setOnBottomReachedListener(object : OnBottomReachedListener {
                             override fun onBottomReached(position: Int) {
                                 if (page != null)
@@ -158,17 +158,6 @@ class Calendar : Fragment() {
                             }
 
                         })
-
-                        //Pagination
-                        /*rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                                super.onScrollStateChanged(recyclerView, newState)
-                                if (!recyclerView.canScrollVertically(1)) {
-
-
-                                }
-                            }
-                        })*/
 
 
                     }
@@ -209,13 +198,11 @@ class Calendar : Fragment() {
 
                         if (page != null) {
                             adapter.addData(response1.body()!!.pagination.events)
-                            for (i in 0 until response1.body()!!.pagination.events.size)
-                                Log.d("MineEvents", response1.body()!!.pagination.events[i].name)
                             page = response1.body()!!.pagination.nextPageUrl
                             if (page == null)
                                 Toasty.custom(
                                     activity!!,
-                                    "No more items",
+                                    "Load more",
                                     R.drawable.ic_error_outline_white_24dp,
                                     R.color.black,
                                     Toasty.LENGTH_SHORT,
