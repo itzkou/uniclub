@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Filter
+import android.widget.Toast
 import com.kou.uniclub.Model.University.University
 import com.kou.uniclub.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.row_university.view.*
 
-
+//TODO("image loading BUG  4th element")
 class SearchUnivAdapter(context: Context, univs: ArrayList<University>) : ArrayAdapter<University>(
     context,
     com.kou.uniclub.R.layout.row_university, univs
@@ -19,14 +20,18 @@ class SearchUnivAdapter(context: Context, univs: ArrayList<University>) : ArrayA
 
     var filtered = ArrayList<University>()
 
+
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         return convertView ?: createView(position, parent)
     }
 
     private fun createView(position: Int, parent: ViewGroup?): View {
         val view = LayoutInflater.from(context).inflate(R.layout.row_university, parent, false)
-        view?.tvUniv?.text = filtered[position].name
-        Picasso.get().load(filtered[position].photo).into(view?.imUniv)
+        view!!.tvUniv!!.text = filtered[position].name
+        Picasso.get().load(filtered[position].photo).into(view.imUniv)
+
+
         return view
     }
 
@@ -68,7 +73,7 @@ class SearchUnivAdapter(context: Context, univs: ArrayList<University>) : ArrayA
 
         override fun publishResults(constraint: CharSequence?, results: Filter.FilterResults) {
             filtered = results.values as ArrayList<University>
-            notifyDataSetInvalidated()
+            notifyDataSetChanged()
         }
 
         override fun convertResultToString(result: Any) = (result as University).name

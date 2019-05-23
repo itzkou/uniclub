@@ -1,22 +1,20 @@
 package com.kou.uniclub.Fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.LinearLayout
-import com.arlib.floatingsearchview.FloatingSearchView
+import android.widget.Toast
 import com.kou.uniclub.Adapter.RvClubsAdapter
-import com.kou.uniclub.Adapter.RvUnivsAdapter
 import com.kou.uniclub.Adapter.SearchUnivAdapter
-import com.kou.uniclub.Extensions.BuilderUnivs
+import com.kou.uniclub.Model.Club.ClubsByUnivResponse
 import com.kou.uniclub.Model.Club.ClubsResponse
+import com.kou.uniclub.Model.University.University
 import com.kou.uniclub.Model.University.UniversityResponse
 import com.kou.uniclub.Network.UniclubApi
 import es.dmoral.toasty.Toasty
@@ -27,7 +25,8 @@ import retrofit2.Response
 
 class Universities : Fragment() {
     private var page: String? = null
-    private var mSearchAdapter: RvUnivsAdapter? = null
+
+
 
 
     companion object {
@@ -55,13 +54,22 @@ class Universities : Fragment() {
                 if (response.isSuccessful && isAdded) {
                     val adapter = SearchUnivAdapter(activity!!, response.body()!!.pagination.universities)
                     searchUniv.setAdapter(adapter)
+                    searchUniv.setOnItemClickListener { parent, view, position, id ->
+                        val item=parent.getItemAtPosition(position) as University
+                        Toast.makeText(activity!!,item.id.toString(),Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
 
         })
+        /***** get UNIV ID***/
+
+
+
 
         return v
     }
+
 
     private fun getClubs(rv: RecyclerView) {
         val uniclub = UniclubApi.create()
@@ -73,8 +81,11 @@ class Universities : Fragment() {
             override fun onResponse(call: Call<ClubsResponse>, response: Response<ClubsResponse>) {
                 if (response.isSuccessful && isAdded) {
                     page = response.body()!!.pagination.nextPageUrl
-                    val adapter = RvClubsAdapter(response.body()!!.pagination.clubs, activity!!)
+                     val adapter = RvClubsAdapter(response.body()!!.pagination.clubs, activity!!)
                     rv.adapter = adapter
+
+
+
 
                     //Pagination
 
@@ -90,7 +101,25 @@ class Universities : Fragment() {
                         }
                     })
 
+
+
                 }
+            }
+
+        })
+    }
+
+    private fun  filterClubs(adapter:RvClubsAdapter,id:Int)
+    {
+        val service=UniclubApi.create()
+        service.getClubsByUniv(id).enqueue(object:Callback<ClubsByUnivResponse>{
+            override fun onFailure(call: Call<ClubsByUnivResponse>, t: Throwable) {
+            }
+
+            override fun onResponse(call: Call<ClubsByUnivResponse>, response: Response<ClubsByUnivResponse>) {
+                if(response.isSuccessful&&isAdded)
+                 adapter.removeData(response.body()!!.clubs)
+
             }
 
         })

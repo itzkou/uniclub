@@ -109,7 +109,8 @@
         <item name="android:layout_marginEnd">16dp</item>
     </style>
  <style name="Autocomplete" parent="Widget.AppCompat.Light.AutoCompleteTextView">
-     <item name="android:windowBackground">@drawable/builder_round</item>
+     <item name="android:popupBackground">@drawable/builder_round</item>
+        <item name="android:dropDownHeight">wrap_content</item>
 
  </style>
 

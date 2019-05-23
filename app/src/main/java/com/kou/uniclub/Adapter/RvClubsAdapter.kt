@@ -3,9 +3,11 @@ package com.kou.uniclub.Adapter
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.kou.uniclub.Activities.ClubDetails
 import com.kou.uniclub.Model.Club.ClubX
 import com.kou.uniclub.R
@@ -48,6 +50,19 @@ class RvClubsAdapter(val clubs :ArrayList<ClubX>, val context: Context): Recycle
             this.clubs.addAll(listItems)
             notifyItemRangeInserted(size, sizeNew)
         }
+
+    }
+
+    fun removeData(list:java.util.ArrayList<ClubX>){
+        val size = this.clubs.size
+        val sizeNew = list.size
+
+        this.clubs.clear()
+        notifyItemRangeRemoved(0,size)
+
+
+
+
 
     }
 
