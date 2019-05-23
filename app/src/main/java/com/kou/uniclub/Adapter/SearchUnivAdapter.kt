@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Filter
-import android.widget.Toast
 import com.kou.uniclub.Model.University.University
 import com.kou.uniclub.R
 import com.squareup.picasso.Picasso
@@ -38,6 +37,7 @@ class SearchUnivAdapter(context: Context, univs: ArrayList<University>) : ArrayA
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
         convertView ?: LayoutInflater.from(context).inflate(R.layout.row_university, parent, false)
         convertView?.tvUniv?.text = filtered[position].name
+        Picasso.get().load(filtered[position].photo).into(convertView?.imUniv)
         return super.getDropDownView(position, convertView, parent)
     }
 

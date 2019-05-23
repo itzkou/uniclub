@@ -45,12 +45,11 @@
             android:id="@+id/searchUnivs"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-
             style="@style/Autocomplete"
             android:background="@drawable/searchview"
             android:hint="Search"
-            android:paddingStart="29dp"
-            android:paddingEnd="29dp"
+            android:paddingStart="34dp"
+            android:paddingEnd="34dp"
              app:layout_constraintTop_toBottomOf="@id/bar"
             android:layout_marginTop="16dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="20dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="20dp"/>

@@ -111,6 +111,10 @@
  <style name="Autocomplete" parent="Widget.AppCompat.Light.AutoCompleteTextView">
      <item name="android:popupBackground">@drawable/builder_round</item>
         <item name="android:dropDownHeight">wrap_content</item>
+     <item name="android:fontFamily">@font/raleway_light</item>
+     <item name="android:textSize">15sp</item>
+
+
 
  </style>
 
