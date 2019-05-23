@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.LinearLayout
-import android.widget.Toast
 import com.kou.uniclub.Adapter.RvClubsAdapter
 import com.kou.uniclub.Adapter.SearchUnivAdapter
 import com.kou.uniclub.Model.Club.ClubsByUnivResponse
@@ -25,8 +24,7 @@ import retrofit2.Response
 
 class Universities : Fragment() {
     private var page: String? = null
-
-
+    private var adapterClubs: RvClubsAdapter? = null
 
 
     companion object {
@@ -55,16 +53,14 @@ class Universities : Fragment() {
                     val adapter = SearchUnivAdapter(activity!!, response.body()!!.pagination.universities)
                     searchUniv.setAdapter(adapter)
                     searchUniv.setOnItemClickListener { parent, view, position, id ->
-                        val item=parent.getItemAtPosition(position) as University
-                        Toast.makeText(activity!!,item.id.toString(),Toast.LENGTH_SHORT).show()
+                        val item = parent.getItemAtPosition(position) as University
+                        filterClubs(adapter = adapterClubs!!, univID = item.id)
                     }
                 }
             }
 
         })
         /***** get UNIV ID***/
-
-
 
 
         return v
@@ -81,10 +77,8 @@ class Universities : Fragment() {
             override fun onResponse(call: Call<ClubsResponse>, response: Response<ClubsResponse>) {
                 if (response.isSuccessful && isAdded) {
                     page = response.body()!!.pagination.nextPageUrl
-                     val adapter = RvClubsAdapter(response.body()!!.pagination.clubs, activity!!)
-                    rv.adapter = adapter
-
-
+                    adapterClubs = RvClubsAdapter(response.body()!!.pagination.clubs, activity!!)
+                    rv.adapter = adapterClubs
 
 
                     //Pagination
@@ -94,13 +88,12 @@ class Universities : Fragment() {
                             super.onScrollStateChanged(recyclerView, newState)
                             if (!rv.canScrollVertically(1)) {
                                 if (page != null)
-                                    getMoreClubs(adapter)
+                                    getMoreClubs(adapterClubs!!)
 
                             }
 
                         }
                     })
-
 
 
                 }
@@ -109,16 +102,15 @@ class Universities : Fragment() {
         })
     }
 
-    private fun  filterClubs(adapter:RvClubsAdapter,id:Int)
-    {
-        val service=UniclubApi.create()
-        service.getClubsByUniv(id).enqueue(object:Callback<ClubsByUnivResponse>{
+    private fun filterClubs(adapter: RvClubsAdapter, univID: Int) {
+        val service = UniclubApi.create()
+        service.getClubsByUniv(univID).enqueue(object : Callback<ClubsByUnivResponse> {
             override fun onFailure(call: Call<ClubsByUnivResponse>, t: Throwable) {
             }
 
             override fun onResponse(call: Call<ClubsByUnivResponse>, response: Response<ClubsByUnivResponse>) {
-                if(response.isSuccessful&&isAdded)
-                 adapter.removeData(response.body()!!.clubs)
+                if (response.isSuccessful && isAdded)
+                    adapter.removeData(response.body()!!.clubs)
 
             }
 
