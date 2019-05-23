@@ -99,16 +99,12 @@ class HomeFeed : Fragment() {
                     rv.adapter = adapter
 
                     //Pagination
-
-                    rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                            super.onScrollStateChanged(recyclerView, newState)
-                            if (!rv.canScrollVertically(1)) {
-                                if (page != null)
-                                    getMoreItems(adapter)
-
-                            }
+                    adapter.setOnBottomReachedListener(object : OnBottomReachedListener {
+                        override fun onBottomReached(position: Int) {
+                            if (page != null)
+                                getMoreItems(adapter)
                         }
+
                     })
 
 
@@ -176,16 +172,12 @@ class HomeFeed : Fragment() {
                     rv.adapter = adapter
 
                     //Pagination
-
-                    rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                            super.onScrollStateChanged(recyclerView, newState)
-                            if (!rv.canScrollVertically(1)) {
-                                if (page != null)
-                                    getMoreItems(adapter)
-
-                            }
+                    adapter.setOnBottomReachedListener(object : OnBottomReachedListener {
+                        override fun onBottomReached(position: Int) {
+                            if (page != null)
+                                getMoreItems(adapter)
                         }
+
                     })
 
 
@@ -219,16 +211,12 @@ class HomeFeed : Fragment() {
                     rv.adapter = adapter
 
                     //Pagination
-
-                    rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                            super.onScrollStateChanged(recyclerView, newState)
-                            if (!rv.canScrollVertically(1)) {
-                                if (page != null)
-                                    getMoreItems(adapter)
-
-                            }
+                    adapter.setOnBottomReachedListener(object : OnBottomReachedListener {
+                        override fun onBottomReached(position: Int) {
+                            if (page != null)
+                                getMoreItems(adapter)
                         }
+
                     })
 
 
@@ -262,15 +250,13 @@ class HomeFeed : Fragment() {
 
                     //Pagination
 
-                    rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                            super.onScrollStateChanged(recyclerView, newState)
-                            if (!rv.canScrollVertically(1)) {
-                                if (page != null)
-                                    getMoreItems(adapter)
-
-                            }
+                    //Pagination
+                    adapter.setOnBottomReachedListener(object : OnBottomReachedListener {
+                        override fun onBottomReached(position: Int) {
+                            if (page != null)
+                                getMoreItems(adapter)
                         }
+
                     })
                 } else if (response.code() == 404)
                     Toasty.custom(
@@ -288,7 +274,7 @@ class HomeFeed : Fragment() {
         })
     }
 
-    private fun getMoreItems(adapter: RvHomeFeedAdapter) {
+    private fun getMoreItems( adapter: RvHomeFeedAdapter) {
         val service = UniclubApi.create()
         if (page != null)
             service.paginateEvents(page!!).enqueue(object : Callback<EventListResponse> {

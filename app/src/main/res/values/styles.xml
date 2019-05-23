@@ -74,11 +74,17 @@
     <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:fontFamily">@font/raleway_semi_bold</item>
         <item name="android:textSize">15sp</item>
-
         <item name="android:windowBackground">@drawable/builder_round</item>
         <item name="colorAccent">@color/orange</item>
     </style>
 
+    <style name="TransparentAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+
+        <item name="android:windowBackground">@drawable/builder_round</item>
+        <item name="android:backgroundDimEnabled">false</item>
+
+
+    </style>
     <style name="BtnParticipate">
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_width">match_parent</item>
@@ -102,9 +108,9 @@
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
     </style>
+ <style name="Autocomplete" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+     <item name="android:windowBackground">@drawable/builder_round</item>
 
-
-
-
+ </style>
 
 </resources>

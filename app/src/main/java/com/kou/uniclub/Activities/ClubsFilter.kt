@@ -24,20 +24,20 @@ class ClubsFilter : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.kou.uniclub.R.layout.activity_clubs_filter)
-        val v = searchUnivs.findViewById(android.support.v7.appcompat.R.id.search_plate) as View
+       /* val v = searchUnivs.findViewById(android.support.v7.appcompat.R.id.search_plate) as View
         v.setBackgroundColor(resources.getColor(android.R.color.transparent))
         searchUnivs.setOnClickListener {
-            searchUnivs.onActionViewExpanded()
+            searchUnivs.onActionViewExpanded()*/
 
-        }
 
-        autoComplete =
-            searchUnivs.findViewById(android.support.v7.appcompat.R.id.search_src_text) as SearchView.SearchAutoComplete
-        rvUnivs.layoutManager = LinearLayoutManager(this@ClubsFilter, LinearLayout.VERTICAL, false)
+
+        /*autoComplete =
+           searchUnivs.findViewById(android.support.v7.appcompat.R.id.search_src_text) as SearchView.SearchAutoComplete
+        rvUnivs.layoutManager = LinearLayoutManager(this@ClubsFilter, LinearLayout.VERTICAL, false)*/
 
     }
 
-    override fun onStart() {
+   /* override fun onStart() {
         super.onStart()
         val service = UniclubApi.create()
         service.getUniversities().enqueue(object : Callback<UniversityResponse> {
@@ -66,6 +66,6 @@ class ClubsFilter : AppCompatActivity() {
 
         })
 
-    }
+    }*/
 }
 

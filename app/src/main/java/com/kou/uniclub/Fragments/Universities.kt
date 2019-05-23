@@ -1,6 +1,6 @@
 package com.kou.uniclub.Fragments
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -9,12 +9,16 @@ import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView
 import android.widget.LinearLayout
-import com.kou.uniclub.Activities.ClubsFilter
+import com.arlib.floatingsearchview.FloatingSearchView
 import com.kou.uniclub.Adapter.RvClubsAdapter
+import com.kou.uniclub.Adapter.RvUnivsAdapter
+import com.kou.uniclub.Adapter.SearchUnivAdapter
+import com.kou.uniclub.Extensions.BuilderUnivs
 import com.kou.uniclub.Model.Club.ClubsResponse
+import com.kou.uniclub.Model.University.UniversityResponse
 import com.kou.uniclub.Network.UniclubApi
-import com.kou.uniclub.R
 import es.dmoral.toasty.Toasty
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,10 +27,10 @@ import retrofit2.Response
 
 class Universities : Fragment() {
     private var page: String? = null
+    private var mSearchAdapter: RvUnivsAdapter? = null
 
 
     companion object {
-
         fun newInstance(): Universities = Universities()
     }
 
@@ -34,17 +38,27 @@ class Universities : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(com.kou.uniclub.R.layout.fragment_clubs, container, false)
         val rvClubs = v.findViewById<RecyclerView>(com.kou.uniclub.R.id.rvClubs)
-        val searchUniv = v.findViewById<SearchView>(R.id.searchUnivs)
+        val searchUniv = v.findViewById<AutoCompleteTextView>(com.kou.uniclub.R.id.searchUnivs)
         rvClubs.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
 
         /***** List of all clubs ****/
         getClubs(rvClubs)
 
+        /*** Show dialog fragment for univ filter*****/
 
+        val service = UniclubApi.create()
+        service.getUniversities().enqueue(object : Callback<UniversityResponse> {
+            override fun onFailure(call: Call<UniversityResponse>, t: Throwable) {
+            }
 
-        searchUniv.setOnClickListener {
-            startActivity(Intent(activity!!, ClubsFilter::class.java))
-        }
+            override fun onResponse(call: Call<UniversityResponse>, response: Response<UniversityResponse>) {
+                if (response.isSuccessful && isAdded) {
+                    val adapter = SearchUnivAdapter(activity!!, response.body()!!.pagination.universities)
+                    searchUniv.setAdapter(adapter)
+                }
+            }
+
+        })
 
         return v
     }
@@ -53,6 +67,7 @@ class Universities : Fragment() {
         val uniclub = UniclubApi.create()
         uniclub.getClubs().enqueue(object : Callback<ClubsResponse> {
             override fun onFailure(call: Call<ClubsResponse>, t: Throwable) {
+
             }
 
             override fun onResponse(call: Call<ClubsResponse>, response: Response<ClubsResponse>) {
@@ -68,7 +83,7 @@ class Universities : Fragment() {
                             super.onScrollStateChanged(recyclerView, newState)
                             if (!rv.canScrollVertically(1)) {
                                 if (page != null)
-                                    getMoreItems(adapter)
+                                    getMoreClubs(adapter)
 
                             }
 
@@ -82,7 +97,7 @@ class Universities : Fragment() {
     }
 
 
-    private fun getMoreItems(adapter: RvClubsAdapter) {
+    private fun getMoreClubs(adapter: RvClubsAdapter) {
         val service = UniclubApi.create()
         if (page != null)
             service.paginateClubs(page!!).enqueue(object : Callback<ClubsResponse> {
@@ -114,4 +129,7 @@ class Universities : Fragment() {
     }
 
 
+/* val dialog = BuilderUnivs()
+        val ft = childFragmentManager.beginTransaction()
+        dialog.show(ft, BuilderUnivs.TAG)*/
 }

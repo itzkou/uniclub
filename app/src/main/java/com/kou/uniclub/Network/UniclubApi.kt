@@ -22,7 +22,7 @@ interface UniclubApi{
             fun create():UniclubApi {
                 val retrofit = Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("http://10.54.234.189:8000/api/")//10.0.2.2:8000 emulator //put ipv4 adress//me192.168.1.4//orange 10.54.234.189
+                    .baseUrl("http://192.168.1.6:8000/api/")//10.0.2.2:8000 emulator //put ipv4 adress//me192.168.1.4//orange 10.54.234.189
                     .build()
                 return retrofit.create(UniclubApi::class.java)
             }
@@ -140,6 +140,9 @@ interface UniclubApi{
 
             @GET
             fun paginateClubs(@Url next_page_url:String):Call<ClubsResponse>
+
+            @GET
+            fun paginateUnivs(@Url next_page_url:String):Call<UniversityResponse>
 
             @GET
             fun paginateToken(@Url next_page_url:String,@Header("Authorization") authToken:String):Call<EventListResponse>

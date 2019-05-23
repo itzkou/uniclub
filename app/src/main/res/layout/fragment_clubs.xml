@@ -42,12 +42,14 @@
 
 
     </android.support.constraint.ConstraintLayout>
-    <android.support.v7.widget.SearchView
+    <AutoCompleteTextView
             android:id="@+id/searchUnivs"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:focusableInTouchMode="false"
-            android:background="@drawable/searchview" app:layout_constraintTop_toBottomOf="@id/bar"
+            style="@style/Autocomplete"
+            android:completionThreshold="1"
+            android:background="@drawable/searchview"
+            android:hint="Select a country" app:layout_constraintTop_toBottomOf="@id/bar"
             android:layout_marginTop="16dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="20dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="20dp"/>
     <android.support.v7.widget.RecyclerView android:id="@+id/rvClubs"

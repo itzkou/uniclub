@@ -72,8 +72,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     //blur libs
     implementation 'jp.wasabeef:blurry:3.0.0'
-
-    implementation 'com.github.armcha:ColoredShadowImageView:1.1.0'
-
-
+    //
+    implementation'com.github.arimorty:floatingsearchview:2.1.1'
 }

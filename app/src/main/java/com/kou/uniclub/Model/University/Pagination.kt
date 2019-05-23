@@ -16,7 +16,7 @@ data class Pagination(
     @SerializedName("last_page_url")
     val lastPageUrl: String,
     @SerializedName("next_page_url")
-    val nextPageUrl: Any?,
+    val nextPageUrl: String?,
     @SerializedName("path")
     val path: String,
     @SerializedName("per_page")

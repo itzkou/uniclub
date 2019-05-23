@@ -1,12 +1,11 @@
 package com.kou.uniclub.Adapter
 
 import android.content.Context
-import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.kou.uniclub.Activities.ClubsFiltered
+import com.kou.uniclub.Extensions.OnBottomReachedListener
 import com.kou.uniclub.Model.University.University
 import com.kou.uniclub.R
 import com.squareup.picasso.Picasso
@@ -14,6 +13,7 @@ import kotlinx.android.synthetic.main.row_university.view.*
 
 class RvUnivsAdapter(val universities: ArrayList<University>, val context: Context) :
     RecyclerView.Adapter<RvUnivsAdapter.Holder>() {
+    private var onBottomReachedListener: OnBottomReachedListener? = null
 
     companion object {
         var univID: Int? = null
@@ -35,11 +35,14 @@ class RvUnivsAdapter(val universities: ArrayList<University>, val context: Conte
 
         holder.card.setOnClickListener {
             univID = univ.id
-            context.startActivity(Intent(context, ClubsFiltered::class.java))
+            //context.startActivity(Intent(context, ClubsFiltered::class.java))
 
         }
 
+        if (position == universities.size - 1 && onBottomReachedListener != null) {
+            onBottomReachedListener!!.onBottomReached(position)
 
+        }
     }
 
 
@@ -54,5 +57,21 @@ class RvUnivsAdapter(val universities: ArrayList<University>, val context: Conte
         val title = view.tvUniv!!
 
 
+    }
+
+    fun addData(listItems: java.util.ArrayList<University>) {
+        val size = this.universities.size
+        val sizeNew = listItems.size
+
+        if (size < sizeNew + size) {
+            this.universities.addAll(listItems)
+            notifyItemRangeInserted(size, sizeNew)
+        }
+
+    }
+
+    fun setOnBottomReachedListener(listener: OnBottomReachedListener) {
+
+        this.onBottomReachedListener = listener
     }
 }

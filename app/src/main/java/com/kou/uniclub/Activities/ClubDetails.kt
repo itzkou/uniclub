@@ -51,6 +51,7 @@ class ClubDetails : AppCompatActivity() {
         getClubInfos(club_id!!)
         //
         cardFollow.setOnClickListener {
+
             if (PrefsManager.geToken(this@ClubDetails) != null)
                 follow(club_id!!)
             else
@@ -60,11 +61,12 @@ class ClubDetails : AppCompatActivity() {
 
     private fun follow(id: Int) {
         val service = UniclubApi.create()
-        service.follow("Bearer $token", id).enqueue(object : Callback<FollowResponse> {
+        service.follow("Bearer ${PrefsManager.geToken(this@ClubDetails)}", id).enqueue(object : Callback<FollowResponse> {
             override fun onFailure(call: Call<FollowResponse>, t: Throwable) {
             }
 
             override fun onResponse(call: Call<FollowResponse>, response: Response<FollowResponse>) {
+                if (response.isSuccessful)
                 Toasty.custom(
                     this@ClubDetails,
                     response.body()!!.message,
