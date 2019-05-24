@@ -8,9 +8,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.jaredrummler.materialspinner.MaterialSpinner
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Extensions.BuilderSearchFilter
@@ -25,6 +29,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+
 
 class HomeFeed : Fragment() {
     private var page: String? = null
@@ -41,14 +46,13 @@ class HomeFeed : Fragment() {
         val rvHome = v.findViewById<RecyclerView>(R.id.rvHome)
         val fab = v.findViewById<FloatingActionButton>(R.id.fabSearch)
         val imProfile = v.findViewById<ImageView>(R.id.settings)
-        val spRegion = v.findViewById<Spinner>(R.id.spRegion)
-        val spTiming = v.findViewById<Spinner>(R.id.spTiming)
+        val spRegion = v.findViewById<MaterialSpinner>(R.id.spRegion)
+        val spTiming = v.findViewById<MaterialSpinner>(R.id.spTiming)
         val token = PrefsManager.geToken(activity!!)
 
-        val timing = arrayOf(" ","Today", "Upcoming", "Passed")
-        val arrTiming = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, timing)
 
-        val region = arrayOf(" ",
+        val region = arrayOf(
+            " ",
             "Tunis",
             "Ariana",
             "Ben Arous",
@@ -97,7 +101,7 @@ class HomeFeed : Fragment() {
         /***Buttons****/
 
 
-        filters(spTiming, arrTiming, spRegion, arrRegion, rvHome)
+        filters(spTiming, spRegion, arrRegion, rvHome)
 
 
 
@@ -332,41 +336,59 @@ class HomeFeed : Fragment() {
     }
 
     private fun filters(
-        spTiming: Spinner,
-        arrTiming: ArrayAdapter<String>,
-        spRegion: Spinner,
+        spTiming: MaterialSpinner,
+        spRegion: MaterialSpinner,
         arrRegion: ArrayAdapter<String>,
         rv: RecyclerView
     ) {
-        spTiming.adapter = arrTiming
-        spRegion.adapter = arrRegion
+        spRegion.setBackgroundResource(R.drawable.btn_feed)
+        spTiming.setBackgroundResource(R.drawable.btn_feed)
+        spTiming.setItems("", "Today", "Upcoming", "Passed")
+        spRegion.setItems(
+            " ",
+            "Tunis",
+            "Ariana",
+            "Ben Arous",
+            "Manouba",
+            "Nabeul",
+            "Zaghouan",
+            "Bizerte",
+            "Béja",
+            "Jendouba",
+            "Kef",
+            "Siliana",
+            "Sousse",
+            "Monastir",
+            "Mahdia",
+            "Sfax",
+            "Kairouan",
+            "Kasserine",
+            "Bouzid",
+            "Gabès",
+            "Mednine",
+            "Tataouine",
+            "Gafsa",
+            "Tozeur",
+            "Kebili"
+        )
 
-        //Time
-        spTiming.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position!=0)
+        spTiming.setOnItemSelectedListener { view, position, id, item ->
+            if (position != 0)
                 when (position) {
                     1 -> today(rv)
                     2 -> upcoming(rv)
                     3 -> passed(rv)
+
+
                 }
-            }
 
         }
 
+
         //region
-        spRegion.onItemSelectedListener=object:AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position!=0)
-                regionFilter(rv,arrRegion.getItem(position)!!)
-            }
-
+        spRegion.setOnItemSelectedListener { view, position, id, item ->
+            if (position != 0)
+                regionFilter(rv, arrRegion.getItem(position)!!)
         }
     }
 }

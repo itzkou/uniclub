@@ -116,8 +116,14 @@
         <item name="android:background">@drawable/searchview</item>
         <item name="android:dropDownItemStyle">@layout/row_university</item>
 
+    </style>
 
-
+    <style name="Spinners" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
+        <item name="android:popupBackground">@drawable/autocomplete_round</item>
+        <item name="android:fontFamily">@font/raleway_light</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:background">@drawable/btn_feed</item>
+        <item name="android:textColor">@drawable/btn_feed_text</item>
     </style>
 
 
