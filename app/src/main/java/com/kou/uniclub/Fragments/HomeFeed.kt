@@ -8,10 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
@@ -44,9 +41,40 @@ class HomeFeed : Fragment() {
         val rvHome = v.findViewById<RecyclerView>(R.id.rvHome)
         val fab = v.findViewById<FloatingActionButton>(R.id.fabSearch)
         val imProfile = v.findViewById<ImageView>(R.id.settings)
-        val btnUpcoming = v.findViewById<Button>(R.id.btnUpcoming)
-        val btnToday = v.findViewById<Button>(R.id.btnToday)
+        val spRegion = v.findViewById<Spinner>(R.id.spRegion)
+        val spTiming = v.findViewById<Spinner>(R.id.spTiming)
         val token = PrefsManager.geToken(activity!!)
+
+        val timing = arrayOf(" ","Today", "Upcoming", "Passed")
+        val arrTiming = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, timing)
+
+        val region = arrayOf(" ",
+            "Tunis",
+            "Ariana",
+            "Ben Arous",
+            "Manouba",
+            "Nabeul",
+            "Zaghouan",
+            "Bizerte",
+            "Béja",
+            "Jendouba",
+            "Kef",
+            "Siliana",
+            "Sousse",
+            "Monastir",
+            "Mahdia",
+            "Sfax",
+            "Kairouan",
+            "Kasserine",
+            "Bouzid",
+            "Gabès",
+            "Mednine",
+            "Tataouine",
+            "Gafsa",
+            "Tozeur",
+            "Kebili"
+        )
+        val arrRegion = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, region)
 
 
         //TODO("when user sign in without foto set place holder")
@@ -68,13 +96,8 @@ class HomeFeed : Fragment() {
         fab.setOnClickListener { BuilderSearchFilter.showDialog(activity!!) }
         /***Buttons****/
 
-        btnUpcoming.setOnClickListener {
-            upcoming(rvHome)
-        }
 
-        btnToday.setOnClickListener {
-            today(rvHome)
-        }
+        filters(spTiming, arrTiming, spRegion, arrRegion, rvHome)
 
 
 
@@ -248,7 +271,6 @@ class HomeFeed : Fragment() {
                     val adapter = RvHomeFeedAdapter(response.body()!!.pagination.events, activity!!)
                     rv.adapter = adapter
 
-                    //Pagination
 
                     //Pagination
                     adapter.setOnBottomReachedListener(object : OnBottomReachedListener {
@@ -274,7 +296,7 @@ class HomeFeed : Fragment() {
         })
     }
 
-    private fun getMoreItems( adapter: RvHomeFeedAdapter) {
+    private fun getMoreItems(adapter: RvHomeFeedAdapter) {
         val service = UniclubApi.create()
         if (page != null)
             service.paginateEvents(page!!).enqueue(object : Callback<EventListResponse> {
@@ -307,5 +329,44 @@ class HomeFeed : Fragment() {
 
             })
 
+    }
+
+    private fun filters(
+        spTiming: Spinner,
+        arrTiming: ArrayAdapter<String>,
+        spRegion: Spinner,
+        arrRegion: ArrayAdapter<String>,
+        rv: RecyclerView
+    ) {
+        spTiming.adapter = arrTiming
+        spRegion.adapter = arrRegion
+
+        //Time
+        spTiming.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position!=0)
+                when (position) {
+                    1 -> today(rv)
+                    2 -> upcoming(rv)
+                    3 -> passed(rv)
+                }
+            }
+
+        }
+
+        //region
+        spRegion.onItemSelectedListener=object:AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position!=0)
+                regionFilter(rv,arrRegion.getItem(position)!!)
+            }
+
+        }
     }
 }

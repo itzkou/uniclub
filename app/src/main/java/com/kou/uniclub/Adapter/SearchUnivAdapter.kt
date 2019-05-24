@@ -27,7 +27,7 @@ class SearchUnivAdapter(context: Context, univs: ArrayList<University>) : ArrayA
 
     private fun createView(position: Int, parent: ViewGroup?): View {
         val view = LayoutInflater.from(context).inflate(R.layout.row_university, parent, false)
-        view!!.tvUniv!!.text = filtered[position].name
+        view?.tvUniv?.text = filtered[position].name
         Picasso.get().load(filtered[position].photo).into(view.imUniv)
 
 
@@ -38,7 +38,7 @@ class SearchUnivAdapter(context: Context, univs: ArrayList<University>) : ArrayA
         convertView ?: LayoutInflater.from(context).inflate(R.layout.row_university, parent, false)
         convertView?.tvUniv?.text = filtered[position].name
         Picasso.get().load(filtered[position].photo).into(convertView?.imUniv)
-        return super.getDropDownView(position, convertView, parent)
+        return super.getDropDownView(position, convertView, parent!!)
     }
 
     override fun getCount() = filtered.size
@@ -73,7 +73,7 @@ class SearchUnivAdapter(context: Context, univs: ArrayList<University>) : ArrayA
 
         override fun publishResults(constraint: CharSequence?, results: Filter.FilterResults) {
             filtered = results.values as ArrayList<University>
-            notifyDataSetChanged()
+            notifyDataSetInvalidated()
         }
 
         override fun convertResultToString(result: Any) = (result as University).name
