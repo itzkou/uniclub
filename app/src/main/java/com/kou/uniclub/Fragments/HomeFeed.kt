@@ -1,9 +1,12 @@
 package com.kou.uniclub.Fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
+import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -12,16 +15,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.jaredrummler.materialspinner.MaterialSpinner
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Extensions.BuilderAuth
-import com.kou.uniclub.Extensions.BuilderSearchFilter
 import com.kou.uniclub.Extensions.BuilderSettings
 import com.kou.uniclub.Extensions.OnBottomReachedListener
 import com.kou.uniclub.Model.Event.EventListResponse
+import com.kou.uniclub.Model.User.UserX
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
@@ -34,35 +38,34 @@ import java.io.IOException
 
 class HomeFeed : Fragment() {
     private var page: String? = null
+    private var picture: String? = null
+    var myPrefs = ArrayList<String?>()
 
 
     companion object {
 
         fun newInstance(): HomeFeed = HomeFeed()
+
     }
 
-    //TODO("this is the pagination model")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(com.kou.uniclub.R.layout.fragment_homefeed, container, false)
         val rvHome = v.findViewById<RecyclerView>(com.kou.uniclub.R.id.rvHome)
         val fab = v.findViewById<FloatingActionButton>(com.kou.uniclub.R.id.fabSearch)
-        val imProfile = v.findViewById<ImageView>(com.kou.uniclub.R.id.settings)
+        val imProfile = v.findViewById<ImageView>(com.kou.uniclub.R.id.imProfile)
         val spRegion = v.findViewById<MaterialSpinner>(com.kou.uniclub.R.id.spRegion)
         val spTiming = v.findViewById<MaterialSpinner>(com.kou.uniclub.R.id.spTiming)
         val token = PrefsManager.geToken(activity!!)
 
-        val resID = resources.getIdentifier(
-            "builder_round",
-            "drawable", activity!!.packageName
-        )
-        Log.d("myDrawable",resID.toString())
 
 
-        //TODO("when user sign in without foto set place holder")
-        if (token != null)
-            Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).apply(RequestOptions.circleCropTransform()).into(
-                imProfile
-            )
+
+
+        if (token != null) {
+            getUser(imProfile)
+
+
+        }
 
         rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
 
@@ -74,7 +77,11 @@ class HomeFeed : Fragment() {
                 BuilderAuth.showDialog(activity!!)
         }
         /********Floating button ******/
-        fab.setOnClickListener { BuilderSearchFilter.showDialog(activity!!) }
+        fab.setOnClickListener {
+            showDialog(activity!!)
+
+
+        }
         /***Buttons****/
 
 
@@ -367,5 +374,119 @@ class HomeFeed : Fragment() {
         spRegion.setOnItemSelectedListener { view, position, id, item ->
             regionFilter(rv, item.toString())
         }
+    }
+
+    private fun getUser(im: ImageView) {
+        val service = UniclubApi.create()
+        service.getUser("Bearer " + PrefsManager.geToken(activity!!)).enqueue(object : Callback<UserX> {
+            override fun onFailure(call: Call<UserX>, t: Throwable) {
+            }
+
+            override fun onResponse(call: Call<UserX>, response: Response<UserX>) {
+
+                if (response.isSuccessful) {
+                    picture = response.body()!!.image
+                    if (picture.equals("/storage/Student/Profile_Picture/"))
+                        Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).apply(RequestOptions.circleCropTransform())
+                            .into(
+                                im
+                            )
+                    else
+                        Glide.with(activity!!).load("http://192.168.1.6:8000" + response.body()!!.image).apply(
+                            RequestOptions.circleCropTransform()
+                        )
+                            .into(
+                                im
+                            )
+                }
+            }
+
+        })
+    }
+
+    private fun cards(card: CardView, context: Context, arr: ArrayList<String?>) {
+
+
+        val category = (card.getChildAt(0) as TextView).text.toString()
+        var isClicked = false
+        card.setOnClickListener {
+            isClicked = if (!isClicked) {
+                card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.orange))
+                arr.add(category)
+
+
+
+                true
+
+
+            } else {
+                card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.darkGray))
+                arr.remove(category)
+
+                false
+
+            }
+
+
+        }
+
+
+    }
+
+
+    fun showDialog(context: Context) {
+
+        val dialogView = LayoutInflater.from(context).inflate(com.kou.uniclub.R.layout.builder_search_filter, null)
+        val busi = dialogView.findViewById<CardView>(R.id.busi)
+        val learni = dialogView.findViewById<CardView>(R.id.learning)
+        val culturi = dialogView.findViewById<CardView>(R.id.culture)
+        val sociali = dialogView.findViewById<CardView>(R.id.social)
+        val phototi = dialogView.findViewById<CardView>(R.id.photography)
+        val techi = dialogView.findViewById<CardView>(R.id.tech)
+        val sporti = dialogView.findViewById<CardView>(R.id.sports)
+        val desi = dialogView.findViewById<CardView>(R.id.design)
+        val gami = dialogView.findViewById<CardView>(R.id.gaming)
+
+
+        val builder = AlertDialog.Builder(context, R.style.FullScreenDialogStyle)
+
+        builder.setView(dialogView)
+        myPrefs.clear()
+        cards(busi, context, myPrefs)
+        cards(learni, context, myPrefs)
+        cards(culturi, context, myPrefs)
+        cards(sociali, context, myPrefs)
+        cards(phototi, context, myPrefs)
+        cards(techi, context, myPrefs)
+        cards(sporti, context, myPrefs)
+        cards(desi, context, myPrefs)
+        cards(gami, context, myPrefs)
+
+
+
+
+
+
+
+
+
+            //TODO("Web service categories filter")
+        builder.setPositiveButton("CONFIRM") { dialog, which ->
+            for (i in 0 until myPrefs.size)
+                Log.d("myPrefs", myPrefs[i])
+            dialog?.dismiss()
+        }
+        builder.setNegativeButton(
+            "CANCEL"
+        ) { dialog, which ->
+            dialog?.dismiss()
+        }
+        val dialog = builder.create()
+
+
+
+        dialog.show()
+
+
     }
 }

@@ -56,7 +56,7 @@ class Calendar : Fragment() {
         val rvCalendar = v.findViewById<RecyclerView>(R.id.rvCalendar)
         val miniCal = v.findViewById<ConstraintLayout>(R.id.miniCal)
         val appBar = v.findViewById<AppBarLayout>(R.id.appBar)
-        val imProfile = v.findViewById<ImageView>(R.id.settings)
+        val imProfile = v.findViewById<ImageView>(R.id.imProfile)
         val token = PrefsManager.geToken(activity!!)
 
 

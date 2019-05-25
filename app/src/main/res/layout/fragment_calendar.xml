@@ -51,7 +51,7 @@
 
                 <ImageView android:layout_width="30dp"
                            android:layout_height="30dp"
-                           android:id="@+id/settings"
+                           android:id="@+id/imProfile"
                            android:src="@drawable/ic_profilp"
                            android:fitsSystemWindows="true"
                            app:layout_collapseMode="parallax"

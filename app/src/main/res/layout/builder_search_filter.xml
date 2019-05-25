@@ -40,7 +40,7 @@
                   android:layout_height="wrap_content"
                   android:layout_gravity="center"
                   android:textSize="18sp"
-                  android:textColor="@color/white" android:text="Business"/>
+                  android:textColor="@color/white" android:text="Business" android:id="@+id/tvBusi"/>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView android:id="@+id/design"
                                         android:layout_width="0dp"
@@ -61,7 +61,7 @@
                   android:textColor="@color/white"
                   android:textSize="18sp"
 
-                  android:text="Design"/>
+                  android:text="Design" android:id="@+id/tvDesign"/>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView app:cardBackgroundColor="@color/darkGray"
                                         android:id="@+id/gaming"
@@ -79,7 +79,7 @@
                   android:textColor="@color/white"
                   android:textSize="18sp"
 
-                  android:text="Gaming"/>
+                  android:text="Gaming" android:id="@+id/tvGami"/>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView
             android:id="@+id/culture" app:cardBackgroundColor="@color/darkGray"
@@ -96,7 +96,7 @@
                   android:textColor="@color/white"
                   android:textSize="18sp"
 
-                  android:text="Culture"/>
+                  android:text="Culture" android:id="@+id/tvCult"/>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView android:id="@+id/tech"
                                         app:cardBackgroundColor="@color/darkGray"
@@ -115,7 +115,7 @@
                   android:textColor="@color/white"
                   android:textSize="18sp"
 
-                  android:text="Technology"/>
+                  android:text="Technology" android:id="@+id/tvTech"/>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView android:id="@+id/sports"
                                         app:cardBackgroundColor="@color/darkGray"
@@ -133,7 +133,7 @@
                   android:textColor="@color/white"
                   android:textSize="18sp"
 
-                  android:text="Sports"/>
+                  android:text="Sports" android:id="@+id/tvSport"/>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView
             app:cardBackgroundColor="@color/darkGray"
@@ -151,7 +151,7 @@
                   android:textColor="@color/white"
                   android:textSize="18sp"
 
-                  android:text="Photography"/>
+                  android:text="Photography" android:id="@+id/tvPhoto"/>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView app:cardBackgroundColor="@color/darkGray"
                                         android:id="@+id/social"
@@ -170,7 +170,7 @@
                   android:textColor="@color/white"
                   android:textSize="18sp"
 
-                  android:text="Social"/>
+                  android:text="Social" android:id="@+id/tvSocial"/>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView android:id="@+id/learning"
                                         android:layout_width="124dp"
@@ -187,7 +187,7 @@
                   android:textSize="18sp"
 
                   android:textColor="@color/white"
-                  android:text="Learning"/>
+                  android:text="Learning" android:id="@+id/tvLearning"/>
     </android.support.v7.widget.CardView>
 
 

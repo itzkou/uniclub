@@ -147,7 +147,6 @@ class SignUP : AppCompatActivity(), Validation {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
-            PrefsManager.setPicture(this@SignUP, mCurrentPhotoPath)
             imProfile.setImageURI(Uri.parse(mCurrentPhotoPath))
             chosenFile = File(mCurrentPhotoPath)
             //multipart stuff
@@ -156,9 +155,8 @@ class SignUP : AppCompatActivity(), Validation {
 
 
         } else if (requestCode == SELECT_FILE && resultCode == RESULT_OK) {
-            PrefsManager.setPicture(this@SignUP, data!!.data!!.toString())
 
-            imProfile.setImageURI(data.data)
+            imProfile.setImageURI(data!!.data)
             chosenUri = data.data!!
             val filePath = arrayOf(MediaStore.Images.Media.DATA)
             val c = contentResolver.query(chosenUri!!, filePath, null, null, null)
@@ -531,6 +529,8 @@ class SignUP : AppCompatActivity(), Validation {
         //TODO("response caching")
         PrefsManager.setPicture(this@SignUP, account.photoUrl.toString())
     }
+
+
 
 
 }
