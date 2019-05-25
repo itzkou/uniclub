@@ -93,6 +93,15 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
                                 isLiked = true
                                 holder.sparkle.playAnimation()
                                 holder.fav.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorito))
+                                Toasty.custom(
+                                    context,
+                                    "${event.name} is marked as favourite!",
+                                    com.kou.uniclub.R.drawable.ic_check_white_24dp,
+                                    com.kou.uniclub.R.color.black,
+                                    Toasty.LENGTH_SHORT,
+                                    false,
+                                    true
+                                ).show()
                             }
 
                         })
@@ -133,7 +142,6 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
 
 
             event_id = event.id
-            Log.d("id_ev", event_id.toString())
             context.startActivity(Intent(context, EventDetails::class.java))
 
         }

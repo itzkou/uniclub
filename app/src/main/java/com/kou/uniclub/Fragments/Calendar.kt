@@ -68,7 +68,7 @@ class Calendar : Fragment() {
         mCalendar = dialogView.findViewById(R.id.mCalendar)
 
         val hide = dialogView.findViewById<ImageView>(R.id.hideCal)
-        val builder = AlertDialog.Builder(activity!!)
+        val builder = AlertDialog.Builder(activity!!,R.style.CalendarDialog)
         builder.setView(dialogView)
         val dialog = builder.create()
 

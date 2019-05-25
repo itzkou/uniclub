@@ -35,7 +35,7 @@ class Universities : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(com.kou.uniclub.R.layout.fragment_clubs, container, false)
         val rvClubs = v.findViewById<RecyclerView>(com.kou.uniclub.R.id.rvClubs)
-        val searchUniv = v.findViewById<AutoCompleteTextView>(com.kou.uniclub.R.id.searchUnivs)
+        val searchUniv = v.findViewById<AutoCompleteTextView>(com.kou.uniclub.R.id.searchFilter)
         rvClubs.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
 
         /***** List of all clubs ****/

@@ -76,6 +76,29 @@
         <item name="android:textSize">15sp</item>
         <item name="android:windowBackground">@drawable/builder_round</item>
         <item name="colorAccent">@color/orange</item>
+
+    </style>
+
+    <style name="CalendarDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:fontFamily">@font/raleway_semi_bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="colorAccent">@color/orange</item>
+        <item name="dialogCornerRadius">15dp</item>
+        <item name="android:insetRight">20dp</item>
+        <item name="android:insetLeft">20dp</item>
+
+
+
+    </style>
+
+    <style name="FullScreenDialogStyle" parent="android:Theme.Light.NoTitleBar.Fullscreen">
+        <item name="android:fontFamily">@font/raleway_semi_bold</item>
+        <item name="android:background">@color/builderSearchFilter</item>
+        <item name="android:textSize">18sp</item>
+        <item name="colorAccent">@color/orange</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsFloating">false</item>
     </style>
 
     <style name="TransparentAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">

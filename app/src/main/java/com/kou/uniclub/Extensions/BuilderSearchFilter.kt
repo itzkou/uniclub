@@ -38,7 +38,7 @@ class BuilderSearchFilter {
             val gami = dialogView.findViewById<CardView>(R.id.gaming)
 
 
-            val builder = AlertDialog.Builder(context, R.style.CustomAlertDialog)
+            val builder = AlertDialog.Builder(context, R.style.FullScreenDialogStyle)
 
             builder.setView(dialogView)
 
@@ -57,12 +57,12 @@ class BuilderSearchFilter {
 
 
 
-            builder.setPositiveButton("confirm") { dialog, which ->
+            builder.setPositiveButton("CONFIRM") { dialog, which ->
 
                 dialog?.dismiss()
             }
             builder.setNegativeButton(
-                "Cancel"
+                "CANCEL"
             ) { dialog, which ->
                 dialog?.dismiss()
             }

@@ -42,12 +42,11 @@
     </android.support.constraint.ConstraintLayout>
 
     <AutoCompleteTextView
-            android:id="@+id/searchUnivs"
+            android:id="@+id/searchFilter"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             style="@style/Autocomplete"
-            android:hint="Search"
-
+            android:hint="Enter your university..."
             android:paddingStart="34dp"
             android:paddingEnd="34dp"
              app:layout_constraintTop_toBottomOf="@id/bar"
@@ -56,13 +55,13 @@
     <ImageView android:layout_width="11dp" android:layout_height="11dp"
                android:src="@drawable/ic_search_g"
                android:layout_marginTop="8dp"
-               app:layout_constraintTop_toTopOf="@+id/searchUnivs"
-               app:layout_constraintStart_toStartOf="@+id/searchUnivs" android:layout_marginStart="16dp"
-               android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/rvClubs"/>
+               app:layout_constraintTop_toTopOf="@+id/searchFilter"
+               app:layout_constraintStart_toStartOf="@+id/searchFilter" android:layout_marginStart="16dp"
+               android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="@+id/searchFilter"/>
     <android.support.v7.widget.RecyclerView android:id="@+id/rvClubs"
                                             android:layout_width="match_parent"
                                             android:layout_height="0dp"
-                                            app:layout_constraintTop_toBottomOf="@id/searchUnivs"
+                                            app:layout_constraintTop_toBottomOf="@id/searchFilter"
                                             app:layout_constraintBottom_toBottomOf="parent"
                                             app:layout_constraintEnd_toEndOf="parent"
                                             app:layout_constraintStart_toStartOf="parent"

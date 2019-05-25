@@ -3,12 +3,13 @@ package com.kou.uniclub.Fragments
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -42,43 +43,19 @@ class HomeFeed : Fragment() {
 
     //TODO("this is the pagination model")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(R.layout.fragment_homefeed, container, false)
-        val rvHome = v.findViewById<RecyclerView>(R.id.rvHome)
-        val fab = v.findViewById<FloatingActionButton>(R.id.fabSearch)
-        val imProfile = v.findViewById<ImageView>(R.id.settings)
-        val spRegion = v.findViewById<MaterialSpinner>(R.id.spRegion)
-        val spTiming = v.findViewById<MaterialSpinner>(R.id.spTiming)
+        val v = inflater.inflate(com.kou.uniclub.R.layout.fragment_homefeed, container, false)
+        val rvHome = v.findViewById<RecyclerView>(com.kou.uniclub.R.id.rvHome)
+        val fab = v.findViewById<FloatingActionButton>(com.kou.uniclub.R.id.fabSearch)
+        val imProfile = v.findViewById<ImageView>(com.kou.uniclub.R.id.settings)
+        val spRegion = v.findViewById<MaterialSpinner>(com.kou.uniclub.R.id.spRegion)
+        val spTiming = v.findViewById<MaterialSpinner>(com.kou.uniclub.R.id.spTiming)
         val token = PrefsManager.geToken(activity!!)
 
-
-        val region = arrayOf(
-            " ",
-            "Tunis",
-            "Ariana",
-            "Ben Arous",
-            "Manouba",
-            "Nabeul",
-            "Zaghouan",
-            "Bizerte",
-            "Béja",
-            "Jendouba",
-            "Kef",
-            "Siliana",
-            "Sousse",
-            "Monastir",
-            "Mahdia",
-            "Sfax",
-            "Kairouan",
-            "Kasserine",
-            "Bouzid",
-            "Gabès",
-            "Mednine",
-            "Tataouine",
-            "Gafsa",
-            "Tozeur",
-            "Kebili"
+        val resID = resources.getIdentifier(
+            "builder_round",
+            "drawable", activity!!.packageName
         )
-        val arrRegion = ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, region)
+        Log.d("myDrawable",resID.toString())
 
 
         //TODO("when user sign in without foto set place holder")
@@ -88,7 +65,7 @@ class HomeFeed : Fragment() {
             )
 
         rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
-        allDates(rvHome)
+
         /********Settings ******/
         imProfile.setOnClickListener {
             if (token != null)
@@ -101,7 +78,8 @@ class HomeFeed : Fragment() {
         /***Buttons****/
 
 
-        filters(spTiming, spRegion, arrRegion, rvHome)
+        filters(spTiming, spRegion, rvHome)
+        allDates(rvHome)
 
 
 
@@ -139,8 +117,8 @@ class HomeFeed : Fragment() {
                     Toasty.custom(
                         activity!!,
                         "No upcoming events",
-                        R.drawable.ic_error_outline_white_24dp,
-                        R.color.movento,
+                        com.kou.uniclub.R.drawable.ic_error_outline_white_24dp,
+                        com.kou.uniclub.R.color.movento,
                         Toasty.LENGTH_SHORT,
                         true,
                         true
@@ -212,8 +190,8 @@ class HomeFeed : Fragment() {
                     Toasty.custom(
                         activity!!,
                         "No events today",
-                        R.drawable.ic_error_outline_white_24dp,
-                        R.color.movento,
+                        com.kou.uniclub.R.drawable.ic_error_outline_white_24dp,
+                        com.kou.uniclub.R.color.movento,
                         Toasty.LENGTH_SHORT,
                         true,
                         true
@@ -251,8 +229,8 @@ class HomeFeed : Fragment() {
                     Toasty.custom(
                         activity!!,
                         "No passed events",
-                        R.drawable.ic_error_outline_white_24dp,
-                        R.color.black,
+                        com.kou.uniclub.R.drawable.ic_error_outline_white_24dp,
+                        com.kou.uniclub.R.color.black,
                         Toasty.LENGTH_SHORT,
                         false,
                         true
@@ -288,8 +266,8 @@ class HomeFeed : Fragment() {
                     Toasty.custom(
                         activity!!,
                         "No events in $city",
-                        R.drawable.ic_error_outline_white_24dp,
-                        R.color.black,
+                        com.kou.uniclub.R.drawable.ic_error_outline_white_24dp,
+                        com.kou.uniclub.R.color.black,
                         Toasty.LENGTH_SHORT,
                         false,
                         true
@@ -317,8 +295,8 @@ class HomeFeed : Fragment() {
                                 Toasty.custom(
                                     activity!!,
                                     "Load more",
-                                    R.drawable.ic_error_outline_white_24dp,
-                                    R.color.black,
+                                    com.kou.uniclub.R.drawable.ic_error_outline_white_24dp,
+                                    com.kou.uniclub.R.color.black,
                                     Toasty.LENGTH_SHORT,
                                     false,
                                     true
@@ -338,14 +316,14 @@ class HomeFeed : Fragment() {
     private fun filters(
         spTiming: MaterialSpinner,
         spRegion: MaterialSpinner,
-        arrRegion: ArrayAdapter<String>,
         rv: RecyclerView
     ) {
-        spRegion.setBackgroundResource(R.drawable.btn_feed)
-        spTiming.setBackgroundResource(R.drawable.btn_feed)
-        spTiming.setItems("", "Today", "Upcoming", "Passed")
+        spRegion.popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(activity!!, R.drawable.builder_round))
+        spTiming.popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(activity!!, R.drawable.builder_round))
+        spRegion.setBackgroundResource(com.kou.uniclub.R.drawable.btn_feed)
+        spTiming.setBackgroundResource(com.kou.uniclub.R.drawable.btn_feed)
+        spTiming.setItems("Today", "Upcoming", "Passed")
         spRegion.setItems(
-            " ",
             "Tunis",
             "Ariana",
             "Ben Arous",
@@ -373,22 +351,21 @@ class HomeFeed : Fragment() {
         )
 
         spTiming.setOnItemSelectedListener { view, position, id, item ->
-            if (position != 0)
-                when (position) {
-                    1 -> today(rv)
-                    2 -> upcoming(rv)
-                    3 -> passed(rv)
+
+            when (position) {
+                0 -> today(rv)
+                1 -> upcoming(rv)
+                2 -> passed(rv)
 
 
-                }
+            }
 
         }
 
 
         //region
         spRegion.setOnItemSelectedListener { view, position, id, item ->
-            if (position != 0)
-                regionFilter(rv, arrRegion.getItem(position)!!)
+            regionFilter(rv, item.toString())
         }
     }
 }
