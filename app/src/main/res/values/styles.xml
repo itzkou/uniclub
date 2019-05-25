@@ -101,9 +101,9 @@
         <item name="android:windowIsFloating">false</item>
     </style>
 
-    <style name="TransparentAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="TransparentAlertDialog" parent="android:Theme.Holo.Light.NoActionBar.Fullscreen">
 
-        <item name="android:windowBackground">@drawable/builder_round</item>
+        <item name="android:windowBackground">@color/transBlack</item>
         <item name="android:backgroundDimEnabled">false</item>
 
 

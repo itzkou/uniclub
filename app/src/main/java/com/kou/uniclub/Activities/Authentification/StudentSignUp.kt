@@ -45,7 +45,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SignUP : AppCompatActivity(), Validation {
+class StudentSignUp : AppCompatActivity(), Validation {
 
     //TODO("Make all fields Nullable ")
 
@@ -97,8 +97,8 @@ class SignUP : AppCompatActivity(), Validation {
         }
 
 
-        val dialogView = LayoutInflater.from(this@SignUP).inflate(R.layout.builder_time_picker, null)
-        val builder = AlertDialog.Builder(this@SignUP)
+        val dialogView = LayoutInflater.from(this@StudentSignUp).inflate(R.layout.builder_time_picker, null)
+        val builder = AlertDialog.Builder(this@StudentSignUp)
         val timePicker = dialogView.findViewById<DatePicker>(R.id.timePicker)
         builder.setView(dialogView)
         builder.setPositiveButton("confirm") { dialog, which ->
@@ -106,7 +106,7 @@ class SignUP : AppCompatActivity(), Validation {
             birthday =
                 timePicker.year.toString() + "-" + timePicker.month.toString() + "-" + timePicker.dayOfMonth.toString()
             edBirth.hint = birthday
-            edBirth.setHintTextColor(ContextCompat.getColor(this@SignUP, R.color.black))
+            edBirth.setHintTextColor(ContextCompat.getColor(this@StudentSignUp, R.color.black))
             dialog?.dismiss()
         }
 
@@ -128,7 +128,6 @@ class SignUP : AppCompatActivity(), Validation {
 
         btnSignup.setOnClickListener {
             uniSignUP(fName, lName, birthday, mail, password, passwordC, adress, image)
-            PrefsManager.setUnigate(this@SignUP,true)
 
         }
         /******************* with facebook *****************/
@@ -222,9 +221,9 @@ class SignUP : AppCompatActivity(), Validation {
                     override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
 
                         if (t is IOException)
-                            Toast.makeText(this@SignUP, "Network faillure", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@StudentSignUp, "Network faillure", Toast.LENGTH_SHORT).show()
                         else
-                            Toast.makeText(this@SignUP, "conversion error", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@StudentSignUp, "conversion error", Toast.LENGTH_SHORT).show()
 
                     }
 
@@ -235,7 +234,7 @@ class SignUP : AppCompatActivity(), Validation {
 
                         } else if (response.code() == 404)
                             Toast.makeText(
-                                this@SignUP,
+                                this@StudentSignUp,
                                 "Email already exists or missing field",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -260,7 +259,7 @@ class SignUP : AppCompatActivity(), Validation {
             ).enqueue(object : Callback<SignUpResponse> {
                 override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
                     if (t is IOException)
-                        Toast.makeText(this@SignUP, "Network faillure", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@StudentSignUp, "Network faillure", Toast.LENGTH_SHORT).show()
 
 
                 }
@@ -272,7 +271,7 @@ class SignUP : AppCompatActivity(), Validation {
 
                     } else if (response.code() == 404)
                         Toast.makeText(
-                            this@SignUP,
+                            this@StudentSignUp,
                             "Email already exists or missing field",
                             Toast.LENGTH_SHORT
                         ).show()
@@ -293,8 +292,8 @@ class SignUP : AppCompatActivity(), Validation {
 
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
-                    PrefsManager.seToken(this@SignUP, response.body()!!.accessToken)
-                    startActivity(Intent(this@SignUP, Home::class.java))
+                    PrefsManager.seToken(this@StudentSignUp, response.body()!!.accessToken)
+                    startActivity(Intent(this@StudentSignUp, Home::class.java))
                 }
             }
 
@@ -437,7 +436,7 @@ class SignUP : AppCompatActivity(), Validation {
         val listPermis = ArrayList<String>()
 
         for (i in appPermissions) {
-            if (ContextCompat.checkSelfPermission(this@SignUP, i) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this@StudentSignUp, i) != PackageManager.PERMISSION_GRANTED) {
                 listPermis.add(i)
 
             }
@@ -445,7 +444,7 @@ class SignUP : AppCompatActivity(), Validation {
 
         if (listPermis.isNotEmpty()) {
             ActivityCompat.requestPermissions(
-                this@SignUP,
+                this@StudentSignUp,
                 listPermis.toArray(arrayOfNulls(listPermis.size)),
                 PERMIS_REQUEST
             )
@@ -477,7 +476,7 @@ class SignUP : AppCompatActivity(), Validation {
 
                         uniSignUP(fn, ln, "null", email, "123facebook", "123facebook", "unknown", null)
                         //TODO("response caching")
-                        PrefsManager.setPicture(this@SignUP, pic)
+                        PrefsManager.setPicture(this@StudentSignUp, pic)
 
 
                     }
@@ -527,7 +526,7 @@ class SignUP : AppCompatActivity(), Validation {
         passwordC = "123social"
         uniSignUP(fName, lName, birthday, mail, passwordC, passwordC, adress, image)
         //TODO("response caching")
-        PrefsManager.setPicture(this@SignUP, account.photoUrl.toString())
+        PrefsManager.setPicture(this@StudentSignUp, account.photoUrl.toString())
     }
 
 

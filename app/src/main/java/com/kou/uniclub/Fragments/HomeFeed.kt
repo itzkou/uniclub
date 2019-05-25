@@ -2,6 +2,7 @@ package com.kou.uniclub.Fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -40,6 +41,7 @@ class HomeFeed : Fragment() {
     private var page: String? = null
     private var picture: String? = null
     var myPrefs = ArrayList<String?>()
+    var wizGate=false
 
 
     companion object {
@@ -79,6 +81,7 @@ class HomeFeed : Fragment() {
         /********Floating button ******/
         fab.setOnClickListener {
             showDialog(activity!!)
+
 
 
         }
@@ -475,6 +478,12 @@ class HomeFeed : Fragment() {
             for (i in 0 until myPrefs.size)
                 Log.d("myPrefs", myPrefs[i])
             dialog?.dismiss()
+
+            if (!PrefsManager.getWizPrefs(activity!!)!!)
+            showWiz(context)
+
+
+
         }
         builder.setNegativeButton(
             "CANCEL"
@@ -486,6 +495,23 @@ class HomeFeed : Fragment() {
 
 
         dialog.show()
+
+
+    }
+
+    private fun showWiz(context:Context){
+
+            val wizView = LayoutInflater.from(context).inflate(com.kou.uniclub.R.layout.builder_wiz_prefs, null)
+            val wizBuilder = AlertDialog.Builder(context, R.style.TransparentAlertDialog)
+            wizBuilder.setView(wizView)
+            val wizDialog = wizBuilder.create()
+            wizDialog.show()
+            Handler().postDelayed({
+                wizDialog.dismiss()
+
+            }, 5000)
+
+            PrefsManager.setWizPrefs(context,true)
 
 
     }

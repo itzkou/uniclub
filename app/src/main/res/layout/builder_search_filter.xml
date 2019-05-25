@@ -8,6 +8,7 @@
     <AutoCompleteTextView android:id="@+id/searchFilter"
                           android:layout_width="match_parent"
                           android:layout_height="35dp"
+                          android:focusedByDefault="false"
                           style="@style/Autocomplete"
                           android:hint="Enter club ,university ,or location..."
                           android:paddingStart="34dp"

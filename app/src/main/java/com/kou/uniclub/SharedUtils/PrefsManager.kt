@@ -6,8 +6,7 @@ import android.preference.PreferenceManager
 import com.kou.uniclub.SharedUtils.Preferences.Companion.IS_FIRSTIME
 import com.kou.uniclub.SharedUtils.Preferences.Companion.PICTURE
 import com.kou.uniclub.SharedUtils.Preferences.Companion.TOKEN
-import com.kou.uniclub.SharedUtils.Preferences.Companion.UNI
-import com.kou.uniclub.SharedUtils.Preferences.Companion.UNIV_ID
+import com.kou.uniclub.SharedUtils.Preferences.Companion.WIZPREFS
 
 class PrefsManager {
 
@@ -52,16 +51,17 @@ class PrefsManager {
         }
 
         //Set social
-        fun setUnigate(context: Context, p: Boolean) {
+        fun setWizPrefs(context: Context, p: Boolean) {
             val editor = getPreferences(context).edit()
-            editor.putBoolean(UNI, p)
+            editor.putBoolean(WIZPREFS, p)
             editor.apply()
 
         }
 
         //Get Picture
-        fun getUnigate(context: Context): Boolean? {
-            return getPreferences(context).getBoolean(UNI,false)
+        fun getWizPrefs(context: Context): Boolean? {
+            return getPreferences(context).getBoolean(WIZPREFS,false)
+
         }
 
 

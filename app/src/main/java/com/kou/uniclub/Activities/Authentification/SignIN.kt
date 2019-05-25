@@ -61,7 +61,7 @@ class SignIN : AppCompatActivity(), Validation {
         btnGoogle.setOnClickListener { google() }
 
         tvSignUp.setOnClickListener {
-            startActivity(Intent(this@SignIN, SignUP::class.java))
+            startActivity(Intent(this@SignIN, StudentSignUp::class.java))
         }
 
     }
