@@ -20,7 +20,6 @@
             android:backgroundTint="@color/white"
     >
         <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/collapse"
                 app:collapsedTitleGravity="center"
                 app:expandedTitleGravity="center"
                 android:layout_width="match_parent"
@@ -103,7 +102,7 @@
                           app:layout_constraintEnd_toEndOf="@id/today" app:layout_constraintStart_toStartOf="@id/today"
                           app:layout_constraintBottom_toBottomOf="@id/today"
                           app:layout_constraintTop_toTopOf="@id/today"
-                          android:id="@+id/textView7"/>
+                />
 
                 <View
                         android:id="@+id/showCal"

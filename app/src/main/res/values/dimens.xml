@@ -1,6 +1,4 @@
 <resources>
-    <dimen name="searchMarginRL">20dp</dimen>
-    <dimen name="searchMarginBM">12dp</dimen>
     <dimen name="formRL">34dp</dimen>
     <dimen name="formTB">35dp</dimen>
     <dimen name="formWidth">292dp</dimen>

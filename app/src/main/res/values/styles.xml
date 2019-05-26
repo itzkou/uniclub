@@ -25,13 +25,6 @@
         <item name="android:windowIsFloating">false</item>
     </style>
 
-    <style name="searchView">
-        <item name="android:textSize">16sp</item>
-        <item name="android:layout_marginRight">@dimen/searchMarginRL</item>
-        <item name="android:layout_marginLeft">@dimen/searchMarginRL</item>
-        <item name="android:layout_marginBottom">@dimen/searchMarginBM</item>
-    </style>
-
     <style name="signUPField">
         <item name="android:paddingStart">9dp</item>
         <item name="android:background">@drawable/ed_signup</item>
@@ -90,6 +83,12 @@
 
 
     </style>
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 
     <style name="FullScreenDialogStyle" parent="android:Theme.Light.NoTitleBar.Fullscreen">
         <item name="android:fontFamily">@font/raleway_semi_bold</item>
@@ -140,15 +139,6 @@
         <item name="android:dropDownItemStyle">@layout/row_university</item>
 
     </style>
-
-    <style name="Spinners" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
-        <item name="android:popupBackground">@drawable/autocomplete_round</item>
-        <item name="android:fontFamily">@font/raleway_light</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:background">@drawable/btn_feed</item>
-        <item name="android:textColor">@drawable/btn_feed_text</item>
-    </style>
-
 
 
 </resources>

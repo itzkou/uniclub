@@ -15,8 +15,8 @@
                                                 android:fitsSystemWindows="true"
                                                 android:clickable="false"
                                                 android:backgroundTint="@color/white">
-        <android.support.design.widget.CollapsingToolbarLayout android:id="@+id/collapse"
-                                                               app:collapsedTitleGravity="center"
+        <android.support.design.widget.CollapsingToolbarLayout
+                app:collapsedTitleGravity="center"
                                                                app:expandedTitleGravity="center"
                                                                android:layout_width="match_parent"
                                                                android:layout_height="match_parent"
@@ -98,7 +98,6 @@
                                                     app:layout_constraintTop_toBottomOf="@+id/cardFollow"
                                                     app:layout_constraintEnd_toEndOf="parent"
                                                     android:layout_marginEnd="16dp"
-                                                    android:id="@+id/cardSponso"
                                                     app:layout_constraintStart_toEndOf="@+id/cardMsg"
                                                     android:layout_marginStart="8dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"

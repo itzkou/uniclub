@@ -25,6 +25,7 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning">
+
         <activity android:name=".Activities.Authentification.UserCategory">
         </activity>
         <activity android:name=".Activities.Authentification.ProSignUp">
@@ -63,7 +64,14 @@
         </activity>
         <activity
                 android:name=".Activities.Splash"
-                android:label="@string/title_activity_home">
+                android:exported="true"
+                android:label="@string/title_activity_home"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
                 android:name=".Activities.Authentification.SignIN"
@@ -72,16 +80,11 @@
         <activity
                 android:name=".Activities.Intro"
                 android:label="@string/title_activity_intro"
-                android:theme="@style/AppTheme">
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
         </activity>
         <activity
                 android:name=".Activities.Home"
                 android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
         <provider

@@ -12,7 +12,6 @@
     >
 
         <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/collapse"
                 app:collapsedTitleGravity="center"
                 app:expandedTitleGravity="center"
                 android:layout_width="match_parent"
