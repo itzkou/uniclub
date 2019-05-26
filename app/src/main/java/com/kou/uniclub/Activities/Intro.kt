@@ -36,6 +36,7 @@ class Intro : AppCompatActivity() {
                 if (position == 2)
                     Handler().postDelayed({
                         startActivity(Intent(this@Intro, UserCategory::class.java))
+                        finish()
 
                     }, 2500)
 

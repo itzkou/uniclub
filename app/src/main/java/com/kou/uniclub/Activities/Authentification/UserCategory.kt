@@ -30,8 +30,13 @@ class UserCategory : AppCompatActivity() {
                 rdi.isClickable = false
                 btnConfirm.setOnClickListener {
                     when (rd.id) {
-                        R.id.rdStudent -> startActivity(Intent(this@UserCategory, StudentSignUp::class.java))
-                        R.id.rdPro -> startActivity(Intent(this@UserCategory, ProSignUp::class.java))
+                        R.id.rdStudent -> {startActivity(Intent(this@UserCategory, StudentSignUp::class.java))
+                            finish()
+                        }
+                        R.id.rdPro -> {
+                            startActivity(Intent(this@UserCategory, ProSignUp::class.java))
+                            finish()
+                        }
 
                     }
 
@@ -47,6 +52,8 @@ class UserCategory : AppCompatActivity() {
 
 
         }
+
+
 
 
     }
