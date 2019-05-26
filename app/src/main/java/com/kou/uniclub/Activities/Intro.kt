@@ -1,11 +1,14 @@
 package com.kou.uniclub.Activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.text.Html
 import android.widget.TextView
+import com.kou.uniclub.Activities.Authentification.UserCategory
 import com.kou.uniclub.Adapter.VpSliderAdapter
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.activity_intro.*
@@ -17,11 +20,11 @@ class Intro : AppCompatActivity() {
         setContentView(R.layout.activity_intro)
 
 
-        val sliderAdapter= VpSliderAdapter(this@Intro)
-      slider_pager.adapter=sliderAdapter
+        val sliderAdapter = VpSliderAdapter(this@Intro)
+        slider_pager.adapter = sliderAdapter
         addDots(0)
 
-       slider_pager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
+        slider_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(p0: Int) {
             }
 
@@ -30,56 +33,45 @@ class Intro : AppCompatActivity() {
 
             override fun onPageSelected(position: Int) {
                 addDots(position)
+                if (position == 2)
+                    Handler().postDelayed({
+                        startActivity(Intent(this@Intro, UserCategory::class.java))
 
-                if(position==2) {
-                    skip.setOnClickListener {
-                        //TODO("Where auth ocurs")
-                        //startActivity(Intent(this@Intro, Auth::class.java))
-                        //finish()
-                    }
-                }
+                    }, 2500)
 
-                //TODO("change this logic later")
-                    /*
-                //on last page selected wait 2 sec and launch activity
-                if (position==2 && !SaveSharedPreference.getLoggedStatus(this@Intro)) {
-                    skip.visibility= View.VISIBLE
-                    skip.setOnClickListener {
-                        startActivity(Intent(this@Intro, SignUp::class.java))
-                    }
-                 */
+
             }
 
         })
 
     }
 
-    private fun addDots( position:Int){
-        val Dots= arrayOfNulls<TextView>(3)
-        //remove all dots khater kol viewpager scrooll yzid dots 3 fois
+    private fun addDots(position: Int) {
+        val Dots = arrayOfNulls<TextView>(3)
         dots_layout.removeAllViews()
 
-        for(i in Dots.indices)
-        { Dots[i]= TextView(this@Intro)
-            Dots[i]!!.text= Html.fromHtml("&#8226")
+        for (i in Dots.indices) {
+            Dots[i] = TextView(this@Intro)
+            Dots[i]!!.text = Html.fromHtml("&#8226")
 
-            Dots[i]!!.textSize= 41F
+            Dots[i]!!.textSize = 41F
             dots_layout.addView(Dots[i])
             Dots[i]!!.setTextColor(ContextCompat.getColor(this, R.color.transparent))
-
 
 
         }
         when (position) {
 
-            0 -> {  Dots[position]!!.setTextColor(ContextCompat.getColor(this, R.color.black))
+            0 -> {
+                Dots[position]!!.setTextColor(ContextCompat.getColor(this, R.color.dots))
 
             }
             1 -> {
-                Dots[position]!!.setTextColor(ContextCompat.getColor(this, R.color.black))
+                Dots[position]!!.setTextColor(ContextCompat.getColor(this, R.color.dots))
 
             }
-            2 ->   {Dots[position]!!.setTextColor(ContextCompat.getColor(this, R.color.black))
+            2 -> {
+                Dots[position]!!.setTextColor(ContextCompat.getColor(this, R.color.dots))
 
             }
         }

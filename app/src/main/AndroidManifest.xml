@@ -26,7 +26,8 @@
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".Activities.Authentification.UserCategory">
+        <activity android:name=".Activities.Authentification.UserCategory"
+        android:exported="true">
         </activity>
         <activity android:name=".Activities.Authentification.ProSignUp">
         </activity>

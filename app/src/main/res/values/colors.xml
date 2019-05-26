@@ -8,7 +8,8 @@
     <color name="movento">#A885D8</color>
     <color name="graySignUp">#CCCCCC</color>
     <color name="darkGray">#999999</color>
-    <color name="builderSearchFilter">#FAFAFA</color>
+    <color name="dots">#666666</color>
+    <color name="grayConstraint">#FAFAFA</color>
     <color name="transBlack">#CF000000</color>
     <color name="trans">#00FFFFFF</color>
 

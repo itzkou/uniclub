@@ -61,7 +61,7 @@ class SignIN : AppCompatActivity(), Validation {
         btnGoogle.setOnClickListener { google() }
 
         tvSignUp.setOnClickListener {
-            startActivity(Intent(this@SignIN, StudentSignUp::class.java))
+            startActivity(Intent(this@SignIN, UserCategory::class.java))
         }
 
     }
@@ -88,10 +88,8 @@ class SignIN : AppCompatActivity(), Validation {
                     PrefsManager.seToken(this@SignIN, response.body()!!.accessToken)
                     startActivity(Intent(this@SignIN, Home::class.java))
                     finish()
-                }
-                else
-                {
-                    Snackbar.make(rootSignIN,"User doesn't exist",Snackbar.LENGTH_LONG).show()
+                } else {
+                    Snackbar.make(rootSignIN, "User doesn't exist", Snackbar.LENGTH_LONG).show()
                     //facebook log out
                     LoginManager.getInstance().logOut()
                     //google sign out

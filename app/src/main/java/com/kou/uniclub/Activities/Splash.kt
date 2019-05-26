@@ -4,8 +4,6 @@ package com.kou.uniclub.Activities
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.Snackbar
@@ -18,7 +16,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.TextView
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
-import com.kou.uniclub.Extensions.ConnectivityReceiver
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -32,13 +29,13 @@ class Splash : AppCompatActivity() {
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        registerReceiver(
-            ConnectivityReceiver(),
-            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        )
+
 
         if (PrefsManager.getFirstTime(this@Splash)) {
             setContentView(R.layout.activity_splash)
+            val rotation = AnimationUtils.loadAnimation(this@Splash, R.anim.loading_icon)
+            rotation.repeatCount = Animation.INFINITE
+            imLoading.animation = rotation
             PrefsManager.setFirstime(this, false)
 
             val r = Runnable {
@@ -46,20 +43,22 @@ class Splash : AppCompatActivity() {
                 finish()
             }
             val h = Handler()
-            h.postDelayed(r, 2000) // will be delayed for 2 seconds
+            h.postDelayed(r, 1500) // will be delayed for 2 seconds
 
         } else {
 
             setContentView(R.layout.activity_splash)
+            val rotation = AnimationUtils.loadAnimation(this@Splash, R.anim.loading_icon)
+            rotation.repeatCount = Animation.INFINITE
+            imLoading.animation = rotation
+
             ReactiveNetwork
                 .observeInternetConnectivity()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { isConnectedToInternet ->
                     if (isConnectedToInternet) {
-                        val rotation = AnimationUtils.loadAnimation(this@Splash, R.anim.loading_icon)
-                        rotation.repeatCount = Animation.INFINITE
-                        imLoading.animation = rotation
+
                         val r = Runnable {
                             startActivity(Intent(this@Splash, Home::class.java))
                             finish()
@@ -67,14 +66,11 @@ class Splash : AppCompatActivity() {
                         val h = Handler()
                         h.postDelayed(r, 2000)
                     } else {
-                        imLoading.visibility = View.INVISIBLE
 
                         val snacko = Snackbar.make(imLogo, "Verify your network status", Snackbar.LENGTH_INDEFINITE)
                         snacko.config(this@Splash)
                         snacko.setAction("REFRESH") {
                             imLoading.visibility = View.VISIBLE
-                            val rotation = AnimationUtils.loadAnimation(this@Splash, R.anim.loading_icon)
-                            rotation.repeatCount = Animation.INFINITE
                             imLoading.animation = rotation
 
                         }

@@ -92,7 +92,7 @@
 
     <style name="FullScreenDialogStyle" parent="android:Theme.Light.NoTitleBar.Fullscreen">
         <item name="android:fontFamily">@font/raleway_semi_bold</item>
-        <item name="android:background">@color/builderSearchFilter</item>
+        <item name="android:background">@color/grayConstraint</item>
         <item name="android:textSize">18sp</item>
         <item name="colorAccent">@color/orange</item>
         <item name="android:windowNoTitle">true</item>
@@ -138,6 +138,12 @@
         <item name="android:background">@drawable/searchview</item>
         <item name="android:dropDownItemStyle">@layout/row_university</item>
 
+    </style>
+
+    <style name="RadioButton" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/ellipse</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:layout_marginStart">20dp</item>
     </style>
 
 
