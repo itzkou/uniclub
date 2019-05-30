@@ -14,6 +14,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.DatePicker
@@ -49,7 +50,7 @@ import java.util.*
 
 class StudentSignUp : AppCompatActivity(), Validation {
 
-    //TODO("Make all fields Nullable ")
+    //TODO(" when email exists ")
 
 
     /******* REQUESTS FOR RESULTS*******/
@@ -63,7 +64,11 @@ class StudentSignUp : AppCompatActivity(), Validation {
     /******* IMAGE UPLOAD*******/
     private var chosenFile: File? = null
     private var chosenUri: Uri? = null
-    private var image: MultipartBody.Part? = null
+    private var image = MultipartBody.Part.createFormData(
+        "attachment",
+        "",
+        RequestBody.create(MediaType.parse("text/plain"), "")
+    )
     private var mCurrentPhotoPath: String = ""
 
     /******* ARRAY PERMISS*******/
@@ -77,6 +82,7 @@ class StudentSignUp : AppCompatActivity(), Validation {
     /******* User attributes *******/
 
     private var birthday: String? = null
+
     private lateinit var fName: String
     private lateinit var lName: String
     private lateinit var mail: String
@@ -105,9 +111,21 @@ class StudentSignUp : AppCompatActivity(), Validation {
         builder.setView(dialogView)
         builder.setPositiveButton("confirm") { dialog, which ->
 
-            birthday =
-                timePicker.year.toString() + "-" + timePicker.month.toString() + "-" + timePicker.dayOfMonth.toString()
-            edBirth.hint = birthday
+            //birthday =timePicker.getDate()
+            val format = SimpleDateFormat(
+                "EE MMM dd HH:mm:ss z yyyy",
+                Locale.ENGLISH
+            )
+            val date = format.parse(timePicker.getDate().toString())
+            val day = DateFormat.format("dd", date) as String
+            val month = DateFormat.format("MMM", date) as String
+            val monthy = DateFormat.format("MM", date) as String
+            val year = DateFormat.format("yyyy", date) as String
+            birthday = "$year-$monthy-$day"
+            Toast.makeText(this@StudentSignUp, monthy, Toast.LENGTH_SHORT).show()
+
+
+            edBirth.hint = "$day  $month  $year"
             edBirth.setHintTextColor(ContextCompat.getColor(this@StudentSignUp, R.color.black))
             dialog?.dismiss()
         }
@@ -215,72 +233,41 @@ class StudentSignUp : AppCompatActivity(), Validation {
         image: MultipartBody.Part?
     ) {
         val service = UniclubApi.create()
-        if (image != null) {
-            service.signUP(fname, lname, birth, mail, pass, passc, adress, image)
-                .enqueue(object : Callback<SignUpResponse> {
-                    override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
 
-                        if (t is IOException)
-                            Toast.makeText(this@StudentSignUp, "Network faillure", Toast.LENGTH_SHORT).show()
-                        else
-                            Toast.makeText(this@StudentSignUp, "conversion error", Toast.LENGTH_SHORT).show()
-
-                    }
-
-                    override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
-                        if (response.isSuccessful) {
-                            if (response.code() == 201)
-                                uniSignIn(service)
-
-                        } else if (response.code() == 404)
-                            Toast.makeText(
-                                this@StudentSignUp,
-                                "Email already exists or missing field",
-                                Toast.LENGTH_SHORT
-                            ).show()
-
-                    }
-
-                })
-        } else {
-            service.signUP(
-                fName,
-                lName,
-                birthday,
-                mail,
-                password,
-                password,
-                adress,
-                MultipartBody.Part.createFormData(
-                    "attachment",
-                    "",
-                    RequestBody.create(MediaType.parse("text/plain"), "")
-                )
-            ).enqueue(object : Callback<SignUpResponse> {
-                override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
-                    if (t is IOException)
-                        Toast.makeText(this@StudentSignUp, "Network faillure", Toast.LENGTH_SHORT).show()
+        service.signUP(
+            fName,
+            lName,
+            birthday,
+            mail,
+            password,
+            password,
+            adress,
+            image
+        ).enqueue(object : Callback<SignUpResponse> {
+            override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
+                if (t is IOException)
+                    Toast.makeText(this@StudentSignUp, "Network faillure", Toast.LENGTH_SHORT).show()
 
 
-                }
+            }
 
-                override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
-                    if (response.isSuccessful) {
-                        if (response.code() == 201)
-                            uniSignIn(service)
+            override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
+                if (response.isSuccessful) {
+                    if (response.code() == 201)
+                        uniSignIn(service)
 
-                    } else if (response.code() == 404)
-                        Toast.makeText(
-                            this@StudentSignUp,
-                            "Email already exists or missing field",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                } else if (response.code() == 404)
+                    Toast.makeText(
+                        this@StudentSignUp,
+                        "Email already exists or missing field",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
-                }
+            }
 
 
-            })
-        }
+        })
+
     }
 
     private fun uniSignIn(service: UniclubApi) {
@@ -502,6 +489,7 @@ class StudentSignUp : AppCompatActivity(), Validation {
 
 
     }
+
     private fun GooUi() {
         val gooBtn = findViewById<SignInButton>(R.id.btnGoogle)
         gooBtn.setOnClickListener {
@@ -523,6 +511,7 @@ class StudentSignUp : AppCompatActivity(), Validation {
 
         }
     }
+
     private fun google() {
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -549,7 +538,11 @@ class StudentSignUp : AppCompatActivity(), Validation {
         PrefsManager.setPicture(this@StudentSignUp, account.photoUrl.toString())
     }
 
-
+    fun DatePicker.getDate(): Date {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, dayOfMonth)
+        return calendar.time
+    }
 
 
 }

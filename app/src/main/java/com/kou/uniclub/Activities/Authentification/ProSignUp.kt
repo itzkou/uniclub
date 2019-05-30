@@ -49,7 +49,12 @@ class ProSignUp : AppCompatActivity(), Validation {
     private lateinit var password: String
     private lateinit var adress: String
     private lateinit var passwordC: String
-    private var image: MultipartBody.Part? = null
+    private var image = MultipartBody.Part.createFormData(
+        "attachment",
+        "",
+        RequestBody.create(MediaType.parse("text/plain"), "")
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pro_sign_up)
@@ -69,7 +74,7 @@ class ProSignUp : AppCompatActivity(), Validation {
 
         formFill()
         btnSignup.setOnClickListener {
-            uniSignUP(fName, lName,null, mail, password, passwordC, adress, image)
+            uniSignUP(fName, lName, null, mail, password, passwordC, adress, image)
         }
 
     }
@@ -190,7 +195,7 @@ class ProSignUp : AppCompatActivity(), Validation {
                         password = "123social"
                         passwordC = "123social"
 
-                        uniSignUP(fn, ln, "null", email, "123facebook", "123facebook", "unknown", null)
+                        uniSignUP(fn, ln, "null", email, "123facebook", "123facebook", "unknown", image)
                         //TODO("response caching")
                         PrefsManager.setPicture(this@ProSignUp, pic)
 

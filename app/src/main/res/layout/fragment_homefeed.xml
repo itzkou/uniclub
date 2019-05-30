@@ -50,17 +50,17 @@
                         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                 >
 
-                    <ImageView android:layout_width="18dp" android:layout_height="23dp"
+                    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
                                android:src="@drawable/ic_notifs"
                                android:id="@+id/editProfile"
                                app:layout_constraintEnd_toStartOf="@id/imProfile" android:layout_marginEnd="24dp"
                                android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
                                android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
 
-                    <ImageView android:layout_width="30dp"
-                               android:layout_height="30dp"
+                    <ImageView android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
                                android:id="@+id/imProfile"
-                               android:src="@drawable/ic_profilp"
+                               android:src="@drawable/ic_settings"
                                app:layout_constraintEnd_toEndOf="parent"
                                android:layout_marginEnd="12dp"
                                android:layout_marginBottom="8dp"

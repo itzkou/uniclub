@@ -63,11 +63,7 @@ class HomeFeed : Fragment() {
 
 
 
-        if (token != null) {
-            getUser(imProfile)
 
-
-        }
 
         rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
 
@@ -128,7 +124,7 @@ class HomeFeed : Fragment() {
                         activity!!,
                         "No upcoming events",
                         com.kou.uniclub.R.drawable.ic_error_outline_white_24dp,
-                        com.kou.uniclub.R.color.movento,
+                        com.kou.uniclub.R.color.black,
                         Toasty.LENGTH_SHORT,
                         true,
                         true

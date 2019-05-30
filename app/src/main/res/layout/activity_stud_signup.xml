@@ -102,20 +102,32 @@
                 app:layout_constraintTop_toBottomOf="@+id/edPasswordC"
                 app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
 
-        />
+                android:layout_marginTop="84dp"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/btnSignup" app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:text="Or continue with" android:id="@+id/textView" android:layout_marginTop="36dp"/>
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                   android:src="@drawable/ic_stripe"
+                   app:layout_constraintStart_toEndOf="@id/textView"
+                   app:layout_constraintTop_toTopOf="@+id/textView"
+                   app:layout_constraintBottom_toBottomOf="@+id/textView" android:layout_marginStart="9dp"/>
 
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                   android:src="@drawable/ic_stripe"
+                   android:id="@+id/imageView5"
+                   app:layout_constraintTop_toTopOf="@+id/textView" app:layout_constraintEnd_toStartOf="@+id/textView"
+                   android:layout_marginEnd="9dp" app:layout_constraintBottom_toBottomOf="@+id/textView"/>
         <android.support.constraint.ConstraintLayout android:layout_width="wrap_content"
                                                      android:layout_height="wrap_content"
                                                      app:layout_constraintTop_toBottomOf="@id/textView"
                                                      app:layout_constraintEnd_toEndOf="parent"
                                                      app:layout_constraintStart_toStartOf="parent"
-                                                     android:layout_marginTop="16dp">
+                                                     android:layout_marginTop="19dp"
+                                                     app:layout_constraintBottom_toBottomOf="parent"
+                                                     android:layout_marginBottom="18dp">
             <com.facebook.login.widget.LoginButton
                     xmlns:facebook="http://schemas.android.com/apk/res-auto"
                     facebook:com_facebook_login_text=""
@@ -132,8 +144,8 @@
 
             <com.google.android.gms.common.SignInButton android:layout_width="46dp"
                                                         android:layout_height="46dp"
-                                                        android:background="@drawable/ic_gmail"
                                                         android:id="@+id/btnGoogle"
+                                                        app:buttonSize="icon_only"
                                                         app:layout_constraintTop_toTopOf="parent"
                                                         app:layout_constraintBottom_toBottomOf="parent"
                                                         app:layout_constraintStart_toStartOf="parent"
