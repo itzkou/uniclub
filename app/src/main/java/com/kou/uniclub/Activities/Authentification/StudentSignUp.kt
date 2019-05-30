@@ -461,7 +461,7 @@ class StudentSignUp : AppCompatActivity(), Validation {
                         password = "123social"
                         passwordC = "123social"
 
-                        uniSignUP(fn, ln, "null", email, "123facebook", "123facebook", "unknown", null)
+                        uniSignUP(fn, ln, "null", email, "123facebook", "123facebook", "unknown", image)
                         //TODO("response caching")
                         PrefsManager.setPicture(this@StudentSignUp, pic)
 
