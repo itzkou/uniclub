@@ -18,11 +18,12 @@ import retrofit2.http.*
 
 interface UniclubApi {
 
-    companion object Factory {    //retrofit instance  //trick hetheya Apiutils
+    companion object Factory {
+        var imageURL="http://10.54.234.189:8000"
         fun create(): UniclubApi {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://192.168.1.6:8000/api/")//10.0.2.2:8000 emulator //put ipv4 adress//me192.168.1.4//orange 10.54.234.189
+                .baseUrl("http://10.54.234.189:8000/api/")//10.0.2.2:8000 emulator //put ipv4 adress//me192.168.1.4//orange 10.54.234.189
                 .build()
             return retrofit.create(UniclubApi::class.java)
         }

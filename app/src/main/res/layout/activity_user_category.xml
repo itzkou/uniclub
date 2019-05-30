@@ -15,7 +15,7 @@
             android:layout_marginStart="30dp" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="28dp"/>
     <TextView
-            android:text="Welcome, all events start here ? Want you to join your favorite event ? So create an account and you’re all set to go."
+            android:text="Welcome, all events start here ? Do you want to join your favorite event ? So create an account and you’re all set to go."
             android:layout_width="0dp"
             android:textSize="16sp"
             android:fontFamily="@font/raleway_bold"
@@ -42,10 +42,8 @@
                          android:layout_width="0dp"
                          android:layout_height="80dp"
                          android:text="I'm a STUDENT"
-
+                         android:onClick="onRadioButtonClicked"
                          style="@style/RadioButton"
-
-
                          app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
                          app:layout_constraintTop_toTopOf="parent"/>
 
@@ -60,8 +58,7 @@
                          app:layout_constraintTop_toBottomOf="@id/rdStudent"
                          android:text="I'm a PROFESSIONAL"
                          style="@style/RadioButton"
-
-
+                         android:onClick="onRadioButtonClicked"
                          app:layout_constraintEnd_toEndOf="parent"
                          app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="10dp"/>
 

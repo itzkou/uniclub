@@ -13,12 +13,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.kou.uniclub.Activities.EditProfile
 import com.kou.uniclub.Adapter.VpProfileAdapter
 import com.kou.uniclub.Fragments.UserBehaviour.Clubs
 import com.kou.uniclub.Fragments.UserBehaviour.Events
 import com.kou.uniclub.Model.User.UserX
 import com.kou.uniclub.Network.UniclubApi
+import com.kou.uniclub.Network.UniclubApi.Factory.imageURL
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
 import retrofit2.Call
@@ -28,6 +30,8 @@ import retrofit2.Response
 //TODO("Photos taken with camera not loading ")
 
 class Profile : Fragment() {
+    private var picture: String? = null
+
     companion object {
 
         fun newInstance(): Profile = Profile()
@@ -48,9 +52,7 @@ class Profile : Fragment() {
             startActivity(Intent(activity!!, EditProfile::class.java))
         }
         if (token != null) {
-            Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).into(
-                imProfile
-            )
+           getUser(imProfile)
         }
 
 
@@ -76,19 +78,28 @@ class Profile : Fragment() {
 
     }
 
-    private fun userInfos(token: String) {
+    private fun getUser(im: ImageView) {
         val service = UniclubApi.create()
-        service.getUser("Bearer $token").enqueue(object : Callback<UserX> {
+        service.getUser("Bearer " + PrefsManager.geToken(activity!!)).enqueue(object : Callback<UserX> {
             override fun onFailure(call: Call<UserX>, t: Throwable) {
             }
 
             override fun onResponse(call: Call<UserX>, response: Response<UserX>) {
-                if (response.isSuccessful && isAdded) {
-                    val u = response.body()!!
 
-                    Toast.makeText(activity!!, u.firstName, Toast.LENGTH_SHORT).show()
-
-
+                if (response.isSuccessful) {
+                    picture = response.body()!!.image
+                    if (picture.equals("/storage/Student/Profile_Picture/"))
+                        Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).apply(RequestOptions.circleCropTransform())
+                            .into(
+                                im
+                            )
+                    else
+                        Glide.with(activity!!).load(imageURL + response.body()!!.image).apply(
+                            RequestOptions.circleCropTransform()
+                        )
+                            .into(
+                                im
+                            )
                 }
             }
 

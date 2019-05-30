@@ -1,10 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".Activities.Authentification.ProSignUp">
 
-</android.support.constraint.ConstraintLayout>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".Activities.Authentification.StudentSignUp">
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+    >
+
+
+        <ImageView android:id="@+id/back"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/back"
+                   app:layout_constraintStart_toStartOf="parent"
+                   android:layout_marginStart="20dp" android:layout_marginTop="32dp"
+                   app:layout_constraintTop_toTopOf="parent"/>
+
+        <EditText android:id="@+id/edUsername"
+                  style="@style/signUPField"
+                  android:hint="FullName*"
+                  android:drawableStart="@drawable/ic_profile_signup"
+                  android:inputType="textPersonName"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintStart_toStartOf="parent"
+                  android:layout_marginTop="91dp" app:layout_constraintTop_toTopOf="parent"/>
+
+        <EditText android:id="@+id/edEmail"
+                  style="@style/signUPField"
+                  android:drawableStart="@drawable/ic_mail_signup"
+                  android:hint="Email address*"
+                  android:inputType="text"
+                  app:layout_constraintTop_toBottomOf="@+id/edUsername"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <EditText android:id="@+id/edUniv"
+                  style="@style/signUPField"
+                  android:inputType="text"
+                  android:layout_height="wrap_content"
+                  android:hint="Company"
+                  android:drawableStart="@drawable/ic_company_signup"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toBottomOf="@id/edEmail"/>
+
+
+        <EditText android:id="@+id/edPassword"
+                  style="@style/signUPField"
+                  android:drawableStart="@drawable/ic_pass_signup"
+                  android:hint="Password*"
+                  android:inputType="textPassword"
+                  app:layout_constraintTop_toBottomOf="@+id/edUniv"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <EditText android:id="@+id/edPasswordC"
+                  style="@style/signUPField"
+                  android:drawableStart="@drawable/ic_pass_signup"
+                  android:hint="Confirm Password*"
+                  android:inputType="textPassword"
+                  app:layout_constraintTop_toBottomOf="@id/edPassword" app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <Button android:id="@+id/btnSignup"
+                style="@style/btnSignUP"
+                app:layout_constraintTop_toBottomOf="@+id/edPasswordC"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+
+                android:layout_marginTop="132dp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/btnSignup" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Or sign up with" android:id="@+id/textView" android:layout_marginTop="36dp"/>
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                   android:src="@drawable/ic_stripe"
+                   app:layout_constraintStart_toEndOf="@id/textView"
+                   app:layout_constraintTop_toTopOf="@+id/textView"
+                   app:layout_constraintBottom_toBottomOf="@+id/textView" android:layout_marginStart="9dp"/>
+
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                   android:src="@drawable/ic_stripe"
+                   android:id="@+id/imageView5"
+                   app:layout_constraintTop_toTopOf="@+id/textView" app:layout_constraintEnd_toStartOf="@+id/textView"
+                   android:layout_marginEnd="9dp" app:layout_constraintBottom_toBottomOf="@+id/textView"/>
+        <android.support.constraint.ConstraintLayout android:layout_width="wrap_content"
+                                                     android:layout_height="wrap_content"
+                                                     app:layout_constraintTop_toBottomOf="@id/textView"
+                                                     app:layout_constraintEnd_toEndOf="parent"
+                                                     app:layout_constraintStart_toStartOf="parent"
+                                                     android:layout_marginTop="19dp" android:id="@+id/constraintLayout"
+                                                     app:layout_constraintBottom_toBottomOf="parent"
+                                                     android:layout_marginBottom="18dp">
+            <com.facebook.login.widget.LoginButton
+                    xmlns:facebook="http://schemas.android.com/apk/res-auto"
+                    facebook:com_facebook_login_text=""
+                    facebook:com_facebook_logout_text=""
+                    android:id="@+id/btnFb"
+                    android:background="@drawable/ic_fb"
+                    android:layout_width="46dp"
+                    android:layout_height="0dp"
+                    android:contentDescription=""
+                    android:layout_marginTop="8dp"
+                    facebook:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                    facebook:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="16dp"
+                    facebook:layout_constraintEnd_toEndOf="parent"/>
+
+
+            <com.google.android.gms.common.SignInButton android:layout_width="46dp"
+                                                        android:layout_height="46dp"
+                                                        app:buttonSize="icon_only"
+                                                        android:id="@+id/btnGoogle"
+
+                                                        app:layout_constraintTop_toTopOf="parent"
+                                                        app:layout_constraintBottom_toBottomOf="parent"
+                                                        app:layout_constraintStart_toStartOf="parent"
+                                                        android:layout_marginStart="16dp"
+                                                        android:layout_marginTop="8dp"
+                                                        android:layout_marginBottom="8dp"
+                                                        app:layout_constraintEnd_toStartOf="@+id/btnFb"
+                                                        android:layout_marginEnd="8dp"/>
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+
+
+</ScrollView>

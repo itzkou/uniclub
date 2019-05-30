@@ -1,27 +1,25 @@
 package com.kou.uniclub.Activities.Authentification
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.RadioButton
-import android.widget.Toast
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.activity_user_category.*
 
 class UserCategory : AppCompatActivity() {
-    private var category = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_category)
 
-        onRadioButtonClicked(rdStudent, rdPro)
-        onRadioButtonClicked(rdPro, rdStudent)
+        /*  myClicks(rdStudent, rdPro)
+          myClicks(rdPro, rdStudent)*/
 
 
     }
 
-    fun onRadioButtonClicked(rd: RadioButton, rdi: RadioButton) {
+    fun myClicks(rd: RadioButton, rdi: RadioButton) {
         var c = false
         rd.setOnClickListener {
 
@@ -30,7 +28,8 @@ class UserCategory : AppCompatActivity() {
                 rdi.isClickable = false
                 btnConfirm.setOnClickListener {
                     when (rd.id) {
-                        R.id.rdStudent -> {startActivity(Intent(this@UserCategory, StudentSignUp::class.java))
+                        R.id.rdStudent -> {
+                            startActivity(Intent(this@UserCategory, StudentSignUp::class.java))
                             finish()
                         }
                         R.id.rdPro -> {
@@ -54,7 +53,35 @@ class UserCategory : AppCompatActivity() {
         }
 
 
+    }
 
+    fun onRadioButtonClicked(view: View) {
+        if (view is RadioButton) {
 
+            val checked = view.isChecked
+
+            btnConfirm.setOnClickListener {
+                when (view.getId()) {
+                    R.id.rdStudent -> {
+                      if (checked)
+                            startActivity(Intent(this@UserCategory, StudentSignUp::class.java))
+
+                    }
+                    R.id.rdPro ->
+                        if (checked) {
+                            startActivity(Intent(this@UserCategory, ProSignUp::class.java))
+                        }
+                }
+            }
+
+            when (view.getId()) {
+                R.id.rdStudent -> {rdStudent.setButtonDrawable(R.drawable.tick_orange)
+                rdPro.setButtonDrawable(R.drawable.ellipse)}
+                R.id.rdPro ->{rdPro.setButtonDrawable(R.drawable.tick_orange)
+                    rdStudent.setButtonDrawable(R.drawable.ellipse)}
+
+            }
+
+        }
     }
 }

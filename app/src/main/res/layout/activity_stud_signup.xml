@@ -68,7 +68,6 @@
         <EditText android:id="@+id/edUniv"
                   style="@style/signUPField"
                   android:inputType="text"
-                  android:layout_width="292dp"
                   android:layout_height="wrap_content"
                   android:hint="University*"
                   android:drawableStart="@drawable/ic_univ_signup"

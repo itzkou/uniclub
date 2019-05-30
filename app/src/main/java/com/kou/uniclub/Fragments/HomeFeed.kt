@@ -28,6 +28,7 @@ import com.kou.uniclub.Extensions.OnBottomReachedListener
 import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Model.User.UserX
 import com.kou.uniclub.Network.UniclubApi
+import com.kou.uniclub.Network.UniclubApi.Factory.imageURL
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
 import es.dmoral.toasty.Toasty
@@ -41,7 +42,6 @@ class HomeFeed : Fragment() {
     private var page: String? = null
     private var picture: String? = null
     var myPrefs = ArrayList<String?>()
-    var wizGate=false
 
 
     companion object {
@@ -395,7 +395,7 @@ class HomeFeed : Fragment() {
                                 im
                             )
                     else
-                        Glide.with(activity!!).load("http://192.168.1.6:8000" + response.body()!!.image).apply(
+                        Glide.with(activity!!).load(imageURL+ response.body()!!.image).apply(
                             RequestOptions.circleCropTransform()
                         )
                             .into(

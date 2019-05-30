@@ -29,7 +29,8 @@
         <activity android:name=".Activities.Authentification.UserCategory"
         android:exported="true">
         </activity>
-        <activity android:name=".Activities.Authentification.ProSignUp">
+        <activity android:name=".Activities.Authentification.ProSignUp"
+                  android:exported="true">
         </activity>
         <activity android:name=".Activities.ClubsFiltered">
         </activity>

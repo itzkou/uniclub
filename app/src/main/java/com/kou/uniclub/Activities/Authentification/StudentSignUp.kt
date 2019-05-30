@@ -17,6 +17,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.DatePicker
+import android.widget.TextView
 import android.widget.Toast
 import com.facebook.*
 import com.facebook.login.LoginResult
@@ -24,6 +25,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.kou.uniclub.Activities.Home
@@ -33,7 +35,7 @@ import com.kou.uniclub.Model.Auth.SignUpResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
-import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.android.synthetic.main.activity_stud_signup.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -84,8 +86,8 @@ class StudentSignUp : AppCompatActivity(), Validation {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.kou.uniclub.R.layout.activity_sign_up)
-        //TODO("add university fiels and company field for both pro and student")
+        setContentView(com.kou.uniclub.R.layout.activity_stud_signup)
+        //TODO("instead of adress change it to university")
         adress = "deprectaed"
         btnFb.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
 
@@ -136,9 +138,7 @@ class StudentSignUp : AppCompatActivity(), Validation {
             facebook()
         }
         /******************* with google *****************/
-        btnGoogle.setOnClickListener {
-            google()
-        }
+        GooUi()
     }
 
 
@@ -502,7 +502,27 @@ class StudentSignUp : AppCompatActivity(), Validation {
 
 
     }
+    private fun GooUi() {
+        val gooBtn = findViewById<SignInButton>(R.id.btnGoogle)
+        gooBtn.setOnClickListener {
+            google()
 
+        }
+
+        for (i in 0 until gooBtn.childCount) {
+            val v = btnGoogle.getChildAt(i)
+            if (v is TextView) {
+                val tv = v
+                tv.setBackgroundResource(R.drawable.ic_gmail)
+                val params = tv.layoutParams
+                params.width = 64
+                params.height = 64
+                tv.layoutParams = params
+                return
+            }
+
+        }
+    }
     private fun google() {
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
