@@ -22,58 +22,139 @@
                    android:layout_marginStart="20dp" android:layout_marginTop="32dp"
                    app:layout_constraintTop_toTopOf="parent"/>
 
-        <EditText android:id="@+id/edUsername"
-                  style="@style/edSignUP"
-                  android:hint="FullName*"
-                  android:drawableStart="@drawable/ic_profile_signup"
-                  android:inputType="textPersonName"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-                  android:layout_marginTop="91dp" app:layout_constraintTop_toTopOf="parent"/>
+        <!--  Username !-->
+        <android.support.design.widget.TextInputLayout
+                android:id="@+id/ilUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintEnabled="false"
+                app:hintAnimationEnabled="false"
+                android:theme="@style/TextInputLayoutAppearance"
+                android:layout_marginStart="26dp"
+                android:layout_marginEnd="26dp"
+                android:layout_marginTop="50dp"
+                app:layout_constraintTop_toBottomOf="@id/back" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+        >
+            <android.support.design.widget.TextInputEditText android:id="@+id/edUsername"
+                                                             android:layout_width="match_parent"
+                                                             android:layout_height="wrap_content"
+                                                             android:textColor="@color/black"
+                                                             android:drawableStart="@drawable/ic_profile_signup"
+                                                             android:inputType="textPersonName"
+                                                             android:hint="Name*   Surname*"
+                                                             android:drawablePadding="8dp"
+            />
+        </android.support.design.widget.TextInputLayout>
+        <!--  Email !-->
+        <android.support.design.widget.TextInputLayout android:id="@+id/ilEmail"
 
-        <EditText android:id="@+id/edEmail"
-                  style="@style/edSignUP"
-                  android:drawableStart="@drawable/ic_mail_signup"
-                  android:hint="Email address*"
-                  android:inputType="text"
-                  app:layout_constraintTop_toBottomOf="@+id/edUsername"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-        />
+                                                       android:layout_width="match_parent"
+                                                       android:layout_height="wrap_content"
+                                                       app:hintEnabled="false"
+                                                       app:hintAnimationEnabled="false"
+                                                       android:theme="@style/TextInputLayoutAppearance"
+                                                       android:layout_marginStart="26dp"
+                                                       android:layout_marginEnd="26dp"
+                                                       android:layout_marginTop="16dp"
+                                                       app:layout_constraintTop_toBottomOf="@+id/ilUsername"
+                                                       app:layout_constraintEnd_toEndOf="parent"
+                                                       app:layout_constraintStart_toStartOf="parent">
+            <android.support.design.widget.TextInputEditText android:id="@+id/edEmail"
+                                                             android:layout_width="match_parent"
+                                                             android:layout_height="wrap_content"
+                                                             android:drawableStart="@drawable/ic_mail_signup"
+                                                             android:textColor="@color/black"
+                                                             android:hint="Email address*"
+                                                             android:inputType="textEmailAddress"
+                                                             android:drawablePadding="8dp"
 
-        <EditText android:id="@+id/edUniv"
-                  style="@style/edSignUP"
-                  android:inputType="text"
-                  android:layout_height="wrap_content"
-                  android:hint="Company"
-                  android:drawableStart="@drawable/ic_company_signup"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toBottomOf="@id/edEmail"/>
+            />
+        </android.support.design.widget.TextInputLayout>
+
+        <!--  Company !-->
+        <android.support.design.widget.TextInputLayout android:id="@+id/ilComp"
+                                                       android:layout_width="match_parent"
+                                                       android:layout_height="wrap_content"
+                                                       app:hintEnabled="false"
+                                                       app:hintAnimationEnabled="false"
+                                                       android:theme="@style/TextInputLayoutAppearance"
+                                                       android:layout_marginStart="26dp"
+                                                       android:layout_marginEnd="26dp"
+                                                       android:layout_marginTop="16dp"
+
+                                                       app:layout_constraintTop_toBottomOf="@+id/ilEmail"
+                                                       app:layout_constraintEnd_toEndOf="parent"
+                                                       app:layout_constraintStart_toStartOf="parent"
+        >
+            <android.support.design.widget.TextInputEditText
+                    android:textColor="@color/black"
+
+                                                             android:inputType="text"
+                                                             android:layout_width="match_parent"
+                                                             android:layout_height="wrap_content"
+                                                             android:hint="Company*"
+                                                             android:drawablePadding="8dp"
+                                                             android:drawableStart="@drawable/ic_company_signup"
+            />
+        </android.support.design.widget.TextInputLayout>
+        <!--  Password !-->
+        <android.support.design.widget.TextInputLayout android:id="@+id/ilPass" android:layout_width="match_parent"
+                                                       android:layout_height="wrap_content"
+                                                       app:hintEnabled="false"
+                                                       app:hintAnimationEnabled="false"
+                                                       app:passwordToggleDrawable="@drawable/asl_password_visibility"
+                                                       app:passwordToggleEnabled="true"
+                                                       app:passwordToggleTint="?colorControlNormal"
+                                                       android:theme="@style/TextInputLayoutAppearance"
+                                                       android:layout_marginStart="26dp"
+                                                       android:layout_marginEnd="26dp"
+                                                       android:layout_marginTop="16dp"
+                                                       app:layout_constraintTop_toBottomOf="@+id/ilComp"
+                                                       app:layout_constraintEnd_toEndOf="parent"
+                                                       app:layout_constraintStart_toStartOf="parent">
+            <android.support.design.widget.TextInputEditText android:id="@+id/edPassword"
+                                                             android:layout_width="match_parent"
+                                                             android:layout_height="wrap_content"
+                                                             android:drawablePadding="8dp"
+                                                             android:drawableStart="@drawable/ic_pass_signup"
+                                                             android:hint="Password*"
+                                                             android:inputType="textPassword"
+                                                             android:textColor="@color/black"
 
 
-        <EditText android:id="@+id/edPassword"
-                  style="@style/edSignUP"
-                  android:drawableStart="@drawable/ic_pass_signup"
-                  android:hint="Password*"
-                  android:inputType="textPassword"
-                  app:layout_constraintTop_toBottomOf="@+id/edUniv"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-        />
+            />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout android:id="@+id/ilPassC" android:layout_width="match_parent"
+                                                       android:layout_height="wrap_content"
+                                                       app:hintEnabled="false"
+                                                       app:hintAnimationEnabled="false"
+                                                       app:passwordToggleDrawable="@drawable/asl_password_visibility"
+                                                       app:passwordToggleEnabled="true"
+                                                       app:passwordToggleTint="?colorControlNormal"
+                                                       android:theme="@style/TextInputLayoutAppearance"
+                                                       android:layout_marginStart="26dp"
+                                                       android:layout_marginEnd="26dp"
+                                                       android:layout_marginTop="16dp"
+                                                       app:layout_constraintTop_toBottomOf="@id/ilPass"
+                                                       app:layout_constraintEnd_toEndOf="parent"
+                                                       app:layout_constraintStart_toStartOf="parent">
+            <android.support.design.widget.TextInputEditText android:id="@+id/edPasswordC"
+                                                             android:drawableStart="@drawable/ic_pass_signup"
+                                                             android:layout_width="match_parent"
+                                                             android:layout_height="wrap_content"
+                                                             android:drawablePadding="8dp"
+                                                             android:hint="Confirm Password*"
+                                                             android:inputType="textPassword"
+                                                             android:textColor="@color/black"
 
-        <EditText android:id="@+id/edPasswordC"
-                  style="@style/edSignUP"
-                  android:drawableStart="@drawable/ic_pass_signup"
-                  android:hint="Confirm Password*"
-                  android:inputType="textPassword"
-                  app:layout_constraintTop_toBottomOf="@id/edPassword" app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-        />
+
+            />
+        </android.support.design.widget.TextInputLayout>
 
         <Button android:id="@+id/btnSignup"
                 style="@style/btnSignUP"
-                app:layout_constraintTop_toBottomOf="@+id/edPasswordC"
+                app:layout_constraintTop_toBottomOf="@+id/ilPassC"
                 app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
 
                 android:layout_marginTop="132dp"/>
@@ -91,7 +172,6 @@
 
         <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
                    android:src="@drawable/ic_stripe"
-                   android:id="@+id/imageView5"
                    app:layout_constraintTop_toTopOf="@+id/textView" app:layout_constraintEnd_toStartOf="@+id/textView"
                    android:layout_marginEnd="9dp" app:layout_constraintBottom_toBottomOf="@+id/textView"/>
         <android.support.constraint.ConstraintLayout android:layout_width="wrap_content"
@@ -99,7 +179,7 @@
                                                      app:layout_constraintTop_toBottomOf="@id/textView"
                                                      app:layout_constraintEnd_toEndOf="parent"
                                                      app:layout_constraintStart_toStartOf="parent"
-                                                     android:layout_marginTop="19dp" android:id="@+id/constraintLayout"
+                                                     android:layout_marginTop="19dp"
                                                      app:layout_constraintBottom_toBottomOf="parent"
                                                      android:layout_marginBottom="18dp">
             <com.facebook.login.widget.LoginButton

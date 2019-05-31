@@ -1,7 +1,6 @@
 <resources>
     <dimen name="formRL">34dp</dimen>
     <dimen name="formTB">35dp</dimen>
-    <dimen name="formWidth">292dp</dimen>
     <dimen name="formDrawablePadding">6dp</dimen>
     <dimen name="authBtnWidth">212dp</dimen>
     <dimen name="authBtnHeight">50dp</dimen>

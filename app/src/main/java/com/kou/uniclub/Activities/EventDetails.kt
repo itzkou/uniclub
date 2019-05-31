@@ -48,6 +48,7 @@ import java.util.*
 class EventDetails : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private var page: String? = null
+    private var place: String? = null
 //TODO("when user reparticipates I want an eror code different than 200")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,10 +85,7 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap?) {
         mMap = googleMap!!
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Uniclub Marker"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
     }
 
     private fun getDetails() {
@@ -115,12 +113,23 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
                     tvTime.text = "$day , $dayNum $month  $timeline"
                     tvLocation.text = event.location
                     tvEventDesc.text = event.description
+                    /*
+                   val lat = event.datetimepicker.substring(0,event.datetimepicker.indexOf(",") ).toDouble()
+                   val  lon = event.datetimepicker.substring(event.datetimepicker.lastIndexOf(",") + 1, event.datetimepicker.length).toDouble()
+                    val myplace = LatLng(lat, lon)
+                    mMap.addMarker(MarkerOptions().position(myplace).title(event.location))
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(myplace))
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myplace, 15f))
+                    //TODO("If u use this u have to fill all DB with radom Lat Lon otherwise crash")
+*/
 
-                    moreEvents(event.clubId, rvMoreE,event.id)
+
+                    moreEvents(event.clubId, rvMoreE, event.id)
 
 
                     readMo.setOnClickListener {
                         tvEventDesc.maxLines = 200
+                        readMo.visibility = View.INVISIBLE
                     }
                     btnParticipate.setOnClickListener {
                         if (PrefsManager.geToken(this@EventDetails) == null)
@@ -146,22 +155,24 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
 
                 override fun onResponse(call: Call<ParticipateResponse>, response: Response<ParticipateResponse>) {
                     if (response.isSuccessful) {
-                      val snacko=  Snackbar.make(btnParticipate,"Your participation is confirmed",Snackbar.LENGTH_INDEFINITE)
-                            .setAction("CANCEL") {
-                                leave(id)
-                                btnParticipate.animation=AnimationUtils.loadAnimation(this@EventDetails,R.anim.abc_slide_in_bottom)
-                                btnParticipate.visibility=View.VISIBLE                        }
+                        val snacko =
+                            Snackbar.make(btnParticipate, "Your participation is confirmed", Snackbar.LENGTH_INDEFINITE)
+                                .setAction("CANCEL") {
+                                    leave(id)
+                                    btnParticipate.animation =
+                                        AnimationUtils.loadAnimation(this@EventDetails, R.anim.abc_slide_in_bottom)
+                                    btnParticipate.visibility = View.VISIBLE
+                                }
 
                         snacko.config(this@EventDetails)
                         snacko.show()
 
-                        btnParticipate.animation=AnimationUtils.loadAnimation(this@EventDetails,R.anim.btn_participate)
-                        btnParticipate.visibility=View.INVISIBLE
+                        btnParticipate.animation =
+                            AnimationUtils.loadAnimation(this@EventDetails, R.anim.btn_participate)
+                        btnParticipate.visibility = View.INVISIBLE
 
 
                     }
-
-
 
 
                 }
@@ -169,27 +180,26 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
             })
     }
 
-    private fun leave(id: Int){
-        val service=UniclubApi.create()
-        service.leave("Bearer ${PrefsManager.geToken(this@EventDetails)}",id).enqueue(object:Callback<ParticipateResponse>{
-            override fun onFailure(call: Call<ParticipateResponse>, t: Throwable) {
-            }
-
-            override fun onResponse(call: Call<ParticipateResponse>, response: Response<ParticipateResponse>) {
-                if (response.isSuccessful)
-                {
-                    Log.d("Leave",response.body()!!.message)
+    private fun leave(id: Int) {
+        val service = UniclubApi.create()
+        service.leave("Bearer ${PrefsManager.geToken(this@EventDetails)}", id)
+            .enqueue(object : Callback<ParticipateResponse> {
+                override fun onFailure(call: Call<ParticipateResponse>, t: Throwable) {
                 }
 
+                override fun onResponse(call: Call<ParticipateResponse>, response: Response<ParticipateResponse>) {
+                    if (response.isSuccessful) {
+                        Log.d("Leave", response.body()!!.message)
+                    }
 
 
-            }
+                }
 
-        })
+            })
     }
 
 
-    private fun moreEvents(clubID: Int, rv: RecyclerView,evenID:Int) {
+    private fun moreEvents(clubID: Int, rv: RecyclerView, evenID: Int) {
         val service = UniclubApi.create()
         service.getClubUpcomingE(clubID).enqueue(object : Callback<EventListResponse> {
             override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
@@ -200,9 +210,9 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
 
                     page = response.body()!!.pagination.nextPageUrl
                     val events = response.body()!!.pagination.events
-                    val filtered:List<EventX>
+                    val filtered: List<EventX>
 
-                    filtered=events.filter { it.id!=evenID }
+                    filtered = events.filter { it.id != evenID }
 
                     val adapter = RvHomeFeedAdapter(filtered as java.util.ArrayList<EventX>, this@EventDetails)
                     rv.adapter = adapter
@@ -256,17 +266,18 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
             })
 
     }
-    fun Snackbar.config(context: Context){
+
+    fun Snackbar.config(context: Context) {
         val params = this.view.layoutParams as ViewGroup.MarginLayoutParams
         params.setMargins(12, 24, 12, 12)
         this.view.layoutParams = params
-        this.view.background = ContextCompat.getDrawable(context,R.drawable.bg_snackbar)
+        this.view.background = ContextCompat.getDrawable(context, R.drawable.bg_snackbar)
 
-        this.setActionTextColor(ContextCompat.getColor(context,R.color.orange))
-        val text=this.view.findViewById<TextView>(android.support.design.R.id.snackbar_text)
-        text.setTextColor(ContextCompat.getColor(context,R.color.white))
-        text.maxLines=1
-        text.textSize=12f
+        this.setActionTextColor(ContextCompat.getColor(context, R.color.orange))
+        val text = this.view.findViewById<TextView>(android.support.design.R.id.snackbar_text)
+        text.setTextColor(ContextCompat.getColor(context, R.color.white))
+        text.maxLines = 1
+        text.textSize = 12f
 
         ViewCompat.setElevation(this.view, 6f)
     }

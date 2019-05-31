@@ -60,8 +60,6 @@
                                                              android:drawablePadding="8dp"
             />
         </android.support.design.widget.TextInputLayout>
-
-
         <!--  Email !-->
         <android.support.design.widget.TextInputLayout android:id="@+id/ilEmail"
 
@@ -113,7 +111,7 @@
             />
         </android.support.design.widget.TextInputLayout>
         <!--  Univ !-->
-        <android.support.design.widget.TextInputLayout android:id="@+id/ilUniv"
+        <android.support.design.widget.TextInputLayout android:id="@+id/ilComp"
                                                        android:layout_width="match_parent"
                                                        android:layout_height="wrap_content"
                                                        app:hintEnabled="false"
@@ -127,7 +125,7 @@
                                                        app:layout_constraintEnd_toEndOf="parent"
                                                        app:layout_constraintStart_toStartOf="parent"
         >
-            <android.support.design.widget.TextInputEditText android:id="@+id/edUniv"
+            <android.support.design.widget.TextInputEditText android:id="@+id/edCompany"
                                                              android:textColor="@color/black"
 
                                                              android:inputType="text"
@@ -150,7 +148,7 @@
                                                        android:layout_marginStart="26dp"
                                                        android:layout_marginEnd="26dp"
                                                        android:layout_marginTop="16dp"
-                                                       app:layout_constraintTop_toBottomOf="@+id/ilUniv"
+                                                       app:layout_constraintTop_toBottomOf="@+id/ilComp"
                                                        app:layout_constraintEnd_toEndOf="parent"
                                                        app:layout_constraintStart_toStartOf="parent">
             <android.support.design.widget.TextInputEditText android:id="@+id/edPassword"
@@ -191,7 +189,6 @@
 
             />
         </android.support.design.widget.TextInputLayout>
-
         <Button android:id="@+id/btnSignup"
                 style="@style/btnSignUP"
                 app:layout_constraintTop_toBottomOf="@+id/ilPassC"
@@ -209,10 +206,8 @@
                    app:layout_constraintStart_toEndOf="@id/textView"
                    app:layout_constraintTop_toTopOf="@+id/textView"
                    app:layout_constraintBottom_toBottomOf="@+id/textView" android:layout_marginStart="9dp"/>
-
         <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
                    android:src="@drawable/ic_stripe"
-                   android:id="@+id/imageView5"
                    app:layout_constraintTop_toTopOf="@+id/textView" app:layout_constraintEnd_toStartOf="@+id/textView"
                    android:layout_marginEnd="9dp" app:layout_constraintBottom_toBottomOf="@+id/textView"/>
         <android.support.constraint.ConstraintLayout android:layout_width="wrap_content"

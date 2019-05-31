@@ -3,8 +3,6 @@ package com.kou.uniclub.Activities.Authentification
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
@@ -71,11 +69,9 @@ class ProSignUp : AppCompatActivity(), Validation {
 
         GooUi()
         /******* uniclub signup *****/
+        formFill()
 
-        //formFill()
-        btnSignup.setOnClickListener {
-            uniSignUP(fName, lName, null, mail, password, passwordC, adress, image)
-        }
+
 
     }
 
@@ -112,68 +108,86 @@ class ProSignUp : AppCompatActivity(), Validation {
         }
     }
 
-    /*private fun formFill() {
+    private fun formFill() {
+        /******* Form Validation *******/
+        btnSignup.isEnabled = false
+
+        var okUsName = false
+        var okEmail = false
+        var okPass = false
+        var okPassc = false
+
 
 
         edUsername.afterTextChanged {
-            edUsername.error = if (it.isValidName()) null
-            else "Enter a valid name and surname"
+            if (it.isValidName()) {
+
+                ilUsername.error = null
+                ilUsername.isErrorEnabled = false
+                okUsName = true
+                fName = it.substring(0, it.indexOf(" ") + 1)
+                lName = it.substring(it.lastIndexOf(" ") + 1, it.length)
+
+            } else {
+                ilUsername.isErrorEnabled = true
+                ilUsername.error = "Enter a valid name and surname"
+                okUsName = false
+            }
+            btnSignup.isEnabled = okUsName && okEmail && okPass && okPassc
         }
         edEmail.afterTextChanged {
-            edEmail.error = if (it.isValidEmail()) null
-            else "Enter a valid email"
+            if (it.isValidEmail()) {
+                ilEmail.error = null
+                ilEmail.isErrorEnabled = false
+                okEmail = true
+                mail = it
+
+            } else {
+                ilEmail.isErrorEnabled = true
+                ilEmail.error = "Enter a valid email"
+                okEmail = false
+
+            }
+            btnSignup.isEnabled = okUsName && okEmail && okPass && okPassc
         }
         edPassword.afterTextChanged {
-            edPassword.error = if (it.isValidPassword()) null
-            else "Password is 6 digits long and includes at least one numeric digit."
+            if (it.isValidPassword()) {
+
+                ilPass.error = null
+                ilPass.isErrorEnabled = false
+                okPass = true
+                password = it
+            } else {
+                ilPass.isErrorEnabled = true
+                ilPass.error = "Password is a 6-digit long and must include numbers"
+                okPass = false
+            }
+            btnSignup.isEnabled = okUsName && okEmail && okPass && okPassc
         }
         edPasswordC.afterTextChanged {
-            edPasswordC.error = if (it == edPassword.text.toString()) null
-            else "Passwords don't match"
+            if (it == edPassword.text.toString()) {
+                ilPassC.error = null
+                ilPassC.isErrorEnabled = false
+                okPassc = true
+                passwordC = it
+            } else {
+                ilPassC.isErrorEnabled = true
+                ilPassC.error = "Passwords don't match"
+                okPassc = false
+            }
+            btnSignup.isEnabled = okUsName && okEmail && okPass && okPassc
         }
 
 
-        /******* Form Validation *******/
-        btnSignup.isEnabled = false
-        val validator = object : TextWatcher {
 
+        btnSignup.setOnClickListener {
 
-            override fun afterTextChanged(s: Editable?) {
+            uniSignUP(fName, lName, null, mail, password, passwordC, adress, image)
 
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val u = edUsername.text.toString().isValidName()
-                val e = edEmail.text.toString().isValidEmail()
-                val p = edPassword.text.toString().isValidPassword()
-                val pc = edPassword.text.toString() == edPasswordC.text.toString()
-                btnSignup.isEnabled = u && e && p && pc
-
-                if (btnSignup.isEnabled) {
-                    val name = edUsername.text.toString()
-
-                    fName = name.substring(0, name.indexOf(" ") + 1)
-                    lName = name.substring(name.lastIndexOf(" ") + 1, name.length)
-                    mail = edEmail.text.toString()
-                    password = edPassword.text.toString()
-                    passwordC = edPasswordC.text.toString()
-
-
-                }
-
-
-            }
         }
-        edUsername.addTextChangedListener(validator)
-        edPassword.addTextChangedListener(validator)
-        edUsername.addTextChangedListener(validator)
-        edPasswordC.addTextChangedListener(validator)
 
 
-    }*/
+    }
 
     private fun facebook() {
         btnFb.setReadPermissions(Arrays.asList("email", "public_profile"))

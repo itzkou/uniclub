@@ -40,11 +40,11 @@
                       app:layout_constraintEnd_toEndOf="parent"
                       android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
                       android:layout_marginStart="8dp" android:layout_marginTop="8dp"
-                      app:layout_constraintTop_toBottomOf="@+id/edUniv"/>
+                      app:layout_constraintTop_toBottomOf="@+id/edCompany"/>
 
 
             <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:id="@+id/edUniv"
+                      android:id="@+id/edCompany"
                       android:drawableStart="@drawable/ic_university"
                       android:drawablePadding="16dp"
                         android:inputType="text"
