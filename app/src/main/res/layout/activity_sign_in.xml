@@ -14,7 +14,7 @@
                app:layout_constraintTop_toTopOf="parent" android:contentDescription="TODO"/>
 
     <EditText android:id="@+id/edEmail"
-              style="@style/signUPField"
+              style="@style/edSignUP"
               android:drawableStart="@drawable/ic_mailg"
               android:hint="Email Address*"
               android:layout_marginTop="72dp"
@@ -24,7 +24,7 @@
               android:autofillHints=""/>
 
     <EditText android:id="@+id/edPassword"
-              style="@style/signUPField"
+              style="@style/edSignUP"
 
               android:drawableStart="@drawable/ic_password"
               android:hint="Password*"

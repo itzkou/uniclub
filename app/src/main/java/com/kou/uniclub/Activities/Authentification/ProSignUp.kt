@@ -72,7 +72,7 @@ class ProSignUp : AppCompatActivity(), Validation {
         GooUi()
         /******* uniclub signup *****/
 
-        formFill()
+        //formFill()
         btnSignup.setOnClickListener {
             uniSignUP(fName, lName, null, mail, password, passwordC, adress, image)
         }
@@ -112,7 +112,7 @@ class ProSignUp : AppCompatActivity(), Validation {
         }
     }
 
-    private fun formFill() {
+    /*private fun formFill() {
 
 
         edUsername.afterTextChanged {
@@ -173,7 +173,7 @@ class ProSignUp : AppCompatActivity(), Validation {
         edPasswordC.addTextChangedListener(validator)
 
 
-    }
+    }*/
 
     private fun facebook() {
         btnFb.setReadPermissions(Arrays.asList("email", "public_profile"))

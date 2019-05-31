@@ -1,5 +1,7 @@
 package com.kou.uniclub.Extensions
 
+import android.support.design.widget.TextInputEditText
+import android.support.design.widget.TextInputLayout
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
@@ -25,7 +27,7 @@ interface Validation {
 
 
 
-    fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit){
+    fun TextInputEditText.afterTextChanged(afterTextChanged: (String) -> Unit){
         this.addTextChangedListener(object: TextWatcher {
 
             override fun afterTextChanged(s: Editable?){
@@ -44,6 +46,7 @@ interface Validation {
         })
 
     }
+
 
 
 

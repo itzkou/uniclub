@@ -25,18 +25,16 @@
         <item name="android:windowIsFloating">false</item>
     </style>
 
-    <style name="signUPField">
-        <item name="android:paddingStart">9dp</item>
-        <item name="android:background">@drawable/ed_signup</item>
+    <style name="edSignUP">
         <item name="android:textSize">14sp</item>
         <item name="android:textColorHint">@color/graySignUp</item>
-        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_marginStart">@dimen/formRL</item>
         <item name="android:layout_marginEnd">@dimen/formRL</item>
         <item name="android:layout_marginBottom">@dimen/formTB</item>
         <item name="android:layout_marginTop">@dimen/formTB</item>
         <item name="android:drawablePadding">@dimen/formDrawablePadding</item>
-        <item name="android:layout_height">26dp</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 
@@ -147,5 +145,21 @@
         <item name="android:layout_marginStart">20dp</item>
     </style>
 
-
+    <style name="HintText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/graySignUp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="TextInputLayoutAppearance" parent="Theme.AppCompat">
+        <item name="hintTextAppearance">@style/HintText</item>
+        <item name="errorTextAppearance">@style/errorAppearance</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/graySignUp</item>
+        <item name="colorControlNormal">@color/graySignUp</item>
+        <item name="colorControlActivated">@color/orange</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="errorAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#CD3C14</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>
