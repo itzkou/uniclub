@@ -10,11 +10,13 @@ import com.kou.uniclub.R
 
 abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
-    private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_gmail)
-    private val intrinsicWidth = deleteIcon?.intrinsicWidth
-    private val intrinsicHeight = deleteIcon?.intrinsicHeight
-    private val background = ColorDrawable()
-    private val backgroundColor = Color.parseColor("#f44336")
+    private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_trash_can)
+    private val iconWidth = deleteIcon?.intrinsicWidth
+    private val iconHeight = deleteIcon?.intrinsicHeight
+    private val deleteText = ContextCompat.getDrawable(context, R.drawable.delete)
+    private val textWidth = deleteText?.intrinsicWidth
+    private val textHeight = deleteText?.intrinsicHeight
+
     private val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
@@ -40,26 +42,53 @@ abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleC
         val isCanceled = dX == 0f && !isCurrentlyActive
 
         if (isCanceled) {
-            clearCanvas(c, itemView.right + dX, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat())
+            clearCanvas(
+                c,
+                itemView.right + dX,
+                itemView.top.toFloat(),
+                itemView.right.toFloat(),
+                itemView.bottom.toFloat()
+            )
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             return
         }
 
-        // Draw the red delete background
-        background.color = backgroundColor
-        background.setBounds(itemView.right + dX.toInt(), itemView.top, itemView.right, itemView.bottom)
-        background.draw(c)
+
+        val paint = Paint()
+        paint.color = Color.BLACK
+        paint.style = Paint.Style.FILL
+        c.drawRoundRect(
+            itemView.right + dX.toInt().toFloat(),
+            itemView.top.toFloat(),
+            itemView.right.toFloat(),
+            itemView.bottom.toFloat(),
+            15f,
+            15f,
+            paint
+        )
 
         // Calculate position of delete icon
-        val deleteIconTop = itemView.top + (itemHeight - intrinsicHeight!!) / 2
-        val deleteIconMargin = (itemHeight - intrinsicHeight) / 2
-        val deleteIconLeft = itemView.right - deleteIconMargin - intrinsicWidth!!
+        val deleteIconMargin = (itemHeight - iconHeight!!) / 2
+        val deleteIconTop = itemView.top + deleteIconMargin
+        val deleteIconBottom = deleteIconTop + iconHeight
+        val deleteIconLeft = itemView.right - deleteIconMargin - iconWidth!!
         val deleteIconRight = itemView.right - deleteIconMargin
-        val deleteIconBottom = deleteIconTop + intrinsicHeight
+
+        // Calculate position of delete text
+        val tMargin = (itemHeight - textHeight!!) / 2
+        val txTop = itemView.top + tMargin
+        val txBottom = txTop + textHeight
+        val txLeft = itemView.right - tMargin - textWidth!! - 48
+        val txRight = itemView.right - tMargin - 48
 
         // Draw the delete icon
         deleteIcon!!.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom)
         deleteIcon.draw(c)
+
+        //Draw the text
+        deleteText!!.setBounds(txLeft, txTop, txRight, txBottom)
+        deleteText.draw(c)
+
 
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }

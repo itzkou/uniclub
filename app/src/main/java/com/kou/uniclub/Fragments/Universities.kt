@@ -20,6 +20,7 @@ import com.kou.uniclub.Model.University.University
 import com.kou.uniclub.Model.University.UniversityResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
+import com.kou.uniclub.SharedUtils.PrefsManager
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_clubs.view.*
 import retrofit2.Call
@@ -42,6 +43,7 @@ class Universities : Fragment() {
         val rvClubs = v.findViewById<RecyclerView>(com.kou.uniclub.R.id.rvClubs)
         val searchUniv = v.findViewById<AutoCompleteTextView>(com.kou.uniclub.R.id.searchFilter)
         val imNotifs = v.findViewById<ImageView>(R.id.imNotifs)
+        val token=PrefsManager.geToken(activity!!)
         rvClubs.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
 
         /***** List of all clubs ****/
@@ -50,6 +52,7 @@ class Universities : Fragment() {
         /***** Feeding Autocomplete ****/
         feedAutocomplete(searchUniv)
         /********** Notifications  ****************/
+        if (token!=null)
         imNotifs.setOnClickListener {
             startActivity(Intent(activity!!, Notifications::class.java))
         }

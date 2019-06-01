@@ -77,16 +77,17 @@ class HomeFeed : Fragment() {
             else
                 BuilderAuth.showDialog(activity!!)
         }
+        /********** Notifications  ****************/
+        if (token!=null)
+        imNotifs.setOnClickListener {
+            startActivity(Intent(activity!!, Notifications::class.java))
+        }
         /********Floating button ******/
         fab.setOnClickListener {
             showDialog(activity!!)
 
+        }
 
-        }
-        /********** Notifications  ****************/
-        imNotifs.setOnClickListener {
-            startActivity(Intent(activity!!, Notifications::class.java))
-        }
         /*** Filters ****/
         filters(spTiming, spRegion, rvHome)
         allDates(rvHome)
