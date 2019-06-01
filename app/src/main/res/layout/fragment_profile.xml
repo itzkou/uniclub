@@ -9,6 +9,8 @@
             android:layout_height="255dp"
             android:fitsSystemWindows="true"
             android:clickable="false"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Light"
+            android:backgroundTint="@color/white"
     >
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -24,42 +26,58 @@
             <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
-                    android:id="@+id/imSettings"
+                    android:id="@+id/imProfile"
                     app:layout_collapseMode="parallax"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
-            />
+            /><ProgressBar android:id="@+id/progressp"
+                           android:layout_width="50dp"
+                           android:layout_height="50dp"
+                           android:layout_gravity="center"
+                           app:layout_collapseMode="parallax"
+                           android:indeterminate="true"
+                           android:fitsSystemWindows="true"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           app:layout_constraintTop_toTopOf="parent"
+                           app:layout_constraintBottom_toBottomOf="parent"/>
             <android.support.constraint.ConstraintLayout
                     android:background="@drawable/orange_bar"
                     android:layout_width="match_parent"
                     android:layout_height="105dp" app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent">
                 <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                           android:src="@drawable/ic_modify"
+                           android:src="@drawable/ic_edit_profile"
                            android:layout_marginTop="16dp"
                            app:layout_constraintTop_toTopOf="parent"
                            app:layout_constraintEnd_toEndOf="parent"
                            android:layout_marginEnd="24dp" android:id="@+id/imNotifs"/>
                 <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                           android:src="@drawable/back"
+                           android:src="@drawable/ic_settings"
                            android:layout_marginTop="16dp"
                            app:layout_constraintTop_toTopOf="parent"
                            app:layout_constraintStart_toStartOf="parent"
-                           android:layout_marginStart="24dp" android:id="@+id/back"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Profile"
+                           android:layout_marginStart="24dp" android:id="@+id/imSettings"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:fontFamily="@font/raleway_bold"
                           app:layout_constraintEnd_toEndOf="parent"
                           android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
                           android:layout_marginStart="8dp" android:layout_marginTop="16dp"
-                          app:layout_constraintTop_toTopOf="parent"/>
+                          app:layout_constraintTop_toTopOf="parent" android:id="@+id/tvMyname"
+                          android:textSize="20sp"/>
                 <android.support.design.widget.TabLayout android:id="@+id/tabLikes"
+                                                         style="@style/NavigationTab"
+
                                                          android:layout_width="match_parent"
                                                          android:layout_height="wrap_content"
                                                          app:layout_constraintStart_toStartOf="parent"
                                                          app:layout_constraintEnd_toEndOf="parent"
                                                          app:layout_constraintBottom_toBottomOf="parent"
-                                                         android:layout_marginEnd="64dp"
-                                                         android:layout_marginStart="64dp"/>
-                />
+                                                         android:layout_marginEnd="61dp"
+                                                         android:layout_marginStart="61dp"
+                                                         android:layout_marginTop="16dp"
+                                                         app:layout_constraintTop_toBottomOf="@+id/tvMyname"
+                                                         android:layout_marginBottom="6dp"/>
 
             </android.support.constraint.ConstraintLayout>
 

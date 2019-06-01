@@ -83,8 +83,8 @@ interface UniclubApi {
     @DELETE("auth/unfollow/{id}")
     fun unfollow(@Header("Authorization") authToken: String, @Path("id") clubID: Int): Call<FollowResponse>
 
-    @GET("auth/getUserParticipatedEvents")
-    fun getFollows(@Header("Authorization") authToken: String): Call<EventListResponse>
+    @GET("auth/getUserFollowedClubs")
+    fun getFollows(@Header("Authorization") authToken: String): Call<ClubsResponse>
 
 
     /************************* Events ********************/

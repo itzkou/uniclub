@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.kou.uniclub.Activities.ClubDetails
+import com.kou.uniclub.Activities.ClubDetails.Companion.club_id
 import com.kou.uniclub.Model.Club.ClubX
 import com.kou.uniclub.R
 import com.squareup.picasso.Picasso
@@ -14,9 +15,7 @@ import kotlinx.android.synthetic.main.row_club.view.*
 
 class RvClubsAdapter(val clubs: ArrayList<ClubX>, val context: Context) :
     RecyclerView.Adapter<RvClubsAdapter.Holder>() {
-    companion object {
-        var club_id: Int? = null
-    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): Holder {
         return Holder(LayoutInflater.from(parent.context).inflate(R.layout.row_club, parent, false))
@@ -39,9 +38,9 @@ class RvClubsAdapter(val clubs: ArrayList<ClubX>, val context: Context) :
     }
 
     class Holder(view: View) : RecyclerView.ViewHolder(view) {
-        val title = view.club_title!!
+        val title = view.tvClub!!
         val root = view.rootClub!!
-        val image = view.cardPic!!
+        val image = view.imClub!!
     }
 
     fun addData(listItems: java.util.ArrayList<ClubX>) {

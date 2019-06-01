@@ -28,7 +28,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+//TODO(" When size =1 && I unparticipated :( buggy bug")
 class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
     RecyclerView.Adapter<RvHomeFeedAdapter.Holder>() {
     private var onBottomReachedListener: OnBottomReachedListener? = null
@@ -182,9 +182,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
             this.events.addAll(listItems)
             notifyItemRangeInserted(size, sizeNew)
         }
-        else{
 
-        }
 
     }
 

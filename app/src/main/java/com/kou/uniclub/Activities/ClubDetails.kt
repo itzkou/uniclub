@@ -3,8 +3,6 @@ package com.kou.uniclub.Activities
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import android.widget.ImageView
-import com.kou.uniclub.Adapter.RvClubsAdapter.Companion.club_id
 import com.kou.uniclub.Adapter.VpClubDetailsAdapter
 import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Fragments.ClubTimeline.Passed
@@ -23,8 +21,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ClubDetails : AppCompatActivity() {
-    private var token: String? = null
-
+    companion object {
+        var club_id: Int? = null
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_club_details)
@@ -93,7 +92,7 @@ class ClubDetails : AppCompatActivity() {
                     val clubx = response.body()!!.club
                     tvClubTitle.text = clubx.name
                     tvClubDesc.text = clubx.description
-                    Picasso.get().load(clubx.photo).into(imClub)
+                    Picasso.get().load(clubx.photo).into(pic)
 
 
                 }

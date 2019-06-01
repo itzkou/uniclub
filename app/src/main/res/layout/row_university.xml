@@ -7,10 +7,9 @@
         android:id="@+id/cardUniv"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         app:cardCornerRadius="16dp"
-        app:cardElevation="1dp">
+        app:cardElevation="0dp"
+>
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
