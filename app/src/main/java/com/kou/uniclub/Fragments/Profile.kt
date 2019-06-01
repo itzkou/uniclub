@@ -65,6 +65,8 @@ class Profile : Fragment() {
 
         if (token!=null)
             getUser(imProfile,progress,myName)
+        else
+            progress.visibility=View.INVISIBLE
 
 
 
