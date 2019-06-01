@@ -1,6 +1,7 @@
 package com.kou.uniclub.Fragments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.FloatingActionButton
@@ -21,6 +22,7 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.jaredrummler.materialspinner.MaterialSpinner
+import com.kou.uniclub.Activities.Notifications
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Extensions.BuilderSettings
@@ -54,10 +56,11 @@ class HomeFeed : Fragment() {
         val v = inflater.inflate(com.kou.uniclub.R.layout.fragment_homefeed, container, false)
         val rvHome = v.findViewById<RecyclerView>(com.kou.uniclub.R.id.rvHome)
         val fab = v.findViewById<FloatingActionButton>(com.kou.uniclub.R.id.fabSearch)
-        val imProfile = v.findViewById<ImageView>(com.kou.uniclub.R.id.imProfile)
+        val imSettings = v.findViewById<ImageView>(com.kou.uniclub.R.id.imSettings)
         val spRegion = v.findViewById<MaterialSpinner>(com.kou.uniclub.R.id.spRegion)
         val spTiming = v.findViewById<MaterialSpinner>(com.kou.uniclub.R.id.spTiming)
         val token = PrefsManager.geToken(activity!!)
+        val imNotifs = v.findViewById<ImageView>(R.id.imNotifs)
 
 
 
@@ -68,7 +71,7 @@ class HomeFeed : Fragment() {
         rvHome.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
 
         /********Settings ******/
-        imProfile.setOnClickListener {
+        imSettings.setOnClickListener {
             if (token != null)
                 BuilderSettings.showSettings(activity!!)
             else
@@ -79,11 +82,12 @@ class HomeFeed : Fragment() {
             showDialog(activity!!)
 
 
-
         }
-        /***Buttons****/
-
-
+        /********** Notifications  ****************/
+        imNotifs.setOnClickListener {
+            startActivity(Intent(activity!!, Notifications::class.java))
+        }
+        /*** Filters ****/
         filters(spTiming, spRegion, rvHome)
         allDates(rvHome)
 
@@ -124,9 +128,9 @@ class HomeFeed : Fragment() {
                         activity!!,
                         "No upcoming events",
                         com.kou.uniclub.R.drawable.ic_error_outline_white_24dp,
-                        com.kou.uniclub.R.color.black,
+                        com.kou.uniclub.R.color.toasty,
                         Toasty.LENGTH_SHORT,
-                        true,
+                        false,
                         true
                     ).show()
             }
@@ -197,7 +201,7 @@ class HomeFeed : Fragment() {
                         activity!!,
                         "No events today",
                         com.kou.uniclub.R.drawable.ic_error_outline_white_24dp,
-                        com.kou.uniclub.R.color.movento,
+                        com.kou.uniclub.R.color.toasty,
                         Toasty.LENGTH_SHORT,
                         true,
                         true
@@ -238,7 +242,7 @@ class HomeFeed : Fragment() {
                         com.kou.uniclub.R.drawable.ic_error_outline_white_24dp,
                         com.kou.uniclub.R.color.black,
                         Toasty.LENGTH_SHORT,
-                        false,
+                        true,
                         true
                     ).show()
             }
@@ -273,9 +277,9 @@ class HomeFeed : Fragment() {
                         activity!!,
                         "No events in $city",
                         com.kou.uniclub.R.drawable.ic_error_outline_white_24dp,
-                        com.kou.uniclub.R.color.black,
+                        com.kou.uniclub.R.color.toasty,
                         Toasty.LENGTH_SHORT,
-                        false,
+                        true,
                         true
                     ).show()
 
@@ -302,7 +306,7 @@ class HomeFeed : Fragment() {
                                     activity!!,
                                     "Load more",
                                     com.kou.uniclub.R.drawable.ic_error_outline_white_24dp,
-                                    com.kou.uniclub.R.color.black,
+                                    com.kou.uniclub.R.color.toasty,
                                     Toasty.LENGTH_SHORT,
                                     false,
                                     true
@@ -391,7 +395,7 @@ class HomeFeed : Fragment() {
                                 im
                             )
                     else
-                        Glide.with(activity!!).load(imageURL+ response.body()!!.image).apply(
+                        Glide.with(activity!!).load(imageURL + response.body()!!.image).apply(
                             RequestOptions.circleCropTransform()
                         )
                             .into(
@@ -462,22 +466,14 @@ class HomeFeed : Fragment() {
         cards(gami, context, myPrefs)
 
 
-
-
-
-
-
-
-
-            //TODO("Web service categories filter")
+        //TODO("Web service categories filter")
         builder.setPositiveButton("CONFIRM") { dialog, which ->
             for (i in 0 until myPrefs.size)
                 Log.d("myPrefs", myPrefs[i])
             dialog?.dismiss()
 
             if (!PrefsManager.getWizPrefs(activity!!)!!)
-            showWiz(context)
-
+                showWiz(context)
 
 
         }
@@ -495,19 +491,19 @@ class HomeFeed : Fragment() {
 
     }
 
-    private fun showWiz(context:Context){
+    private fun showWiz(context: Context) {
 
-            val wizView = LayoutInflater.from(context).inflate(com.kou.uniclub.R.layout.builder_wiz_prefs, null)
-            val wizBuilder = AlertDialog.Builder(context, R.style.TransparentAlertDialog)
-            wizBuilder.setView(wizView)
-            val wizDialog = wizBuilder.create()
-            wizDialog.show()
-            Handler().postDelayed({
-                wizDialog.dismiss()
+        val wizView = LayoutInflater.from(context).inflate(com.kou.uniclub.R.layout.builder_wiz_prefs, null)
+        val wizBuilder = AlertDialog.Builder(context, R.style.TransparentAlertDialog)
+        wizBuilder.setView(wizView)
+        val wizDialog = wizBuilder.create()
+        wizDialog.show()
+        Handler().postDelayed({
+            wizDialog.dismiss()
 
-            }, 5000)
+        }, 5000)
 
-            PrefsManager.setWizPrefs(context,true)
+        PrefsManager.setWizPrefs(context, true)
 
 
     }

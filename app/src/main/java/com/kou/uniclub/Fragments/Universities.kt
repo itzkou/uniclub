@@ -1,5 +1,6 @@
 package com.kou.uniclub.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -8,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
+import android.widget.ImageView
 import android.widget.LinearLayout
+import com.kou.uniclub.Activities.Notifications
 import com.kou.uniclub.Adapter.RvClubsAdapter
 import com.kou.uniclub.Adapter.SearchUnivAdapter
 import com.kou.uniclub.Model.Club.ClubsByUnivResponse
@@ -16,7 +19,9 @@ import com.kou.uniclub.Model.Club.ClubsResponse
 import com.kou.uniclub.Model.University.University
 import com.kou.uniclub.Model.University.UniversityResponse
 import com.kou.uniclub.Network.UniclubApi
+import com.kou.uniclub.R
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.fragment_clubs.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,31 +41,18 @@ class Universities : Fragment() {
         val v = inflater.inflate(com.kou.uniclub.R.layout.fragment_clubs, container, false)
         val rvClubs = v.findViewById<RecyclerView>(com.kou.uniclub.R.id.rvClubs)
         val searchUniv = v.findViewById<AutoCompleteTextView>(com.kou.uniclub.R.id.searchFilter)
+        val imNotifs = v.findViewById<ImageView>(R.id.imNotifs)
         rvClubs.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
 
         /***** List of all clubs ****/
         getClubs(rvClubs)
 
-        /*** Show dialog fragment for univ filter*****/
-
-        val service = UniclubApi.create()
-        service.getUniversities().enqueue(object : Callback<UniversityResponse> {
-            override fun onFailure(call: Call<UniversityResponse>, t: Throwable) {
-            }
-
-            override fun onResponse(call: Call<UniversityResponse>, response: Response<UniversityResponse>) {
-                if (response.isSuccessful && isAdded) {
-                    val adapter = SearchUnivAdapter(activity!!, response.body()!!.pagination.universities)
-                    searchUniv.setAdapter(adapter)
-                    searchUniv.setOnItemClickListener { parent, view, position, id ->
-                        val item = parent.getItemAtPosition(position) as University
-                        filterClubs(adapter = adapterClubs!!, univID = item.id)
-                    }
-                }
-            }
-
-        })
-        /***** get UNIV ID***/
+        /***** Feeding Autocomplete ****/
+        feedAutocomplete(searchUniv)
+        /********** Notifications  ****************/
+        imNotifs.setOnClickListener {
+            startActivity(Intent(activity!!, Notifications::class.java))
+        }
 
 
         return v
@@ -150,7 +142,23 @@ class Universities : Fragment() {
     }
 
 
-/* val dialog = BuilderUnivs()
-        val ft = childFragmentManager.beginTransaction()
-        dialog.show(ft, BuilderUnivs.TAG)*/
+    private fun feedAutocomplete(searchUniv: AutoCompleteTextView) {
+        val service = UniclubApi.create()
+        service.getUniversities().enqueue(object : Callback<UniversityResponse> {
+            override fun onFailure(call: Call<UniversityResponse>, t: Throwable) {
+            }
+
+            override fun onResponse(call: Call<UniversityResponse>, response: Response<UniversityResponse>) {
+                if (response.isSuccessful && isAdded) {
+                    val adapter = SearchUnivAdapter(activity!!, response.body()!!.pagination.universities)
+                    searchUniv.setAdapter(adapter)
+                    searchUniv.setOnItemClickListener { parent, view, position, id ->
+                        val item = parent.getItemAtPosition(position) as University
+                        filterClubs(adapter = adapterClubs!!, univID = item.id)
+                    }
+                }
+            }
+
+        })
+    }
 }

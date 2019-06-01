@@ -113,15 +113,20 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
                     tvTime.text = "$day , $dayNum $month  $timeline"
                     tvLocation.text = event.location
                     tvEventDesc.text = event.description
-                    /*
-                   val lat = event.datetimepicker.substring(0,event.datetimepicker.indexOf(",") ).toDouble()
-                   val  lon = event.datetimepicker.substring(event.datetimepicker.lastIndexOf(",") + 1, event.datetimepicker.length).toDouble()
-                    val myplace = LatLng(lat, lon)
-                    mMap.addMarker(MarkerOptions().position(myplace).title(event.location))
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(myplace))
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myplace, 15f))
-                    //TODO("If u use this u have to fill all DB with radom Lat Lon otherwise crash")
-*/
+
+                    if(event.datetimepicker!=null) {
+                        val lat = event.datetimepicker.substring(0, event.datetimepicker.indexOf(",")).toDouble()
+                        val lon = event.datetimepicker.substring(
+                            event.datetimepicker.lastIndexOf(",") + 1,
+                            event.datetimepicker.length
+                        ).toDouble()
+                        val myplace = LatLng(lat, lon)
+                        mMap.addMarker(MarkerOptions().position(myplace).title(event.location))
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(myplace))
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myplace, 15f))
+                        //TODO("If u use this u have to fill all DB with radom Lat Lon otherwise crash")
+                    }
+
 
 
                     moreEvents(event.clubId, rvMoreE, event.id)

@@ -19,18 +19,17 @@ import retrofit2.http.*
 interface UniclubApi {
 
     companion object Factory {
-        var imageURL="http://192.168.1.3:8000"
+        var imageURL="http://192.168.1.2:8000"
         fun create(): UniclubApi {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://192.168.1.3:8000/api/")//10.0.2.2:8000 emulator //put ipv4 adress//me192.168.1.4//orange 10.54.234.189
+                .baseUrl("http://192.168.1.2:8000/api/")//10.0.2.2:8000 emulator //put ipv4 adress//me192.168.1.4//orange 10.54.234.189
                 .build()
             return retrofit.create(UniclubApi::class.java)
         }
     }
 
     /************************* User ********************/
-
     @Multipart
     @POST("auth/signup")
     fun signUP(
@@ -132,7 +131,6 @@ interface UniclubApi {
     /************************* University ********************/
     @GET("University/ShowByName/{name}")
     fun getUniversity(@Path("name") name: String): Call<UniversityNameResponse>
-
     /************************* Pagination ********************/
     @GET
     fun paginateEvents(@Url next_page_url: String): Call<EventListResponse>
@@ -145,6 +143,4 @@ interface UniclubApi {
 
     @GET
     fun paginateToken(@Url next_page_url: String, @Header("Authorization") authToken: String): Call<EventListResponse>
-
-
 }

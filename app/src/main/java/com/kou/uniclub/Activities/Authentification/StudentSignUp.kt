@@ -12,8 +12,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.text.Editable
-import android.text.TextWatcher
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
@@ -99,7 +97,7 @@ class StudentSignUp : AppCompatActivity(), Validation {
 
 
         /******************* camera  *****************/
-        imProfile.setOnClickListener {
+        imSettings.setOnClickListener {
             if (checkPermis())
                 selectImage()
         }
@@ -160,7 +158,7 @@ class StudentSignUp : AppCompatActivity(), Validation {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
-            imProfile.setImageURI(Uri.parse(mCurrentPhotoPath))
+            imSettings.setImageURI(Uri.parse(mCurrentPhotoPath))
             chosenFile = File(mCurrentPhotoPath)
             //multipart stuff
             val requestFile = RequestBody.create(MediaType.parse("image/*"), chosenFile)
@@ -169,7 +167,7 @@ class StudentSignUp : AppCompatActivity(), Validation {
 
         } else if (requestCode == SELECT_FILE && resultCode == RESULT_OK) {
 
-            imProfile.setImageURI(data!!.data)
+            imSettings.setImageURI(data!!.data)
             chosenUri = data.data!!
             val filePath = arrayOf(MediaStore.Images.Media.DATA)
             val c = contentResolver.query(chosenUri!!, filePath, null, null, null)

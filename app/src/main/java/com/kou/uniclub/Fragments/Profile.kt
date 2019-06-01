@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.kou.uniclub.Activities.EditProfile
@@ -41,19 +40,17 @@ class Profile : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_profile, container, false)
         val vpProfile = v.findViewById<ViewPager>(R.id.vpProfile)
-        val imProfile = v.findViewById<ImageView>(R.id.imProfile)
+        val imSettings = v.findViewById<ImageView>(R.id.imSettings)
         val tabLikes = v.findViewById<TabLayout>(R.id.tabLikes)
         val token = PrefsManager.geToken(activity!!)
-        val edit = v.findViewById<ImageView>(R.id.editProfile)
+        val edit = v.findViewById<ImageView>(R.id.imNotifs)
         val nested = v.findViewById<NestedScrollView>(R.id.nestedVprofile)
         nested.isFillViewport = true
         setupViewPager(vpProfile, tabLikes)
         edit.setOnClickListener {
             startActivity(Intent(activity!!, EditProfile::class.java))
         }
-        if (token != null) {
-           getUser(imProfile)
-        }
+
 
 
 

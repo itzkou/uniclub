@@ -24,7 +24,7 @@
             <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
-                    android:id="@+id/imProfile"
+                    android:id="@+id/imSettings"
                     app:layout_collapseMode="parallax"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
@@ -39,7 +39,7 @@
                            android:layout_marginTop="16dp"
                            app:layout_constraintTop_toTopOf="parent"
                            app:layout_constraintEnd_toEndOf="parent"
-                           android:layout_marginEnd="24dp" android:id="@+id/editProfile"/>
+                           android:layout_marginEnd="24dp" android:id="@+id/imNotifs"/>
                 <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
                            android:src="@drawable/back"
                            android:layout_marginTop="16dp"

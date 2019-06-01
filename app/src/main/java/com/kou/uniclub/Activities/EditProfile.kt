@@ -43,7 +43,7 @@ class EditProfile : AppCompatActivity() {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
 
-            imProfile.setImageURI(Uri.parse(mCurrentPhotoPath))
+            imSettings.setImageURI(Uri.parse(mCurrentPhotoPath))
             chosenFile=File(mCurrentPhotoPath)
             //multipart stuff
             val requestFile = RequestBody.create(MediaType.parse("image/*"),chosenFile)
@@ -51,7 +51,7 @@ class EditProfile : AppCompatActivity() {
 
 
         } else if (requestCode == SELECT_FILE && resultCode == RESULT_OK) {
-           imProfile.setImageURI(data!!.data)
+           imSettings.setImageURI(data!!.data)
             chosenUri=data.data!!
             val filePath = arrayOf(MediaStore.Images.Media.DATA)
             val c = contentResolver.query(chosenUri, filePath, null, null, null)

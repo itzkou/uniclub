@@ -1,6 +1,7 @@
 package com.kou.uniclub.Fragments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.AppBarLayout
@@ -15,8 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import com.kou.uniclub.Activities.Notifications
 import com.kou.uniclub.Adapter.RvCalendarAdapter
 import com.kou.uniclub.Adapter.RvMyEventsAdapter
 import com.kou.uniclub.Extensions.BuilderAuth
@@ -33,6 +33,7 @@ import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import es.dmoral.toasty.Toasty
 import jp.wasabeef.blurry.Blurry
+import kotlinx.android.synthetic.main.fragment_calendar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,14 +51,16 @@ class Calendar : Fragment() {
     private lateinit var rvMyevents: RecyclerView
     private var page: String? = null
 
-        //TODO("RecyclerView not addding all data only first page is added")
+    //TODO("RecyclerView not addding all data only first page is added")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_calendar, container, false)
         val rvCalendar = v.findViewById<RecyclerView>(R.id.rvCalendar)
         val miniCal = v.findViewById<ConstraintLayout>(R.id.miniCal)
         val appBar = v.findViewById<AppBarLayout>(R.id.appBar)
-        val imProfile = v.findViewById<ImageView>(R.id.imProfile)
+        val imSettings = v.findViewById<ImageView>(R.id.imSettings)
+        val eventPH = v.findViewById<ConstraintLayout>(R.id.eventPH)
         val token = PrefsManager.geToken(activity!!)
+        val imNotifs = v.findViewById<ImageView>(R.id.imNotifs)
 
 
         rvMyevents = v.findViewById(R.id.rvMyEvents)
@@ -68,54 +71,37 @@ class Calendar : Fragment() {
         mCalendar = dialogView.findViewById(R.id.mCalendar)
 
         val hide = dialogView.findViewById<ImageView>(R.id.hideCal)
-        val builder = AlertDialog.Builder(activity!!,R.style.CalendarDialog)
+        val builder = AlertDialog.Builder(activity!!, R.style.CalendarDialog)
         builder.setView(dialogView)
-        val dialog = builder.create()
+        val dialogMiniCal = builder.create()
 
-        if (token != null)
-            Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).apply(RequestOptions.circleCropTransform()).into(
-                imProfile
-            )
-        imProfile.setOnClickListener {
-            if (token != null)
-                BuilderSettings.showSettings(activity!!)
-            else
-                BuilderAuth.showDialog(activity!!)
-        }
+
         /********** Custom mini calendar  ****************/
         miniCalendar(rvCalendar)
-        /********** My participations  ****************/
 
         if (token != null) {
+            /********** My participations  ****************/
+
             myEvents(rvMyevents)
-
+            /********** Settings  ****************/
+            imSettings.setOnClickListener {
+                BuilderSettings.showSettings(activity!!)
+            }
+            /********** MiniCalendar  ****************/
             show.setOnClickListener {
-                dialog.show()
-
-                hide.setOnClickListener { dialog.dismiss() }
-
+                dialogMiniCal.show()
+                hide.setOnClickListener { dialogMiniCal.dismiss() }
             }
-        }
+            /********** Notifications  ****************/
+            imNotifs.setOnClickListener {
+                startActivity(Intent(activity!!,Notifications::class.java))
+            }
+        } else
+            eventPH.visibility = View.VISIBLE
+
         /**********Blurring appBAr****************/
-        var blurred = false
+        blurAppBar(appBar)
 
-        appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { p0, p1 ->
-            val alpha = (p0.totalScrollRange + p1).toFloat() / p0.totalScrollRange
-            if ((alpha == 0f || alpha == 1f)) {
-                Blurry.delete(miniCal as ViewGroup)
-                blurred = false
-            } else if ((alpha > 0 && alpha < 1) && !blurred) {
-                blurred = true
-                Blurry.with(activity!!)
-                    .radius(25)
-                    .sampling(2)
-                    .async()
-                    .animate(250)
-                    .onto(miniCal as ViewGroup)
-
-            }
-
-        })
 
 
 
@@ -145,6 +131,8 @@ class Calendar : Fragment() {
                 override fun onResponse(call: Call<EventListResponse>, response: Response<EventListResponse>) {
                     if (response.isSuccessful && isAdded) {
                         page = response.body()!!.pagination.nextPageUrl
+                        if (response.body()!!.pagination.events.size > 0)
+                            eventPH.visibility = View.INVISIBLE
                         val adapter = RvMyEventsAdapter(response.body()!!.pagination.events, activity!!)
                         rv.adapter = adapter
                         decoration(response.body()!!.pagination.events, activity!!, mCalendar)
@@ -164,7 +152,6 @@ class Calendar : Fragment() {
 
             })
     }
-
 
     private fun miniCalendar(recyclerView: RecyclerView) {
         val calendar = java.util.Calendar.getInstance()
@@ -250,5 +237,26 @@ class Calendar : Fragment() {
 
     }
 
+    private fun blurAppBar(appBar: AppBarLayout) {
+        var blurred = false
+
+        appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { p0, p1 ->
+            val alpha = (p0.totalScrollRange + p1).toFloat() / p0.totalScrollRange
+            if ((alpha == 0f || alpha == 1f)) {
+                Blurry.delete(miniCal as ViewGroup)
+                blurred = false
+            } else if ((alpha > 0 && alpha < 1) && !blurred) {
+                blurred = true
+                Blurry.with(activity!!)
+                    .radius(25)
+                    .sampling(2)
+                    .async()
+                    .animate(250)
+                    .onto(miniCal as ViewGroup)
+
+            }
+
+        })
+    }
 
 }

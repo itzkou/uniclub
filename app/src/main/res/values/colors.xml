@@ -12,6 +12,7 @@
     <color name="dots">#666666</color>
     <color name="grayConstraint">#FAFAFA</color>
     <color name="transBlack">#CF000000</color>
+    <color name="toasty">#707070</color>
 
 
 </resources>

@@ -22,7 +22,7 @@
                    android:layout_marginStart="20dp" android:layout_marginTop="32dp"
                    app:layout_constraintTop_toTopOf="parent"/>
 
-        <com.mikhaellopez.circularimageview.CircularImageView android:id="@+id/imProfile"
+        <com.mikhaellopez.circularimageview.CircularImageView android:id="@+id/imSettings"
                                                               android:layout_width="82dp"
                                                               android:layout_height="82dp"
                                                               android:src="@drawable/ic_picupload"
@@ -33,9 +33,9 @@
 
         <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
                    android:src="@drawable/ic_plus"
-                   app:layout_constraintTop_toTopOf="@+id/imProfile"
-                   app:layout_constraintBottom_toBottomOf="@+id/imProfile"
-                   app:layout_constraintEnd_toEndOf="@+id/imProfile" app:layout_constraintVertical_bias="1.0"/>
+                   app:layout_constraintTop_toTopOf="@+id/imSettings"
+                   app:layout_constraintBottom_toBottomOf="@+id/imSettings"
+                   app:layout_constraintEnd_toEndOf="@+id/imSettings" app:layout_constraintVertical_bias="1.0"/>
         <!--  Username !-->
         <android.support.design.widget.TextInputLayout
                 android:id="@+id/ilUsername"
@@ -47,7 +47,7 @@
                 android:layout_marginStart="26dp"
                 android:layout_marginEnd="26dp"
                 android:layout_marginTop="50dp"
-                app:layout_constraintTop_toBottomOf="@id/imProfile" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imSettings" app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
         >
             <android.support.design.widget.TextInputEditText android:id="@+id/edUsername"
