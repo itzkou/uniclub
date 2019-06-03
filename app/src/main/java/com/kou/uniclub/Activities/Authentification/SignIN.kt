@@ -1,10 +1,16 @@
 package com.kou.uniclub.Activities.Authentification
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
+import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Gravity
+import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import com.facebook.*
 import com.facebook.login.LoginManager
@@ -39,6 +45,19 @@ class SignIN : AppCompatActivity(), Validation {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
         btnFb.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+        btnSignin.isEnabled = false
+        var mail = false
+        var pass = false
+        edEmail.afterTextChanged {
+            mail = it.isValidEmail()
+            btnSignin.isEnabled = mail && pass
+        }
+        edPassword.afterTextChanged {
+            pass = it.isValidPassword()
+            btnSignin.isEnabled = mail && pass
+
+        }
+
 
         btnSignin.setOnClickListener {
             uniSignIn(edEmail.text.toString(), edPassword.text.toString())
@@ -52,14 +71,15 @@ class SignIN : AppCompatActivity(), Validation {
 
 
         /******************* with google *****************/
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()//request email id
             .build()
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-        btnGoogle.setOnClickListener { google() }
-
+        // Build a GoogleSignInClient with the options specified by gso.
+        GooUi()
         tvSignUp.setOnClickListener {
             startActivity(Intent(this@SignIN, UserCategory::class.java))
         }
@@ -89,7 +109,10 @@ class SignIN : AppCompatActivity(), Validation {
                     startActivity(Intent(this@SignIN, Home::class.java))
                     finish()
                 } else {
-                    Snackbar.make(rootSignIN, "User doesn't exist", Snackbar.LENGTH_LONG).show()
+                    val snacko=Snackbar.make(rootSignIN, "User doesn't exist", Snackbar.LENGTH_LONG)
+                        snacko.config(this@SignIN)
+
+                        snacko.show()
                     //facebook log out
                     LoginManager.getInstance().logOut()
                     //google sign out
@@ -149,18 +172,52 @@ class SignIN : AppCompatActivity(), Validation {
 
     }
 
-    private fun google() {
+    private fun GooUi() {
 
+        btnGoogle.setOnClickListener {
+            val signInIntent = mGoogleSignInClient.signInIntent
+            startActivityForResult(signInIntent, GOOGLE_SIGN)//pass the declared request code here
 
-        val signInIntent = mGoogleSignInClient.signInIntent
-        startActivityForResult(signInIntent, GOOGLE_SIGN)//pass the declared request code here
+        }
+
+        for (i in 0 until btnGoogle.childCount) {
+            val v = btnGoogle.getChildAt(i)
+            if (v is TextView) {
+                val tv = v
+                tv.setBackgroundResource(R.drawable.ic_gmail)
+                val params = tv.layoutParams
+                params.width = 64
+                params.height = 64
+                tv.layoutParams = params
+                return
+            }
+
+        }
     }
+
 
     private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
 
         val account = task.getResult(ApiException::class.java)!!
         uniSignIn(account.email.toString(), "123social")
         PrefsManager.setPicture(this@SignIN, account.photoUrl.toString())
+    }
+
+    fun Snackbar.config(context: Context) {
+        val params = this.view.layoutParams as ViewGroup.MarginLayoutParams
+        params.setMargins(12, 24, 12, 12)
+        this.view.layoutParams = params
+        this.view.background = ContextCompat.getDrawable(context, R.drawable.bg_snackbar)
+
+        this.setActionTextColor(ContextCompat.getColor(context, R.color.orange))
+        val text = this.view.findViewById<TextView>(android.support.design.R.id.snackbar_text)
+        text.setTextColor(ContextCompat.getColor(context, R.color.white))
+
+        text.textAlignment=TextView.TEXT_ALIGNMENT_CENTER
+        text.maxLines = 1
+        text.textSize = 12f
+
+        ViewCompat.setElevation(this.view, 6f)
     }
 
 

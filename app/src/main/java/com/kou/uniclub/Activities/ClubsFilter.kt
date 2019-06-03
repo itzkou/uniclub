@@ -2,18 +2,6 @@ package com.kou.uniclub.Activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.SearchView
-import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import com.kou.uniclub.Adapter.RvUnivsAdapter
-import com.kou.uniclub.Model.University.UniversityResponse
-import com.kou.uniclub.Network.UniclubApi
-import kotlinx.android.synthetic.main.activity_clubs_filter.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class ClubsFilter : AppCompatActivity() {

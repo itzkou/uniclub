@@ -150,6 +150,12 @@ class StudentSignUp : AppCompatActivity(), Validation {
             facebook()
         }
         /******************* with google *****************/
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()//request email id
+            .build()
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         GooUi()
     }
 
@@ -500,13 +506,15 @@ class StudentSignUp : AppCompatActivity(), Validation {
     }
 
     private fun GooUi() {
-        val gooBtn = findViewById<SignInButton>(R.id.btnGoogle)
-        gooBtn.setOnClickListener {
-            google()
+
+        btnGoogle.setOnClickListener {
+
+            val signInIntent = mGoogleSignInClient.signInIntent
+            startActivityForResult(signInIntent, GOOGLE_SIGN)//pass the declared request code here
 
         }
 
-        for (i in 0 until gooBtn.childCount) {
+        for (i in 0 until btnGoogle.childCount) {
             val v = btnGoogle.getChildAt(i)
             if (v is TextView) {
                 val tv = v
@@ -521,18 +529,6 @@ class StudentSignUp : AppCompatActivity(), Validation {
         }
     }
 
-    private fun google() {
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()//request email id
-            .build()
-
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-
-        val signInIntent = mGoogleSignInClient.signInIntent
-        startActivityForResult(signInIntent, GOOGLE_SIGN)//pass the declared request code here
-    }
 
     private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
 

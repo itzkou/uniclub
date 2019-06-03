@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
-import com.kou.uniclub.Model.Event.EventListResponse
+import com.kou.uniclub.Model.Event.Pagination.EventListResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.fragment_passed.*

@@ -1,10 +1,11 @@
-package com.kou.uniclub.Model.Event
+package com.kou.uniclub.Model.Club.Pagination
+
 
 import com.google.gson.annotations.SerializedName
 
-data class EventDetailsResponse(
+data class ClubsResponse(
     @SerializedName("data")
-    val event: EventX,
+    val pagination: Pagination,
     @SerializedName("success")
     val success: Boolean
 )

@@ -1,12 +1,14 @@
-package com.kou.uniclub.Model.Event
+package com.kou.uniclub.Model.Club.Pagination
+
 
 import com.google.gson.annotations.SerializedName
+import com.kou.uniclub.Model.Club.ClubX
 
 data class Pagination(
+    @SerializedName("data")
+    val clubs: ArrayList<ClubX>,
     @SerializedName("current_page")
     val currentPage: Int,
-    @SerializedName("data")
-    val events: ArrayList<EventX>,
     @SerializedName("first_page_url")
     val firstPageUrl: String,
     @SerializedName("from")

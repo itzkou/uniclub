@@ -1,4 +1,4 @@
-package com.kou.uniclub.Model.Event
+package com.kou.uniclub.Model.Event.Pagination
 
 import com.google.gson.annotations.SerializedName
 

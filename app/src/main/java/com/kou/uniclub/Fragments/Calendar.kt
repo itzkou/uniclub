@@ -19,11 +19,10 @@ import android.widget.LinearLayout
 import com.kou.uniclub.Activities.Notifications
 import com.kou.uniclub.Adapter.RvCalendarAdapter
 import com.kou.uniclub.Adapter.RvMyEventsAdapter
-import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Extensions.BuilderSettings
 import com.kou.uniclub.Extensions.OnBottomReachedListener
-import com.kou.uniclub.Model.Event.EventListResponse
 import com.kou.uniclub.Model.Event.EventX
+import com.kou.uniclub.Model.Event.Pagination.EventListResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager

@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
-import com.kou.uniclub.Model.Event.EventListResponse
+import com.kou.uniclub.Model.Event.Pagination.EventListResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.squareup.picasso.Picasso

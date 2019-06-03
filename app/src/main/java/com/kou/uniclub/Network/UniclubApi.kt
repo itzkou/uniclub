@@ -2,13 +2,13 @@ package com.kou.uniclub.Network
 
 import com.kou.uniclub.Model.Auth.LoginResponse
 import com.kou.uniclub.Model.Auth.SignUpResponse
-import com.kou.uniclub.Model.Club.ClubDetailsResponse
-import com.kou.uniclub.Model.Club.ClubsByUnivResponse
-import com.kou.uniclub.Model.Club.ClubsResponse
-import com.kou.uniclub.Model.Event.EventDetailsResponse
-import com.kou.uniclub.Model.Event.EventListResponse
-import com.kou.uniclub.Model.University.UniversityNameResponse
-import com.kou.uniclub.Model.University.UniversityResponse
+import com.kou.uniclub.Model.Club.NoPagination.ClubDetailsResponse
+import com.kou.uniclub.Model.Club.NoPagination.ClubsByUnivResponse
+import com.kou.uniclub.Model.Club.Pagination.ClubsResponse
+import com.kou.uniclub.Model.Event.NoPagination.EventDetailsResponse
+import com.kou.uniclub.Model.Event.Pagination.EventListResponse
+import com.kou.uniclub.Model.University.Pagination.UniversityResponse
+import com.kou.uniclub.Model.University.NoPagination.UniversitiesResponse
 import com.kou.uniclub.Model.User.*
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -19,11 +19,11 @@ import retrofit2.http.*
 interface UniclubApi {
 
     companion object Factory {
-        var imageURL="http://192.168.1.2:8000"
+        var imageURL="http://10.54.234.189:8000"
         fun create(): UniclubApi {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://192.168.1.2:8000/api/")//10.0.2.2:8000 emulator //put ipv4 adress//me192.168.1.4//orange 10.54.234.189
+                .baseUrl("http://10.54.234.189:8000/api/")//10.0.2.2:8000 emulator //put ipv4 adress//me192.168.1.4//orange 10.54.234.189
                 .build()
             return retrofit.create(UniclubApi::class.java)
         }
@@ -89,8 +89,11 @@ interface UniclubApi {
 
     /************************* Events ********************/
 
-    @GET("Event/List")
+    @GET("Event/List/Paginated")
     fun getEventFeed(): Call<EventListResponse>
+
+    @GET
+    fun paginateEvents(@Url next_page_url: String): Call<EventListResponse>
 
     @GET("EventDetails/{id}")
     fun getEvent(@Path("id") eventID: Int): Call<EventDetailsResponse>
@@ -111,15 +114,20 @@ interface UniclubApi {
     /************************* University ********************/
 
     @GET("University/List ")
-    fun getUniversities(): retrofit2.Call<UniversityResponse>
+    fun getUniversities(): retrofit2.Call<UniversitiesResponse>
 
+    @GET
+    fun paginateUnivs(@Url next_page_url: String): Call<UniversityResponse>
     /************************* Clubs ********************/
+    @GET
+    fun paginateClubs(@Url next_page_url: String): Call<ClubsResponse>
+
+    @GET("Club/List/Paginated")
+    fun getClubs(): Call<ClubsResponse>
 
     @GET("Club/showByUniversity/{univ_id}")
     fun getClubsByUniv(@Path("univ_id") id: Int): Call<ClubsByUnivResponse>
 
-    @GET("Clubs")
-    fun getClubs(): Call<ClubsResponse>
 
     @GET("Club/{id}/UpcomingEvents")
     fun getClubUpcomingE(@Path("id") id: Int): Call<EventListResponse>
@@ -128,18 +136,10 @@ interface UniclubApi {
     fun getClub(@Path("id") id: Int): Call<ClubDetailsResponse>
 
 
-    /************************* University ********************/
-    @GET("University/ShowByName/{name}")
-    fun getUniversity(@Path("name") name: String): Call<UniversityNameResponse>
-    /************************* Pagination ********************/
-    @GET
-    fun paginateEvents(@Url next_page_url: String): Call<EventListResponse>
 
-    @GET
-    fun paginateClubs(@Url next_page_url: String): Call<ClubsResponse>
 
-    @GET
-    fun paginateUnivs(@Url next_page_url: String): Call<UniversityResponse>
+
+
 
     @GET
     fun paginateToken(@Url next_page_url: String, @Header("Authorization") authToken: String): Call<EventListResponse>

@@ -27,8 +27,8 @@ import com.kou.uniclub.Adapter.RvHomeFeedAdapter
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter.Companion.event_id
 import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Extensions.OnBottomReachedListener
-import com.kou.uniclub.Model.Event.EventDetailsResponse
-import com.kou.uniclub.Model.Event.EventListResponse
+import com.kou.uniclub.Model.Event.NoPagination.EventDetailsResponse
+import com.kou.uniclub.Model.Event.Pagination.EventListResponse
 import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Model.User.ParticipateResponse
 import com.kou.uniclub.Network.UniclubApi

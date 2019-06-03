@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.widget.LinearLayout
 import com.kou.uniclub.Adapter.RvClubsAdapter
 import com.kou.uniclub.Adapter.RvUnivsAdapter
-import com.kou.uniclub.Model.Club.ClubsByUnivResponse
+import com.kou.uniclub.Model.Club.NoPagination.ClubsByUnivResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.activity_clubs_filtered.*

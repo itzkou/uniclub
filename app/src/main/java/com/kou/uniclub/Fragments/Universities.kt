@@ -14,15 +14,14 @@ import android.widget.LinearLayout
 import com.kou.uniclub.Activities.Notifications
 import com.kou.uniclub.Adapter.RvClubsAdapter
 import com.kou.uniclub.Adapter.SearchUnivAdapter
-import com.kou.uniclub.Model.Club.ClubsByUnivResponse
-import com.kou.uniclub.Model.Club.ClubsResponse
+import com.kou.uniclub.Model.Club.NoPagination.ClubsByUnivResponse
+import com.kou.uniclub.Model.Club.Pagination.ClubsResponse
 import com.kou.uniclub.Model.University.University
-import com.kou.uniclub.Model.University.UniversityResponse
+import com.kou.uniclub.Model.University.NoPagination.UniversitiesResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.fragment_clubs.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,7 +42,7 @@ class Universities : Fragment() {
         val rvClubs = v.findViewById<RecyclerView>(com.kou.uniclub.R.id.rvClubs)
         val searchUniv = v.findViewById<AutoCompleteTextView>(com.kou.uniclub.R.id.searchFilter)
         val imNotifs = v.findViewById<ImageView>(R.id.imNotifs)
-        val token=PrefsManager.geToken(activity!!)
+        val token = PrefsManager.geToken(activity!!)
         rvClubs.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
 
         /***** List of all clubs ****/
@@ -52,10 +51,10 @@ class Universities : Fragment() {
         /***** Feeding Autocomplete ****/
         feedAutocomplete(searchUniv)
         /********** Notifications  ****************/
-        if (token!=null)
-        imNotifs.setOnClickListener {
-            startActivity(Intent(activity!!, Notifications::class.java))
-        }
+        if (token != null)
+            imNotifs.setOnClickListener {
+                startActivity(Intent(activity!!, Notifications::class.java))
+            }
 
 
         return v
@@ -144,20 +143,20 @@ class Universities : Fragment() {
 
     }
 
-
     private fun feedAutocomplete(searchUniv: AutoCompleteTextView) {
         val service = UniclubApi.create()
-        service.getUniversities().enqueue(object : Callback<UniversityResponse> {
-            override fun onFailure(call: Call<UniversityResponse>, t: Throwable) {
+        service.getUniversities().enqueue(object : Callback<UniversitiesResponse> {
+            override fun onFailure(call: Call<UniversitiesResponse>, t: Throwable) {
             }
 
-            override fun onResponse(call: Call<UniversityResponse>, response: Response<UniversityResponse>) {
+            override fun onResponse(call: Call<UniversitiesResponse>, response: Response<UniversitiesResponse>) {
                 if (response.isSuccessful && isAdded) {
-                    val adapter = SearchUnivAdapter(activity!!, response.body()!!.pagination.universities)
+                    val adapter = SearchUnivAdapter(activity!!, response.body()!!.univs)
                     searchUniv.setAdapter(adapter)
                     searchUniv.setOnItemClickListener { parent, view, position, id ->
                         val item = parent.getItemAtPosition(position) as University
                         filterClubs(adapter = adapterClubs!!, univID = item.id)
+
                     }
                 }
             }
