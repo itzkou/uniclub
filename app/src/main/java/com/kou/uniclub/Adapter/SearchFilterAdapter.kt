@@ -6,31 +6,34 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Filter
-import com.kou.uniclub.Model.University.University
+import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.R
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.row_search_filter.view.*
 import kotlinx.android.synthetic.main.row_university.view.*
+import java.util.*
 
-class SearchUnivAdapter(context: Context, univs: ArrayList<University>) : ArrayAdapter<University>(
-    context,
-    com.kou.uniclub.R.layout.row_university, univs
-) {
+class SearchFilterAdapter(context: Context, events: ArrayList<EventX>) :
+    ArrayAdapter<EventX>(context, com.kou.uniclub.R.layout.row_search_filter, events) {
 
-    var filtered = ArrayList<University>()
 
+    var filtered = ArrayList<EventX>()
 
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+
         return convertView ?: createView(position, parent)
     }
 
     private fun createView(position: Int, parent: ViewGroup?): View {
-        val view = LayoutInflater.from(context).inflate(R.layout.row_university, parent, false)
-        view?.tvUniv?.text = filtered[position].name
-        Picasso.get().load(filtered[position].photo).into(view.imUniv)
 
-
+        val view = LayoutInflater.from(context).inflate(R.layout.row_search_filter, parent, false)
+        view?.tiEvent?.text = filtered[position].name
+        if (filtered[position].photo!="")
+        Picasso.get().load(filtered[position].photo).into(view.imEvent)
         return view
+
+
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -43,6 +46,7 @@ class SearchUnivAdapter(context: Context, univs: ArrayList<University>) : ArrayA
     override fun getCount() = filtered.size
 
     override fun getItem(position: Int) = filtered[position]
+
 
     override fun getFilter() = filter
 
@@ -60,21 +64,31 @@ class SearchUnivAdapter(context: Context, univs: ArrayList<University>) : ArrayA
             return results
         }
 
-        private fun autocomplete(input: String): ArrayList<University> {
-            val results = arrayListOf<University>()
+        private fun autocomplete(input: String): ArrayList<EventX> {
+            val results = arrayListOf<EventX>()
+            //TODO("Review this logic")
+            for (event in events) {
 
-            for (specie in univs) {
-                if (specie.name.toLowerCase().contains(input.toLowerCase())) results.add(specie)
+                when {
+                    event.name.toLowerCase().contains(input.toLowerCase()) -> results.add(event)
+                    event.location.toLowerCase().contains(input.toLowerCase())&&input.length>4 -> results.add(event)
+                    event.description.toLowerCase().contains(input.toLowerCase())&&input.length>4 -> results.add(event)
+                }
+
             }
+
+
 
             return results
         }
 
         override fun publishResults(constraint: CharSequence?, results: Filter.FilterResults) {
-            filtered = results.values as ArrayList<University>
+            filtered = results.values as ArrayList<EventX>
             notifyDataSetInvalidated()
         }
 
-        override fun convertResultToString(result: Any) = (result as University).name
+        override fun convertResultToString(result: Any) = (result as EventX).name
     }
+
+
 }

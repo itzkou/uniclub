@@ -10,7 +10,7 @@
                           android:layout_height="35dp"
                           android:focusedByDefault="false"
                           style="@style/Autocomplete"
-                          android:hint="Enter club ,university ,or location..."
+                          android:hint="Enter event ,keyword ,or location..."
                           android:paddingStart="34dp"
                           app:layout_constraintEnd_toEndOf="parent"
                           app:layout_constraintStart_toStartOf="parent"

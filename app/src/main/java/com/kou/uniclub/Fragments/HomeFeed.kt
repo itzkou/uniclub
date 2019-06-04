@@ -15,22 +15,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import android.widget.*
 import com.jaredrummler.materialspinner.MaterialSpinner
+import com.kou.uniclub.Activities.EventDetails
 import com.kou.uniclub.Activities.Notifications
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
+import com.kou.uniclub.Adapter.RvHomeFeedAdapter.Companion.event_id
+import com.kou.uniclub.Adapter.SearchFilterAdapter
 import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Extensions.BuilderSettings
 import com.kou.uniclub.Extensions.OnBottomReachedListener
+import com.kou.uniclub.Model.Event.EventX
+import com.kou.uniclub.Model.Event.NoPagination.EventsResponse
 import com.kou.uniclub.Model.Event.Pagination.EventListResponse
-import com.kou.uniclub.Model.User.UserX
 import com.kou.uniclub.Network.UniclubApi
-import com.kou.uniclub.Network.UniclubApi.Factory.imageURL
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
 import es.dmoral.toasty.Toasty
@@ -42,7 +40,6 @@ import java.io.IOException
 
 class HomeFeed : Fragment() {
     private var page: String? = null
-    private var picture: String? = null
     var myPrefs = ArrayList<String?>()
 
 
@@ -78,13 +75,13 @@ class HomeFeed : Fragment() {
                 BuilderAuth.showDialog(activity!!)
         }
         /********** Notifications  ****************/
-        if (token!=null)
-        imNotifs.setOnClickListener {
-            startActivity(Intent(activity!!, Notifications::class.java))
-        }
+        if (token != null)
+            imNotifs.setOnClickListener {
+                startActivity(Intent(activity!!, Notifications::class.java))
+            }
         /********Floating button ******/
         fab.setOnClickListener {
-            showDialog(activity!!)
+            showSearchFilter(activity!!)
 
         }
 
@@ -145,7 +142,7 @@ class HomeFeed : Fragment() {
     private fun allDates(rv: RecyclerView) {
         // All Dates
         val service = UniclubApi.create()
-        service.getEventFeed().enqueue(object : Callback<EventListResponse> {
+        service.getEventsP().enqueue(object : Callback<EventListResponse> {
             override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
             }
 
@@ -380,33 +377,7 @@ class HomeFeed : Fragment() {
         }
     }
 
-    private fun getUser(im: ImageView) {
-        val service = UniclubApi.create()
-        service.getUser("Bearer " + PrefsManager.geToken(activity!!)).enqueue(object : Callback<UserX> {
-            override fun onFailure(call: Call<UserX>, t: Throwable) {
-            }
 
-            override fun onResponse(call: Call<UserX>, response: Response<UserX>) {
-
-                if (response.isSuccessful) {
-                    picture = response.body()!!.image
-                    if (picture.equals("/storage/Student/Profile_Picture/"))
-                        Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).apply(RequestOptions.circleCropTransform())
-                            .into(
-                                im
-                            )
-                    else
-                        Glide.with(activity!!).load(imageURL + response.body()!!.image).apply(
-                            RequestOptions.circleCropTransform()
-                        )
-                            .into(
-                                im
-                            )
-                }
-            }
-
-        })
-    }
 
     private fun cards(card: CardView, context: Context, arr: ArrayList<String?>) {
 
@@ -438,7 +409,7 @@ class HomeFeed : Fragment() {
     }
 
 
-    fun showDialog(context: Context) {
+    private fun showSearchFilter(context: Context) {
 
         val dialogView = LayoutInflater.from(context).inflate(com.kou.uniclub.R.layout.builder_search_filter, null)
         val busi = dialogView.findViewById<CardView>(R.id.busi)
@@ -450,6 +421,7 @@ class HomeFeed : Fragment() {
         val sporti = dialogView.findViewById<CardView>(R.id.sports)
         val desi = dialogView.findViewById<CardView>(R.id.design)
         val gami = dialogView.findViewById<CardView>(R.id.gaming)
+        val searchFilter = dialogView.findViewById<AutoCompleteTextView>(R.id.searchFilter)
 
 
         val builder = AlertDialog.Builder(context, R.style.FullScreenDialogStyle)
@@ -467,7 +439,7 @@ class HomeFeed : Fragment() {
         cards(gami, context, myPrefs)
 
 
-        //TODO("Web service categories filter")
+
         builder.setPositiveButton("CONFIRM") { dialog, which ->
             for (i in 0 until myPrefs.size)
                 Log.d("myPrefs", myPrefs[i])
@@ -486,10 +458,33 @@ class HomeFeed : Fragment() {
         val dialog = builder.create()
 
 
-
         dialog.show()
+        feedAutocomplete(searchFilter)
+
+    }
+        //TODO("When server performs updates events I want to update data")
+    private fun feedAutocomplete(sv: AutoCompleteTextView) {
+        val service = UniclubApi.create()
+        service.getEvents().enqueue(object : Callback<EventsResponse> {
+            override fun onFailure(call: Call<EventsResponse>, t: Throwable) {
+            }
+
+            override fun onResponse(call: Call<EventsResponse>, response: Response<EventsResponse>) {
+                if (response.isSuccessful && isAdded) {
+                    val adapter = SearchFilterAdapter(activity!!, response.body()!!.events)
+
+                    sv.setAdapter(adapter)
+                    sv.setOnItemClickListener { parent, view, position, id ->
+                        val item = parent.getItemAtPosition(position) as EventX
+                        event_id=item.id
+                        startActivity(Intent(activity!!,EventDetails::class.java))
 
 
+                    }
+                }
+            }
+
+        })
     }
 
     private fun showWiz(context: Context) {

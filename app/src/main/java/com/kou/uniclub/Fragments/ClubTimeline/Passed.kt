@@ -28,7 +28,7 @@ class Passed:Fragment() {
         val v=inflater.inflate(R.layout.fragment_passed,container,false)
 
         val service= UniclubApi.create()
-        service.getEventFeed().enqueue(object: Callback<EventListResponse> {
+        service.getEventsP().enqueue(object: Callback<EventListResponse> {
             override fun onFailure(call: Call<EventListResponse>, t: Throwable) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }

@@ -5,10 +5,11 @@ import com.kou.uniclub.Model.Auth.SignUpResponse
 import com.kou.uniclub.Model.Club.NoPagination.ClubDetailsResponse
 import com.kou.uniclub.Model.Club.NoPagination.ClubsByUnivResponse
 import com.kou.uniclub.Model.Club.Pagination.ClubsResponse
+import com.kou.uniclub.Model.Event.NoPagination.EventsResponse
 import com.kou.uniclub.Model.Event.NoPagination.EventDetailsResponse
 import com.kou.uniclub.Model.Event.Pagination.EventListResponse
-import com.kou.uniclub.Model.University.Pagination.UniversityResponse
 import com.kou.uniclub.Model.University.NoPagination.UniversitiesResponse
+import com.kou.uniclub.Model.University.Pagination.UniversityResponse
 import com.kou.uniclub.Model.User.*
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -19,11 +20,11 @@ import retrofit2.http.*
 interface UniclubApi {
 
     companion object Factory {
-        var imageURL="http://10.54.234.189:8000"
+        var imageURL="http://192.168.1.2:8000"
         fun create(): UniclubApi {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://10.54.234.189:8000/api/")//10.0.2.2:8000 emulator //put ipv4 adress//me192.168.1.4//orange 10.54.234.189
+                .baseUrl("http://192.168.1.2:8000/api/")//10.0.2.2:8000 emulator //put ipv4 adress//me192.168.1.4//orange 10.54.234.189
                 .build()
             return retrofit.create(UniclubApi::class.java)
         }
@@ -89,8 +90,10 @@ interface UniclubApi {
 
     /************************* Events ********************/
 
+    @GET("Event/List")
+    fun getEvents(): Call<EventsResponse>
     @GET("Event/List/Paginated")
-    fun getEventFeed(): Call<EventListResponse>
+    fun getEventsP(): Call<EventListResponse>
 
     @GET
     fun paginateEvents(@Url next_page_url: String): Call<EventListResponse>

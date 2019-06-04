@@ -152,6 +152,7 @@ class Universities : Fragment() {
             override fun onResponse(call: Call<UniversitiesResponse>, response: Response<UniversitiesResponse>) {
                 if (response.isSuccessful && isAdded) {
                     val adapter = SearchUnivAdapter(activity!!, response.body()!!.univs)
+
                     searchUniv.setAdapter(adapter)
                     searchUniv.setOnItemClickListener { parent, view, position, id ->
                         val item = parent.getItemAtPosition(position) as University

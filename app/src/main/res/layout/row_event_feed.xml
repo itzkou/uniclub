@@ -36,7 +36,6 @@
                   android:textSize="20sp"
                   android:textAlignment="viewStart"
                   android:fontFamily="@font/raleway_semi_bold"
-
                   android:layout_width="212dp"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="20dp"

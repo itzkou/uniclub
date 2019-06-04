@@ -1,6 +1,7 @@
-package com.kou.uniclub.Model.University
+package com.kou.uniclub.Model.University.Pagination
 
 import com.google.gson.annotations.SerializedName
+import com.kou.uniclub.Model.University.University
 
 data class Pagination(
     @SerializedName("current_page")
