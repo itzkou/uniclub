@@ -13,47 +13,10 @@ class UserCategory : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_category)
 
-        /*  myClicks(rdStudent, rdPro)
-          myClicks(rdPro, rdStudent)*/
 
 
     }
 
-    fun myClicks(rd: RadioButton, rdi: RadioButton) {
-        var c = false
-        rd.setOnClickListener {
-
-            c = if (!c) {
-                rd.setButtonDrawable(R.drawable.tick_orange)
-                rdi.isClickable = false
-                btnConfirm.setOnClickListener {
-                    when (rd.id) {
-                        R.id.rdStudent -> {
-                            startActivity(Intent(this@UserCategory, StudentSignUp::class.java))
-                            finish()
-                        }
-                        R.id.rdPro -> {
-                            startActivity(Intent(this@UserCategory, ProSignUp::class.java))
-                            finish()
-                        }
-
-                    }
-
-                }
-                true
-
-            } else {
-                rd.setButtonDrawable(R.drawable.ellipse)
-                rdi.isClickable = true
-                false
-
-            }
-
-
-        }
-
-
-    }
 
     fun onRadioButtonClicked(view: View) {
         if (view is RadioButton) {

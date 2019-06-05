@@ -96,7 +96,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
                                     context,
                                     "${event.name} is marked as favourite!",
                                     com.kou.uniclub.R.drawable.ic_check_white_24dp,
-                                    com.kou.uniclub.R.color.black,
+                                    com.kou.uniclub.R.color.toasty,
                                     Toasty.LENGTH_SHORT,
                                     false,
                                     true

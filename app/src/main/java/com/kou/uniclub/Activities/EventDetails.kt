@@ -1,6 +1,7 @@
 package com.kou.uniclub.Activities
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.Snackbar
@@ -9,7 +10,9 @@ import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.SpannableString
 import android.text.format.DateFormat
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -108,8 +111,10 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
                     val dayNum = DateFormat.format("dd", startDate) as String
                     val month = DateFormat.format("MMM", startDate) as String
                     val timeline = DateFormat.format("HH:mm", startDate) as String
+
+
                     evenTitle.text = event.name
-                    tvOrganizer.text = "Par ${event.animatedBy}"
+                    tvOrganizer.text = event.animatedBy
                     tvTime.text = "$day , $dayNum $month  $timeline"
                     tvLocation.text = event.location
                     tvEventDesc.text = event.description
@@ -223,7 +228,7 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
                     rv.adapter = adapter
 
                     //Pagination
-//Pagination
+
                     adapter.setOnBottomReachedListener(object : OnBottomReachedListener {
                         override fun onBottomReached(position: Int) {
                             if (page != null)

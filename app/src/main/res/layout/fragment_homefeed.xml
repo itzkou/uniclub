@@ -89,7 +89,7 @@
                     <com.jaredrummler.materialspinner.MaterialSpinner android:id="@+id/spTiming"
                                                                       app:ms_padding_top="0dp"
                                                                       android:textSize="14sp"
-                                                                      android:fontFamily="@font/raleway_regular"
+                                                                      android:fontFamily="@font/hv_regular"
                                                                       app:ms_padding_bottom="0dp"
                                                                       app:ms_arrow_tint="@color/orange"
                                                                       app:ms_dropdown_max_height="156dp"
@@ -103,7 +103,7 @@
                                                                       android:layout_marginStart="8dp"/>
                     <com.jaredrummler.materialspinner.MaterialSpinner
 
-                            android:fontFamily="@font/raleway_regular"
+                            android:fontFamily="@font/hv_regular"
                             android:textSize="14sp"
                             app:ms_padding_top="0dp"
                             app:ms_padding_bottom="0dp"

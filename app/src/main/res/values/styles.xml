@@ -9,27 +9,16 @@
         <item name="android:windowBackground">@color/white</item>
         <item name="android:textViewStyle">@style/ralewayTextview</item>
         <item name="android:buttonStyle">@style/raylewayButton</item>
-        <!-- enable window content transitions -->
-        <item name="android:windowActivityTransitions">true</item>
 
-        <!-- specify enter and exit transitions -->
-        <item name="android:windowEnterTransition">@transition/explode</item>
-        <item name="android:windowExitTransition">@transition/explode</item>
-
-        <!-- specify shared element transitions -->
-        <item name="android:windowSharedElementEnterTransition">
-            @transition/change_image_transform</item>
-        <item name="android:windowSharedElementExitTransition">
-            @transition/change_image_transform</item>
     </style>
 
     <style name="ralewayTextview" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/raleway_light</item>
+        <item name="android:fontFamily">@font/hv_regular</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="raylewayButton" parent="android:Widget.Holo.Button">
-        <item name="android:fontFamily">@font/raleway_bold</item>
+        <item name="android:fontFamily">@font/hv_bold</item>
     </style>
 
     <style name="ImagePreviewerTheme">
@@ -51,7 +40,7 @@
 
     <style name="btnSignUP" >
         <item name="android:background">@drawable/btn_signup</item>
-        <item name="android:fontFamily">@font/raleway_bold</item>
+        <item name="android:fontFamily">@font/hv_bold</item>
         <item name="android:textSize">18sp</item>
         <item name="android:text">Sign up</item>
         <item name="android:textColor">@color/white</item>
@@ -69,13 +58,13 @@
         <item name="android:layout_marginTop">32dp</item>
         <item name="android:text">Connect to use this feature</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">@font/raleway_light</item>
+        <item name="android:fontFamily">@font/hv_light</item>
         <item name="android:textSize">20sp</item>
     </style>
 
 
     <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:fontFamily">@font/raleway_semi_bold</item>
+        <item name="android:fontFamily">@font/hv_bold</item>
         <item name="android:textSize">15sp</item>
         <item name="android:windowBackground">@drawable/builder_round</item>
         <item name="colorAccent">@color/orange</item>
@@ -83,7 +72,7 @@
     </style>
 
     <style name="CalendarDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:fontFamily">@font/raleway_semi_bold</item>
+        <item name="android:fontFamily">@font/hv_bold</item>
         <item name="android:textSize">15sp</item>
         <item name="colorAccent">@color/orange</item>
         <item name="dialogCornerRadius">15dp</item>
@@ -101,7 +90,7 @@
     </style>
 
     <style name="FullScreenDialogStyle" parent="android:Theme.Light.NoTitleBar.Fullscreen">
-        <item name="android:fontFamily">@font/raleway_semi_bold</item>
+        <item name="android:fontFamily">@font/hv_bold</item>
         <item name="android:background">@color/grayConstraint</item>
         <item name="android:textSize">18sp</item>
         <item name="colorAccent">@color/orange</item>
@@ -134,7 +123,7 @@
     </style>
 
     <style name="EventDetails">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:layout_marginStart">16dp</item>
@@ -142,7 +131,7 @@
     </style>
     <style name="Autocomplete" parent="Widget.AppCompat.Light.AutoCompleteTextView">
         <item name="android:popupBackground">@drawable/autocomplete_round</item>
-        <item name="android:fontFamily">@font/raleway_light</item>
+        <item name="android:fontFamily">@font/hv_light</item>
         <item name="android:textSize">15sp</item>
         <item name="android:background">@drawable/searchview</item>
         <item name="android:dropDownItemStyle">@layout/row_university</item>
@@ -154,6 +143,7 @@
         <item name="android:button">@drawable/ellipse</item>
         <item name="android:paddingStart">24dp</item>
         <item name="android:layout_marginStart">20dp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="HintText" parent="TextAppearance.AppCompat">
@@ -168,6 +158,7 @@
         <item name="colorControlNormal">@color/graySignUp</item>
         <item name="colorControlActivated">@color/orange</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/hv_regular</item>
     </style>
     <style name="errorAppearance" parent="@android:style/TextAppearance">
         <item name="android:textColor">#CD3C14</item>
@@ -183,7 +174,7 @@
     <style name="NavigationTabTextAppeareance" parent="TextAppearance.Design.Tab">
         <item name="android:textColor">#666666</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">@font/raleway_regular</item>
+        <item name="android:fontFamily">@font/hv_regular</item>
         <item name="textAllCaps">false</item>
     </style>
 </resources>

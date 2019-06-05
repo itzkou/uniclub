@@ -18,7 +18,7 @@
                android:layout_marginStart="81dp" android:id="@+id/imageView8"/>
     <TextView
             android:text="EXPLORE"
-            android:fontFamily="@font/raleway_bold"
+            android:fontFamily="@font/hv_bold"
             android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -15,6 +15,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/txslide"
+            android:fontFamily="@font/hv_light"
             android:textSize="17sp"
             android:textAlignment="viewStart"
             app:layout_constraintStart_toStartOf="parent"

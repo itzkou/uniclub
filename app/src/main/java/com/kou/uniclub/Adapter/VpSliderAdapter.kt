@@ -42,6 +42,8 @@ class VpSliderAdapter(context: Context) : PagerAdapter() {
         val txslide = view.findViewById<TextView>(R.id.txslide)
         val imslide = view.findViewById<ImageView>(R.id.imslide)
 
+
+
         //data binding
         txslide.text = slider_title[position]
         imslide.setImageResource(slider_image[position])

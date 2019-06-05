@@ -18,7 +18,7 @@
             android:text="Welcome, all events start here ? Do you want to join your favorite event ? So create an account and you’re all set to go."
             android:layout_width="0dp"
             android:textSize="16sp"
-            android:fontFamily="@font/raleway_bold"
+            android:fontFamily="@font/hv_bold"
             android:layout_height="wrap_content"
             android:id="@+id/textView5" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="30dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="30dp"

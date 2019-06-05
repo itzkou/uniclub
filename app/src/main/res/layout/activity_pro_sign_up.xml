@@ -163,7 +163,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/btnSignup" app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="Or sign up with" android:id="@+id/textView" android:layout_marginTop="36dp"/>
+                android:text="Or sign up with"
+                android:textSize="11sp"
+                 android:id="@+id/textView" android:layout_marginTop="36dp"/>
         <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
                    android:src="@drawable/ic_stripe"
                    app:layout_constraintStart_toEndOf="@id/textView"

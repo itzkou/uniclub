@@ -40,7 +40,8 @@ import java.io.IOException
 
 class HomeFeed : Fragment() {
     private var page: String? = null
-    var myPrefs = ArrayList<String?>()
+    private var myPrefs = ArrayList<String?>()
+    private var searchFilter: AutoCompleteTextView? = null
 
 
     companion object {
@@ -93,6 +94,13 @@ class HomeFeed : Fragment() {
 
         return v
     }
+
+   /* override fun onResume() {
+        super.onResume()
+        val dialogView = LayoutInflater.from(context).inflate(com.kou.uniclub.R.layout.builder_search_filter, null)
+        searchFilter = dialogView.findViewById(R.id.searchFilter)
+        feedAutocomplete(searchFilter)
+    }*/
 
 
     private fun upcoming(rv: RecyclerView) {
@@ -378,7 +386,6 @@ class HomeFeed : Fragment() {
     }
 
 
-
     private fun cards(card: CardView, context: Context, arr: ArrayList<String?>) {
 
 
@@ -410,8 +417,8 @@ class HomeFeed : Fragment() {
 
 
     private fun showSearchFilter(context: Context) {
-
         val dialogView = LayoutInflater.from(context).inflate(com.kou.uniclub.R.layout.builder_search_filter, null)
+        val back=dialogView.findViewById<View>(R.id.back)
         val busi = dialogView.findViewById<CardView>(R.id.busi)
         val learni = dialogView.findViewById<CardView>(R.id.learning)
         val culturi = dialogView.findViewById<CardView>(R.id.culture)
@@ -421,7 +428,7 @@ class HomeFeed : Fragment() {
         val sporti = dialogView.findViewById<CardView>(R.id.sports)
         val desi = dialogView.findViewById<CardView>(R.id.design)
         val gami = dialogView.findViewById<CardView>(R.id.gaming)
-        val searchFilter = dialogView.findViewById<AutoCompleteTextView>(R.id.searchFilter)
+        searchFilter = dialogView.findViewById(R.id.searchFilter)
 
 
         val builder = AlertDialog.Builder(context, R.style.FullScreenDialogStyle)
@@ -455,15 +462,20 @@ class HomeFeed : Fragment() {
         ) { dialog, which ->
             dialog?.dismiss()
         }
+
         val dialog = builder.create()
 
 
         dialog.show()
-        feedAutocomplete(searchFilter)
+        back.setOnClickListener {
+            dialog.dismiss()
+        }
+        feedAutocomplete(searchFilter!!)
 
     }
-        //TODO("When server performs updates events I want to update data")
-    private fun feedAutocomplete(sv: AutoCompleteTextView) {
+
+    //TODO("When server performs updates events I want to update data")
+    private fun feedAutocomplete(sv: AutoCompleteTextView?) {
         val service = UniclubApi.create()
         service.getEvents().enqueue(object : Callback<EventsResponse> {
             override fun onFailure(call: Call<EventsResponse>, t: Throwable) {
@@ -473,11 +485,11 @@ class HomeFeed : Fragment() {
                 if (response.isSuccessful && isAdded) {
                     val adapter = SearchFilterAdapter(activity!!, response.body()!!.events)
 
-                    sv.setAdapter(adapter)
-                    sv.setOnItemClickListener { parent, view, position, id ->
+                    sv!!.setAdapter(adapter)
+                    sv!!.setOnItemClickListener { parent, view, position, id ->
                         val item = parent.getItemAtPosition(position) as EventX
-                        event_id=item.id
-                        startActivity(Intent(activity!!,EventDetails::class.java))
+                        event_id = item.id
+                        startActivity(Intent(activity!!, EventDetails::class.java))
 
 
                     }
