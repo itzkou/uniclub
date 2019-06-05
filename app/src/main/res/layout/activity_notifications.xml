@@ -16,18 +16,20 @@
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
     >
 
-        <ImageView android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:id="@+id/imSettings"
-                   android:src="@drawable/ic_settings"
+        <ImageView android:layout_width="30dp"
+                   android:layout_height="30dp"
+                   android:id="@+id/imCancel"
+                   android:visibility="invisible"
+                   android:src="@drawable/ic_cancel"
                    app:layout_constraintEnd_toEndOf="parent"
                    android:layout_marginEnd="12dp"
                    android:layout_marginBottom="8dp"
                    app:layout_constraintBottom_toBottomOf="parent"
                    android:layout_marginTop="8dp"
                    app:layout_constraintTop_toTopOf="parent"
-                   android:fitsSystemWindows="true"
-                   app:layout_collapseMode="pin"/>
+                   />
+
+
         <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/back"
                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
                    android:layout_marginBottom="8dp" android:layout_marginTop="8dp"
@@ -39,7 +41,7 @@
                   android:fontFamily="@font/hv_bold"
                   app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
                   app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent" />
+                  app:layout_constraintStart_toStartOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
     <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
@@ -47,5 +49,22 @@
                                             app:layout_constraintStart_toStartOf="parent"
                                             app:layout_constraintBottom_toBottomOf="parent"
                                             android:id="@+id/rvNotifs"
-                                            app:layout_constraintTop_toBottomOf="@+id/bar"/>
+                                            app:layout_constraintTop_toBottomOf="@+id/bar"
+                                            android:layout_marginBottom="48dp"/>
+    <Button
+            android:text="delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imDelete" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/rvNotifs" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"/>
+    <Button
+            android:text="select all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imSelect" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/rvNotifs" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"/>
 </android.support.constraint.ConstraintLayout>

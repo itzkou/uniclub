@@ -45,7 +45,7 @@ class RvFollowedClubsAdapter(val clubs :ArrayList<ClubX>, val context: Context):
         val pic=view.foPic!!
         val desc=view.foDesc!!
         val root=view.rootClub!!
-        val heart=view.foHeart!!
+
     }
     fun addData(listItems: java.util.ArrayList<ClubX>) {
         val size = this.clubs.size
