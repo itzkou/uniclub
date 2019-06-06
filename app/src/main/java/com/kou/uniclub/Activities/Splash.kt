@@ -60,6 +60,8 @@ class Splash : AppCompatActivity() {
         unregisterReceiver(broadcastReceiver)
     }
 
+
+
     fun Snackbar.config(context: Context) {
         val params = this.view.layoutParams as ViewGroup.MarginLayoutParams
         params.setMargins(12, 24, 12, 12)

@@ -32,11 +32,11 @@ class BuilderSettings {
             val builder = AlertDialog.Builder(context, com.kou.uniclub.R.style.CustomAlertDialog)
             builder.setView(dialogView)
             val dialog = builder.create()
-
             dialog.window!!.setGravity(Gravity.TOP)
             dialog.show()
 
             logout.setOnClickListener {
+                dialog.dismiss()
                     PrefsManager.seToken(context, null)
                     //facebook log out
                     LoginManager.getInstance().logOut()

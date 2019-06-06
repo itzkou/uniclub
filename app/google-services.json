@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "938947502504",
+    "firebase_url": "https://steam-genius-236523.firebaseio.com",
+    "project_id": "steam-genius-236523",
+    "storage_bucket": "steam-genius-236523.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938947502504:android:f6c32abda5b16882",
+        "android_client_info": {
+          "package_name": "com.kou.uniclub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "938947502504-l5rq1nuo20fj4js602o2mlq4qnk9r4ut.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhCnl9WxvYXYLLiues820T8KSexS4cPZ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "938947502504-l5rq1nuo20fj4js602o2mlq4qnk9r4ut.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

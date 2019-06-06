@@ -26,10 +26,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.kou.uniclub.Activities.Home
 import com.kou.uniclub.Extensions.Validation
 import com.kou.uniclub.Model.Auth.LoginResponse
 import com.kou.uniclub.Model.Auth.SignUpResponse
+import com.kou.uniclub.Model.User.UserX
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
@@ -252,15 +256,16 @@ class StudentSignUp : AppCompatActivity(), Validation {
 
             override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
                 if (response.isSuccessful) {
-                    if (response.code() == 201)
+                    if (response.code() == 201) {
                         uniSignIn(service)
 
+
+
+                    }
+
                 } else if (response.code() == 404)
-                    Toast.makeText(
-                        this@StudentSignUp,
-                        "Email already exists or missing field",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    startActivity(Intent(this@StudentSignUp, SignIN::class.java))
+                finish()
 
             }
 
@@ -273,11 +278,12 @@ class StudentSignUp : AppCompatActivity(), Validation {
         service.signIN(mail, password).enqueue(object : Callback<LoginResponse> {
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 if (t is IOException)
-                    Log.d("lol", "lol")
+                    Log.d("faillure", t.message)
             }
 
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
+                    firebase(email = mail,pasword = password)
                     PrefsManager.seToken(this@StudentSignUp, response.body()!!.accessToken)
                     startActivity(Intent(this@StudentSignUp, Home::class.java))
                 }
@@ -476,7 +482,6 @@ class StudentSignUp : AppCompatActivity(), Validation {
                         passwordC = "123social"
 
                         uniSignUP(fn, ln, "null", email, "123facebook", "123facebook", "unknown", image)
-                        //TODO("response caching")
                         PrefsManager.setPicture(this@StudentSignUp, pic)
 
 
@@ -542,11 +547,48 @@ class StudentSignUp : AppCompatActivity(), Validation {
         PrefsManager.setPicture(this@StudentSignUp, account.photoUrl.toString())
     }
 
-    fun DatePicker.getDate(): Date {
+    private fun DatePicker.getDate(): Date {
         val calendar = Calendar.getInstance()
         calendar.set(year, month, dayOfMonth)
         return calendar.time
     }
 
+    private fun firebase(email:String,pasword:String)
+    {
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,pasword)
+            .addOnCompleteListener {
+            if (it.isSuccessful)
+                uploadPictoFirebase()
+
+        }
+
+    }
+
+    //TODO("social login has a null chosen Uri")
+    private  fun uploadPictoFirebase(){
+        if(chosenUri!= null) {
+            val file = UUID.randomUUID().toString()
+            val ref = FirebaseStorage.getInstance().getReference("/images/$file")
+            ref.putFile(chosenUri!!)
+                .addOnSuccessListener {
+                    ref.downloadUrl.addOnSuccessListener {
+                        saveUserFirebase(it.toString())
+                    }
+                }
+        }
+
+    }
+
+    private fun saveUserFirebase(pic:String)
+    {   val uid=FirebaseAuth.getInstance().uid ?: ""
+        val ref=FirebaseDatabase.getInstance().getReference("/users/$uid")
+        val user=UserFire(uid,fName,pic)
+        ref.setValue(user)
+
+
+
+    }
+
+    class UserFire(val uid:String,val username:String,val pic:String)
 
 }

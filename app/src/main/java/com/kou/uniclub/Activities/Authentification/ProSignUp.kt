@@ -72,7 +72,6 @@ class ProSignUp : AppCompatActivity(), Validation {
         formFill()
 
 
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -310,11 +309,8 @@ class ProSignUp : AppCompatActivity(), Validation {
                         uniSignIn(service)
 
                 } else if (response.code() == 404)
-                    Toast.makeText(
-                        this@ProSignUp,
-                        "Email already exists or missing field",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    startActivity(Intent(this@ProSignUp, SignIN::class.java))
+                finish()
 
             }
 

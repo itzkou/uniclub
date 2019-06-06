@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 28
@@ -74,8 +75,11 @@ dependencies {
     implementation 'jp.wasabeef:blurry:3.0.0'
     //Spinner
     implementation 'com.jaredrummler:material-spinner:1.3.1'
-    //anko
-    implementation "org.jetbrains.anko:anko:0.10.8"
+    //FireBase
+    implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.google.firebase:firebase-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-storage:17.0.0'
+    implementation 'com.google.firebase:firebase-database:17.0.0'
 
 
 

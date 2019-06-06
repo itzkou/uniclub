@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.kou.uniclub.R
 
-class Notification:Fragment() {
+class Messaging:Fragment() {
 
     companion object {
 
-        fun newInstance():Notification=Notification()
+        fun newInstance():Messaging=Messaging()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

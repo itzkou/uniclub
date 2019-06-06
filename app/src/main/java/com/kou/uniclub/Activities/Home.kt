@@ -109,7 +109,7 @@ class Home : AppCompatActivity() {
         val homeFeed=HomeFeed.newInstance()
         val calendar=Calendar.newInstance()
         val clubs=Universities.newInstance()
-        val messagerie=Notification.newInstance()
+        val messagerie=Messaging.newInstance()
         val profile=Profile.newInstance()
 
 

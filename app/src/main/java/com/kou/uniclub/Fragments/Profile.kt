@@ -110,15 +110,12 @@ class Profile : Fragment() {
                     tv.text="${user!!.firstName} ${user.lastName}"
                     picture = user.image
                     if (picture.equals("/storage/Student/Profile_Picture/"))
-                        Glide.with(activity!!).load(PrefsManager.getPicture(activity!!)).apply(RequestOptions.circleCropTransform())
+                        Glide.with(activity!!).load(PrefsManager.getPicture(activity!!))
                             .into(
                                 im
                             )
                     else
-                        Glide.with(activity!!).load(imageURL + response.body()!!.image).apply(
-                            RequestOptions.circleCropTransform()
-                        )
-                            .into(
+                        Glide.with(activity!!).load(imageURL + response.body()!!.image) .into(
                                 im
                             )
 
