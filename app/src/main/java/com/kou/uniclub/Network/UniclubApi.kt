@@ -5,12 +5,16 @@ import com.kou.uniclub.Model.Auth.SignUpResponse
 import com.kou.uniclub.Model.Club.NoPagination.ClubDetailsResponse
 import com.kou.uniclub.Model.Club.NoPagination.ClubsByUnivResponse
 import com.kou.uniclub.Model.Club.Pagination.ClubsResponse
-import com.kou.uniclub.Model.Event.NoPagination.EventsResponse
 import com.kou.uniclub.Model.Event.NoPagination.EventDetailsResponse
+import com.kou.uniclub.Model.Event.NoPagination.EventsResponse
 import com.kou.uniclub.Model.Event.Pagination.EventListResponse
 import com.kou.uniclub.Model.University.NoPagination.UniversitiesResponse
 import com.kou.uniclub.Model.University.Pagination.UniversityResponse
 import com.kou.uniclub.Model.User.*
+import com.kou.uniclub.Model.User.Behaviour.FavoriteResponse
+import com.kou.uniclub.Model.User.Behaviour.FollowResponse
+import com.kou.uniclub.Model.User.Behaviour.MyfavoritesResponse
+import com.kou.uniclub.Model.User.Behaviour.ParticipateResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Retrofit

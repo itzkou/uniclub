@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import com.google.firebase.auth.FirebaseAuth
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kou.uniclub.Adapter.VpHomeAdapter
 import com.kou.uniclub.Extensions.BuilderAuth
@@ -60,7 +61,7 @@ class Home : AppCompatActivity() {
                 {
                     1-> {if(PrefsManager.geToken(this@Home)==null)
                         BuilderAuth.showDialog(this@Home)}
-                    3-> {if(PrefsManager.geToken(this@Home)==null)
+                    3-> {if(PrefsManager.geToken(this@Home)==null||FirebaseAuth.getInstance().uid==null)
                         BuilderAuth.showDialog(this@Home)}
                     4->  {if(PrefsManager.geToken(this@Home)==null)
                         BuilderAuth.showDialog(this@Home)}

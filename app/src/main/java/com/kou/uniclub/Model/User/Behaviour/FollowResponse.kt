@@ -1,9 +1,9 @@
-package com.kou.uniclub.Model.User
+package com.kou.uniclub.Model.User.Behaviour
 
 
 import com.google.gson.annotations.SerializedName
 
-data class FavoriteResponse(
+data class FollowResponse(
     @SerializedName("message")
     val message: String
 )

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:background="@color/gray_scale"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="48dp">
+
+    <com.mikhaellopez.circularimageview.CircularImageView android:id="@+id/imTo" android:layout_width="48dp"
+                                                          android:layout_height="48dp"
+                                                          android:src="@drawable/im_event"
+                                                          app:layout_constraintStart_toStartOf="parent"
+                                                          android:layout_marginStart="8dp"
+                                                          app:layout_constraintTop_toTopOf="parent"
+                                                          app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+              android:maxWidth="240dp"
+              android:id="@+id/tvTo"
+              android:text="You"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintVertical_bias="0.551" app:layout_constraintStart_toEndOf="@+id/imTo"
+              android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+              android:layout_marginEnd="8dp"/>
+</android.support.constraint.ConstraintLayout>

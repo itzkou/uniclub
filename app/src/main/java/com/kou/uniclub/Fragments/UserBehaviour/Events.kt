@@ -8,11 +8,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import com.kou.uniclub.Adapter.RvFavoEventsAdapter
-import com.kou.uniclub.Model.User.MyfavoritesResponse
+import com.kou.uniclub.Model.User.Behaviour.MyfavoritesResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager

@@ -13,7 +13,7 @@ import com.kou.uniclub.Activities.EventDetails
 import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Extensions.OnBottomReachedListener
 import com.kou.uniclub.Model.Event.EventX
-import com.kou.uniclub.Model.User.FavoriteResponse
+import com.kou.uniclub.Model.User.Behaviour.FavoriteResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager

@@ -1,11 +1,9 @@
 package com.kou.uniclub.Extensions
 
 import android.support.design.widget.TextInputEditText
-import android.support.design.widget.TextInputLayout
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
-import android.widget.EditText
 
 interface Validation {
 

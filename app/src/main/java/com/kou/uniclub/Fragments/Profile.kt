@@ -16,7 +16,6 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.kou.uniclub.Activities.EditProfile
 import com.kou.uniclub.Adapter.VpProfileAdapter
 import com.kou.uniclub.Fragments.UserBehaviour.Clubs

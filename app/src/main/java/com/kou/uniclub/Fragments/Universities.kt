@@ -16,8 +16,8 @@ import com.kou.uniclub.Adapter.RvClubsAdapter
 import com.kou.uniclub.Adapter.SearchUnivAdapter
 import com.kou.uniclub.Model.Club.NoPagination.ClubsByUnivResponse
 import com.kou.uniclub.Model.Club.Pagination.ClubsResponse
-import com.kou.uniclub.Model.University.University
 import com.kou.uniclub.Model.University.NoPagination.UniversitiesResponse
+import com.kou.uniclub.Model.University.University
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager

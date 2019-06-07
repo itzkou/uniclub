@@ -9,7 +9,7 @@ import com.kou.uniclub.Fragments.ClubTimeline.Passed
 import com.kou.uniclub.Fragments.ClubTimeline.Today
 import com.kou.uniclub.Fragments.ClubTimeline.Upcoming
 import com.kou.uniclub.Model.Club.NoPagination.ClubDetailsResponse
-import com.kou.uniclub.Model.User.FollowResponse
+import com.kou.uniclub.Model.User.Behaviour.FollowResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager

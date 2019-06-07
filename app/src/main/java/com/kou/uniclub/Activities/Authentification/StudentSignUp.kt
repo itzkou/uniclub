@@ -33,7 +33,7 @@ import com.kou.uniclub.Activities.Home
 import com.kou.uniclub.Extensions.Validation
 import com.kou.uniclub.Model.Auth.LoginResponse
 import com.kou.uniclub.Model.Auth.SignUpResponse
-import com.kou.uniclub.Model.User.UserX
+import com.kou.uniclub.Model.User.UserFire
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
@@ -582,13 +582,13 @@ class StudentSignUp : AppCompatActivity(), Validation {
     private fun saveUserFirebase(pic:String)
     {   val uid=FirebaseAuth.getInstance().uid ?: ""
         val ref=FirebaseDatabase.getInstance().getReference("/users/$uid")
-        val user=UserFire(uid,fName,pic)
+        val user= UserFire(uid,fName,pic)
         ref.setValue(user)
 
 
 
     }
 
-    class UserFire(val uid:String,val username:String,val pic:String)
+
 
 }
