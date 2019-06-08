@@ -20,6 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
 import com.kou.uniclub.Activities.Home
 import com.kou.uniclub.Extensions.Validation
 import com.kou.uniclub.Model.Auth.LoginResponse
@@ -104,6 +105,7 @@ class SignIN : AppCompatActivity(), Validation {
 
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
+                    fireSignIn(m,p)
                     PrefsManager.seToken(this@SignIN, response.body()!!.accessToken)
                     startActivity(Intent(this@SignIN, Home::class.java))
                     finish()
@@ -200,6 +202,14 @@ class SignIN : AppCompatActivity(), Validation {
         val account = task.getResult(ApiException::class.java)!!
         uniSignIn(account.email.toString(), "123social")
         PrefsManager.setPicture(this@SignIN, account.photoUrl.toString())
+    }
+
+    private fun fireSignIn(mail:String,pass:String){
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(mail,pass)
+                .addOnCompleteListener {
+                    if(it.isSuccessful)
+                        Log.d("fireSign","Sign in succesful")
+                }
     }
 
     fun Snackbar.config(context: Context) {

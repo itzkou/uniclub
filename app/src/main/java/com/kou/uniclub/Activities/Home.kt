@@ -73,6 +73,7 @@ class Home : AppCompatActivity() {
         setupViewPager(vp_home)
           }
 
+
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.nav_home -> {
@@ -124,5 +125,7 @@ class Home : AppCompatActivity() {
 
 
     }
+
+
 
 }

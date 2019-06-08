@@ -133,7 +133,7 @@
         <item name="android:popupBackground">@drawable/autocomplete_round</item>
         <item name="android:fontFamily">@font/hv_light</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:background">@drawable/searchview</item>
+        <item name="android:background">@drawable/sv_bg</item>
         <item name="android:dropDownItemStyle">@layout/row_university</item>
         <item name="android:dropDownHeight">wrap_content</item>
 

@@ -564,7 +564,7 @@ class StudentSignUp : AppCompatActivity(), Validation {
 
     }
 
-    //TODO("social login has a null chosen Uri")
+    //TODO("chosen Uri null prevents realtime database")
     private  fun uploadPictoFirebase(){
         if(chosenUri!= null) {
             val file = UUID.randomUUID().toString()

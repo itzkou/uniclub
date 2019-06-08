@@ -5,20 +5,26 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.2.0'
+
     }
+
 }
 
 allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'https://jitpack.io' }
+        maven {
+            url 'https://jitpack.io'
+        }
+
 
     }
 }

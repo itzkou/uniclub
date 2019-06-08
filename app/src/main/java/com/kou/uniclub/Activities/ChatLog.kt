@@ -1,14 +1,9 @@
 package com.kou.uniclub.Activities
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
+import android.support.v7.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.kou.uniclub.Adapter.RvChatAdapter
 import com.kou.uniclub.Adapter.RvUsersAdapter.Companion.USER_KEY
 import com.kou.uniclub.Model.Chat.Message
@@ -17,56 +12,104 @@ import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.activity_chat_log.*
 
 class ChatLog : AppCompatActivity() {
-    private var msgs=ArrayList<Message>()
-
+    lateinit var msgs: ArrayList<Message>
+    lateinit var adapter: RvChatAdapter
+    private var toUser: UserFire? = null
+    private var currentUser:UserFire?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_log)
-
-
+        toUser = intent.getParcelableExtra(USER_KEY)
+        msgs = ArrayList<Message>()
+        adapter = RvChatAdapter(msgs, this@ChatLog)
+        rvChat.adapter=adapter
+        //fetchCurrentUser()
         imSend.setOnClickListener {
             sendMsg()
         }
-        //rvChat.adapter=RvChatAdapter(arrayListOf(msg,msg2),context = this@ChatLog)
 
         listenMsgs()
+    }
 
+    private fun sendMsg() {
+
+        val text = edMsg.text.toString()
+
+        val fromId = FirebaseAuth.getInstance().uid
+        val user = intent.getParcelableExtra<UserFire>(USER_KEY)
+        val toId = user.uid
+
+        if (fromId == null) return
+
+        val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
+
+        val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
+
+        val chatMessage = Message(reference.key!!, text, fromId, toId, System.currentTimeMillis() / 1000)
+
+        reference.setValue(chatMessage)
+            .addOnSuccessListener {
+                edMsg.text.clear()
+                rvChat.scrollToPosition(adapter.itemCount - 1)
+            }
+
+        toReference.setValue(chatMessage)
 
     }
 
-    private fun sendMsg(){
 
-        val myID=FirebaseAuth.getInstance().uid
-        if (myID!=null){
-        val userID=intent.getParcelableExtra<UserFire>(USER_KEY)//The use I want to talk to
-        val ref=FirebaseDatabase.getInstance().getReference("/messages").push() //creating fire Node
-        val message=Message(ref.key!!,edMsg.text.toString(),myID,userID.uid,System.currentTimeMillis()/1000)
-            ref.setValue(message)
-                .addOnSuccessListener {
-                    Log.d("sentMessage",ref.key)
-                }
-        }
-    }
-    private fun listenMsgs(){
-        val ref=FirebaseDatabase.getInstance().getReference("/messages")
-        ref.addChildEventListener(object:ChildEventListener{
-            override fun onCancelled(p0: DatabaseError) {}
+    private fun listenMsgs() {
+        val fromId = FirebaseAuth.getInstance().uid
+        val toId = toUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
 
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {}
-
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {}
+        ref.addChildEventListener(object: ChildEventListener {
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                val chatMsg=p0.getValue(Message::class.java)   //I HAVE USED THIS MODEL so I need to check the type of added child
-                if (chatMsg!=null)
-                    msgs.add(chatMsg)
+                val chatMessage = p0.getValue(Message::class.java)
 
-                rvChat.adapter=RvChatAdapter(msgs,this@ChatLog)
+                if (chatMessage != null) {
+
+                    if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
+                        adapter.add(chatMessage)
+                    } else {
+                        adapter.add(chatMessage)
+                    }
+                }
 
             }
 
-            override fun onChildRemoved(p0: DataSnapshot) {}
+            override fun onCancelled(p0: DatabaseError) {
 
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+
+            }
+
+        })
+    }
+
+    private fun fetchCurrentUser() {
+        val uid = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+        ref.addListenerForSingleValueEvent(object: ValueEventListener {
+
+            override fun onDataChange(p0: DataSnapshot) {
+                currentUser = p0.getValue(UserFire::class.java)
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
         })
     }
 }

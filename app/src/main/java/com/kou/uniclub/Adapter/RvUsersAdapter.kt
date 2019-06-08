@@ -15,7 +15,9 @@ import kotlinx.android.synthetic.main.row_user.view.*
 class RvUsersAdapter(val users: ArrayList<UserFire>, val context: Context) :
     RecyclerView.Adapter<RvUsersAdapter.VH>() {
     companion object {
-        val USER_KEY="User_key"
+        val USER_KEY="User_key"  //to retrieve user
+        var toUserPic:String?=null
+
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): VH {
@@ -28,13 +30,17 @@ class RvUsersAdapter(val users: ArrayList<UserFire>, val context: Context) :
 
     override fun onBindViewHolder(vh: VH, position: Int) {
         val user = users[position]
+
+        toUserPic=user.pic
         Picasso.get().load(user.pic).into(vh.photo)
         vh.username.text = user.username
 
         vh.root.setOnClickListener {
+
             val intent=Intent(context,ChatLog::class.java)
             intent.putExtra(USER_KEY,user)
             context.startActivity(intent)
+
         }
     }
 

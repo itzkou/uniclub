@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
+
+
 androidExtensions{
     experimental=true
 }
@@ -27,6 +29,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
@@ -49,6 +52,8 @@ dependencies {
 
     // circular imageview
     implementation 'com.mikhaellopez:circularimageview:3.2.0'
+    //Gservices
+    implementation'com.google.gms:google-services:4.2.0'
     //MAPS
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
@@ -82,6 +87,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'com.google.firebase:firebase-storage:17.0.0'
     implementation 'com.google.firebase:firebase-database:17.0.0'
+
 
 
 }
