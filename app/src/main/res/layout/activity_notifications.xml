@@ -27,13 +27,21 @@
                    app:layout_constraintBottom_toBottomOf="parent"
                    android:layout_marginTop="8dp"
                    app:layout_constraintTop_toTopOf="parent"
-                   />
+        />
 
 
-        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/back"
-                   app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-                   android:layout_marginBottom="8dp" android:layout_marginTop="8dp"
-                   app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="12dp"
+        <ImageView android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/back"
+                   app:layout_constraintTop_toTopOf="parent"
+                   app:layout_constraintBottom_toBottomOf="parent"
+                   android:layout_marginBottom="8dp"
+                   android:paddingTop="20dp"
+                   android:paddingBottom="20dp"
+                   android:paddingRight="20dp"
+                   android:layout_marginTop="8dp"
+                   app:layout_constraintStart_toStartOf="parent"
+                   android:layout_marginStart="12dp"
                    android:id="@+id/back"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:text="Notifications"

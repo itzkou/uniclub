@@ -7,24 +7,18 @@ import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
-import com.kou.uniclub.Adapter.RvHomeFeedAdapter.Companion.event_id
 import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Extensions.OnBottomReachedListener
 import com.kou.uniclub.Model.Event.EventX
@@ -48,8 +42,10 @@ import java.util.*
 class EventDetails : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private var page: String? = null
-    private var place: String? = null
-//TODO("when user reparticipates I want an eror code different than 200")
+    companion object {
+        var eventId: Int? = null
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,8 +72,7 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
 
         })
 
-        rvMoreE.layoutManager = LinearLayoutManager(this@EventDetails, LinearLayout.HORIZONTAL, false)
-        getDetails()
+        getDetails(eventId!!)
 
 
     }
@@ -88,9 +83,9 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-    private fun getDetails() {
+    private fun getDetails(id: Int) {
         val service = UniclubApi.create()
-        service.getEvent(event_id!!).enqueue(object : Callback<EventDetailsResponse> {
+        service.getEvent(id).enqueue(object : Callback<EventDetailsResponse> {
             override fun onFailure(call: Call<EventDetailsResponse>, t: Throwable) {
             }
 
@@ -116,7 +111,7 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
                     tvLocation.text = event.location
                     tvEventDesc.text = event.description
 
-                    if(event.datetimepicker!=null) {
+                    /*if(event.datetimepicker!=null) {
                         val lat = event.datetimepicker.substring(0, event.datetimepicker.indexOf(",")).toDouble()
                         val lon = event.datetimepicker.substring(
                             event.datetimepicker.lastIndexOf(",") + 1,
@@ -127,7 +122,7 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(myplace))
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myplace, 15f))
                         //TODO("If u use this u have to fill all DB with radom Lat Lon otherwise crash")
-                    }
+                    }*/
 
 
 

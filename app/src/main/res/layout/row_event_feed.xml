@@ -70,6 +70,9 @@
                 android:id="@+id/favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:paddingBottom="20dp"
                 android:src="@drawable/ic_favoriteg"
                 app:layout_constraintTop_toTopOf="@+id/title"
                 app:layout_constraintBottom_toBottomOf="@+id/place" app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +85,9 @@
                                                app:layout_constraintStart_toStartOf="@+id/favorite"
                                                app:layout_constraintEnd_toEndOf="@+id/favorite"
                                                app:layout_constraintTop_toTopOf="@+id/favorite"
-                                               app:layout_constraintBottom_toBottomOf="@+id/favorite"/>
+                                               app:layout_constraintBottom_toBottomOf="@+id/favorite"
+                                               app:layout_constraintHorizontal_bias="0.625"
+                                               app:layout_constraintVertical_bias="0.625"/>
 
     </android.support.constraint.ConstraintLayout>
 

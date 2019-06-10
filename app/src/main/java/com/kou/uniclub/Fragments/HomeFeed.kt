@@ -18,9 +18,9 @@ import android.view.ViewGroup
 import android.widget.*
 import com.jaredrummler.materialspinner.MaterialSpinner
 import com.kou.uniclub.Activities.EventDetails
+import com.kou.uniclub.Activities.EventDetails.Companion.eventId
 import com.kou.uniclub.Activities.Notifications
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
-import com.kou.uniclub.Adapter.RvHomeFeedAdapter.Companion.event_id
 import com.kou.uniclub.Adapter.SearchFilterAdapter
 import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Extensions.BuilderSettings
@@ -486,9 +486,9 @@ class HomeFeed : Fragment() {
                     val adapter = SearchFilterAdapter(activity!!, response.body()!!.events)
 
                     sv!!.setAdapter(adapter)
-                    sv!!.setOnItemClickListener { parent, view, position, id ->
+                    sv.setOnItemClickListener { parent, view, position, id ->
                         val item = parent.getItemAtPosition(position) as EventX
-                        event_id = item.id
+                        eventId = item.id
                         startActivity(Intent(activity!!, EventDetails::class.java))
 
 

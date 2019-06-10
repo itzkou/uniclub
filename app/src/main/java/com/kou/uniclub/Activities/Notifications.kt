@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import com.kou.uniclub.Adapter.RvNotifsAdapter
-import com.kou.uniclub.Model.Notification.Notif
+import com.kou.uniclub.Model.Notification.Notification
 import com.kou.uniclub.Model.Notification.NotificationResponse
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
@@ -22,7 +22,7 @@ class Notifications : AppCompatActivity() {
 
 
     // private val simpleAdapter = RvNotifsAdapter((1..5).map { "Item: $it" }.toMutableList())
-    private var simpleAdapter= RvNotifsAdapter(arrayListOf<Notif>(),this@Notifications)
+    private var simpleAdapter= RvNotifsAdapter(arrayListOf<Notification>(),this@Notifications)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

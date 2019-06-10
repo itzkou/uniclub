@@ -3,7 +3,7 @@ package com.kou.uniclub.Model.Notification
 
 import com.google.gson.annotations.SerializedName
 
-data class Notif(
+data class Notification(
     @SerializedName("data")
     val details: NotifDetails,
     @SerializedName("created_at")

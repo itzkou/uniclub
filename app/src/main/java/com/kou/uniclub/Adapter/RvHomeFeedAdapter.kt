@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.kou.uniclub.Activities.EventDetails
+import com.kou.uniclub.Activities.EventDetails.Companion.eventId
 import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Extensions.OnBottomReachedListener
 import com.kou.uniclub.Model.Event.EventX
@@ -33,10 +34,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
     RecyclerView.Adapter<RvHomeFeedAdapter.Holder>() {
     private var onBottomReachedListener: OnBottomReachedListener? = null
 
-    companion object {
-        var event_id: Int? = null
 
-    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): Holder {
@@ -138,7 +136,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
 
         //EventO details
         holder.root.setOnClickListener {
-            event_id = event.id
+            eventId = event.id
             context.startActivity(Intent(context, EventDetails::class.java))
 
         }
