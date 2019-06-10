@@ -25,18 +25,6 @@
         <item name="android:windowIsFloating">false</item>
     </style>
 
-    <style name="edSignUP">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColorHint">@color/graySignUp</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginStart">@dimen/formRL</item>
-        <item name="android:layout_marginEnd">@dimen/formRL</item>
-        <item name="android:layout_marginBottom">@dimen/formTB</item>
-        <item name="android:layout_marginTop">@dimen/formTB</item>
-        <item name="android:drawablePadding">@dimen/formDrawablePadding</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
 
     <style name="btnSignUP" >
         <item name="android:background">@drawable/btn_signup</item>

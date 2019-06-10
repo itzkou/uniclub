@@ -75,7 +75,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
         var isLiked = false
         holder.fav.setOnClickListener {
             if (PrefsManager.geToken(context) != null) {
-
+        //TODO('Optimize this')
                 if (!isLiked) {
                     val service = UniclubApi.create()
                     service.favorite("Bearer " + PrefsManager.geToken(context)!!, event.id)
@@ -138,8 +138,6 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
 
         //EventO details
         holder.root.setOnClickListener {
-
-
             event_id = event.id
             context.startActivity(Intent(context, EventDetails::class.java))
 

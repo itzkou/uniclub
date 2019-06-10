@@ -2,36 +2,39 @@ package com.kou.uniclub.Adapter
 
 import android.content.Context
 import android.graphics.Color
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.kou.uniclub.Model.Notif.Notification
+import com.kou.uniclub.Model.Notification.Notif
+import com.kou.uniclub.R
 import kotlinx.android.synthetic.main.row_notifs.view.*
 
 
-class NotifsAdapter(private val notifs: ArrayList<Notification>, val context: Context) :
-    RecyclerView.Adapter<NotifsAdapter.VH>() {
+class RvNotifsAdapter(private val notifs: ArrayList<Notif>, val context: Context) :
+    RecyclerView.Adapter<RvNotifsAdapter.VH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): VH {
-        return NotifsAdapter.VH(LayoutInflater.from(parent.context).inflate(com.kou.uniclub.R.layout.row_notifs, parent, false))
+        return RvNotifsAdapter.VH(LayoutInflater.from(parent.context).inflate(com.kou.uniclub.R.layout.row_notifs, parent, false))
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val notif = notifs[position]
-        holder.title.text = notif.msg
-        holder.root.setCardBackgroundColor(if (notif.selected) Color.CYAN else Color.WHITE)
+        holder.title.text = notif.details.eventName
+        holder.root.setCardBackgroundColor(if (notif.readAt==null) Color.WHITE else ContextCompat.getColor(context,R.color.grayBar))
         holder.root.setOnClickListener {
             notif.selected = !notif.selected
-            holder.root.setCardBackgroundColor(if (notif.selected) Color.CYAN else Color.WHITE)
+            holder.root.setCardBackgroundColor(if (notif.selected) ContextCompat.getColor(context,R.color.orange) else Color.WHITE)
         }
+
 
 
     }
 
     override fun getItemCount(): Int = notifs.size
 
-    fun addItem(notif: Notification) {
+    fun addItem(notif: Notif) {
         notifs.add(notif)
         notifyItemInserted(notifs.size)
     }

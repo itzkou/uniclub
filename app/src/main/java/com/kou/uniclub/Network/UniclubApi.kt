@@ -8,6 +8,8 @@ import com.kou.uniclub.Model.Club.Pagination.ClubsResponse
 import com.kou.uniclub.Model.Event.NoPagination.EventDetailsResponse
 import com.kou.uniclub.Model.Event.NoPagination.EventsResponse
 import com.kou.uniclub.Model.Event.Pagination.EventListResponse
+import com.kou.uniclub.Model.Notification.NotificationResponse
+import com.kou.uniclub.Model.Notification.NotifsActionsResponse
 import com.kou.uniclub.Model.University.NoPagination.UniversitiesResponse
 import com.kou.uniclub.Model.University.Pagination.UniversityResponse
 import com.kou.uniclub.Model.User.Behaviour.FavoriteResponse
@@ -24,7 +26,7 @@ import retrofit2.http.*
 interface UniclubApi {
 
     companion object Factory {
-        var imageURL="http://192.168.1.2:8000"
+        var imageURL = "http://192.168.1.2:8000"
         fun create(): UniclubApi {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
@@ -91,11 +93,22 @@ interface UniclubApi {
     @GET("auth/getUserFollowedClubs")
     fun getFollows(@Header("Authorization") authToken: String): Call<ClubsResponse>
 
+    /************************* Notifications ********************/
+    @GET("auth/getNotif")
+    fun getNotifs(@Header("Authorization") authToken: String): Call<NotificationResponse>
+
+    @GET("auth/markRead/{id}")
+    fun markAsRead(@Header("Authorization") authToken: String, @Path("id") notifId: String): Call<NotifsActionsResponse>
+
+    @GET("auth/markAllRead")
+    fun markAllRead(@Header("Authorization") authToken: String): Call<NotifsActionsResponse>
+
 
     /************************* Events ********************/
 
     @GET("Event/List")
     fun getEvents(): Call<EventsResponse>
+
     @GET("Event/List/Paginated")
     fun getEventsP(): Call<EventListResponse>
 
@@ -125,6 +138,7 @@ interface UniclubApi {
 
     @GET
     fun paginateUnivs(@Url next_page_url: String): Call<UniversityResponse>
+
     /************************* Clubs ********************/
     @GET
     fun paginateClubs(@Url next_page_url: String): Call<ClubsResponse>
@@ -143,11 +157,4 @@ interface UniclubApi {
     fun getClub(@Path("id") id: Int): Call<ClubDetailsResponse>
 
 
-
-
-
-
-
-    @GET
-    fun paginateToken(@Url next_page_url: String, @Header("Authorization") authToken: String): Call<EventListResponse>
 }

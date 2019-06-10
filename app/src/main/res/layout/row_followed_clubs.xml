@@ -64,7 +64,7 @@
                    android:src="@drawable/ic_heart"
                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="10dp"
                    android:layout_marginBottom="10dp" app:layout_constraintBottom_toBottomOf="parent"
-                   android:id="@+id/foHeart"/>
+        />
 
     </android.support.constraint.ConstraintLayout>
 

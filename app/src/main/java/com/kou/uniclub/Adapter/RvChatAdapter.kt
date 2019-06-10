@@ -51,7 +51,7 @@ class RvChatAdapter(val messages: ArrayList<Message>, val context: Context) :
                 (holder as chatFromVH).tvMsg.text=message.text
             }
             TO->{(holder as chatToVH).tvMsg.text=message.text
-                Picasso.get().load(toUserPic).into((holder as chatToVH).imUser)}
+                Picasso.get().load(toUserPic).into(holder .imUser)}
         }
     }
     fun add(chatMsg: Message) {

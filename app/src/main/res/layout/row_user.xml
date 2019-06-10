@@ -25,7 +25,6 @@
                   app:layout_constraintTop_toTopOf="@+id/imUser" app:layout_constraintStart_toEndOf="@+id/imUser"
                   android:layout_marginStart="13dp"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:id="@+id/tvminiMsg"
                   app:layout_constraintEnd_toEndOf="@+id/tvUsername"
                   app:layout_constraintStart_toStartOf="@+id/tvUsername"
                   app:layout_constraintTop_toBottomOf="@id/tvUsername"/>

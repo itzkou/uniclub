@@ -3,34 +3,38 @@ package com.kou.uniclub.Activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
-import com.kou.uniclub.Adapter.NotifsAdapter
-import com.kou.uniclub.Model.Notif.Notification
+import com.kou.uniclub.Adapter.RvNotifsAdapter
+import com.kou.uniclub.Model.Notification.Notif
+import com.kou.uniclub.Model.Notification.NotificationResponse
+import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
+import com.kou.uniclub.SharedUtils.PrefsManager
 import com.kou.uniclub.UI.SwipeToDeleteCallback
 import kotlinx.android.synthetic.main.activity_notifications.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class Notifications : AppCompatActivity() {
-    private val n1 = Notification("Hello I am Notif one")
-    private val n2 = Notification("Hello I am Notif two")
 
-    // private val simpleAdapter = NotifsAdapter((1..5).map { "Item: $it" }.toMutableList())
-    private val simpleAdapter = NotifsAdapter(arrayListOf(n1, n2), this@Notifications)
+
+    // private val simpleAdapter = RvNotifsAdapter((1..5).map { "Item: $it" }.toMutableList())
+    private var simpleAdapter= RvNotifsAdapter(arrayListOf<Notif>(),this@Notifications)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notifications)
 
-        rvNotifs.layoutManager = LinearLayoutManager(this@Notifications)
-        rvNotifs.adapter = simpleAdapter
+        if (PrefsManager.geToken(this@Notifications) != null)
+            getNotifs(rvNotifs)
 
         val swipeHandler = object : SwipeToDeleteCallback(this) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val adapter = rvNotifs.adapter as NotifsAdapter
+                val adapter = rvNotifs.adapter as RvNotifsAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
             }
         }
@@ -61,5 +65,23 @@ class Notifications : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun getNotifs(rv: RecyclerView) {
+        val service = UniclubApi.create()
+        service.getNotifs("Bearer " + PrefsManager.geToken(this@Notifications))
+            .enqueue(object : Callback<NotificationResponse> {
+                override fun onFailure(call: Call<NotificationResponse>, t: Throwable) {
+                }
+
+                override fun onResponse(call: Call<NotificationResponse>, response: Response<NotificationResponse>) {
+                    if (response.isSuccessful) {
+                        simpleAdapter = RvNotifsAdapter(response.body()!!.notifs, this@Notifications)
+                        rv.adapter = simpleAdapter
+
+                    }
+                }
+
+            })
     }
 }
