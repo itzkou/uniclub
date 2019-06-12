@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/orange</item>
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/black</item>
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@color/windoBg</item>
         <item name="android:textViewStyle">@style/ralewayTextview</item>
         <item name="android:buttonStyle">@style/raylewayButton</item>
 

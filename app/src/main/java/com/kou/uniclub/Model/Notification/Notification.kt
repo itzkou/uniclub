@@ -15,7 +15,7 @@ data class Notification(
     @SerializedName("notifiable_type")
     val notifiableType: String,
     @SerializedName("read_at")
-    val readAt: Any?,
+    var readAt: String?,
     @SerializedName("type")
     val type: String,
     @SerializedName("updated_at")

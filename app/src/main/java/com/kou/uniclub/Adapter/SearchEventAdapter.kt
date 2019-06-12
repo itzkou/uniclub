@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Filter
+import android.widget.Toast
 import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.R
 import com.squareup.picasso.Picasso
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.row_search_filter.view.*
 import kotlinx.android.synthetic.main.row_university.view.*
 import java.util.*
 
-class SearchFilterAdapter(context: Context, events: ArrayList<EventX>) :
+class SearchEventAdapter(context: Context, events: ArrayList<EventX>) :
     ArrayAdapter<EventX>(context, com.kou.uniclub.R.layout.row_search_filter, events) {
 
 
@@ -21,8 +22,11 @@ class SearchFilterAdapter(context: Context, events: ArrayList<EventX>) :
 
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        if (position==5)
+            Toast.makeText(context,"5",Toast.LENGTH_SHORT).show()
 
         return convertView ?: createView(position, parent)
+
     }
 
     private fun createView(position: Int, parent: ViewGroup?): View {
@@ -84,7 +88,7 @@ class SearchFilterAdapter(context: Context, events: ArrayList<EventX>) :
 
         override fun publishResults(constraint: CharSequence?, results: Filter.FilterResults) {
             filtered = results.values as ArrayList<EventX>
-            notifyDataSetInvalidated()
+            notifyDataSetChanged()
         }
 
         override fun convertResultToString(result: Any) = (result as EventX).name

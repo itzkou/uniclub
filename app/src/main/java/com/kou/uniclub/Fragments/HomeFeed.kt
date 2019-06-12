@@ -21,7 +21,7 @@ import com.kou.uniclub.Activities.EventDetails
 import com.kou.uniclub.Activities.EventDetails.Companion.eventId
 import com.kou.uniclub.Activities.Notifications
 import com.kou.uniclub.Adapter.RvHomeFeedAdapter
-import com.kou.uniclub.Adapter.SearchFilterAdapter
+import com.kou.uniclub.Adapter.SearchEventAdapter
 import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Extensions.BuilderSettings
 import com.kou.uniclub.Extensions.OnBottomReachedListener
@@ -40,6 +40,7 @@ import java.io.IOException
 
 class HomeFeed : Fragment() {
     private var page: String? = null
+
     private var myPrefs = ArrayList<String?>()
     private var searchFilter: AutoCompleteTextView? = null
 
@@ -95,12 +96,6 @@ class HomeFeed : Fragment() {
         return v
     }
 
-   /* override fun onResume() {
-        super.onResume()
-        val dialogView = LayoutInflater.from(context).inflate(com.kou.uniclub.R.layout.builder_search_filter, null)
-        searchFilter = dialogView.findViewById(R.id.searchFilter)
-        feedAutocomplete(searchFilter)
-    }*/
 
 
     private fun upcoming(rv: RecyclerView) {
@@ -476,14 +471,14 @@ class HomeFeed : Fragment() {
 
     //TODO("When server performs updates events I want to update data")
     private fun feedAutocomplete(sv: AutoCompleteTextView?) {
-        val service = UniclubApi.create()
+       val service = UniclubApi.create()
         service.getEvents().enqueue(object : Callback<EventsResponse> {
             override fun onFailure(call: Call<EventsResponse>, t: Throwable) {
             }
 
             override fun onResponse(call: Call<EventsResponse>, response: Response<EventsResponse>) {
                 if (response.isSuccessful && isAdded) {
-                    val adapter = SearchFilterAdapter(activity!!, response.body()!!.events)
+                    val adapter = SearchEventAdapter(activity!!, response.body()!!.events)
 
                     sv!!.setAdapter(adapter)
                     sv.setOnItemClickListener { parent, view, position, id ->
@@ -493,11 +488,13 @@ class HomeFeed : Fragment() {
 
 
                     }
+
+
+
                 }
             }
 
-        })
-    }
+        })}
 
     private fun showWiz(context: Context) {
 

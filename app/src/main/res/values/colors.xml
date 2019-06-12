@@ -13,6 +13,7 @@
     <color name="grayConstraint">#FAFAFA</color>
     <color name="transBlack">#CF000000</color>
     <color name="toasty">#707070</color>
+    <color name="windoBg">#FAFAFA</color>
 
 
 </resources>

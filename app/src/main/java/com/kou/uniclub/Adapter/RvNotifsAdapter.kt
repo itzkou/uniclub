@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.kou.uniclub.Activities.EventDetails
 import com.kou.uniclub.Activities.EventDetails.Companion.eventId
 import com.kou.uniclub.Model.Notification.Notification
@@ -25,24 +25,34 @@ import retrofit2.Response
 
 class RvNotifsAdapter(private val notifs: ArrayList<Notification>, val context: Context) :
     RecyclerView.Adapter<RvNotifsAdapter.VH>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, position: Int): VH {
-        return RvNotifsAdapter.VH(LayoutInflater.from(parent.context).inflate(com.kou.uniclub.R.layout.row_notifs, parent, false))
+    val list=notifs
+    override fun onCreateViewHolder(parent: ViewGroup, position: Int): RvNotifsAdapter.VH {
+        return RvNotifsAdapter.VH(
+            LayoutInflater.from(parent.context).inflate(
+                com.kou.uniclub.R.layout.row_notifs,
+                parent,
+                false
+            )
+        )
     }
 
-    override fun onBindViewHolder(holder: VH, position: Int) {
+    override fun onBindViewHolder(holder: RvNotifsAdapter.VH, position: Int) {
         val notif = notifs[position]
         holder.title.text = notif.details.eventName
-        holder.root.setCardBackgroundColor(if (notif.readAt==null) Color.WHITE else ContextCompat.getColor(context,R.color.grayBar))
+        val params = holder.root.layoutParams as ViewGroup.MarginLayoutParams
+
+        params.marginEnd=(if (notif.readAt!=null)0 else 20)
+        params.marginStart = (if (notif.readAt!=null)0 else 20)
+        holder.root.radius=(if (notif.readAt!=null)0f else 15f)
+        holder.root.setCardBackgroundColor(if (notif.readAt!=null)ContextCompat.getColor(context, com.kou.uniclub.R.color.grayBar)else Color.WHITE)
+
+
         holder.root.setOnClickListener {
+           notif.readAt="x"
+            notifyItemChanged(position)
             markAsRead(notif)
-            eventId=notif.details.eventId
-            context.startActivity(Intent(context,EventDetails::class.java))
-
-
-            //call mark as read api
-            //notif.selected = !notif.selected
-            //holder.root.setCardBackgroundColor(if (notif.selected) ContextCompat.getColor(context,R.color.orange) else Color.WHITE)
+            eventId = notif.details.eventId
+            context.startActivity(Intent(context, EventDetails::class.java))
         }
 
 
@@ -63,7 +73,6 @@ class RvNotifsAdapter(private val notifs: ArrayList<Notification>, val context: 
         notifyDataSetChanged()
 
 
-
     }
 
     fun deselectAll() {
@@ -73,40 +82,58 @@ class RvNotifsAdapter(private val notifs: ArrayList<Notification>, val context: 
     }
 
     fun removeAll() {
-       val iterator=notifs.iterator()
+        val iterator = notifs.iterator()
         for (i in iterator)
-        if (i.selected)
-        {   iterator.remove()
+            if (i.selected) {
+                iterator.remove()
 
 
-        }
+            }
         notifyDataSetChanged()
 
     }
 
 
     fun removeAt(position: Int) {
+        deletenotif(notifs[position].id)
         notifs.removeAt(position)
         notifyItemRemoved(position)
+
+
     }
 
-    fun markAsRead(notif:Notification)
-    {val service=UniclubApi.create()
-        service.markAsRead("Bearer "+PrefsManager.geToken(context),notif.id).enqueue(object :
+    fun markAsRead(notif: Notification) {
+        val service = UniclubApi.create()
+        service.markAsRead("Bearer " + PrefsManager.geToken(context), notif.id).enqueue(object :
             Callback<NotifsActionsResponse> {
             override fun onFailure(call: Call<NotifsActionsResponse>, t: Throwable) {
             }
 
             override fun onResponse(call: Call<NotifsActionsResponse>, response: Response<NotifsActionsResponse>) {
-                if (response.isSuccessful)
-                {
-                    Log.d("markAsRead",response.message())
+                if (response.isSuccessful) {
+
                 }
             }
 
         })
     }
 
+    fun deletenotif(id: String) {
+        val service = UniclubApi.create()
+        service.deleteNotif("Bearer " + PrefsManager.geToken(context), id).enqueue(object :
+            Callback<NotifsActionsResponse> {
+            override fun onFailure(call: Call<NotifsActionsResponse>, t: Throwable) {
+            }
+
+            override fun onResponse(call: Call<NotifsActionsResponse>, response: Response<NotifsActionsResponse>) {
+                if (response.isSuccessful) {
+
+                    Log.d("yay", "yay")
+                }
+            }
+
+        })
+    }
 
 
     class VH(view: View) : RecyclerView.ViewHolder(view) {
