@@ -442,7 +442,7 @@ class HomeFeed : Fragment() {
 
 
 
-        builder.setPositiveButton("CONFIRM") { dialog, which ->
+        builder.setPositiveButton("Update") { dialog, which ->
             for (i in 0 until myPrefs.size)
                 Log.d("myPrefs", myPrefs[i])
             dialog?.dismiss()
@@ -452,11 +452,7 @@ class HomeFeed : Fragment() {
 
 
         }
-        builder.setNegativeButton(
-            "CANCEL"
-        ) { dialog, which ->
-            dialog?.dismiss()
-        }
+
 
         val dialog = builder.create()
 

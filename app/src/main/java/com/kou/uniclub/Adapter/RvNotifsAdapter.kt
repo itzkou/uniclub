@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,10 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.kou.uniclub.Activities.EventDetails
 import com.kou.uniclub.Activities.EventDetails.Companion.eventId
+import com.kou.uniclub.Model.Club.NoPagination.ClubDetailsResponse
 import com.kou.uniclub.Model.Notification.Notification
 import com.kou.uniclub.Model.Notification.NotifsActionsResponse
 import com.kou.uniclub.Network.UniclubApi
-import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
 import kotlinx.android.synthetic.main.row_notifs.view.*
 import retrofit2.Call
@@ -26,6 +25,7 @@ import retrofit2.Response
 class RvNotifsAdapter(private val notifs: ArrayList<Notification>, val context: Context) :
     RecyclerView.Adapter<RvNotifsAdapter.VH>() {
     val list=notifs
+    var  clubName=""
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): RvNotifsAdapter.VH {
         return RvNotifsAdapter.VH(
             LayoutInflater.from(parent.context).inflate(
@@ -38,7 +38,8 @@ class RvNotifsAdapter(private val notifs: ArrayList<Notification>, val context: 
 
     override fun onBindViewHolder(holder: RvNotifsAdapter.VH, position: Int) {
         val notif = notifs[position]
-        holder.title.text = notif.details.eventName
+
+        holder.title.text = "A new event was added :"+notif.details.eventName
         val params = holder.root.layoutParams as ViewGroup.MarginLayoutParams
 
         params.marginEnd=(if (notif.readAt!=null)0 else 20)
@@ -61,10 +62,22 @@ class RvNotifsAdapter(private val notifs: ArrayList<Notification>, val context: 
 
     override fun getItemCount(): Int = notifs.size
 
-    fun addItem(notif: Notification) {
-        notifs.add(notif)
-        notifyItemInserted(notifs.size)
-    }
+    fun clubName(notif: Notification):String {
+
+        val service=UniclubApi.create()
+        service.getClub(notif.details.clubID).enqueue(object :Callback<ClubDetailsResponse>{
+            override fun onFailure(call: Call<ClubDetailsResponse>, t: Throwable) {
+            }
+
+            override fun onResponse(call: Call<ClubDetailsResponse>, response: Response<ClubDetailsResponse>) {
+                if (response.isSuccessful)
+                    clubName=response.body()!!.club.name
+
+            }
+
+        })
+        return clubName
+        }
 
     fun selectAll() {
         for (i in 0 until notifs.size)

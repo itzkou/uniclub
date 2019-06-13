@@ -80,11 +80,10 @@
 
         <com.airbnb.lottie.LottieAnimationView android:id="@+id/sparkle"
                                                android:layout_width="54dp"
-                                               android:layout_height="60dp"
+                                               android:layout_height="54dp"
                                                app:lottie_fileName="sparkle.json"
                                                app:layout_constraintStart_toStartOf="@+id/favorite"
                                                app:layout_constraintEnd_toEndOf="@+id/favorite"
-                                               app:layout_constraintTop_toTopOf="@+id/favorite"
                                                app:layout_constraintBottom_toBottomOf="@+id/favorite"
                                                />
 

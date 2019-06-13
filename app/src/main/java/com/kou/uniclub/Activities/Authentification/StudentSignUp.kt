@@ -294,7 +294,7 @@ class StudentSignUp : AppCompatActivity(), Validation {
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
-        // Create an image file name
+        // Create an image file clubName
         val timeStamp: String? = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
@@ -380,7 +380,7 @@ class StudentSignUp : AppCompatActivity(), Validation {
 
             } else {
                 ilUsername.isErrorEnabled = true
-                ilUsername.error = "Enter a valid name and surname"
+                ilUsername.error = "Enter a valid clubName and surname"
                 okUsName = false
             }
             btnSignup.isEnabled = okUsName && okEmail && okPass && okPassc

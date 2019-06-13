@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             android:clickable="false"
-            android:backgroundTint="@color/white"
+            android:background="@color/windoBg"
+
     >
         <android.support.design.widget.CollapsingToolbarLayout
                 app:collapsedTitleGravity="center"

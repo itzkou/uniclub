@@ -8,7 +8,9 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import com.airbnb.lottie.LottieAnimationView
 import com.kou.uniclub.Activities.EventDetails
 import com.kou.uniclub.Activities.EventDetails.Companion.eventId
 import com.kou.uniclub.Extensions.BuilderAuth
@@ -33,8 +35,6 @@ import java.util.*
 class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
     RecyclerView.Adapter<RvHomeFeedAdapter.Holder>() {
     private var onBottomReachedListener: OnBottomReachedListener? = null
-
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): Holder {
@@ -69,69 +69,24 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
             Picasso.get().load(event.photo).into(holder.pic)
         else holder.pic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.im_event))
 
-
+        //TODO(" add liked var to EventX and apply notify Itemchanged")
         var isLiked = false
         holder.fav.setOnClickListener {
             if (PrefsManager.geToken(context) != null) {
-        //TODO('Optimize this')
                 if (!isLiked) {
-                    val service = UniclubApi.create()
-                    service.favorite("Bearer " + PrefsManager.geToken(context)!!, event.id)
-                        .enqueue(object : Callback<FavoriteResponse> {
-                            override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
-                                if (t is IOException)
-                                    Toasty.warning(context, "Network faillure", Toast.LENGTH_SHORT, true).show()
-                            }
+                   like(holder.fav,holder.sparkle,event)
 
-                            override fun onResponse(
-                                call: Call<FavoriteResponse>,
-                                response: Response<FavoriteResponse>
-                            ) {
-                                isLiked = true
-                                holder.sparkle.playAnimation()
-                                holder.fav.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorito))
-                                Toasty.custom(
-                                    context,
-                                    "${event.name} is marked as favourite!",
-                                    com.kou.uniclub.R.drawable.ic_check_white_24dp,
-                                    com.kou.uniclub.R.color.toasty,
-                                    Toasty.LENGTH_SHORT,
-                                    false,
-                                    true
-                                ).show()
-                            }
-
-                        })
                 } else if (isLiked) {
-                    val service = UniclubApi.create()
-                    service.unfavorite("Bearer " + PrefsManager.geToken(context)!!, event.id)
-                        .enqueue(object : Callback<FavoriteResponse> {
-                            override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
-                                Toasty.warning(context, "Network faillure", Toast.LENGTH_SHORT, true).show()
-                            }
+                    unlike(holder.fav, event.id)
 
-                            override fun onResponse(
-                                call: Call<FavoriteResponse>,
-                                response: Response<FavoriteResponse>
-                            ) {
-                                if (response.isSuccessful) {
-                                    isLiked = false
-                                    holder.fav.setImageDrawable(
-                                        ContextCompat.getDrawable(
-                                            context,
-                                            R.drawable.ic_favoriteg
-                                        )
-                                    )
-                                }
-                            }
-
-                        })
 
                 }
-            } else {
+                isLiked=!isLiked
+            }
+
+            else
                 BuilderAuth.showDialog(context)
 
-            }
         }
 
         //EventO details
@@ -179,6 +134,62 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
             notifyItemRangeInserted(size, sizeNew)
         }
 
+
+    }
+
+    fun like(view:ImageView,lottie:LottieAnimationView,event:EventX)
+    {
+        val service = UniclubApi.create()
+        service.favorite("Bearer " + PrefsManager.geToken(context)!!, event.id)
+            .enqueue(object : Callback<FavoriteResponse> {
+                override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
+                    if (t is IOException)
+                        Toasty.warning(context, "Network faillure", Toast.LENGTH_SHORT, true).show()
+                }
+
+                override fun onResponse(
+                    call: Call<FavoriteResponse>,
+                    response: Response<FavoriteResponse>
+                ) {
+                   lottie.sparkle.playAnimation()
+                   view.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorito))
+                    Toasty.custom(
+                        context,
+                        "${event.name} is marked as favourite!",
+                        com.kou.uniclub.R.drawable.ic_check_white_24dp,
+                        com.kou.uniclub.R.color.toasty,
+                        Toasty.LENGTH_SHORT,
+                        false,
+                        true
+                    ).show()
+                }
+
+            })
+    }
+
+    fun unlike(view: ImageView, id: Int) {
+        val service = UniclubApi.create()
+        service.unfavorite("Bearer " + PrefsManager.geToken(context)!!, id)
+            .enqueue(object : Callback<FavoriteResponse> {
+                override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
+                    Toasty.warning(context, "Network faillure", Toast.LENGTH_SHORT, true).show()
+                }
+
+                override fun onResponse(
+                    call: Call<FavoriteResponse>,
+                    response: Response<FavoriteResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        view.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                context,
+                                R.drawable.ic_favoriteg
+                            )
+                        )
+                    }
+                }
+
+            })
 
     }
 

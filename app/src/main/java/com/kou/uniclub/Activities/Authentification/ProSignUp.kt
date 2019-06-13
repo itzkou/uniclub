@@ -129,7 +129,7 @@ class ProSignUp : AppCompatActivity(), Validation {
 
             } else {
                 ilUsername.isErrorEnabled = true
-                ilUsername.error = "Enter a valid name and surname"
+                ilUsername.error = "Enter a valid clubName and surname"
                 okUsName = false
             }
             btnSignup.isEnabled = okUsName && okEmail && okPass && okPassc

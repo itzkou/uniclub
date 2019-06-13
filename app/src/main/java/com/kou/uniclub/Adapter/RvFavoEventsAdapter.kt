@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.kou.uniclub.Model.Event.EventX
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.row_liked_event.view.*
 
 class RvFavoEventsAdapter(val events :ArrayList<EventX>, val context: Context): RecyclerView.Adapter<RvFavoEventsAdapter.Holder>() {
@@ -19,11 +20,14 @@ return events.size    }
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val event: EventX = events[position]
         holder.title.text=event.name
+        if (event.photo!="")
+        Picasso.get().load(event.photo).into(holder.pic)
 
 
     }
 
     class Holder( view: View):RecyclerView.ViewHolder(view){
         val  title=view.title
+        val pic=view.image
     }
 }

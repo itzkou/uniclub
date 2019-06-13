@@ -59,9 +59,10 @@
                                             android:id="@+id/rvNotifs"
                                             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                                             app:layout_constraintTop_toBottomOf="@+id/bar"
-                                            android:layout_marginBottom="48dp"/>
+                                            />
     <Button
             android:text="delete"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imDelete" android:layout_marginTop="8dp"
@@ -70,6 +71,8 @@
             android:layout_marginStart="8dp"/>
     <Button
             android:text="select all"
+            android:visibility="gone"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imSelect" android:layout_marginTop="8dp"

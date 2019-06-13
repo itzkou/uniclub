@@ -37,7 +37,7 @@ class ClubsFilter : AppCompatActivity() {
                     val x = response.body()!!.pagination.universities
                     val arr = arrayListOf<String>()
                     for (i in 0 until x.size)
-                        arr.add(x[i].name)
+                        arr.add(x[i].clubName)
                     val dataAdapter =
                         ArrayAdapter<String>(
                             this@ClubsFilter,
