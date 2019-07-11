@@ -1,6 +1,7 @@
 package com.kou.uniclub.Activities
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.Snackbar
@@ -73,6 +74,9 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
         })
 
         getDetails(eventId!!)
+        back.setOnClickListener {
+            startActivity(Intent(this@EventDetails,Home::class.java))
+        }
 
 
     }
@@ -276,7 +280,7 @@ class EventDetails : AppCompatActivity(), OnMapReadyCallback {
         this.view.background = ContextCompat.getDrawable(context, R.drawable.bg_snackbar)
 
         this.setActionTextColor(ContextCompat.getColor(context, R.color.orange))
-        val text = this.view.findViewById<TextView>(android.support.design.R.id.snackbar_text)
+        val text = this.view.findViewById<TextView>(R.id.snackbar_text)
         text.setTextColor(ContextCompat.getColor(context, R.color.white))
         text.maxLines = 1
         text.textSize = 12f

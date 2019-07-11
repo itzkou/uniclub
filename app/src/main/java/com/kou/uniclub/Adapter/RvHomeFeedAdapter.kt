@@ -52,7 +52,6 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
         return events.size
     }
 
-    //TODO("root clickability")
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val event: EventX = events[position]
         //date stuff
@@ -90,7 +89,7 @@ class RvHomeFeedAdapter(val events: ArrayList<EventX>, val context: Context) :
         }
 
         //EventO details
-        holder.root.setOnClickListener {
+        holder.pic.setOnClickListener {
             eventId = event.id
             context.startActivity(Intent(context, EventDetails::class.java))
 

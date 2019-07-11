@@ -110,7 +110,7 @@ class SignIN : AppCompatActivity(), Validation {
                     startActivity(Intent(this@SignIN, Home::class.java))
                     finish()
                 } else {
-                    val snacko=Snackbar.make(rootSignIN, "User doesn't exist", Snackbar.LENGTH_LONG)
+                    val snacko=Snackbar.make(rootSignIN, "Wrong email or password", Snackbar.LENGTH_LONG)
                         snacko.config(this@SignIN)
 
                         snacko.show()
@@ -219,7 +219,7 @@ class SignIN : AppCompatActivity(), Validation {
         this.view.background = ContextCompat.getDrawable(context, R.drawable.bg_snackbar)
 
         this.setActionTextColor(ContextCompat.getColor(context, R.color.orange))
-        val text = this.view.findViewById<TextView>(android.support.design.R.id.snackbar_text)
+        val text = this.view.findViewById<TextView>(R.id.snackbar_text)
         text.setTextColor(ContextCompat.getColor(context, R.color.white))
 
         text.textAlignment=TextView.TEXT_ALIGNMENT_CENTER

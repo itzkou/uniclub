@@ -40,7 +40,7 @@
                            app:layout_constraintEnd_toEndOf="parent"
                            app:layout_constraintTop_toTopOf="parent"
                            app:layout_constraintBottom_toBottomOf="parent"
-                           />
+                />
 
                 <ProgressBar android:id="@+id/progress"
                              android:layout_width="50dp"
@@ -72,13 +72,17 @@
                           app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
                           android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
                           android:layout_marginStart="8dp" android:id="@+id/evenTitle"/>
-                        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:src="@drawable/back"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                                   android:layout_marginStart="16dp"
-                        />
+                <ImageView android:id="@+id/back" android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/back"
+                           android:paddingStart="16dp"
+                           android:paddingEnd="10dp"
+                           android:paddingTop="16dp"
+                           android:paddingBottom="16dp"
+                           app:layout_constraintTop_toTopOf="parent"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintStart_toStartOf="parent"
+                />
 
             </android.support.constraint.ConstraintLayout>
         </android.support.design.widget.CollapsingToolbarLayout>

@@ -11,7 +11,6 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +27,7 @@ import com.kou.uniclub.Extensions.OnBottomReachedListener
 import com.kou.uniclub.Model.Event.EventX
 import com.kou.uniclub.Model.Event.NoPagination.EventsResponse
 import com.kou.uniclub.Model.Event.Pagination.EventListResponse
+import com.kou.uniclub.Model.categorty
 import com.kou.uniclub.Network.UniclubApi
 import com.kou.uniclub.R
 import com.kou.uniclub.SharedUtils.PrefsManager
@@ -36,12 +36,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+import java.util.*
 
 
 class HomeFeed : Fragment() {
     private var page: String? = null
-
-    private var myPrefs = ArrayList<String?>()
     private var searchFilter: AutoCompleteTextView? = null
 
 
@@ -95,8 +94,6 @@ class HomeFeed : Fragment() {
 
         return v
     }
-
-
 
     private fun upcoming(rv: RecyclerView) {
 
@@ -333,8 +330,9 @@ class HomeFeed : Fragment() {
         spTiming.popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(activity!!, R.drawable.builder_round))
         spRegion.setBackgroundResource(com.kou.uniclub.R.drawable.btn_feed)
         spTiming.setBackgroundResource(com.kou.uniclub.R.drawable.btn_feed)
-        spTiming.setItems("Today", "Upcoming", "Passed")
+        spTiming.setItems("All dates", "Today", "Upcoming", "Passed")
         spRegion.setItems(
+            "All regions",
             "Tunis",
             "Ariana",
             "Ben Arous",
@@ -364,9 +362,10 @@ class HomeFeed : Fragment() {
         spTiming.setOnItemSelectedListener { view, position, id, item ->
 
             when (position) {
-                0 -> today(rv)
-                1 -> upcoming(rv)
-                2 -> passed(rv)
+                0 -> allDates(rv)
+                1 -> today(rv)
+                2 -> upcoming(rv)
+                3 -> passed(rv)
 
 
             }
@@ -376,44 +375,59 @@ class HomeFeed : Fragment() {
 
         //region
         spRegion.setOnItemSelectedListener { view, position, id, item ->
-            regionFilter(rv, item.toString())
+            if (position != 0)
+                regionFilter(rv, item.toString())
+
         }
     }
 
 
-    private fun cards(card: CardView, context: Context, arr: ArrayList<String?>) {
+    private fun cards(card: CardView, context: Context, c: categorty) {
 
 
-        val category = (card.getChildAt(0) as TextView).text.toString()
-        var isClicked = false
         card.setOnClickListener {
-            isClicked = if (!isClicked) {
+            c.isClicked = if (!c.isClicked) {
                 card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.orange))
-                arr.add(category)
-
-
-
                 true
-
-
             } else {
                 card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.darkGray))
-                arr.remove(category)
-
                 false
 
             }
-
-
         }
 
 
     }
 
 
+
+    private fun radio(rd: RadioButton, c: categorty, context: Context,arr: ArrayList<CardView>) {
+        var ischecked=false
+        rd.setOnClickListener {
+            if (!ischecked) {
+                c.isClicked = true
+                rd.setButtonDrawable(R.drawable.tick_orange)
+                for (i in 0 until arr.size)
+                    arr[i].setCardBackgroundColor(ContextCompat.getColor(context,R.color.orange))
+
+
+
+            } else {
+                c.isClicked = false
+                rd.setButtonDrawable(R.drawable.ellipse)
+                for (i in 0 until arr.size)
+                    arr[i].setCardBackgroundColor(ContextCompat.getColor(context,R.color.darkGray))
+
+            }
+            ischecked=!ischecked
+        }
+
+    }
+
     private fun showSearchFilter(context: Context) {
         val dialogView = LayoutInflater.from(context).inflate(com.kou.uniclub.R.layout.builder_search_filter, null)
-        val back=dialogView.findViewById<View>(R.id.back)
+        val back = dialogView.findViewById<View>(R.id.back)
+
         val busi = dialogView.findViewById<CardView>(R.id.busi)
         val learni = dialogView.findViewById<CardView>(R.id.learning)
         val culturi = dialogView.findViewById<CardView>(R.id.culture)
@@ -423,51 +437,56 @@ class HomeFeed : Fragment() {
         val sporti = dialogView.findViewById<CardView>(R.id.sports)
         val desi = dialogView.findViewById<CardView>(R.id.design)
         val gami = dialogView.findViewById<CardView>(R.id.gaming)
+        val rd = dialogView.findViewById<RadioButton>(R.id.rdPrefs)
+
+        val c1 = categorty()
+        val c2 = categorty()
+        val c3 = categorty()
+        val c4 = categorty()
+        val c5 = categorty()
+        val c6 = categorty()
+        val c7 = categorty()
+        val c8 = categorty()
+        val c9 = categorty()
+
+
+
         searchFilter = dialogView.findViewById(R.id.searchFilter)
 
 
         val builder = AlertDialog.Builder(context, R.style.FullScreenDialogStyle)
 
         builder.setView(dialogView)
-        myPrefs.clear()
-        cards(busi, context, myPrefs)
-        cards(learni, context, myPrefs)
-        cards(culturi, context, myPrefs)
-        cards(sociali, context, myPrefs)
-        cards(phototi, context, myPrefs)
-        cards(techi, context, myPrefs)
-        cards(sporti, context, myPrefs)
-        cards(desi, context, myPrefs)
-        cards(gami, context, myPrefs)
-
-
-
-        builder.setPositiveButton("Update") { dialog, which ->
-            for (i in 0 until myPrefs.size)
-                Log.d("myPrefs", myPrefs[i])
-            dialog?.dismiss()
-
-            if (!PrefsManager.getWizPrefs(activity!!)!!)
-                showWiz(context)
-
-
-        }
 
 
         val dialog = builder.create()
 
 
         dialog.show()
+        cards(busi, context, c1)
+        cards(learni, context, c2)
+        cards(culturi, context, c3)
+        cards(sociali, context, c4)
+        cards(phototi, context, c5)
+        cards(techi, context, c6)
+        cards(sporti, context, c7)
+        cards(desi, context, c8)
+        cards(gami, context, c9)
+
+        radio(rd, c1, context, arrayListOf(busi,learni,culturi,sociali,phototi,techi,sporti,desi,gami))
+
+
         back.setOnClickListener {
             dialog.dismiss()
         }
         feedAutocomplete(searchFilter!!)
 
+
     }
 
     //TODO("When server performs updates events I want to update data")
     private fun feedAutocomplete(sv: AutoCompleteTextView?) {
-       val service = UniclubApi.create()
+        val service = UniclubApi.create()
         service.getEvents().enqueue(object : Callback<EventsResponse> {
             override fun onFailure(call: Call<EventsResponse>, t: Throwable) {
             }
@@ -486,11 +505,11 @@ class HomeFeed : Fragment() {
                     }
 
 
-
                 }
             }
 
-        })}
+        })
+    }
 
     private fun showWiz(context: Context) {
 

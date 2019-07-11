@@ -15,16 +15,31 @@
     <TextView
             android:text="Remind me"
             android:textSize="15sp"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvRemind"
             app:layout_constraintTop_toBottomOf="@+id/tvNotifs" android:layout_marginTop="30dp"
-            app:layout_constraintStart_toStartOf="@+id/tvNotifs"/>
+            app:layout_constraintStart_toStartOf="@+id/tvNotifs"
+    />
+    <TextView android:id="@+id/tvRdesc" android:layout_width="wrap_content" android:layout_height="wrap_content"
+              app:layout_constraintTop_toBottomOf="@id/tvRemind"
+              app:layout_constraintStart_toStartOf="@id/tvRemind"
+              android:textSize="9sp"
+              android:textColor="#818181"/>
+    <com.jaredrummler.materialspinner.MaterialSpinner android:id="@+id/spReminder"
+                                                      android:layout_width="0dp"
+                                                      android:layout_height="wrap_content"
+                                                      app:ms_background_color="@color/white"
+                                                      android:fontFamily="@font/hv_regular"
+                                                      android:textSize="15sp"
+                                                      app:layout_constraintTop_toTopOf="@id/tvRemind"
+                                                      app:layout_constraintBottom_toBottomOf="@id/tvRemind"
+                                                      app:layout_constraintEnd_toEndOf="parent"
+                                                      android:layout_marginEnd="10dp"
+    />
     <TextView
             android:text="Preferences"
             android:textSize="15sp"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvPreferences" android:layout_marginTop="30dp"
@@ -33,7 +48,6 @@
     <TextView
             android:text="Log out"
             android:textSize="15sp"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvLogout"
@@ -45,8 +59,9 @@
     />
     <RadioButton android:buttonTint="@color/orange"
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioNotifs" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="20dp"
-            app:layout_constraintTop_toTopOf="@+id/tvNotifs" app:layout_constraintBottom_toBottomOf="@+id/tvNotifs"/>
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/radioNotifs" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="20dp"
+                 app:layout_constraintTop_toTopOf="@+id/tvNotifs"
+                 app:layout_constraintBottom_toBottomOf="@+id/tvNotifs"/>
 </android.support.constraint.ConstraintLayout>
