@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -43,7 +44,7 @@ class EditProfile : AppCompatActivity() {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
 
-            imSettings.setImageURI(Uri.parse(mCurrentPhotoPath))
+            imPro.setImageURI(Uri.parse(mCurrentPhotoPath))
             chosenFile=File(mCurrentPhotoPath)
             //multipart stuff
             val requestFile = RequestBody.create(MediaType.parse("image/*"),chosenFile)
@@ -51,7 +52,7 @@ class EditProfile : AppCompatActivity() {
 
 
         } else if (requestCode == SELECT_FILE && resultCode == RESULT_OK) {
-           imSettings.setImageURI(data!!.data)
+            imPro.setImageURI(data!!.data)
             chosenUri=data.data!!
             val filePath = arrayOf(MediaStore.Images.Media.DATA)
             val c = contentResolver.query(chosenUri, filePath, null, null, null)
@@ -111,7 +112,7 @@ class EditProfile : AppCompatActivity() {
 
     fun selectImage() {
 
-        val items = arrayOf<CharSequence>("Camera", "Gallery","Import from Google","Import from facebook", "Delete profile picture")
+        val items = arrayOf<CharSequence>("Camera", "Gallery", "Delete profile picture")
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Set a profile picture")
@@ -126,10 +127,13 @@ class EditProfile : AppCompatActivity() {
                     startActivityForResult(intent, SELECT_FILE)
 
                 }
-                //TODO("develop these and use prefs manager")
-                items[i] == "Import from Google" -> null
-                items[i] == "Import from facebook" -> null
-                items[i] == "Delete profile picture" -> null
+                items[i] == "Delete profile picture" -> imPro.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this@EditProfile,
+                        R.drawable.ic_picupload
+                    )
+                )
+
 
 
             }

@@ -1,8 +1,10 @@
 package com.kou.uniclub.Activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.kou.uniclub.Adapter.VpClubDetailsAdapter
 import com.kou.uniclub.Extensions.BuilderAuth
 import com.kou.uniclub.Fragments.ClubTimeline.Passed
@@ -29,6 +31,12 @@ class ClubDetails : AppCompatActivity() {
         setContentView(R.layout.activity_club_details)
 
         setupViewPager(vpClubDetails)
+        rdMore.setOnClickListener {
+            tvClubDesc.maxLines = 100
+            rdMore.visibility = View.INVISIBLE
+        }
+
+        back.setOnClickListener { startActivity(Intent(this, Home::class.java)) }
 
 
     }
@@ -70,8 +78,8 @@ class ClubDetails : AppCompatActivity() {
                     this@ClubDetails,
                     response.body()!!.message,
                     R.drawable.ic_error_outline_white_24dp,
-                    R.color.movento,
-                    Toasty.LENGTH_SHORT,
+                    R.color.toasty,
+                    Toasty.LENGTH_LONG,
                     false,
                     true
                 ).show()

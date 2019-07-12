@@ -14,6 +14,8 @@ import android.widget.LinearLayout
 import com.kou.uniclub.Activities.Notifications
 import com.kou.uniclub.Adapter.RvClubsAdapter
 import com.kou.uniclub.Adapter.SearchUnivAdapter
+import com.kou.uniclub.Extensions.BuilderAuth
+import com.kou.uniclub.Extensions.BuilderSettings
 import com.kou.uniclub.Model.Club.NoPagination.ClubsByUnivResponse
 import com.kou.uniclub.Model.Club.Pagination.ClubsResponse
 import com.kou.uniclub.Model.University.NoPagination.UniversitiesResponse
@@ -42,6 +44,7 @@ class Universities : Fragment() {
         val rvClubs = v.findViewById<RecyclerView>(com.kou.uniclub.R.id.rvClubs)
         val searchUniv = v.findViewById<AutoCompleteTextView>(com.kou.uniclub.R.id.searchFilter)
         val imNotifs = v.findViewById<ImageView>(R.id.imNotifs)
+        val imSettings = v.findViewById<ImageView>(R.id.imSettings)
         val token = PrefsManager.geToken(activity!!)
         rvClubs.layoutManager = LinearLayoutManager(activity!!, LinearLayout.VERTICAL, false)
 
@@ -55,6 +58,14 @@ class Universities : Fragment() {
             imNotifs.setOnClickListener {
                 startActivity(Intent(activity!!, Notifications::class.java))
             }
+
+        /********Settings ******/
+        imSettings.setOnClickListener {
+            if (token != null)
+                BuilderSettings.showSettings(activity!!)
+            else
+                BuilderAuth.showDialog(activity!!)
+        }
 
 
         return v

@@ -400,26 +400,28 @@ class HomeFeed : Fragment() {
     }
 
 
-
-    private fun radio(rd: RadioButton, c: categorty, context: Context,arr: ArrayList<CardView>) {
-        var ischecked=false
+    private fun radio(rd: RadioButton, c: ArrayList<categorty>, context: Context, arr: ArrayList<CardView>) {
+        var isCheck = false
         rd.setOnClickListener {
-            if (!ischecked) {
-                c.isClicked = true
+            isCheck = if (!isCheck) {
+
                 rd.setButtonDrawable(R.drawable.tick_orange)
                 for (i in 0 until arr.size)
                     arr[i].setCardBackgroundColor(ContextCompat.getColor(context,R.color.orange))
+                for (i in 0 until c.size)
+                    c[i].isClicked = true
 
 
-
+                true
             } else {
-                c.isClicked = false
                 rd.setButtonDrawable(R.drawable.ellipse)
                 for (i in 0 until arr.size)
                     arr[i].setCardBackgroundColor(ContextCompat.getColor(context,R.color.darkGray))
+                for (i in 0 until c.size)
+                    c[i].isClicked = false
+                false
 
             }
-            ischecked=!ischecked
         }
 
     }
@@ -473,7 +475,12 @@ class HomeFeed : Fragment() {
         cards(desi, context, c8)
         cards(gami, context, c9)
 
-        radio(rd, c1, context, arrayListOf(busi,learni,culturi,sociali,phototi,techi,sporti,desi,gami))
+        radio(
+            rd,
+            arrayListOf(c1, c2, c3, c4, c5, c6, c7, c8, c9),
+            context,
+            arrayListOf(busi, learni, culturi, sociali, phototi, techi, sporti, desi, gami)
+        )
 
 
         back.setOnClickListener {

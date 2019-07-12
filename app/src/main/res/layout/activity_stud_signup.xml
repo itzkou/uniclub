@@ -125,7 +125,7 @@
                                                        app:layout_constraintEnd_toEndOf="parent"
                                                        app:layout_constraintStart_toStartOf="parent"
         >
-            <android.support.design.widget.TextInputEditText android:id="@+id/edCompany"
+            <android.support.design.widget.TextInputEditText android:id="@+id/edUsername"
                                                              android:textColor="@color/black"
 
                                                              android:inputType="text"

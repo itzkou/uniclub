@@ -25,13 +25,13 @@
                    android:id="@+id/imSettings"
                    android:src="@drawable/ic_settings"
                    app:layout_constraintEnd_toEndOf="parent"
-                   android:layout_marginEnd="12dp"
-                   android:layout_marginBottom="8dp"
+                   android:paddingEnd="12dp"
+                   android:paddingBottom="16dp"
                    app:layout_constraintBottom_toBottomOf="parent"
-                   android:layout_marginTop="8dp"
+                   android:paddingTop="16dp"
                    app:layout_constraintTop_toTopOf="parent"
                    android:fitsSystemWindows="true"
-                   app:layout_collapseMode="pin"/>
+        />
 
 
         <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"

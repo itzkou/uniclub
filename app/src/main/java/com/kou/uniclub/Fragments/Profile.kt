@@ -50,7 +50,7 @@ class Profile : Fragment() {
         val col=v.findViewById<ConstraintLayout>(R.id.collapso)
         val appBar=v.findViewById<AppBarLayout>(R.id.appBar)
         val token = PrefsManager.geToken(activity!!)
-        val edit = v.findViewById<ImageView>(com.kou.uniclub.R.id.imNotifs)
+        val edit = v.findViewById<ImageView>(com.kou.uniclub.R.id.imEdit)
         val nested = v.findViewById<NestedScrollView>(com.kou.uniclub.R.id.nestedVprofile)
         val progress=v.findViewById<ProgressBar>(com.kou.uniclub.R.id.progressp)
         val myName=v.findViewById<TextView>(R.id.tvMyname)
@@ -75,7 +75,9 @@ class Profile : Fragment() {
         blurAppBar(appBar,col)
 
 
-
+        edit.setOnClickListener {
+            startActivity(Intent(activity, EditProfile::class.java))
+        }
 
 
 
@@ -104,7 +106,7 @@ class Profile : Fragment() {
 
             override fun onResponse(call: Call<UserX>, response: Response<UserX>) {
 
-                if (response.isSuccessful) {
+                if (response.isSuccessful && isAdded) {
                     val user=response.body()
                     tv.text="${user!!.firstName} ${user.lastName}"
                     picture = user.image
