@@ -1,4 +1,4 @@
-# uniclub
+# Uniclub
 " An event organizer android application that concerns university clubs "
 
 
